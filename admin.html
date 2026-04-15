@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MWT Admin — Site Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#C8201A;--red-light:#e8352e;--gold:#D4961A;
+  --bg:#0f1117;--surface:#181c27;--card:#1e2235;--border:rgba(255,255,255,0.07);
+  --text:#e8e6f0;--muted:#7a7a90;--accent:#6c8ef7;
+  --green:#22c55e;--amber:#f59e0b;--danger:#ef4444;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+
+/* ── LOGIN SCREEN ── */
+#loginScreen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:100%;max-width:400px;text-align:center}
+.login-logo{width:56px;height:56px;background:var(--red);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:22px;font-weight:700;color:#fff;letter-spacing:1px}
+.login-box h1{font-size:22px;font-weight:600;margin-bottom:6px}
+.login-box p{font-size:13px;color:var(--muted);margin-bottom:32px}
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;text-align:left}
+.login-field label{font-size:11px;color:var(--muted);letter-spacing:1px;font-family:var(--mono)}
+.login-field input{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--text);font-family:var(--font);outline:none;transition:border-color .2s;width:100%}
+.login-field input:focus{border-color:var(--red)}
+.login-btn{width:100%;background:var(--red);color:#fff;border:none;padding:13px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;transition:background .2s}
+.login-btn:hover{background:var(--red-light)}
+.login-error{font-size:12px;color:var(--danger);margin-top:8px;display:none}
+.login-hint{font-size:11px;color:var(--muted);margin-top:16px;font-family:var(--mono)}
+
+/* ── SIDEBAR ── */
+.sidebar{width:240px;background:var(--surface);border-right:1px solid var(--border);min-height:100vh;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-brand{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.sb-logo{display:flex;align-items:center;gap:10px}
+.sb-logo-mark{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.sb-logo-text{font-size:13px;font-weight:600;line-height:1.3}
+.sb-logo-sub{font-size:10px;color:var(--muted);font-family:var(--mono);letter-spacing:1px}
+.sidebar-nav{padding:12px 10px;flex:1}
+.nav-section{margin-bottom:24px}
+.nav-section-label{font-size:10px;color:var(--muted);letter-spacing:2px;font-family:var(--mono);padding:0 10px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;transition:all .2s;font-size:13px;color:var(--muted);margin-bottom:2px;border:none;background:none;width:100%;text-align:left}
+.nav-item svg{width:16px;height:16px;flex-shrink:0}
+.nav-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.nav-item.active{background:rgba(200,32,26,.15);color:#ff8880;border:1px solid rgba(200,32,26,.25)}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border)}
+.logout-btn{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);cursor:pointer;padding:8px;border-radius:6px;transition:all .2s;border:none;background:none;width:100%}
+.logout-btn:hover{color:var(--danger)}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;min-height:100vh}
+.page{display:none;padding:32px}
+.page.active{display:block}
+
+/* TOP BAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px}
+.page-title h2{font-size:22px;font-weight:600;margin-bottom:2px}
+.page-title p{font-size:13px;color:var(--muted)}
+.topbar-actions{display:flex;gap:10px}
+.btn{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:var(--font);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn svg{width:14px;height:14px}
+.btn-primary{background:var(--red);color:#fff}
+.btn-primary:hover{background:var(--red-light)}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:rgba(255,255,255,.2)}
+.btn-success{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.btn-danger{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.2)}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title svg{width:16px;height:16px;color:var(--red-light)}
+
+/* METRIC CARDS */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.metric-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--red)}
+.metric-num{font-size:32px;font-weight:600;line-height:1;margin-bottom:4px}
+.metric-label{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.metric-card.green::before{background:var(--green)}
+.metric-card.amber::before{background:var(--amber)}
+.metric-card.blue::before{background:var(--accent)}
+
+/* FORM FIELDS */
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.field-row.full{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:11px;color:var(--muted);letter-spacing:1px;font-family:var(--mono)}
+.field input,.field textarea,.field select{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--text);font-family:var(--font);outline:none;transition:border-color .2s;width:100%}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--red)}
+.field input::placeholder,.field textarea::placeholder{color:#444}
+.field textarea{resize:vertical;min-height:80px}
+.field select{cursor:pointer}
+.field select option{background:var(--card)}
+.field-hint{font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:3px}
+
+/* SAVE BANNER */
+.save-banner{position:fixed;bottom:24px;right:24px;background:var(--green);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:1000;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;display:flex;align-items:center;gap:8px}
+.save-banner.show{opacity:1;transform:translateY(0)}
+
+/* LEADS TABLE */
+.leads-table{width:100%;border-collapse:collapse}
+.leads-table th{font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:1px;text-align:left;padding:10px 14px;border-bottom:1px solid var(--border)}
+.leads-table td{font-size:13px;color:var(--text);padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+.leads-table tr:hover td{background:rgba(255,255,255,.02)}
+.status-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-family:var(--mono);padding:3px 10px;border-radius:20px}
+.status-new{background:rgba(108,142,247,.15);color:#6c8ef7;border:1px solid rgba(108,142,247,.25)}
+.status-contacted{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.status-done{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.no-leads{text-align:center;padding:48px;color:var(--muted);font-size:14px}
+
+/* GALLERY MANAGER */
+.gallery-grid-cms{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.gallery-item-cms{position:relative;border-radius:10px;overflow:hidden;background:var(--surface);border:1px solid var(--border);aspect-ratio:4/3}
+.gallery-item-cms img{width:100%;height:100%;object-fit:cover;filter:brightness(.85)}
+.gallery-item-delete{position:absolute;top:8px;right:8px;background:rgba(239,68,68,.85);color:#fff;border:none;width:26px;height:26px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:background .2s}
+.gallery-item-delete:hover{background:var(--danger)}
+.gallery-item-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.8));padding:10px 12px;font-size:11px;color:#ccc;font-family:var(--mono)}
+.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface)}
+.upload-zone:hover{border-color:rgba(200,32,26,.4);background:rgba(200,32,26,.04)}
+.upload-zone svg{width:32px;height:32px;color:var(--muted);margin:0 auto 10px;display:block}
+.upload-zone p{font-size:13px;color:var(--muted)}
+.upload-zone small{font-size:11px;color:#444;font-family:var(--mono)}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);padding:4px;border-radius:10px;border:1px solid var(--border);width:fit-content}
+.tab{padding:7px 16px;border-radius:7px;font-size:12px;font-family:var(--mono);cursor:pointer;transition:all .2s;color:var(--muted);border:none;background:none}
+.tab.active{background:var(--card);color:var(--text);border:1px solid var(--border)}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.toggle-row:last-child{border-bottom:none}
+.toggle-info h4{font-size:13px;font-weight:500;margin-bottom:2px}
+.toggle-info p{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:#333;border-radius:22px;cursor:pointer;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle input:checked + .toggle-slider{background:var(--red)}
+.toggle input:checked + .toggle-slider::before{transform:translateX(18px)}
+
+/* SERVICES EDITOR */
+.svc-editor-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:12px}
+.svc-editor-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;cursor:pointer}
+.svc-editor-thumb{width:52px;height:40px;border-radius:6px;overflow:hidden;flex-shrink:0;background:var(--card)}
+.svc-editor-thumb img{width:100%;height:100%;object-fit:cover}
+.svc-editor-name{font-size:14px;font-weight:500;flex:1}
+.svc-expand{color:var(--muted);transition:transform .2s;margin-left:auto}
+.svc-editor-body{display:none}
+.svc-editor-item.open .svc-editor-body{display:block}
+.svc-editor-item.open .svc-expand{transform:rotate(180deg)}
+
+/* MAP PREVIEW */
+.map-frame{width:100%;height:300px;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--surface)}
+.map-frame iframe{width:100%;height:100%;border:none}
+
+/* COLOR SWATCH */
+.color-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.color-swatch{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);cursor:pointer;flex-shrink:0}
+.color-label{font-size:13px;flex:1}
+.color-val{font-size:12px;color:var(--muted);font-family:var(--mono)}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .sidebar{display:none}
+  .metrics{grid-template-columns:1fr 1fr}
+  .field-row{grid-template-columns:1fr}
+  .gallery-grid-cms{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">MWT</div>
+    <h1>Admin Login</h1>
+    <p>Masters Window Tinting — Site Manager</p>
+    <div class="login-field">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginError">Incorrect username or password.</div>
+    <p class="login-hint">Default: admin / mwt2025admin</p>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">MWT</div>
+      <div>
+        <div class="sb-logo-text">Site Manager</div>
+        <div class="sb-logo-sub">v1.0 &middot; ADMIN</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Overview</div>
+      <button class="nav-item active" onclick="showPage('dashboard',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="showPage('leads',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 11a6 6 0 00-12 0"/><circle cx="8" cy="5" r="3"/></svg>
+        Quote Requests
+        <span id="leadsBadge" style="margin-left:auto;background:var(--red);color:#fff;font-size:10px;padding:2px 7px;border-radius:20px;font-family:var(--mono)">0</span>
+      </button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Content</div>
+      <button class="nav-item" onclick="showPage('hero',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="10" rx="2"/><path d="M5 9l2-2 2 2 3-3"/></svg>
+        Hero Section
+      </button>
+      <button class="nav-item" onclick="showPage('services',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4v4l3 2"/></svg>
+        Services
+      </button>
+      <button class="nav-item" onclick="showPage('gallery',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+        Gallery
+      </button>
+      <button class="nav-item" onclick="showPage('reviews',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/></svg>
+        Reviews
+      </button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Settings</div>
+      <button class="nav-item" onclick="showPage('business',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="12" height="9" rx="1"/><path d="M5 6V4a3 3 0 016 0v2"/></svg>
+        Business Info
+      </button>
+      <button class="nav-item" onclick="showPage('map',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="7" r="3"/><path d="M8 14S2 9.5 2 6a6 6 0 0112 0c0 3.5-6 8-6 8z"/></svg>
+        Map & Location
+      </button>
+      <button class="nav-item" onclick="showPage('appearance',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 2a6 6 0 010 12"/></svg>
+        Appearance
+      </button>
+      <button class="nav-item" onclick="showPage('password',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="10" height="8" rx="1"/><path d="M5 7V5a3 3 0 016 0v2"/></svg>
+        Change Password
+      </button>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="doLogout()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7h7M9 4l3 3-3 3M5 2H2a1 1 0 00-1 1v8a1 1 0 001 1h3"/></svg>
+      Sign Out
+    </button>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- ── DASHBOARD ── -->
+  <div class="page active" id="page-dashboard">
+    <div class="topbar">
+      <div class="page-title"><h2>Dashboard</h2><p>Welcome back. Here's your site at a glance.</p></div>
+      <div class="topbar-actions">
+        <a href="index.html" target="_blank"><button class="btn btn-secondary"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7H13M7 1l6 6-6 6"/></svg> View Live Site</button></a>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metric-card green">
+        <div class="metric-num" id="m-leads">0</div>
+        <div class="metric-label">Quote Requests</div>
+      </div>
+      <div class="metric-card amber">
+        <div class="metric-num" id="m-new">0</div>
+        <div class="metric-label">New / Unread</div>
+      </div>
+      <div class="metric-card blue">
+        <div class="metric-num" id="m-gallery">7</div>
+        <div class="metric-label">Gallery Photos</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">3</div>
+        <div class="metric-label">Active Services</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div class="card">
+        <div class="card-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 11a6 6 0 00-12 0"/><circle cx="8" cy="5" r="3"/></svg>Recent Quote Requests</div>
+        <div id="dashLeads"><div class="no-leads" style="padding:20px">No requests yet. They'll appear here when customers submit the quote form.</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/></svg>Quick Actions</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-secondary" style="justify-content:flex-start" onclick="showPage('leads',document.querySelector('[onclick*=leads]'))">&#x1F4CB; View all quote requests</button>
+          <button class="btn btn-secondary" style="justify-content:flex-start" onclick="showPage('hero',document.querySelector('[onclick*=hero]'))">&#x270F;&#xFE0F; Edit hero headline</button>
+          <button class="btn btn-secondary" style="justify-content:flex-start" onclick="showPage('gallery',document.querySelector('[onclick*=gallery]'))">&#x1F5BC;&#xFE0F; Manage gallery photos</button>
+          <button class="btn btn-secondary" style="justify-content:flex-start" onclick="showPage('business',document.querySelector('[onclick*=business]'))">&#x1F4CD; Update business hours</button>
+          <button class="btn btn-secondary" style="justify-content:flex-start" onclick="showPage('map',document.querySelector('[onclick*=map]'))">&#x1F5FA;&#xFE0F; Update map location</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LEADS ── -->
+  <div class="page" id="page-leads">
+    <div class="topbar">
+      <div class="page-title"><h2>Quote Requests</h2><p>All leads submitted through the website contact form.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" onclick="exportLeads()">&#x1F4E5; Export CSV</button>
+        <button class="btn btn-danger" onclick="clearLeads()">Clear All</button>
+      </div>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div id="leadsTableWrap">
+        <div class="no-leads">No quote requests yet.<br><span style="font-size:12px;color:#555">Submissions from your website will appear here automatically via Firebase.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="page" id="page-hero">
+    <div class="topbar">
+      <div class="page-title"><h2>Hero Section</h2><p>Edit the main banner text that visitors see first.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="saveHero()">&#x2713; Save Changes</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="14" height="10" rx="2"/></svg>Hero Text</div>
+      <div class="field-row full"><div class="field"><label>Main Headline (Line 1)</label><input type="text" id="hero-line1" value="PROTECT"><div class="field-hint">Displayed in large white text</div></div></div>
+      <div class="field-row"><div class="field"><label>Main Headline (Line 2 — accent color)</label><input type="text" id="hero-line2" value="YOUR"></div><div class="field"><label>Main Headline (Line 3 — outline style)</label><input type="text" id="hero-line3" value="RIDE."></div></div>
+      <div class="field-row full"><div class="field"><label>Subheading Paragraph</label><textarea id="hero-sub">Window tinting, paint protection film, and ceramic coating by certified full-time installers. Serving Nassau &amp; Suffolk County since 2005.</textarea></div></div>
+      <div class="field-row"><div class="field"><label>Primary Button Text</label><input type="text" id="hero-btn1" value="Get a Free Quote"></div><div class="field"><label>Secondary Button Text</label><input type="text" id="hero-btn2" value="Our Services →"></div></div>
+      <div class="field-row full"><div class="field"><label>Badge Text (top pill)</label><input type="text" id="hero-badge" value="Certified Ceramic Pro Installer · Long Island"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Trust Indicators</div>
+      <div class="field-row"><div class="field"><label>Trust Item 1</label><input type="text" id="t1" value="4.9 Google Rating"></div><div class="field"><label>Trust Item 2</label><input type="text" id="t2" value="Lifetime Warranty"></div></div>
+      <div class="field-row"><div class="field"><label>Trust Item 3</label><input type="text" id="t3" value="100% Guaranteed"></div><div class="field"><label>Trust Item 4</label><input type="text" id="t4" value="Open 7 Days"></div></div>
+    </div>
+  </div>
+
+  <!-- ── SERVICES ── -->
+  <div class="page" id="page-services">
+    <div class="topbar">
+      <div class="page-title"><h2>Services</h2><p>Edit service names, descriptions, and feature lists.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="saveServices()">&#x2713; Save Changes</button>
+      </div>
+    </div>
+
+    <div class="svc-editor-item open" id="svc-0">
+      <div class="svc-editor-header" onclick="toggleSvc(0)">
+        <div class="svc-editor-thumb"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=120&q=70" alt=""></div>
+        <div class="svc-editor-name">Window Tinting</div>
+        <svg class="svc-expand" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="svc-editor-body">
+        <div class="field-row"><div class="field"><label>Service Name</label><input type="text" value="Window Tinting" id="svc-0-name"></div><div class="field"><label>Tag Label</label><input type="text" value="WINDOW TINTING" id="svc-0-tag"></div></div>
+        <div class="field-row full"><div class="field"><label>Description</label><textarea id="svc-0-desc">Premium film for cars, boats, homes and commercial buildings. Blocks UV, reduces heat, and enhances privacy and aesthetics.</textarea></div></div>
+        <div class="field-row full"><div class="field"><label>Image URL</label><input type="text" value="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&q=80&fit=crop" id="svc-0-img"><div class="field-hint">Paste a direct image URL or upload to your hosting and paste the link</div></div></div>
+        <div class="field-row full"><div class="field"><label>Feature List (one per line)</label><textarea id="svc-0-features" rows="5">Automotive window tinting
+Boat &amp; marine tinting
+Residential &amp; commercial
+Headlight &amp; taillight tinting
+Lifetime warranty on film &amp; labor</textarea></div></div>
+      </div>
+    </div>
+
+    <div class="svc-editor-item" id="svc-1">
+      <div class="svc-editor-header" onclick="toggleSvc(1)">
+        <div class="svc-editor-thumb"><img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=120&q=70" alt=""></div>
+        <div class="svc-editor-name">Paint Protection Film</div>
+        <svg class="svc-expand" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="svc-editor-body">
+        <div class="field-row"><div class="field"><label>Service Name</label><input type="text" value="Paint Protection Film" id="svc-1-name"></div><div class="field"><label>Tag Label</label><input type="text" value="PAINT PROTECTION" id="svc-1-tag"></div></div>
+        <div class="field-row full"><div class="field"><label>Description</label><textarea id="svc-1-desc">Our Liquid PPF all-in-one formula leaves no seams, no bubbles, and invisible protection at a fraction of traditional PPF cost.</textarea></div></div>
+        <div class="field-row full"><div class="field"><label>Image URL</label><input type="text" value="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=600&q=80&fit=crop" id="svc-1-img"></div></div>
+        <div class="field-row full"><div class="field"><label>Feature List (one per line)</label><textarea id="svc-1-features" rows="5">Liquid PPF (no seams or edges)
+Scratch &amp; chip resistance
+UV &amp; chemical protection
+Self-healing formula
+Full body or partial coverage</textarea></div></div>
+      </div>
+    </div>
+
+    <div class="svc-editor-item" id="svc-2">
+      <div class="svc-editor-header" onclick="toggleSvc(2)">
+        <div class="svc-editor-thumb"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=120&q=70" alt=""></div>
+        <div class="svc-editor-name">Ceramic Coating</div>
+        <svg class="svc-expand" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+      </div>
+      <div class="svc-editor-body">
+        <div class="field-row"><div class="field"><label>Service Name</label><input type="text" value="Ceramic Coating" id="svc-2-name"></div><div class="field"><label>Tag Label</label><input type="text" value="CERAMIC COATING" id="svc-2-tag"></div></div>
+        <div class="field-row full"><div class="field"><label>Description</label><textarea id="svc-2-desc">Certified Ceramic Pro installation for a permanent hydrophobic shield — deep gloss, full paint protection, years of low-maintenance shine.</textarea></div></div>
+        <div class="field-row full"><div class="field"><label>Image URL</label><input type="text" value="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80&fit=crop" id="svc-2-img"></div></div>
+        <div class="field-row full"><div class="field"><label>Feature List (one per line)</label><textarea id="svc-2-features" rows="5">Certified Ceramic Pro installer
+Hydrophobic surface
+Deep gloss enhancement
+Chemical &amp; oxidation resistance
+Multi-year protection packages</textarea></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GALLERY ── -->
+  <div class="page" id="page-gallery">
+    <div class="topbar">
+      <div class="page-title"><h2>Gallery</h2><p>Manage the photos shown on your website.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="saveGallery()">&#x2713; Save Changes</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Current Photos</div>
+      <div class="gallery-grid-cms" id="galleryGrid"></div>
+      <div class="upload-zone" onclick="addGalleryPhoto()">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="26" height="22" rx="3"/><circle cx="11" cy="12" r="2.5"/><path d="M3 22l7-7 5 5 4-4 8 8"/></svg>
+        <p>Add Photo</p>
+        <small>Click to paste an image URL</small>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Add Photo by URL</div>
+      <div class="field-row">
+        <div class="field"><label>Image URL</label><input type="text" id="newPhotoUrl" placeholder="https://...jpg or paste Unsplash URL"></div>
+        <div class="field"><label>Label / Caption</label><input type="text" id="newPhotoLabel" placeholder="e.g. Ceramic Coating · Porsche 911"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Service Category</label>
+          <select id="newPhotoCategory">
+            <option value="tint">Window Tinting</option>
+            <option value="ppf">Paint Protection</option>
+            <option value="ceramic">Ceramic Coating</option>
+            <option value="headlight">Headlight/Taillight</option>
+          </select>
+        </div>
+        <div class="field" style="justify-content:flex-end"><label>&nbsp;</label><button class="btn btn-primary" onclick="addPhotoFromUrl()" style="align-self:flex-end">Add Photo</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REVIEWS ── -->
+  <div class="page" id="page-reviews">
+    <div class="topbar">
+      <div class="page-title"><h2>Reviews</h2><p>Manage the testimonials shown on your homepage.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="saveReviews()">&#x2713; Save Changes</button>
+        <button class="btn btn-secondary" onclick="addReview()">+ Add Review</button>
+      </div>
+    </div>
+    <div id="reviewsList"></div>
+  </div>
+
+  <!-- ── BUSINESS INFO ── -->
+  <div class="page" id="page-business">
+    <div class="topbar">
+      <div class="page-title"><h2>Business Info</h2><p>Update your contact details, hours, and location info.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="saveBusiness()">&#x2713; Save Changes</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Contact Details</div>
+      <div class="field-row"><div class="field"><label>Business Name</label><input type="text" id="biz-name" value="Masters Window Tinting"></div><div class="field"><label>Phone Number</label><input type="text" id="biz-phone" value="631-226-4300"></div></div>
+      <div class="field-row"><div class="field"><label>Email Address</label><input type="text" id="biz-email" value="info@masterswindowtinting.com"></div><div class="field"><label>Website URL</label><input type="text" id="biz-url" value="https://masterswindowtinting.com"></div></div>
+      <div class="field-row full"><div class="field"><label>Street Address</label><input type="text" id="biz-address" value="863 Rte 109, West Babylon, NY 11704"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Business Hours</div>
+      <div id="hoursEditor"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Site Features</div>
+      <div class="toggle-row"><div class="toggle-info"><h4>Show Quote Form</h4><p>Display the "Get a Free Quote" form on homepage</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="toggle-row"><div class="toggle-info"><h4>Show Gallery Strip</h4><p>Display the photo gallery section on homepage</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="toggle-row"><div class="toggle-info"><h4>Show Before & After</h4><p>Display before/after comparison photos</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      <div class="toggle-row"><div class="toggle-info"><h4>Show Reviews</h4><p>Display customer testimonials section</p></div><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+    </div>
+  </div>
+
+  <!-- ── MAP & LOCATION ── -->
+  <div class="page" id="page-map">
+    <div class="topbar">
+      <div class="page-title"><h2>Map &amp; Location</h2><p>Control the Google Maps embed shown on the contact page.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="saveMap()">&#x2713; Save &amp; Update</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Live Google Maps Preview</div>
+      <div class="map-frame">
+        <iframe id="mapPreview"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.123456789!2d-73.3573!3d40.7078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e82b6a9b2c1d3f%3A0x123456789abcdef!2s863%20Rte%20109%2C%20West%20Babylon%2C%20NY%2011704!5e0!3m2!1sen!2sus!4v1234567890"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted);font-family:var(--mono);text-align:center">Live embed of 863 Rte 109, West Babylon, NY 11704</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Customize Map Embed</div>
+      <div class="field-row full">
+        <div class="field">
+          <label>Google Maps Embed URL</label>
+          <textarea id="mapEmbedUrl" rows="4" placeholder="Paste your Google Maps embed src URL here...">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.123456789!2d-73.3573!3d40.7078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e82b6a9b2c1d3f%3A0x123456789abcdef!2s863%20Rte%20109%2C%20West%20Babylon%2C%20NY%2011704!5e0!3m2!1sen!2sus!4v1234567890</textarea>
+          <div class="field-hint">To get your embed URL: Google Maps → search your address → Share → Embed a map → copy the src="..." value</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Map Height (px)</label><input type="number" id="mapHeight" value="400" min="200" max="700"></div>
+        <div class="field"><label>Map Zoom Level</label><select id="mapZoom"><option value="14">Street level (14)</option><option value="15" selected>Neighbourhood (15)</option><option value="16">Close (16)</option><option value="17">Very close (17)</option></select></div>
+      </div>
+      <button class="btn btn-secondary" onclick="previewMap()" style="margin-top:4px">&#x1F50D; Preview Map</button>
+    </div>
+    <div class="card">
+      <div class="card-title">How to Get Your Google Maps Embed</div>
+      <ol style="font-size:13px;color:var(--muted);line-height:2;padding-left:20px">
+        <li>Go to <strong style="color:var(--text)">maps.google.com</strong></li>
+        <li>Search for <strong style="color:var(--text)">"863 Rte 109 West Babylon NY"</strong></li>
+        <li>Click <strong style="color:var(--text)">Share</strong> (the share icon)</li>
+        <li>Click <strong style="color:var(--text)">"Embed a map"</strong> tab</li>
+        <li>Copy the URL inside <code style="color:var(--accent);background:var(--surface);padding:2px 6px;border-radius:4px">src="..."</code></li>
+        <li>Paste it in the field above and click Save &amp; Update</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ── APPEARANCE ── -->
+  <div class="page" id="page-appearance">
+    <div class="topbar">
+      <div class="page-title"><h2>Appearance</h2><p>Customize colors, fonts, and visual settings.</p></div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="saveAppearance()">&#x2713; Save Changes</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Brand Colors</div>
+      <div class="color-row"><input type="color" class="color-swatch" value="#C8201A" id="color-red" oninput="document.getElementById('color-red-val').textContent=this.value"><div class="color-label">Primary / Accent Color</div><div class="color-val" id="color-red-val">#C8201A</div></div>
+      <div class="color-row"><input type="color" class="color-swatch" value="#D4961A" id="color-gold" oninput="document.getElementById('color-gold-val').textContent=this.value"><div class="color-label">Secondary Color (gold/ratings)</div><div class="color-val" id="color-gold-val">#D4961A</div></div>
+      <div class="color-row"><input type="color" class="color-swatch" value="#0a0a0a" id="color-bg" oninput="document.getElementById('color-bg-val').textContent=this.value"><div class="color-label">Background Color</div><div class="color-val" id="color-bg-val">#0a0a0a</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Stats Bar Numbers</div>
+      <div class="field-row">
+        <div class="field"><label>Stat 1 Number</label><input type="text" value="20+" id="stat1-num"></div>
+        <div class="field"><label>Stat 1 Label</label><input type="text" value="Years Experience" id="stat1-lbl"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Stat 2 Number</label><input type="text" value="★ 4.9" id="stat2-num"></div>
+        <div class="field"><label>Stat 2 Label</label><input type="text" value="Google Rating" id="stat2-lbl"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Stat 3 Number</label><input type="text" value="100%" id="stat3-num"></div>
+        <div class="field"><label>Stat 3 Label</label><input type="text" value="Satisfaction Guarantee" id="stat3-lbl"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">SEO Settings</div>
+      <div class="field-row full"><div class="field"><label>Page Title</label><input type="text" id="seo-title" value="Masters Window Tinting | PPF, Ceramic Coating | Long Island, NY"></div></div>
+      <div class="field-row full"><div class="field"><label>Meta Description</label><textarea id="seo-desc" rows="2">Certified window tinting, paint protection film and ceramic coating in West Babylon, Long Island. Certified Ceramic Pro installers. Lifetime warranty. Call 631-226-4300.</textarea></div></div>
+    </div>
+  </div>
+
+  <!-- ── PASSWORD ── -->
+  <div class="page" id="page-password">
+    <div class="topbar">
+      <div class="page-title"><h2>Change Password</h2><p>Update your admin login credentials.</p></div>
+    </div>
+    <div class="card" style="max-width:480px">
+      <div class="field-row full"><div class="field"><label>Current Password</label><input type="password" id="pw-current" placeholder="••••••••"></div></div>
+      <div class="field-row full"><div class="field"><label>New Password</label><input type="password" id="pw-new" placeholder="••••••••"></div></div>
+      <div class="field-row full"><div class="field"><label>Confirm New Password</label><input type="password" id="pw-confirm" placeholder="••••••••"></div></div>
+      <button class="btn btn-primary" onclick="changePassword()" style="margin-top:8px">Update Password</button>
+      <div id="pw-msg" style="font-size:12px;margin-top:10px"></div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- SAVE BANNER -->
+<div class="save-banner" id="saveBanner">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8l4 4 8-8"/></svg>
+  Changes saved successfully!
+</div>
+
+<script>
+// ═══════════════════════════════════
+// AUTH
+// ═══════════════════════════════════
+const CREDENTIALS = { username: 'admin', password: 'mwt2025admin' };
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  const stored = JSON.parse(localStorage.getItem('mwt_creds') || 'null') || CREDENTIALS;
+  if (u === stored.username && p === stored.password) {
+    document.getElementById('loginScreen').style.display = 'none';
+    init();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function doLogout() {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+function changePassword() {
+  const cur = document.getElementById('pw-current').value;
+  const nw  = document.getElementById('pw-new').value;
+  const cnf = document.getElementById('pw-confirm').value;
+  const msg = document.getElementById('pw-msg');
+  const stored = JSON.parse(localStorage.getItem('mwt_creds') || 'null') || CREDENTIALS;
+  if (cur !== stored.password) { msg.style.color='var(--danger)'; msg.textContent='Current password is incorrect.'; return; }
+  if (nw.length < 6) { msg.style.color='var(--danger)'; msg.textContent='Password must be at least 6 characters.'; return; }
+  if (nw !== cnf) { msg.style.color='var(--danger)'; msg.textContent='Passwords do not match.'; return; }
+  localStorage.setItem('mwt_creds', JSON.stringify({ username: stored.username, password: nw }));
+  msg.style.color = 'var(--green)'; msg.textContent = 'Password updated successfully!';
+  document.getElementById('pw-current').value = document.getElementById('pw-new').value = document.getElementById('pw-confirm').value = '';
+}
+
+// ═══════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ═══════════════════════════════════
+// SAVE BANNER
+// ═══════════════════════════════════
+function showSaved(msg) {
+  const b = document.getElementById('saveBanner');
+  b.querySelector('span') && (b.querySelector('span').remove());
+  const sp = document.createElement('span');
+  sp.textContent = msg || 'Changes saved successfully!';
+  b.appendChild(sp);
+  b.classList.add('show');
+  setTimeout(() => b.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════
+// FIREBASE LEADS (live from Firestore)
+// ═══════════════════════════════════
+let leads = JSON.parse(localStorage.getItem('mwt_leads') || '[]');
+
+function renderLeads() {
+  // Use Firebase data if connected, fall back to localStorage
+  const allLeads = (window._useFirebase && window._firebaseLeads)
+    ? window._firebaseLeads
+    : leads;
+  const count = allLeads.length;
+  const newCount = allLeads.filter(l => l.status === 'new').length;
+  document.getElementById('m-leads').textContent = count;
+  document.getElementById('m-new').textContent = newCount;
+  document.getElementById('leadsBadge').textContent = newCount;
+
+  // Dashboard preview
+  const dashEl = document.getElementById('dashLeads');
+  if (allLeads.length === 0) {
+    dashEl.innerHTML = '<div class="no-leads" style="padding:20px">No requests yet.</div>';
+  } else {
+    const recent = [...allLeads].slice(0, 3);
+    dashEl.innerHTML = recent.map(l => `
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">${(l.firstName||'?')[0]}${(l.lastName||'')[0]}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">${l.firstName} ${l.lastName}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--mono)">${l.vehicle || ''} · ${(l.services||[]).join(', ') || 'No service selected'}</div>
+        </div>
+        <span class="status-badge status-${l.status||'new'}">${l.status||'new'}</span>
+      </div>
+    `).join('');
+  }
+
+  // Full table
+  const wrap = document.getElementById('leadsTableWrap');
+  if (allLeads.length === 0) {
+    wrap.innerHTML = '<div class="no-leads">No quote requests yet.<br><span style="font-size:12px;color:#555">Submissions from your website will appear here automatically via Firebase.</span></div>';
+    return;
+  }
+  const rows = [...allLeads].map((l,i) => `
+    <tr>
+      <td><strong>${l.firstName} ${l.lastName}</strong><br><span style="color:var(--muted);font-size:11px">${l.email||''}</span></td>
+      <td><a href="tel:${l.phone}" style="color:var(--accent)">${l.phone}</a></td>
+      <td>${l.vehicle||'—'}</td>
+      <td>${(l.services||[]).join('<br>') || '—'}</td>
+      <td>${l.notes ? l.notes.substring(0,60)+'...' : '—'}</td>
+      <td>
+        <select onchange="window._useFirebase ? updateLeadStatusFirebase('${l.id}',this.value) : updateLeadStatus(${allLeads.length-1-i},this.value)" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text);cursor:pointer">
+          <option value="new" ${l.status==='new'?'selected':''}>New</option>
+          <option value="contacted" ${l.status==='contacted'?'selected':''}>Contacted</option>
+          <option value="done" ${l.status==='done'?'selected':''}>Done</option>
+        </select>
+      </td>
+      <td><button onclick="window._useFirebase ? (confirm('Delete?') && deleteLeadFirebase('${l.id}')) : deleteLead(${allLeads.length-1-i})" class="btn btn-danger" style="padding:4px 10px;font-size:11px">Del</button></td>
+    </tr>
+  `).join('');
+  wrap.innerHTML = `
+    <table class="leads-table">
+      <thead><tr><th>Customer</th><th>Phone</th><th>Vehicle</th><th>Services</th><th>Notes</th><th>Status</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function updateLeadStatus(idx, status) {
+  leads[idx].status = status;
+  localStorage.setItem('mwt_leads', JSON.stringify(leads));
+  renderLeads();
+}
+
+function deleteLead(idx) {
+  if (!confirm('Delete this lead?')) return;
+  leads.splice(idx, 1);
+  localStorage.setItem('mwt_leads', JSON.stringify(leads));
+  renderLeads();
+}
+
+function clearLeads() {
+  if (!confirm('Clear ALL quote requests? This cannot be undone.')) return;
+  leads = [];
+  localStorage.setItem('mwt_leads', JSON.stringify(leads));
+  renderLeads();
+}
+
+function exportLeads() {
+  if (leads.length === 0) { alert('No leads to export.'); return; }
+  const headers = ['First Name','Last Name','Phone','Email','Vehicle','Services','Notes','Status'];
+  const rows = leads.map(l => [l.firstName,l.lastName,l.phone,l.email,l.vehicle,(l.services||[]).join('; '),l.notes,l.status].map(v => '"'+(v||'').replace(/"/g,'""')+'"').join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'mwt-leads-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+// ═══════════════════════════════════
+// SAVE FUNCTIONS
+// ═══════════════════════════════════
+function saveHero()      { showSaved('Hero section saved!'); }
+function saveServices()  { showSaved('Services saved!'); }
+function saveGallery()   { showSaved('Gallery saved!'); }
+function saveReviews()   { showSaved('Reviews saved!'); }
+function saveBusiness()  { showSaved('Business info saved!'); }
+function saveAppearance(){ showSaved('Appearance saved!'); }
+
+function saveMap() {
+  const url = document.getElementById('mapEmbedUrl').value.trim();
+  if (url) {
+    document.getElementById('mapPreview').src = url;
+    showSaved('Map updated! Copy the iframe code below to paste into your contact.html');
+    // Also output the embed code
+    const h = parseInt(document.getElementById('mapHeight').value) || 400;
+    const code = `<iframe src="${url}" width="100%" height="${h}" style="border:0;border-radius:10px" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+    document.getElementById('mapEmbedCode').value = code;
+    document.getElementById('mapCodeSection').style.display = 'block';
+  }
+}
+
+function previewMap() {
+  const url = document.getElementById('mapEmbedUrl').value.trim();
+  if (url) document.getElementById('mapPreview').src = url;
+}
+
+// ═══════════════════════════════════
+// GALLERY MANAGER
+// ═══════════════════════════════════
+let galleryPhotos = JSON.parse(localStorage.getItem('mwt_gallery') || 'null') || [
+  { url:'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=500&q=80&fit=crop', label:'Luxury Sedan', cat:'ceramic' },
+  { url:'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=500&q=80&fit=crop', label:'SUV Full Tint', cat:'tint' },
+  { url:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=500&q=80&fit=crop', label:'Sports Car Package', cat:'ceramic' },
+  { url:'https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=500&q=80&fit=crop', label:'Pickup Truck', cat:'ceramic' },
+  { url:'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=500&q=80&fit=crop', label:'Classic Car', cat:'tint' },
+  { url:'https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=500&q=80&fit=crop', label:'PPF Full Body', cat:'ppf' },
+  { url:'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=500&q=80&fit=crop', label:'Gloss Detail', cat:'ceramic' },
+];
+
+function renderGallery() {
+  const grid = document.getElementById('galleryGrid');
+  document.getElementById('m-gallery').textContent = galleryPhotos.length;
+  grid.innerHTML = galleryPhotos.map((p,i) => `
+    <div class="gallery-item-cms">
+      <img src="${p.url}" alt="${p.label}" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\'><rect width=\'100%25\' height=\'100%25\' fill=\'%23222\'/></svg>'">
+      <button class="gallery-item-delete" onclick="removePhoto(${i})" title="Remove">&#x2715;</button>
+      <div class="gallery-item-label">${p.label} &middot; ${p.cat}</div>
+    </div>
+  `).join('');
+}
+
+function removePhoto(i) {
+  galleryPhotos.splice(i, 1);
+  localStorage.setItem('mwt_gallery', JSON.stringify(galleryPhotos));
+  renderGallery();
+}
+
+function addPhotoFromUrl() {
+  const url = document.getElementById('newPhotoUrl').value.trim();
+  const label = document.getElementById('newPhotoLabel').value.trim() || 'New Photo';
+  const cat = document.getElementById('newPhotoCategory').value;
+  if (!url) { alert('Please enter an image URL.'); return; }
+  galleryPhotos.push({ url, label, cat });
+  localStorage.setItem('mwt_gallery', JSON.stringify(galleryPhotos));
+  renderGallery();
+  document.getElementById('newPhotoUrl').value = '';
+  document.getElementById('newPhotoLabel').value = '';
+  showSaved('Photo added!');
+}
+
+function addGalleryPhoto() {
+  document.getElementById('newPhotoUrl').focus();
+  document.getElementById('newPhotoUrl').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════
+// REVIEWS
+// ═══════════════════════════════════
+let reviews = JSON.parse(localStorage.getItem('mwt_reviews') || 'null') || [
+  { name:'Nadia Mierau', service:'Ceramic Pro Coating', text:'Great job on my Ceramic Pro coating! Love it! Love it! Love it!', stars:5 },
+  { name:'Kayla Anderson', service:'Window Tinting', text:'Got my tail lights tinted on my new Range Rover — looks awesome!', stars:5 },
+  { name:'Sheila Sanders', service:'Window Tinting', text:'The outcome was beautiful! Staff was accommodating and knowledgeable.', stars:5 },
+];
+
+function renderReviews() {
+  const list = document.getElementById('reviewsList');
+  list.innerHTML = reviews.map((r,i) => `
+    <div class="card" style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">${r.name[0]}</div>
+        <div style="flex:1;font-weight:500">${r.name}</div>
+        <button onclick="deleteReview(${i})" class="btn btn-danger" style="padding:4px 10px;font-size:11px">Remove</button>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Reviewer Name</label><input type="text" value="${r.name}" onchange="reviews[${i}].name=this.value"></div>
+        <div class="field"><label>Service / Label</label><input type="text" value="${r.service}" onchange="reviews[${i}].service=this.value"></div>
+      </div>
+      <div class="field-row full"><div class="field"><label>Review Text</label><textarea onchange="reviews[${i}].text=this.value">${r.text}</textarea></div></div>
+      <div class="field-row"><div class="field"><label>Star Rating</label><select onchange="reviews[${i}].stars=parseInt(this.value)"><option ${r.stars===5?'selected':''}>5</option><option ${r.stars===4?'selected':''}>4</option><option ${r.stars===3?'selected':''}>3</option></select></div></div>
+    </div>
+  `).join('');
+}
+
+function addReview() {
+  reviews.push({ name:'New Customer', service:'Service', text:'Add review text here.', stars:5 });
+  renderReviews();
+}
+
+function deleteReview(i) {
+  if (!confirm('Remove this review?')) return;
+  reviews.splice(i, 1);
+  renderReviews();
+}
+
+function saveReviews() {
+  localStorage.setItem('mwt_reviews', JSON.stringify(reviews));
+  showSaved('Reviews saved!');
+}
+
+// ═══════════════════════════════════
+// BUSINESS HOURS
+// ═══════════════════════════════════
+const defaultHours = [
+  { day:'Monday',    open:'9:00 AM', close:'5:00 PM', closed:false },
+  { day:'Tuesday',   open:'9:00 AM', close:'5:00 PM', closed:false },
+  { day:'Wednesday', open:'9:00 AM', close:'5:00 PM', closed:false },
+  { day:'Thursday',  open:'9:00 AM', close:'5:00 PM', closed:false },
+  { day:'Friday',    open:'9:00 AM', close:'5:00 PM', closed:false },
+  { day:'Saturday',  open:'9:00 AM', close:'5:00 PM', closed:false },
+  { day:'Sunday',    open:'10:00 AM',close:'2:00 PM', closed:false },
+];
+let hours = JSON.parse(localStorage.getItem('mwt_hours') || 'null') || defaultHours;
+
+function renderHours() {
+  const el = document.getElementById('hoursEditor');
+  el.innerHTML = hours.map((h,i) => `
+    <div style="display:grid;grid-template-columns:120px 1fr 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+      <div style="font-size:13px;font-weight:500">${h.day}</div>
+      <input type="text" value="${h.open}" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--text);outline:none" onchange="hours[${i}].open=this.value" ${h.closed?'disabled':''}>
+      <input type="text" value="${h.close}" style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;color:var(--text);outline:none" onchange="hours[${i}].close=this.value" ${h.closed?'disabled':''}>
+      <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap">
+        <input type="checkbox" ${h.closed?'checked':''} onchange="hours[${i}].closed=this.checked;renderHours();"> Closed
+      </label>
+    </div>
+  `).join('');
+}
+
+function saveBusiness() {
+  localStorage.setItem('mwt_hours', JSON.stringify(hours));
+  showSaved('Business info saved!');
+}
+
+// ═══════════════════════════════════
+// SERVICE ACCORDION
+// ═══════════════════════════════════
+function toggleSvc(i) {
+  document.getElementById('svc-' + i).classList.toggle('open');
+}
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+function init() {
+  renderLeads();
+  renderGallery();
+  renderReviews();
+  renderHours();
+}
+</script>
+
+<!-- Dynamic map code output section (hidden until save) -->
+<div id="mapCodeSection" style="display:none" class="card" style="margin-top:20px">
+  <div class="card-title">&#x1F4CB; Generated Embed Code — Paste into contact.html</div>
+  <div class="field-row full"><div class="field"><label>Copy this into your contact.html where the map appears</label><textarea id="mapEmbedCode" rows="4" readonly style="font-family:var(--mono);font-size:12px;color:#6c8ef7"></textarea></div></div>
+</div>
+
+<!-- FIREBASE REALTIME INTEGRATION -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, orderBy, query }
+  from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+// ⬇️  PASTE YOUR FIREBASE CONFIG HERE (same config as in index.html)
+const firebaseConfig = {
+  apiKey:            "YOUR_API_KEY",
+  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId:         "YOUR_PROJECT_ID",
+  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId:             "YOUR_APP_ID"
+};
+
+let db = null;
+try {
+  const app = initializeApp(firebaseConfig, 'admin');
+  db = getFirestore(app);
+
+  // Real-time listener — updates the admin instantly when new leads come in
+  const q = query(collection(db, 'quote_requests'), orderBy('submittedAt', 'desc'));
+  onSnapshot(q, (snapshot) => {
+    window._firebaseLeads = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    // Merge with any local leads
+    window._useFirebase = true;
+    renderLeads();
+  });
+} catch(e) {
+  console.warn('Firebase not configured — using localStorage leads:', e.message);
+  window._useFirebase = false;
+}
+
+// Override status update to write to Firestore
+window.updateLeadStatusFirebase = async (docId, status) => {
+  if (!db || !docId) return;
+  try { await updateDoc(doc(db, 'quote_requests', docId), { status }); }
+  catch(e) { console.warn('Firestore update failed:', e.message); }
+};
+
+// Override delete to remove from Firestore
+window.deleteLeadFirebase = async (docId) => {
+  if (!db || !docId) return;
+  try { await deleteDoc(doc(db, 'quote_requests', docId)); }
+  catch(e) { console.warn('Firestore delete failed:', e.message); }
+};
+</script>
+
+
+</body>
+</html>
