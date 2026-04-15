@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact & Free Quote | Masters Window Tinting | Long Island, NY</title>
+<meta name="description" content="Contact Masters Window Tinting in West Babylon, NY. Get a free quote for window tinting, PPF, or ceramic coating. Call 631-226-4300 or fill out our form.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C8201A; --red-dark: #8f1410; --red-light: #e8352e; --gold: #D4961A;
+    --black: #0a0a0a; --off-black: #111111; --dark: #1a1a1a;
+    --gray: #888; --light-gray: #c0c0c0; --white: #f8f5f0;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red-light); display: inline-block; margin-bottom: 12px; }
+  .section-title { font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px); line-height: 0.95; color: var(--white); letter-spacing: 1px; }
+  .section-title span { color: var(--red-light); }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* TOPBAR */
+  .topbar { background: #050505; border-bottom: 1px solid rgba(200,32,26,0.2); padding: 8px 0; font-size: 12px; font-family: var(--font-mono); }
+  .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .topbar-left { display: flex; gap: 24px; }
+  .topbar-left a { color: var(--light-gray); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .topbar-left a:hover { color: var(--red-light); }
+  .topbar-left a svg { width: 12px; height: 12px; }
+  .topbar-hours { color: var(--gray); }
+  .topbar-right { display: flex; gap: 10px; }
+  .social-btn { width: 26px; height: 26px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 11px; text-decoration: none; transition: all 0.2s; font-weight: 600; }
+  .social-btn:hover { border-color: var(--red); color: var(--red-light); }
+
+  /* NAV */
+  nav { background: rgba(10,10,10,0.97); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-mark { width: 44px; height: 44px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: #fff; letter-spacing: 1px; flex-shrink: 0; }
+  .logo-text .name { font-family: var(--font-display); font-size: 18px; color: var(--white); letter-spacing: 1px; line-height: 1; }
+  .logo-text .location { font-size: 10px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 2px; margin-top: 2px; }
+  .nav-links { display: flex; gap: 4px; list-style: none; }
+  .nav-links a { font-size: 12px; color: var(--gray); text-decoration: none; padding: 6px 12px; border-radius: 4px; font-family: var(--font-mono); letter-spacing: 0.5px; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  .nav-links a.active { color: var(--red-light); }
+  .nav-cta { background: var(--red); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; text-decoration: none; white-space: nowrap; }
+  .nav-cta:hover { background: var(--red-light); }
+
+  /* PAGE HERO */
+  .page-hero { background: var(--off-black); padding: 80px 0 60px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,32,26,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,32,26,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+  .page-hero-glow { position: absolute; width: 500px; height: 500px; background: radial-gradient(ellipse, rgba(200,32,26,0.12) 0%, transparent 70%); top: -200px; right: -100px; pointer-events: none; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 11px; color: var(--gray); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .breadcrumb a { color: var(--gray); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--red-light); }
+  .breadcrumb span { color: #444; }
+  .page-hero h1 { font-family: var(--font-display); font-size: clamp(52px, 8vw, 100px); line-height: 0.9; color: var(--white); letter-spacing: 1px; margin-bottom: 20px; position: relative; z-index: 1; }
+  .page-hero h1 span { color: var(--red-light); }
+  .page-hero p { font-size: 17px; color: #777; line-height: 1.75; max-width: 560px; position: relative; z-index: 1; }
+
+  /* QUICK CONTACT CARDS */
+  .quick-contact { padding: 48px 0; background: var(--off-black); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .quick-card { background: var(--dark); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px 20px; text-align: center; text-decoration: none; transition: all 0.25s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .quick-card:hover { border-color: rgba(200,32,26,0.4); transform: translateY(-2px); }
+  .quick-card .qc-icon { width: 48px; height: 48px; background: rgba(200,32,26,0.1); border: 1px solid rgba(200,32,26,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .quick-card .qc-icon svg { width: 20px; height: 20px; color: var(--red-light); }
+  .quick-card .qc-label { font-size: 10px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 1px; }
+  .quick-card .qc-value { font-size: 15px; font-weight: 600; color: var(--white); }
+  .quick-card .qc-sub { font-size: 11px; color: #555; font-family: var(--font-mono); }
+
+  /* MAIN CONTENT */
+  .contact-main { padding: 80px 0; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+
+  /* LEFT INFO */
+  .contact-info h2 { font-family: var(--font-display); font-size: 40px; color: var(--white); letter-spacing: 0.5px; margin-bottom: 12px; }
+  .contact-info > p { font-size: 15px; color: #666; line-height: 1.8; margin-bottom: 32px; }
+
+  .hours-card { background: var(--off-black); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+  .hours-card h3 { font-size: 12px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--gray); margin-bottom: 16px; }
+  .hours-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-day { font-size: 13px; color: #777; }
+  .hours-time { font-size: 13px; font-weight: 500; color: var(--white); font-family: var(--font-mono); }
+  .hours-time.closed { color: #444; }
+  .open-badge { background: rgba(30,160,70,0.15); color: #4ade80; font-size: 10px; font-family: var(--font-mono); padding: 3px 8px; border-radius: 20px; letter-spacing: 1px; }
+
+  .map-embed { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 24px; background: var(--dark); }
+  .map-placeholder { height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--dark); cursor: pointer; transition: background 0.2s; text-decoration: none; }
+  .map-placeholder:hover { background: #1d1d1d; }
+  .map-placeholder svg { width: 32px; height: 32px; color: var(--red-light); }
+  .map-placeholder h4 { font-size: 14px; font-weight: 500; color: var(--white); }
+  .map-placeholder p { font-size: 12px; color: var(--gray); font-family: var(--font-mono); }
+
+  .faq-section { margin-top: 8px; }
+  .faq-title { font-size: 12px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--gray); margin-bottom: 12px; }
+  .faq-item { border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+  .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; background: var(--off-black); transition: background 0.2s; }
+  .faq-question:hover { background: #161616; }
+  .faq-question h4 { font-size: 14px; font-weight: 500; color: var(--white); }
+  .faq-question .faq-arrow { color: var(--red-light); font-size: 18px; transition: transform 0.3s; flex-shrink: 0; }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+  .faq-answer { font-size: 13px; color: #666; line-height: 1.7; padding: 0 18px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; }
+  .faq-item.open .faq-answer { max-height: 200px; padding: 0 18px 16px; }
+
+  /* FORM */
+  .form-box { background: var(--off-black); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px; position: relative; }
+  .form-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red), var(--red-light)); border-radius: 16px 16px 0 0; }
+  .form-title { font-family: var(--font-display); font-size: 32px; color: var(--white); margin-bottom: 4px; letter-spacing: 0.5px; }
+  .form-subtitle { font-size: 13px; color: var(--gray); margin-bottom: 28px; }
+  .form-section-label { font-size: 10px; font-family: var(--font-mono); letter-spacing: 2px; color: #444; margin: 20px 0 12px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 11px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 1px; }
+  .field input, .field select, .field textarea { background: var(--dark); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px; font-size: 14px; color: var(--white); font-family: var(--font-body); transition: border-color 0.2s; width: 100%; outline: none; -webkit-appearance: none; }
+  .field input::placeholder, .field textarea::placeholder { color: #444; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--red); }
+  .field select { cursor: pointer; }
+  .field select option { background: var(--dark); }
+  .field textarea { resize: vertical; min-height: 100px; }
+  .services-check { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .service-check-item { display: flex; align-items: center; gap: 10px; background: var(--dark); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 14px; cursor: pointer; transition: all 0.2s; }
+  .service-check-item:hover { border-color: rgba(200,32,26,0.3); }
+  .service-check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--red); flex-shrink: 0; cursor: pointer; }
+  .service-check-item label { font-size: 13px; color: #aaa; cursor: pointer; transition: color 0.2s; }
+  .service-check-item:has(input:checked) { border-color: rgba(200,32,26,0.4); background: rgba(200,32,26,0.06); }
+  .service-check-item:has(input:checked) label { color: var(--white); }
+  .form-submit { width: 100%; background: var(--red); color: #fff; border: none; padding: 15px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: var(--font-body); margin-top: 16px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .form-submit:hover { background: var(--red-light); transform: translateY(-1px); }
+  .form-submit svg { width: 16px; height: 16px; }
+  .form-note { font-size: 11px; color: #444; text-align: center; margin-top: 12px; font-family: var(--font-mono); line-height: 1.7; }
+  .success-state { display: none; text-align: center; padding: 40px 0; }
+  .success-state .check-circle { width: 64px; height: 64px; background: rgba(30,160,70,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .success-state .check-circle svg { width: 28px; height: 28px; color: #4ade80; }
+  .success-state h3 { font-family: var(--font-display); font-size: 28px; color: var(--white); margin-bottom: 8px; }
+  .success-state p { font-size: 14px; color: var(--gray); line-height: 1.7; }
+
+  /* FOOTER */
+  footer { background: #050505; border-top: 1px solid rgba(255,255,255,0.06); padding: 60px 0 0; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 13px; color: #555; line-height: 1.8; max-width: 280px; margin: 16px 0; }
+  .footer-socials { display: flex; gap: 10px; }
+  .footer-social-link { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .footer-social-link:hover { border-color: var(--red); color: var(--red-light); }
+  .footer-col h4 { font-size: 11px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--gray); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 13px; color: #555; text-decoration: none; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.04); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .footer-bottom p { font-size: 11px; color: #333; font-family: var(--font-mono); }
+  .footer-bottom a { color: #444; text-decoration: none; }
+  .footer-bottom a:hover { color: var(--gray); }
+  .mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--red); z-index: 200; padding: 14px 20px; flex-direction: column; align-items: center; gap: 4px; }
+  .mobile-cta a { font-size: 17px; font-weight: 700; color: #fff; text-decoration: none; font-family: var(--font-display); letter-spacing: 2px; }
+  .mobile-cta span { font-size: 10px; color: rgba(255,255,255,0.7); font-family: var(--font-mono); letter-spacing: 1px; }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .quick-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .mobile-cta { display: flex; }
+    body { padding-bottom: 66px; }
+    .form-row { grid-template-columns: 1fr; }
+    .services-check { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:6312264300">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 2h3l1 4-2 1a9 9 0 004 4l1-2 4 1v3a1 1 0 01-1 1A11 11 0 012 3a1 1 0 011-1z"/></svg>
+        631-226-4300
+      </a>
+      <a href="mailto:info@masterswindowtinting.com">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="3" width="12" height="9" rx="1"/><path d="M1 5l6 4 6-4"/></svg>
+        info@masterswindowtinting.com
+      </a>
+    </div>
+    <div class="topbar-hours">MON–SAT 9AM–5PM &nbsp;·&nbsp; SUN 10AM–2PM</div>
+    <div class="topbar-right">
+      <a href="#" class="social-btn">IG</a>
+      <a href="#" class="social-btn">FB</a>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">MWT</div>
+      <div class="logo-text">
+        <div class="name">Masters Window Tinting</div>
+        <div class="location">WEST BABYLON · LONG ISLAND, NY</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="index.html#services">PPF</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Get Free Quote</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-glow"></div>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:var(--white)">Contact</span>
+    </div>
+    <h1>GET A<br><span>FREE QUOTE</span></h1>
+    <p>We respond the same day — usually within the hour. Stop by anytime, give us a call, or fill out the form below and we'll reach out to you.</p>
+  </div>
+</section>
+
+<!-- QUICK CONTACT -->
+<div class="quick-contact">
+  <div class="container">
+    <div class="quick-grid">
+      <a href="tel:6312264300" class="quick-card">
+        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h3l1.5 4-2 1.2A10 10 0 009.8 12.5L11 10.5l4 1.5V16a1 1 0 01-1 1A14 14 0 010 3a1 1 0 011-1z"/></svg></div>
+        <div class="qc-label">Call Us Now</div>
+        <div class="qc-value">631-226-4300</div>
+        <div class="qc-sub">Tap to call</div>
+      </a>
+      <a href="mailto:info@masterswindowtinting.com" class="quick-card">
+        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="16" height="13" rx="2"/><path d="M2 7l8 5 8-5"/></svg></div>
+        <div class="qc-label">Email Us</div>
+        <div class="qc-value" style="font-size:12px">info@masterswindowtinting.com</div>
+        <div class="qc-sub">Same-day reply</div>
+      </a>
+      <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank" class="quick-card">
+        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="9" r="3.5"/><path d="M10 18S3 12.5 3 8a7 7 0 0114 0c0 4.5-7 10-7 10z"/></svg></div>
+        <div class="qc-label">Find Us</div>
+        <div class="qc-value" style="font-size:13px">863 Rte 109, West Babylon</div>
+        <div class="qc-sub">Get directions →</div>
+      </a>
+      <div class="quick-card" style="cursor:default">
+        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="16" height="15" rx="2"/><path d="M6 3V1M14 3V1M2 8h16"/></svg></div>
+        <div class="qc-label">Hours</div>
+        <div class="qc-value" style="font-size:13px">Mon–Sat 9am–5pm</div>
+        <div class="qc-sub">Sun 10am–2pm</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<section class="contact-main">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT: INFO -->
+      <div class="contact-info reveal">
+        <h2>Visit Our Shop</h2>
+        <p>We're located at 863 Rte 109 in West Babylon. Walk-ins are welcome for estimates — no appointment needed. For installations we recommend calling ahead to schedule.</p>
+
+        <div class="hours-card">
+          <h3>BUSINESS HOURS</h3>
+          <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">10:00 AM – 2:00 PM</span></div>
+        </div>
+
+        <div class="map-embed">
+          <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank" class="map-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="10" r="3"/><path d="M12 21S5 14 5 9a7 7 0 0114 0c0 5-7 12-7 12z"/></svg>
+            <h4>863 Rte 109, West Babylon, NY 11704</h4>
+            <p>Click to open in Google Maps →</p>
+          </a>
+        </div>
+
+        <div class="faq-section">
+          <div class="faq-title">FREQUENTLY ASKED QUESTIONS</div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>Do I need an appointment?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Walk-ins are welcome for estimates and quick jobs. For full tinting, ceramic coating, or PPF installs, we recommend calling ahead to schedule a time so we can have the bay ready for your vehicle.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>How long does window tinting take?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">A typical automotive window tint takes 2–4 hours depending on the vehicle. Larger vehicles or multiple services may take longer. We'll give you an estimated time when you schedule.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>What's the difference between Liquid PPF and traditional PPF?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Traditional PPF is a thick plastic film that's cut to size and applied in sheets — it can leave seams and bubbles at panel edges. Our Liquid PPF is an all-in-one formula that goes on like a coating, leaving no seams, no visible edges, and full coverage for a fraction of the cost.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>Is there a warranty on your work?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Yes — all of our installations come with a lifetime warranty on both the film/coating and the workmanship. If something isn't right, we'll fix it. No hassle, no excuses.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>Do you serve areas outside West Babylon?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Our shop is in West Babylon, and we serve customers from across Nassau and Suffolk County — including Babylon, Amityville, Copiague, Lindenhurst, Deer Park, Bay Shore, and all of Long Island. Most customers find it's a short drive worth making.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="reveal">
+        <div class="form-box">
+          <div id="form-content">
+            <div class="form-title">Request a Quote</div>
+            <div class="form-subtitle">Fill out the form and we'll get back to you same day — usually within an hour during business hours.</div>
+
+            <form onsubmit="handleSubmit(event)">
+              <div class="form-section-label">YOUR INFORMATION</div>
+              <div class="form-row">
+                <div class="field"><label>First Name *</label><input type="text" name="fname" placeholder="John" required></div>
+                <div class="field"><label>Last Name *</label><input type="text" name="lname" placeholder="Smith" required></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Phone Number *</label><input type="tel" name="phone" placeholder="631-555-0100" required></div>
+                <div class="field"><label>Email Address</label><input type="email" name="email" placeholder="you@email.com"></div>
+              </div>
+              <div class="form-row" style="grid-template-columns:1fr">
+                <div class="field"><label>ZIP Code</label><input type="text" name="zip" placeholder="11704"></div>
+              </div>
+
+              <div class="form-section-label">YOUR VEHICLE</div>
+              <div class="form-row">
+                <div class="field"><label>Year</label><input type="text" name="year" placeholder="2023"></div>
+                <div class="field"><label>Make</label><input type="text" name="make" placeholder="Toyota"></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Model *</label><input type="text" name="model" placeholder="Camry" required></div>
+                <div class="field"><label>Color</label><input type="text" name="color" placeholder="Silver"></div>
+              </div>
+
+              <div class="form-section-label">SERVICE NEEDED</div>
+              <div class="services-check">
+                <div class="service-check-item"><input type="checkbox" id="s1" name="service" value="window-tint"><label for="s1">Window Tinting</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s2" name="service" value="ppf"><label for="s2">Paint Protection Film</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s3" name="service" value="ceramic"><label for="s3">Ceramic Coating</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s4" name="service" value="headlight"><label for="s4">Headlight/Taillight</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s5" name="service" value="boat"><label for="s5">Boat/Marine</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s6" name="service" value="residential"><label for="s6">Residential/Commercial</label></div>
+              </div>
+
+              <div class="form-section-label">ADDITIONAL DETAILS</div>
+              <div class="field" style="margin-bottom:0">
+                <label>Tell us more (optional)</label>
+                <textarea name="notes" placeholder="Any specific questions, details about your vehicle, or budget range..."></textarea>
+              </div>
+
+              <button type="submit" class="form-submit">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 4l5 4-5 4"/></svg>
+                Send My Quote Request
+              </button>
+              <p class="form-note">We respond same day during business hours.<br>Your information is never shared or sold.</p>
+            </form>
+          </div>
+
+          <div class="success-state" id="success">
+            <div class="check-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l4 4 10-10"/></svg>
+            </div>
+            <h3>Request Sent!</h3>
+            <p>Thanks — we got your quote request and will get back to you shortly. If it's urgent, give us a call at <a href="tel:6312264300" style="color:var(--red-light)">631-226-4300</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">MWT</div>
+          <div class="logo-text">
+            <div class="name">Masters Window Tinting</div>
+            <div class="location">WEST BABYLON · LONG ISLAND, NY</div>
+          </div>
+        </a>
+        <p>Long Island's trusted automotive protection specialists since 2005.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link">IG</a>
+          <a href="#" class="footer-social-link">FB</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="index.html#services">Window Tinting</a></li><li><a href="index.html#services">Paint Protection Film</a></li><li><a href="index.html#services">Ceramic Coating</a></li><li><a href="index.html#services">Headlight Tinting</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="index.html#reviews">Testimonials</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Service Area</h4><ul><li><a href="#">Nassau County</a></li><li><a href="#">Suffolk County</a></li><li><a href="#">West Babylon</a></li><li><a href="#">Babylon</a></li><li><a href="#">Amityville</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Masters Window Tinting · 863 Rte 109, West Babylon, NY 11704 · <a href="tel:6312264300">631-226-4300</a></p>
+      <p><a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a href="tel:6312264300">TAP TO CALL · 631-226-4300</a>
+  <span>Free quotes · Open 7 days</span>
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  }
+
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
