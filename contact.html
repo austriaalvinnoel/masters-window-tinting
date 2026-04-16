@@ -301,13 +301,113 @@
 
         <div class="faq-section">
           <div class="faq-title">FREQUENTLY ASKED QUESTIONS</div>
-          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h4>Do I need an appointment?</h4><span class="faq-arrow">+</span></div><div class="faq-answer">For installations we recommend calling ahead to schedule.</div></div>
-          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h4>How long does window tinting take?</h4><span class="faq-arrow">+</span></div><div class="faq-answer">A typical window tint takes 2–4 hours depending on the vehicle.</div></div>
-          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><h4>Is there a warranty?</h4><span class="faq-arrow">+</span></div><div class="faq-answer">Yes - lifetime warranty on all installations.</div></div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>Do I need an appointment?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Walk-ins are welcome for estimates and quick jobs. For full tinting, ceramic coating, or PPF installs, we recommend calling ahead to schedule a time so we can have the bay ready for your vehicle.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>How long does window tinting take?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">A typical automotive window tint takes 2–4 hours depending on the vehicle. Larger vehicles or multiple services may take longer. We'll give you an estimated time when you schedule.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>What's the difference between Liquid PPF and traditional PPF?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Traditional PPF is a thick plastic film that's cut to size and applied in sheets — it can leave seams and bubbles at panel edges. Our Liquid PPF is an all-in-one formula that goes on like a coating, leaving no seams, no visible edges, and full coverage for a fraction of the cost.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>Is there a warranty on your work?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Yes — all of our installations come with a lifetime warranty on both the film/coating and the workmanship. If something isn't right, we'll fix it. No hassle, no excuses.</div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>Do you serve areas outside West Babylon?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Our shop is in West Babylon, and we serve customers from across Nassau and Suffolk County — including Babylon, Amityville, Copiague, Lindenhurst, Deer Park, Bay Shore, and all of Long Island. Most customers find it's a short drive worth making.</div>
+          </div>
         </div>
       </div>
 
-      <div class="reveal"><div class="form-box"><div id="form-content"><div class="form-title">Request a Quote</div><div class="form-subtitle">Fill out the form and we'll get back to you same day.</div><form onsubmit="handleSubmit(event)"><div class="form-section-label">YOUR INFORMATION</div><div class="form-row"><div class="field"><label>First Name *</label><input type="text" name="fname" placeholder="John" required></div><div class="field"><label>Last Name *</label><input type="text" name="lname" placeholder="Smith" required></div></div><div class="form-row"><div class="field"><label>Phone *</label><input type="tel" name="phone" placeholder="631-555-0100" required></div><div class="field"><label>Email</label><input type="email" name="email" placeholder="you@email.com"></div></div><div class="form-section-label">YOUR VEHICLE</div><div class="form-row"><div class="field"><label>Year</label><input type="text" name="year" placeholder="2023"></div><div class="field"><label Make</label><input type="text" name="make" placeholder="Toyota"></div></div><div class="form-row"><div class="field"><label>Model *</label><input type="text" name="model" placeholder="Camry" required></div><div class="field"><label>Color</label><input type="text" name="color" placeholder="Silver"></div></div><div class="form-section-label">SERVICE NEEDED</div><div class="services-check"><div class="service-check-item"><input type="checkbox" id="s1" name="service" value="window-tint"><label for="s1">Window Tinting</label></div><div class="service-check-item"><input type="checkbox" id="s2" name="service" value="ppf"><label for="s2">Paint Protection Film</label></div><div class="service-check-item"><input type="checkbox" id="s3" name="service" value="ceramic"><label for="s3">Ceramic Coating</label></div><div class="service-check-item"><input type="checkbox" id="s4" name="service" value="headlight"><label for="s4">Headlight/Taillight</label></div></div><div class="field" style="margin-bottom:0"><label>Notes</label><textarea name="notes" placeholder="Any specific questions or details..."></textarea></div><button type="submit" class="form-submit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 4l5 4-5 4"/></svg>Send My Quote Request</button><p class="form-note">We respond same day during business hours.</p></form></div><div class="success-state" id="success"><div class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l4 4 10-10"/></svg></div><h3>Request Sent!</h3><p>Thanks — we got your quote request and will get back to you shortly.</p></div></div></div>
+      <!-- RIGHT: FORM -->
+      <div class="reveal">
+        <div class="form-box">
+          <div id="form-content">
+            <div class="form-title">Request a Quote</div>
+            <div class="form-subtitle">Fill out the form and we'll get back to you same day — usually within an hour during business hours.</div>
+
+            <form onsubmit="handleSubmit(event)">
+              <div class="form-section-label">YOUR INFORMATION</div>
+              <div class="form-row">
+                <div class="field"><label>First Name *</label><input type="text" name="fname" placeholder="John" required></div>
+                <div class="field"><label>Last Name *</label><input type="text" name="lname" placeholder="Smith" required></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Phone Number *</label><input type="tel" name="phone" placeholder="631-555-0100" required></div>
+                <div class="field"><label>Email Address</label><input type="email" name="email" placeholder="you@email.com"></div>
+              </div>
+              <div class="form-row" style="grid-template-columns:1fr">
+                <div class="field"><label>ZIP Code</label><input type="text" name="zip" placeholder="11704"></div>
+              </div>
+
+              <div class="form-section-label">YOUR VEHICLE</div>
+              <div class="form-row">
+                <div class="field"><label>Year</label><input type="text" name="year" placeholder="2023"></div>
+                <div class="field"><label>Make</label><input type="text" name="make" placeholder="Toyota"></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Model *</label><input type="text" name="model" placeholder="Camry" required></div>
+                <div class="field"><label>Color</label><input type="text" name="color" placeholder="Silver"></div>
+              </div>
+
+              <div class="form-section-label">SERVICE NEEDED</div>
+              <div class="services-check">
+                <div class="service-check-item"><input type="checkbox" id="s1" name="service" value="window-tint"><label for="s1">Window Tinting</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s2" name="service" value="ppf"><label for="s2">Paint Protection Film</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s3" name="service" value="ceramic"><label for="s3">Ceramic Coating</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s4" name="service" value="headlight"><label for="s4">Headlight/Taillight</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s5" name="service" value="boat"><label for="s5">Boat/Marine</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s6" name="service" value="residential"><label for="s6">Residential/Commercial</label></div>
+              </div>
+
+              <div class="form-section-label">ADDITIONAL DETAILS</div>
+              <div class="field" style="margin-bottom:0">
+                <label>Tell us more (optional)</label>
+                <textarea name="notes" placeholder="Any specific questions, details about your vehicle, or budget range..."></textarea>
+              </div>
+
+              <button type="submit" class="form-submit">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 4l5 4-5 4"/></svg>
+                Send My Quote Request
+              </button>
+              <p class="form-note">We respond same day during business hours.<br>Your information is never shared or sold.</p>
+            </form>
+          </div>
+
+          <div class="success-state" id="success">
+            <div class="check-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l4 4 10-10"/></svg>
+            </div>
+            <h3>Request Sent!</h3>
+            <p>Thanks — we got your quote request and will get back to you shortly. If it's urgent, give us a call at <a href="tel:6312264300" style="color:var(--red-light)">631-226-4300</a>.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -315,19 +415,55 @@
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div class="footer-brand"><a href="index.html" class="logo"><div class="logo-mark">MWT</div><div class="logo-text"><div class="name">Masters Window Tinting</div><div class="location">WEST BABYLON · LONG ISLAND, NY</div></div></a><p>Long Island's trusted automotive protection specialists since 2005.</p><div class="footer-socials"><a href="#" class="footer-social-link">IG</a><a href="#" class="footer-social-link">FB</a></div></div>
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">MWT</div>
+          <div class="logo-text">
+            <div class="name">Masters Window Tinting</div>
+            <div class="location">WEST BABYLON · LONG ISLAND, NY</div>
+          </div>
+        </a>
+        <p>Long Island's trusted automotive protection specialists since 2005.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link">IG</a>
+          <a href="#" class="footer-social-link">FB</a>
+        </div>
+      </div>
       <div class="footer-col"><h4>Services</h4><ul><li><a href="index.html#services">Window Tinting</a></li><li><a href="index.html#services">Paint Protection Film</a></li><li><a href="index.html#services">Ceramic Coating</a></li><li><a href="index.html#services">Headlight Tinting</a></li></ul></div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="footer-col"><h4>Service Area</h4><ul><li><a href="#">Nassau County</a></li><li><a href="#">Suffolk County</a></li><li><a href="#">West Babylon</a></li><li><a href="#">Babylon</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="index.html#reviews">Testimonials</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Service Area</h4><ul><li><a href="#">Nassau County</a></li><li><a href="#">Suffolk County</a></li><li><a href="#">West Babylon</a></li><li><a href="#">Babylon</a></li><li><a href="#">Amityville</a></li></ul></div>
     </div>
-    <div class="footer-bottom"><p>© 2025 Masters Window Tinting · <a href="tel:6312264300">631-226-4300</a></p></div>
+    <div class="footer-bottom">
+      <p>© 2025 Masters Window Tinting · 863 Rte 109, West Babylon, NY 11704 · <a href="tel:6312264300">631-226-4300</a></p>
+      <p><a href="#">Privacy Policy</a></p>
+    </div>
   </div>
 </footer>
-<div class="mobile-cta"><a href="tel:6312264300">TAP TO CALL · 631-226-4300</a><span>Free quotes · Open 7 days</span></div>
+
+<div class="mobile-cta">
+  <a href="tel:6312264300">TAP TO CALL · 631-226-4300</a>
+  <span>Free quotes · Open 7 days</span>
+</div>
+
 <script>
-const reveals=document.querySelectorAll('.reveal');const obs=new IntersectionObserver(entries=>{entries.forEach((e,i) =>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});},{threshold:0.1});reveals.forEach(el=>obs.observe(el));
-function handleSubmit(e){e.preventDefault();document.getElementById('form-content').style.display='none';document.getElementById('success').style.display='block';}
-function toggleFaq(el){const item=el.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  }
+
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
 </script>
 </body>
 </html>
