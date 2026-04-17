@@ -7,3 +7,455 @@
 <meta name="description" content="View our work — window tinting, paint protection film, and ceramic coating results from Masters Window Tinting in West Babylon, Long Island.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C8201A; --red-dark: #8f1410; --red-light: #e8352e; --gold: #D4961A;
+    --black: #0a0a0a; --off-black: #111111; --dark: #1a1a1a;
+    --gray: #888; --light-gray: #c0c0c0; --white: #f8f5f0;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--black); color: var(--white); overflow-x: hidden; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red-light); display: inline-block; margin-bottom: 12px; }
+  .section-title { font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px); line-height: 0.95; color: var(--white); letter-spacing: 1px; }
+  .section-title span { color: var(--red-light); }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* TOPBAR */
+  .topbar { background: #050505; border-bottom: 1px solid rgba(200,32,26,0.2); padding: 8px 0; font-size: 12px; font-family: var(--font-mono); }
+  .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .topbar-left { display: flex; gap: 24px; }
+  .topbar-left a { color: var(--light-gray); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .topbar-left a:hover { color: var(--red-light); }
+  .topbar-left a svg { width: 12px; height: 12px; }
+  .topbar-hours { color: var(--gray); }
+  .topbar-right { display: flex; gap: 10px; }
+  .social-btn { width: 26px; height: 26px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 11px; text-decoration: none; transition: all 0.2s; font-weight: 600; }
+  .social-btn:hover { border-color: var(--red); color: var(--red-light); }
+
+  /* NAV */
+  nav { background: rgba(10,10,10,0.97); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-mark { width: 44px; height: 44px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: #fff; letter-spacing: 1px; flex-shrink: 0; }
+  .logo-text .name { font-family: var(--font-display); font-size: 18px; color: var(--white); letter-spacing: 1px; line-height: 1; }
+  .logo-text .location { font-size: 10px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 2px; margin-top: 2px; }
+  .nav-links { display: flex; gap: 4px; list-style: none; }
+  .nav-links a { font-size: 12px; color: var(--gray); text-decoration: none; padding: 6px 12px; border-radius: 4px; font-family: var(--font-mono); letter-spacing: 0.5px; transition: all 0.2s; }
+  .nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+  .nav-links a.active { color: var(--red-light); }
+  .nav-cta { background: var(--red); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; text-decoration: none; white-space: nowrap; }
+  .nav-cta:hover { background: var(--red-light); }
+
+  /* PAGE HERO */
+  .page-hero { background: var(--off-black); padding: 80px 0 60px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,32,26,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,32,26,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+  .page-hero-glow { position: absolute; width: 500px; height: 500px; background: radial-gradient(ellipse, rgba(200,32,26,0.12) 0%, transparent 70%); top: -200px; right: -100px; pointer-events: none; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 11px; color: var(--gray); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .breadcrumb a { color: var(--gray); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--red-light); }
+  .breadcrumb span { color: #444; }
+  .page-hero h1 { font-family: var(--font-display); font-size: clamp(52px, 8vw, 100px); line-height: 0.9; color: var(--white); letter-spacing: 1px; margin-bottom: 20px; position: relative; z-index: 1; }
+  .page-hero h1 span { color: var(--red-light); }
+  .page-hero p { font-size: 17px; color: #777; line-height: 1.75; max-width: 560px; position: relative; z-index: 1; }
+
+  /* FILTER BAR */
+  .filter-bar { padding: 32px 0; border-bottom: 1px solid rgba(255,255,255,0.05); background: var(--off-black); position: sticky; top: 73px; z-index: 50; }
+  .filter-inner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .filter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--gray); padding: 8px 18px; border-radius: 100px; font-size: 12px; font-family: var(--font-mono); letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s; }
+  .filter-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+  .filter-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+  .filter-count { margin-left: auto; font-size: 11px; color: var(--gray); font-family: var(--font-mono); }
+
+  /* GALLERY GRID */
+  .gallery-section { padding: 48px 0 80px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .gallery-grid.col-4 { grid-template-columns: repeat(4, 1fr); }
+  .gallery-card { position: relative; border-radius: 10px; overflow: hidden; cursor: pointer; background: var(--dark); border: 1px solid rgba(255,255,255,0.06); group: true; }
+  .gallery-card:hover .gallery-overlay { opacity: 1; }
+  .gallery-card:hover .gallery-img { transform: scale(1.04); }
+  .gallery-card.featured { grid-column: span 2; grid-row: span 2; }
+  .gallery-img {
+    width: 100%; aspect-ratio: 1; background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 48px; color: rgba(200,32,26,0.15);
+    transition: transform 0.4s ease;
+    position: relative; overflow: hidden;
+  }
+  .gallery-card.featured .gallery-img { aspect-ratio: auto; height: 100%; min-height: 360px; }
+
+  /* Simulated car photo placeholders with gradient patterns */
+  .gallery-img.tint-1 { background: linear-gradient(135deg, #0d0d0d 0%, #1a1208 50%, #0d0d0d 100%); }
+  .gallery-img.tint-2 { background: linear-gradient(135deg, #080d14 0%, #0f1a24 50%, #080d14 100%); }
+  .gallery-img.ppf-1  { background: linear-gradient(135deg, #0d100a 0%, #141a10 50%, #0d100a 100%); }
+  .gallery-img.ppf-2  { background: linear-gradient(135deg, #140a08 0%, #221210 50%, #140a08 100%); }
+  .gallery-img.cera-1 { background: linear-gradient(135deg, #0a0a14 0%, #10100d 50%, #0a0a14 100%); }
+  .gallery-img.cera-2 { background: linear-gradient(135deg, #0d0a14 0%, #1a1020 50%, #0d0a14 100%); }
+
+  .gallery-img-inner { text-align: center; position: relative; z-index: 1; }
+  .gallery-img-inner .car-icon { font-size: 64px; opacity: 0.15; display: block; }
+  .gallery-img-inner .placeholder-text { font-size: 10px; color: #333; font-family: var(--font-mono); letter-spacing: 2px; margin-top: 8px; }
+
+  .gallery-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; opacity: 0; transition: opacity 0.3s; }
+  .overlay-tag { font-size: 10px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--red-light); background: rgba(200,32,26,0.15); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(200,32,26,0.3); }
+  .overlay-title { font-family: var(--font-display); font-size: 20px; color: var(--white); letter-spacing: 0.5px; }
+  .overlay-view { font-size: 11px; color: var(--gray); font-family: var(--font-mono); margin-top: 4px; }
+  .gallery-label { padding: 14px 16px; }
+  .gallery-label .g-service { font-size: 10px; font-family: var(--font-mono); letter-spacing: 1px; color: var(--red-light); margin-bottom: 4px; }
+  .gallery-label .g-title { font-size: 14px; font-weight: 500; color: var(--white); }
+  .gallery-label .g-detail { font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+  /* BEFORE/AFTER showcase */
+  .ba-showcase { padding: 60px 0; background: var(--off-black); }
+  .ba-large { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); margin-top: 40px; }
+  .ba-panel { position: relative; min-height: 280px; display: flex; flex-direction: column; }
+  .ba-panel-top { flex: 1; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 100px; }
+  .ba-panel-top.before-bg { background: #121212; color: rgba(255,255,255,0.04); }
+  .ba-panel-top.after-bg { background: linear-gradient(135deg, #150805, #220e0a); color: rgba(200,32,26,0.08); }
+  .ba-panel-label { padding: 20px 24px; background: var(--dark); }
+  .ba-panel-label .tag { font-size: 10px; font-family: var(--font-mono); letter-spacing: 2px; padding: 4px 10px; border-radius: 20px; margin-bottom: 8px; display: inline-block; }
+  .before-tag { background: rgba(255,255,255,0.06); color: var(--gray); }
+  .after-tag { background: rgba(200,32,26,0.15); color: var(--red-light); }
+  .ba-panel-label h3 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .ba-panel-label p { font-size: 12px; color: var(--gray); line-height: 1.6; }
+  .ba-center-divider { position: relative; }
+  .ba-center-divider::before { content: 'VS'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--red); color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 14px; z-index: 10; }
+
+  /* VIDEO SECTION */
+  .video-section { padding: 80px 0; }
+  .video-placeholder { background: var(--dark); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; margin-top: 40px; cursor: pointer; transition: border-color 0.3s; }
+  .video-placeholder:hover { border-color: rgba(200,32,26,0.3); }
+  .play-btn { width: 72px; height: 72px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+  .video-placeholder:hover .play-btn { transform: scale(1.1); }
+  .play-btn svg { width: 28px; height: 28px; color: #fff; margin-left: 4px; }
+  .video-placeholder h3 { font-family: var(--font-display); font-size: 24px; color: var(--white); letter-spacing: 0.5px; }
+  .video-placeholder p { font-size: 13px; color: var(--gray); font-family: var(--font-mono); }
+
+  /* CTA */
+  .cta-strip { background: var(--red); padding: 60px 0; }
+  .cta-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+  .cta-strip h2 { font-family: var(--font-display); font-size: clamp(32px, 5vw, 56px); color: #fff; line-height: 1; }
+  .cta-strip p { font-size: 15px; color: rgba(255,255,255,0.75); margin-top: 8px; }
+  .btn-white { background: #fff; color: var(--red); padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: all 0.2s; display: inline-block; }
+  .btn-white:hover { transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer { background: #050505; border-top: 1px solid rgba(255,255,255,0.06); padding: 60px 0 0; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  .footer-brand p { font-size: 13px; color: #555; line-height: 1.8; max-width: 280px; margin: 16px 0; }
+  .footer-socials { display: flex; gap: 10px; }
+  .footer-social-link { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+  .footer-social-link:hover { border-color: var(--red); color: var(--red-light); }
+  .footer-col h4 { font-size: 11px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--gray); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a { font-size: 13px; color: #555; text-decoration: none; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--white); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.04); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .footer-bottom p { font-size: 11px; color: #333; font-family: var(--font-mono); }
+  .footer-bottom a { color: #444; text-decoration: none; }
+  .footer-bottom a:hover { color: var(--gray); }
+  .mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--red); z-index: 200; padding: 14px 20px; flex-direction: column; align-items: center; gap: 4px; }
+  .mobile-cta a { font-size: 17px; font-weight: 700; color: #fff; text-decoration: none; font-family: var(--font-display); letter-spacing: 2px; }
+  .mobile-cta span { font-size: 10px; color: rgba(255,255,255,0.7); font-family: var(--font-mono); letter-spacing: 1px; }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-card.featured { grid-column: span 2; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .ba-large { grid-template-columns: 1fr; }
+    .mobile-cta { display: flex; }
+    body { padding-bottom: 66px; }
+    .cta-inner { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 560px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-card.featured { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <a href="tel:6312264300">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 2h3l1 4-2 1a9 9 0 004 4l1-2 4 1v3a1 1 0 01-1 1A11 11 0 012 3a1 1 0 011-1z"/></svg>
+        631-226-4300
+      </a>
+      <a href="mailto:info@masterswindowtinting.com">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="3" width="12" height="9" rx="1"/><path d="M1 5l6 4 6-4"/></svg>
+        info@masterswindowtinting.com
+      </a>
+    </div>
+    <div class="topbar-hours">MON–SAT 9AM–5PM &nbsp;·&nbsp; SUN 10AM–2PM</div>
+    <div class="topbar-right">
+      <a href="#" class="social-btn">IG</a>
+      <a href="#" class="social-btn">FB</a>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-mark">MWT</div>
+      <div class="logo-text">
+        <div class="name">Masters Window Tinting</div>
+        <div class="location">WEST BABYLON · LONG ISLAND, NY</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="index.html#services">PPF</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Get Free Quote</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-glow"></div>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <span style="color:var(--white)">Gallery</span>
+    </div>
+    <h1>OUR<br><span>WORK</span></h1>
+    <p>Real results from real vehicles — window tinting, paint protection film, ceramic coating, and more. Every photo is from a job we completed right here in West Babylon.</p>
+  </div>
+</section>
+
+<!-- FILTER -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-inner">
+      <button class="filter-btn active" onclick="filterGallery('all', this)">All Work</button>
+      <button class="filter-btn" onclick="filterGallery('tint', this)">Window Tinting</button>
+      <button class="filter-btn" onclick="filterGallery('ppf', this)">Paint Protection</button>
+      <button class="filter-btn" onclick="filterGallery('ceramic', this)">Ceramic Coating</button>
+      <button class="filter-btn" onclick="filterGallery('headlight', this)">Headlights</button>
+      <span class="filter-count" id="count-display">Showing all 12 photos</span>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="container">
+    <div class="gallery-grid" id="gallery">
+
+      <div class="gallery-card featured reveal" data-cat="ceramic">
+        <div class="gallery-img cera-1">
+          <div class="gallery-img-inner">
+            <span class="car-icon">🚗</span>
+            <div class="placeholder-text">CERAMIC COATING · FEATURED</div>
+            <div style="margin-top:12px;font-size:10px;color:#222;font-family:var(--font-mono)">[Upload your best photo here]</div>
+          </div>
+        </div>
+        <div class="gallery-overlay">
+          <div class="overlay-tag">Ceramic Coating</div>
+          <div class="overlay-title">Ceramic Pro Full Detail</div>
+          <div class="overlay-view">McLaren · Nassau County</div>
+        </div>
+        <div class="gallery-label">
+          <div class="g-service">Ceramic Coating</div>
+          <div class="g-title">Ceramic Pro Full Detail — McLaren</div>
+          <div class="g-detail">Nassau County · Multi-year protection</div>
+        </div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="tint">
+        <div class="gallery-img tint-1">
+          <div class="gallery-img-inner"><span class="car-icon">🚙</span><div class="placeholder-text">WINDOW TINT</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Window Tinting</div><div class="overlay-title">Full Window Tint</div><div class="overlay-view">Range Rover · Suffolk County</div></div>
+        <div class="gallery-label"><div class="g-service">Window Tinting</div><div class="g-title">Full Window Tint — Range Rover</div><div class="g-detail">Ceramic tint · UV blocking · Lifetime warranty</div></div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="tint">
+        <div class="gallery-img tint-2">
+          <div class="gallery-img-inner"><span class="car-icon">🚗</span><div class="placeholder-text">TAILLIGHT TINT</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Taillight Tinting</div><div class="overlay-title">Taillight Tint</div><div class="overlay-view">BMW 5 Series · Nassau</div></div>
+        <div class="gallery-label"><div class="g-service">Taillight Tinting</div><div class="g-title">Taillight Tint — BMW 5 Series</div><div class="g-detail">Smoked finish · Clean install</div></div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="ppf">
+        <div class="gallery-img ppf-1">
+          <div class="gallery-img-inner"><span class="car-icon">🏎</span><div class="placeholder-text">LIQUID PPF</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Paint Protection</div><div class="overlay-title">Liquid PPF Install</div><div class="overlay-view">Corvette · West Babylon</div></div>
+        <div class="gallery-label"><div class="g-service">Liquid PPF</div><div class="g-title">Liquid PPF Full Body — Corvette</div><div class="g-detail">No seams · Self-healing · Invisible protection</div></div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="ppf">
+        <div class="gallery-img ppf-2">
+          <div class="gallery-img-inner"><span class="car-icon">🚐</span><div class="placeholder-text">PPF FILM</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Paint Protection</div><div class="overlay-title">PPF Hood Install</div><div class="overlay-view">Suburban · Copiague</div></div>
+        <div class="gallery-label"><div class="g-service">Paint Protection Film</div><div class="g-title">PPF Hood &amp; Bumper — Suburban</div><div class="g-detail">Chip guard · Rock protection</div></div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="ceramic">
+        <div class="gallery-img cera-2">
+          <div class="gallery-img-inner"><span class="car-icon">🚗</span><div class="placeholder-text">CERAMIC</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Ceramic Coating</div><div class="overlay-title">Ceramic Coating</div><div class="overlay-view">Porsche 911 · Babylon</div></div>
+        <div class="gallery-label"><div class="g-service">Ceramic Coating</div><div class="g-title">Ceramic Pro Coating — Porsche 911</div><div class="g-detail">High-gloss finish · 3-year protection</div></div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="headlight">
+        <div class="gallery-img tint-1" style="background:linear-gradient(135deg,#0d0d1a,#0a0a14)">
+          <div class="gallery-img-inner"><span class="car-icon">💡</span><div class="placeholder-text">HEADLIGHT TINT</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Headlight Tinting</div><div class="overlay-title">Headlight Tint + LED</div><div class="overlay-view">Audi A4 · Amityville</div></div>
+        <div class="gallery-label"><div class="g-service">Headlight Tinting</div><div class="g-title">Headlight Tint + LED Strips — Audi A4</div><div class="g-detail">Smoked headlights · Custom LED accents</div></div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="tint">
+        <div class="gallery-img tint-2" style="background:linear-gradient(135deg,#0d0a0a,#1a1010)">
+          <div class="gallery-img-inner"><span class="car-icon">🚗</span><div class="placeholder-text">RESIDENTIAL TINT</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Residential</div><div class="overlay-title">Home Window Film</div><div class="overlay-view">West Babylon</div></div>
+        <div class="gallery-label"><div class="g-service">Residential Window Tinting</div><div class="g-title">Home Window Film — West Babylon</div><div class="g-detail">UV blocking · Heat reduction · Privacy film</div></div>
+      </div>
+
+      <div class="gallery-card reveal" data-cat="ceramic">
+        <div class="gallery-img cera-1" style="background:linear-gradient(135deg,#0f0d08,#1a1610)">
+          <div class="gallery-img-inner"><span class="car-icon">🚘</span><div class="placeholder-text">CERAMIC + PPF</div></div>
+        </div>
+        <div class="gallery-overlay"><div class="overlay-tag">Ceramic + PPF</div><div class="overlay-title">Full Protection Package</div><div class="overlay-view">Tesla Model 3 · Nassau</div></div>
+        <div class="gallery-label"><div class="g-service">Ceramic + Liquid PPF Combo</div><div class="g-title">Full Protection Package — Tesla Model 3</div><div class="g-detail">Ceramic coating over Liquid PPF</div></div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:48px">
+      <p style="font-size:13px;color:var(--gray);font-family:var(--font-mono);margin-bottom:16px">Have a project you'd like to see here?</p>
+      <a href="contact.html" style="background:var(--red);color:#fff;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;display:inline-block;transition:background 0.2s" onmouseover="this.style.background='var(--red-light)'" onmouseout="this.style.background='var(--red)'">Book Your Vehicle →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER SHOWCASE -->
+<section class="ba-showcase">
+  <div class="container">
+    <span class="label">Transformations</span>
+    <h2 class="section-title reveal">BEFORE &amp; <span>AFTER</span></h2>
+    <div class="ba-large">
+      <div class="ba-panel">
+        <div class="ba-panel-top before-bg">BEFORE</div>
+        <div class="ba-panel-label">
+          <span class="tag before-tag">Before</span>
+          <h3>Paint Showing Wear &amp; UV Damage</h3>
+          <p>Without protection, paint oxidizes, fades, and becomes vulnerable to chips, scratches, and environmental contaminants over time.</p>
+        </div>
+      </div>
+      <div class="ba-panel ba-center-divider">
+        <div class="ba-panel-top after-bg">AFTER</div>
+        <div class="ba-panel-label">
+          <span class="tag after-tag">After Ceramic Coating</span>
+          <h3>Deep Gloss, Full Protection</h3>
+          <p>After Ceramic Pro coating, paint has a deep mirror-like finish, is hydrophobic, and is protected from UV rays, chemicals, and light scratches for years.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="container">
+    <span class="label">Watch Us Work</span>
+    <h2 class="section-title reveal">SEE IT <span>DONE RIGHT</span></h2>
+    <div class="video-placeholder reveal">
+      <div class="play-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <h3>Ceramic Coating — Time Lapse</h3>
+      <p style="font-size:13px;color:var(--gray);font-family:var(--font-mono)">[Embed your Instagram Reel or YouTube video here]</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <h2>LIKE WHAT<br>YOU SEE?</h2>
+        <p>Get a free quote and let's protect your vehicle next.</p>
+      </div>
+      <a href="contact.html" class="btn-white">Get a Free Quote →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <div class="logo-mark">MWT</div>
+          <div class="logo-text">
+            <div class="name">Masters Window Tinting</div>
+            <div class="location">WEST BABYLON · LONG ISLAND, NY</div>
+          </div>
+        </a>
+        <p>Long Island's trusted automotive protection specialists since 2005.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link">IG</a>
+          <a href="#" class="footer-social-link">FB</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="index.html#services">Window Tinting</a></li><li><a href="index.html#services">Paint Protection Film</a></li><li><a href="index.html#services">Ceramic Coating</a></li><li><a href="index.html#services">Headlight Tinting</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="index.html#reviews">Testimonials</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Service Area</h4><ul><li><a href="#">Nassau County</a></li><li><a href="#">Suffolk County</a></li><li><a href="#">West Babylon</a></li><li><a href="#">Babylon</a></li><li><a href="#">Amityville</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Masters Window Tinting · 863 Rte 109, West Babylon, NY 11704 · <a href="tel:6312264300">631-226-4300</a></p>
+      <p><a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</footer>
+
+<div class="mobile-cta">
+  <a href="tel:6312264300">TAP TO CALL · 631-226-4300</a>
+  <span>Free quotes · Open 7 days</span>
+</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 70); observer.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  function filterGallery(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.gallery-card');
+    let shown = 0;
+    cards.forEach(card => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = match ? '' : 'none';
+      if (match) shown++;
+    });
+    document.getElementById('count-display').textContent =
+      cat === 'all' ? `Showing all ${shown} photos` : `Showing ${shown} photo${shown !== 1 ? 's' : ''}`;
+  }
+</script>
+</body>
+</html>
