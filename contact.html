@@ -74,6 +74,7 @@
   .quick-card .qc-label { font-size: 10px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 1px; }
   .quick-card .qc-value { font-size: 15px; font-weight: 600; color: var(--white); }
   .quick-card .qc-sub { font-size: 11px; color: #555; font-family: var(--font-mono); }
+  .map-card { text-align: left; justify-content: flex-start; }
 
   /* MAIN CONTENT */
   .contact-main { padding: 80px 0; }
@@ -247,12 +248,20 @@
         <div class="qc-value" style="font-size:12px">info@masterswindowtinting.com</div>
         <div class="qc-sub">Same-day reply</div>
       </a>
-      <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank" class="quick-card">
-        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="9" r="3.5"/><path d="M10 18S3 12.5 3 8a7 7 0 0114 0c0 4.5-7 10-7 10z"/></svg></div>
-        <div class="qc-label">Find Us</div>
-        <div class="qc-value" style="font-size:13px">863 Rte 109, West Babylon</div>
-        <div class="qc-sub">Get directions →</div>
-      </a>
+      <div class="quick-card map-card" style="padding:0;overflow:hidden;cursor:default;gap:0">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.6!2d-73.35913!3d40.71284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e82e594c4e6bcb%3A0x9e5c2f9a3c7e1d0a!2s863%20NY-109%2C%20West%20Babylon%2C%20NY%2011704!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+          width="100%" height="130" style="border:0;display:block;filter:grayscale(20%) invert(5%)" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank"
+           style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;text-decoration:none;background:var(--dark);border-top:1px solid rgba(255,255,255,0.06)">
+          <div>
+            <div style="font-size:10px;color:var(--gray);font-family:var(--font-mono);letter-spacing:1px;margin-bottom:3px">FIND US</div>
+            <div style="font-size:13px;font-weight:600;color:var(--white)">863 Rte 109, West Babylon</div>
+          </div>
+          <span style="font-size:11px;color:var(--red-light);font-family:var(--font-mono);white-space:nowrap">Directions →</span>
+        </a>
+      </div>
       <div class="quick-card" style="cursor:default">
         <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="16" height="15" rx="2"/><path d="M6 3V1M14 3V1M2 8h16"/></svg></div>
         <div class="qc-label">Hours</div>
