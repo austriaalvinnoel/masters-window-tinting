@@ -241,11 +241,11 @@
 <div class="filter-bar">
   <div class="container">
     <div class="filter-inner">
-      <button class="filter-btn active" onclick="filterGallery('all', this)">All Work</button>
-      <button class="filter-btn" onclick="filterGallery('tint', this)">Window Tinting</button>
-      <button class="filter-btn" onclick="filterGallery('ppf', this)">Paint Protection</button>
-      <button class="filter-btn" onclick="filterGallery('ceramic', this)">Ceramic Coating</button>
-      <button class="filter-btn" onclick="filterGallery('headlight', this)">Headlights</button>
+      <button class="filter-btn active" data-cat="all" onclick="filterGallery('all', this)">All Work</button>
+      <button class="filter-btn" data-cat="tint" onclick="filterGallery('tint', this)">Window Tinting</button>
+      <button class="filter-btn" data-cat="ppf" onclick="filterGallery('ppf', this)">Paint Protection</button>
+      <button class="filter-btn" data-cat="ceramic" onclick="filterGallery('ceramic', this)">Ceramic Coating</button>
+      <button class="filter-btn" data-cat="headlight" onclick="filterGallery('headlight', this)">Headlights</button>
       <span class="filter-count" id="count-display">Showing all 12 photos</span>
     </div>
   </div>
@@ -444,8 +444,9 @@
   reveals.forEach(el => observer.observe(el));
 
   function filterGallery(cat, btn) {
+    const activeBtn = btn || document.querySelector(`.filter-btn[data-cat="${cat}"]`) || document.querySelector('.filter-btn[data-cat="all"]');
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    activeBtn.classList.add('active');
     const cards = document.querySelectorAll('.gallery-card');
     let shown = 0;
     cards.forEach(card => {
@@ -456,6 +457,11 @@
     document.getElementById('count-display').textContent =
       cat === 'all' ? `Showing all ${shown} photos` : `Showing ${shown} photo${shown !== 1 ? 's' : ''}`;
   }
+
+  const validTabs = new Set(['all', 'tint', 'ppf', 'ceramic', 'headlight']);
+  const tabParam = new URLSearchParams(window.location.search).get('tab');
+  const initialTab = validTabs.has(tabParam) ? tabParam : 'all';
+  filterGallery(initialTab);
 </script>
 </body>
 </html>

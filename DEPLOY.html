@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MWT â€” One-Click GitHub Deploy</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#e6edf3;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{background:#161b22;border:1px solid #30363d;border-radius:16px;padding:40px;width:100%;max-width:560px}
+  h1{font-size:22px;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+  .logo{width:36px;height:36px;background:#c8201a;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+  .subtitle{font-size:13px;color:#8b949e;margin-bottom:28px}
+  label{font-size:12px;color:#8b949e;display:block;margin-bottom:6px;font-family:monospace}
+  input[type=text],input[type=password]{width:100%;background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:10px 14px;font-size:14px;color:#e6edf3;outline:none;margin-bottom:16px;font-family:monospace}
+  input:focus{border-color:#c8201a}
+  .file-zone{border:2px dashed #30363d;border-radius:10px;padding:24px;text-align:center;margin-bottom:20px;cursor:pointer;transition:all .2s;position:relative}
+  .file-zone:hover,.file-zone.drag{border-color:#c8201a;background:rgba(200,32,26,.05)}
+  .file-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+  .file-zone p{font-size:14px;color:#8b949e}
+  .file-zone small{font-size:11px;color:#444;font-family:monospace}
+  .file-list{margin-bottom:20px;display:none}
+  .file-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#0d1117;border-radius:6px;margin-bottom:6px;font-size:13px}
+  .file-item .name{font-family:monospace;color:#58a6ff}
+  .file-item .size{color:#8b949e;font-size:11px}
+  .file-item .status{font-size:11px;font-family:monospace}
+  .status-wait{color:#8b949e}
+  .status-pushing{color:#d29922}
+  .status-ok{color:#3fb950}
+  .status-err{color:#f85149}
+  .deploy-btn{width:100%;background:#c8201a;color:#fff;border:none;padding:13px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:12px}
+  .deploy-btn:hover:not(:disabled){background:#e8352e;transform:translateY(-1px)}
+  .deploy-btn:disabled{opacity:.5;cursor:not-allowed}
+  .progress-bar{height:4px;background:#21262d;border-radius:4px;overflow:hidden;margin-bottom:16px;display:none}
+  .progress-fill{height:100%;background:#c8201a;border-radius:4px;transition:width .4s ease;width:0%}
+  .log{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:14px;font-size:12px;font-family:monospace;color:#8b949e;line-height:1.8;max-height:200px;overflow-y:auto;display:none;margin-bottom:16px}
+  .success-banner{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);border-radius:10px;padding:20px;text-align:center;display:none;margin-bottom:16px}
+  .success-banner h3{color:#3fb950;font-size:16px;margin-bottom:6px}
+  .success-banner a{color:#58a6ff;font-size:13px}
+  .note{font-size:11px;color:#444;text-align:center;line-height:1.6;font-family:monospace}
+  .sep{border:none;border-top:1px solid #21262d;margin:20px 0}
+  .info-row{display:flex;gap:8px;align-items:center;font-size:12px;color:#8b949e;margin-bottom:8px}
+  .info-row svg{width:14px;height:14px;flex-shrink:0;color:#c8201a}
+  .token-hint{font-size:11px;color:#444;margin-top:-10px;margin-bottom:14px;font-family:monospace}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>
+    <div class="logo">MWT</div>
+    GitHub Auto-Deploy
+  </h1>
+  <p class="subtitle">Masters Window Tinting â€” push all site files to GitHub in one click</p>
+
+  <div class="info-row">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v4M8 11v.5"/></svg>
+    Repo: <strong style="color:#e6edf3">austriaalvinnoel/masters-window-tinting</strong>
+  </div>
+  <div class="info-row">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/></svg>
+    Branch: <strong style="color:#e6edf3">main</strong>
+  </div>
+
+  <hr class="sep">
+
+  <label>GitHub Personal Access Token</label>
+  <input type="password" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" value="">
+  <div class="token-hint">// Enter your token each session. Do not hardcode tokens in files.</div>
+
+  <label>Select your 4 public HTML files</label>
+  <div class="file-zone" id="dropZone">
+    <input type="file" id="fileInput" multiple accept=".html">
+    <p>ðŸ“‚ Click to choose files or drag &amp; drop here</p>
+    <small>index.html Â· about.html Â· gallery.html Â· contact.html</small>
+  </div>
+
+  <div class="file-list" id="fileList"></div>
+
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="log" id="log"></div>
+  <div class="success-banner" id="successBanner">
+    <h3>âœ… All files pushed to GitHub!</h3>
+    <p style="font-size:13px;color:#8b949e;margin-bottom:10px">Vercel is auto-deploying now â€” your live site updates in ~30 seconds.</p>
+    <a href="https://masters-window-tinting.vercel.app" target="_blank">ðŸŒ masters-window-tinting.vercel.app â†’</a><br><br>
+    <a href="https://github.com/austriaalvinnoel/masters-window-tinting" target="_blank">Source Repo -></a>
+  </div>
+
+  <button class="deploy-btn" id="deployBtn" disabled onclick="deploy()">
+    ðŸš€ Push All Files to GitHub
+  </button>
+
+  <p class="note">
+    This page talks directly to the GitHub API from your browser.<br>
+    Your token never leaves your device.
+  </p>
+</div>
+
+<script>
+const OWNER = 'austriaalvinnoel';
+const REPO  = 'masters-window-tinting';
+const BRANCH = 'main';
+
+let selectedFiles = {};
+
+// File input handler
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  handleFiles(e.target.files);
+});
+
+// Drag and drop
+const zone = document.getElementById('dropZone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+zone.addEventListener('drop', e => {
+  e.preventDefault();
+  zone.classList.remove('drag');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(files) {
+  selectedFiles = {};
+  const list = document.getElementById('fileList');
+  list.innerHTML = '';
+  list.style.display = 'block';
+
+  [...files].forEach(f => {
+    if (!f.name.endsWith('.html')) return;
+    selectedFiles[f.name] = f;
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.id = 'fi-' + f.name;
+    item.innerHTML = `
+      <span class="name">${f.name}</span>
+      <span class="size">${(f.size/1024).toFixed(1)} KB</span>
+      <span class="status status-wait" id="st-${f.name}">waiting</span>
+    `;
+    list.appendChild(item);
+  });
+
+  const count = Object.keys(selectedFiles).length;
+  document.getElementById('deployBtn').disabled = count === 0;
+  document.getElementById('deployBtn').textContent = count > 0
+    ? `ðŸš€ Push ${count} File${count>1?'s':''} to GitHub`
+    : 'ðŸš€ Push All Files to GitHub';
+}
+
+function log(msg, color) {
+  const el = document.getElementById('log');
+  el.style.display = 'block';
+  const line = document.createElement('div');
+  line.style.color = color || '#8b949e';
+  line.textContent = msg;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+
+function setStatus(filename, text, cls) {
+  const el = document.getElementById('st-' + filename);
+  if (el) { el.textContent = text; el.className = 'status ' + cls; }
+}
+
+function setProgress(pct) {
+  document.getElementById('progressBar').style.display = 'block';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+async function getFileSHA(token, filename) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filename}`, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (r.ok) { const d = await r.json(); return d.sha; }
+  } catch(e) {}
+  return null;
+}
+
+async function pushFile(token, filename, file) {
+  setStatus(filename, 'reading...', 'status-pushing');
+  const b64 = await new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const b64 = reader.result.split(',')[1];
+      res(b64);
+    };
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+
+  setStatus(filename, 'getting SHA...', 'status-pushing');
+  const sha = await getFileSHA(token, filename);
+
+  setStatus(filename, 'pushing...', 'status-pushing');
+  log(`  â†’ Pushing ${filename} (${(file.size/1024).toFixed(1)} KB)...`);
+
+  const body = {
+    message: `Update ${filename} â€” CMS, Firebase, Maps, service images`,
+    content: b64,
+    branch: BRANCH
+  };
+  if (sha) body.sha = sha;
+
+  const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${filename}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (r.ok) {
+    setStatus(filename, 'âœ“ pushed', 'status-ok');
+    log(`  âœ“ ${filename} â€” ${sha ? 'updated' : 'created'}`, '#3fb950');
+    return true;
+  } else {
+    const err = await r.json();
+    setStatus(filename, 'âœ— failed', 'status-err');
+    log(`  âœ— ${filename} â€” ${r.status}: ${err.message}`, '#f85149');
+    return false;
+  }
+}
+
+async function deploy() {
+  const token = document.getElementById('tokenInput').value.trim();
+  if (!token) { alert('Please enter your GitHub token.'); return; }
+
+  const files = Object.entries(selectedFiles);
+  if (files.length === 0) { alert('Please select your HTML files first.'); return; }
+
+  const btn = document.getElementById('deployBtn');
+  btn.disabled = true;
+  btn.textContent = 'Deploying...';
+
+  log('ðŸš€ Starting GitHub deploy...', '#c8201a');
+  log(`   Repo: ${OWNER}/${REPO} Â· Branch: ${BRANCH}`);
+  log(`   Files: ${files.map(([n])=>n).join(', ')}`);
+  log('');
+
+  let ok = 0;
+  for (let i = 0; i < files.length; i++) {
+    const [name, file] = files[i];
+    setProgress(Math.round((i / files.length) * 90));
+    const success = await pushFile(token, name, file);
+    if (success) ok++;
+    // Small delay between files to avoid rate limiting
+    await new Promise(r => setTimeout(r, 300));
+  }
+
+  setProgress(100);
+  log('');
+  if (ok === files.length) {
+    log(`âœ… All ${ok} files pushed successfully!`, '#3fb950');
+    log('   Vercel is deploying now â€” ~30 seconds until live.', '#3fb950');
+    document.getElementById('successBanner').style.display = 'block';
+    btn.textContent = 'âœ… All Done!';
+    btn.style.background = '#1a7f37';
+  } else {
+    log(`âš ï¸  ${ok}/${files.length} files pushed. Check errors above.`, '#d29922');
+    btn.disabled = false;
+    btn.textContent = `Retry (${files.length - ok} failed)`;
+  }
+}
+</script>
+</body>
+</html>
+

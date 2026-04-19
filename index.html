@@ -206,6 +206,7 @@ nav{background:rgba(10,10,10,.97);backdrop-filter:blur(12px);position:sticky;top
 .form-submit:hover:not(:disabled){background:var(--red-light);transform:translateY(-1px)}
 .form-submit:disabled{opacity:.6;cursor:not-allowed}
 .form-note{font-size:11px;color:#444;text-align:center;margin-top:10px;font-family:var(--font-mono)}
+.form-error{display:none;font-size:12px;color:#ff8a84;text-align:center;margin-top:10px;line-height:1.6}
 .success-state{display:none;text-align:center;padding:32px 0}
 .chk-circle{width:64px;height:64px;background:rgba(30,160,70,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
 .chk-circle svg{width:28px;height:28px;color:#4ade80}
@@ -349,7 +350,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:60p
             <li>Headlight &amp; taillight tinting</li>
             <li>Lifetime warranty on film &amp; labor</li>
           </ul>
-          <a href="#contact" class="svc-link">Get a quote &#8594;</a>
+          <a href="gallery.html?tab=tint" class="svc-link">View window tinting work &#8594;</a>
         </div>
       </div>
       <div class="svc-card reveal">
@@ -559,30 +560,6 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:60p
             <div><div class="ci-lbl">Location</div><div class="ci-val">863 Rte 109, West Babylon, NY 11704</div></div>
           </a>
         </div>
-
-        <!-- LIVE MAP EMBED -->
-        <div style="margin-top:20px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);position:relative">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.49!2d-73.37148!3d40.71433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e829a87c3e6c5d%3A0x1c0f3f1e2b4a6d8e!2s863%20NY-109%2C%20West%20Babylon%2C%20NY%2011704!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-            width="100%"
-            height="220"
-            style="display:block;border:0;filter:grayscale(18%) contrast(1.05) brightness(0.88)"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Masters Window Tinting location map">
-          </iframe>
-          <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank"
-             style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--dark);text-decoration:none;transition:background .2s"
-             onmouseover="this.style.background='#1d1d1d'" onmouseout="this.style.background='var(--dark)'">
-            <div style="display:flex;align-items:center;gap:10px">
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#e8352e" stroke-width="1.5"><circle cx="8" cy="7" r="3"/><path d="M8 14S2 9.5 2 6a6 6 0 0112 0c0 3.5-6 8-6 8z"/></svg>
-              <span style="font-size:13px;font-weight:600;color:var(--white)">863 Rte 109, West Babylon, NY 11704</span>
-            </div>
-            <span style="font-size:11px;color:#e8352e;font-family:var(--font-mono);white-space:nowrap">Directions &#8594;</span>
-          </a>
-        </div>
-
       </div>
       <div class="reveal">
         <div class="form-box">
@@ -615,6 +592,7 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:60p
               </div>
               <button type="submit" class="form-submit" id="submitBtn">Send My Request &#8594;</button>
               <p class="form-note">Saved securely via Firebase. We never sell or share your data.</p>
+              <p class="form-error" id="formError" role="alert"></p>
             </form>
           </div>
           <div class="success-state" id="successState">
@@ -655,45 +633,51 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:60p
   <span>Free quotes &middot; Open 7 days</span>
 </div>
 
-<!-- =====================================================
-  FIREBASE INTEGRATION
-  Steps to activate:
-  1. Go to console.firebase.google.com
-  2. Create a project named "masters-window-tinting"
-  3. Add a Web app, copy the firebaseConfig
-  4. Paste your values in the config below
-  5. Go to Firestore > Create database > Test mode
-  Quote submissions will appear in Firestore under
-  the "quote_requests" collection.
-====================================================== -->
+<!-- Load Firebase config from firebase-config.js -->
+<script src="firebase-config.js"></script>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-  // PASTE YOUR FIREBASE CONFIG HERE
-  const firebaseConfig = {
-    apiKey:            "YOUR_API_KEY",
-    authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId:         "YOUR_PROJECT_ID",
-    storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId:             "YOUR_APP_ID"
-  };
+  const requiredConfigKeys = [
+    "apiKey",
+    "authDomain",
+    "projectId",
+    "storageBucket",
+    "messagingSenderId",
+    "appId"
+  ];
+  const firebaseConfig = window.MWT_FIREBASE_CONFIG || {};
+  const hasFirebaseConfig = requiredConfigKeys.every((key) => {
+    return typeof firebaseConfig[key] === "string" && firebaseConfig[key].trim() !== "";
+  });
 
   let db;
-  try {
+  if (hasFirebaseConfig) {
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
-  } catch(e) {
-    console.warn("Firebase not configured yet. Form will show success but not save until config is added.");
+  } else {
+    console.warn("Firebase config is missing. Update firebase-config.js with valid credentials.");
   }
 
   window.submitQuote = async (e) => {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
+    const err = document.getElementById('formError');
+    err.style.display = 'none';
+    err.textContent = '';
     btn.textContent = 'Sending...';
     btn.disabled = true;
+
+    if (!db) {
+      err.textContent = "Quote form is temporarily unavailable. Please call 631-226-4300.";
+      err.style.display = 'block';
+      btn.textContent = 'Send My Request →';
+      btn.disabled = false;
+      return;
+    }
 
     const services = [...document.querySelectorAll('.svc-chk input:checked')].map(cb => cb.value);
 
@@ -711,14 +695,17 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:60p
     };
 
     try {
-      if (db) await addDoc(collection(db, 'quote_requests'), data);
+      await addDoc(collection(db, 'quote_requests'), data);
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
     } catch(err) {
       console.warn("Firebase save failed (check your config):", err.message);
+      const msg = document.getElementById('formError');
+      msg.textContent = "We could not submit your request right now. Please call 631-226-4300.";
+      msg.style.display = 'block';
+      btn.textContent = 'Send My Request →';
+      btn.disabled = false;
     }
-
-    // Always show success to the customer
-    document.getElementById('formContent').style.display = 'none';
-    document.getElementById('successState').style.display = 'block';
   };
 </script>
 
