@@ -106,10 +106,18 @@ nav{background:rgba(10,10,10,.97);backdrop-filter:blur(12px);position:sticky;top
 .ba-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
 .ba-card{border-radius:14px;overflow:hidden;background:var(--dark);border:1px solid rgba(255,255,255,.06)}
 .ba-images{display:grid;grid-template-columns:1fr 1fr;height:200px;position:relative}
-.ba-img{height:200px;overflow:hidden}
+.ba-img{height:200px;overflow:hidden;position:relative}
 .ba-img img{width:100%;height:100%;object-fit:cover}
-.ba-img.before img{filter:saturate(.3) brightness(.65)}
-.ba-img.after img{filter:saturate(1.25) brightness(1.05)}
+.ba-img.before img{filter:saturate(.55) brightness(.72)}
+.ba-img.after img{filter:saturate(1.15) brightness(1.03)}
+.ba-card.ceramic .ba-img.before img{filter:saturate(.25) contrast(.82) brightness(.58)}
+.ba-card.ceramic .ba-img.after img{filter:saturate(1.35) contrast(1.12) brightness(1.08)}
+.ba-card.tint .ba-img.before img{filter:saturate(.9) contrast(.95) brightness(.92)}
+.ba-card.tint .ba-img.after img{filter:saturate(1.05) contrast(1.16) brightness(.74)}
+.ba-card.tint .ba-img.after::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.48) 0%,rgba(0,0,0,.12) 38%,rgba(0,0,0,0) 70%);pointer-events:none}
+.ba-card.ppf .ba-img.before img{filter:saturate(.55) contrast(.85) brightness(.7)}
+.ba-card.ppf .ba-img.after img{filter:saturate(1.2) contrast(1.1) brightness(1.02)}
+.ba-card.ppf .ba-img.after::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 18%,rgba(255,255,255,.12) 48%,transparent 72%);pointer-events:none}
 .ba-line{position:absolute;left:50%;top:0;bottom:0;width:3px;background:var(--red);transform:translateX(-50%);z-index:3}
 .ba-dot{position:absolute;left:50%;top:50%;width:32px;height:32px;background:var(--red);border-radius:50%;transform:translate(-50%,-50%);z-index:4;display:flex;align-items:center;justify-content:center}
 .ba-dot svg{width:14px;height:14px;color:#fff}
@@ -403,30 +411,30 @@ footer{background:#050505;border-top:1px solid rgba(255,255,255,.06);padding:60p
       <p style="font-size:15px;color:#666;max-width:340px;line-height:1.7" class="reveal">See the real difference on vehicles just like yours.</p>
     </div>
     <div class="ba-grid">
-      <div class="ba-card reveal">
+      <div class="ba-card reveal ceramic">
         <div class="ba-images">
-          <div class="ba-img before"><img src="https://images.unsplash.com/photo-1591293836027-e05b48473b67?w=400&q=80&fit=crop" alt="Dull car paint before ceramic coating"></div>
-          <div class="ba-img after"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&q=80&fit=crop" alt="Glossy car after ceramic coating"></div>
+          <div class="ba-img before"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&q=80&fit=crop" alt="Before ceramic coating: same blue sports car with a dull finish"></div>
+          <div class="ba-img after"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400&q=80&fit=crop" alt="After ceramic coating: same blue sports car with a glossy reflective finish"></div>
           <div class="ba-line"></div>
           <div class="ba-dot"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
         </div>
         <div class="ba-lbl-row"><div class="ba-lbl b">BEFORE</div><div class="ba-lbl a">AFTER &#8594;</div></div>
         <div class="ba-info"><h4>Ceramic Coating</h4><p>Deep gloss &middot; UV protection &middot; Hydrophobic &middot; Ceramic Pro</p></div>
       </div>
-      <div class="ba-card reveal">
+      <div class="ba-card reveal tint">
         <div class="ba-images">
-          <div class="ba-img before"><img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400&q=80&fit=crop" alt="Car before window tinting clear windows"></div>
-          <div class="ba-img after"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=400&q=80&fit=crop" alt="Car after window tinting dark tint"></div>
+          <div class="ba-img before"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=400&q=80&fit=crop" alt="Before window tinting: same SUV with clear windows"></div>
+          <div class="ba-img after"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=400&q=80&fit=crop" alt="After window tinting: same SUV with premium dark tint"></div>
           <div class="ba-line"></div>
           <div class="ba-dot"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
         </div>
         <div class="ba-lbl-row"><div class="ba-lbl b">BEFORE</div><div class="ba-lbl a">AFTER &#8594;</div></div>
         <div class="ba-info"><h4>Window Tinting</h4><p>Privacy &middot; Heat rejection &middot; UV block &middot; Premium film</p></div>
       </div>
-      <div class="ba-card reveal">
+      <div class="ba-card reveal ppf">
         <div class="ba-images">
-          <div class="ba-img before"><img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=400&q=80&fit=crop" alt="Car paint before PPF unprotected"></div>
-          <div class="ba-img after"><img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=400&q=80&fit=crop" alt="Car paint protected with PPF film"></div>
+          <div class="ba-img before"><img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=400&q=80&fit=crop" alt="Before paint protection film: same car with an unprotected finish"></div>
+          <div class="ba-img after"><img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=400&q=80&fit=crop" alt="After paint protection film: same car with a sleek scratch-resistant finish"></div>
           <div class="ba-line"></div>
           <div class="ba-dot"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
         </div>
