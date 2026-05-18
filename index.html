@@ -1686,13 +1686,15 @@
       z-index: 2;
     }
 
-    .borograph-video-ratio iframe {
+    .borograph-video-ratio iframe,
+    .borograph-video-ratio video {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       border: none;
       display: block;
+      object-fit: cover;
     }
 
     .borograph-video-tag {
@@ -1968,14 +1970,17 @@
     <div class="borograph-video-col">
       <div class="borograph-video-wrap">
         <div class="borograph-video-ratio">
-          <iframe
-            src="https://www.youtube.com/embed/Y3OO205BxUU?rel=0&modestbranding=1&mute=0"
-            title="BOROGRAPH 2.0 Ceramic Coating — Masters Window Tinting"
-            loading="lazy"
-            allowfullscreen
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe>
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            controls
+            preload="metadata"
+            poster="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp"
+          >
+            <source src="borograph-2-ceramic.mp4" type="video/mp4">
+          </video>
         </div>
         <div class="borograph-video-tag">BOROGRAPH 2.0 · Official Product Video</div>
       </div>
