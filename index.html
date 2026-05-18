@@ -1156,6 +1156,152 @@
       .carousel-dots { right: 1.5rem; bottom: 1.5rem; }
       .carousel-arrow { width: 36px; height: 36px; font-size: 0.9rem; }
     }
+    /* TWO-COLUMN SLIDE LAYOUT (PPF slide) */
+    .hero-slide-layout {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .hero-copy { display: flex; flex-direction: column; gap: 0; }
+
+    .hero-video {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 9 / 16;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(200,168,75,0.3);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,75,0.1);
+      background: #000;
+    }
+
+    /* NESTED MEDIA CAROUSEL */
+    .media-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .media-item {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .media-item.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .media-item iframe,
+    .media-item video {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      object-fit: cover;
+    }
+
+    .media-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(8,8,8,0.75);
+      border: 1px solid rgba(200,168,75,0.35);
+      color: var(--white);
+      width: 32px;
+      height: 32px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .media-arrow:hover {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .media-prev { left: 8px; }
+    .media-next { right: 8px; }
+
+    .media-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 20;
+    }
+
+    .media-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(240,237,232,0.35);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.25s;
+    }
+
+    .media-dot.active {
+      background: var(--gold);
+      width: 18px;
+      border-radius: 4px;
+    }
+
+    /* PPF slide — override .carousel-slide padding for two-col layout */
+    .slide-ppf {
+      align-items: center;
+      padding: 0 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-slide-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0;
+      }
+
+      .slide-ppf {
+        align-items: flex-start;
+        padding: 8rem 1.5rem 5rem;
+        flex-direction: column;
+      }
+
+      .hero-video {
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .video-frame {
+        max-width: 200px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1182,18 +1328,18 @@
   <!-- Slides -->
   <div class="carousel-track">
 
-    <!-- Slide 1 -->
+    <!-- Slide 1 — About Masters -->
     <div class="carousel-slide active">
       <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/2441a3ea-9892-4244-bd0e-2eab886face1/ea6c252799294fe876f48933e948507f9a125cc1.webp')"></div>
       <div class="hero-gradient"></div>
       <div class="hero-grain"></div>
       <div class="hero-content">
-        <div class="hero-badge">25+ Years Trusted on Long Island</div>
+        <div class="hero-badge">Trusted on Long Island</div>
         <h1 class="display">MASTERS<br>WINDOW<br><span class="gold">TINTING.</span></h1>
-        <p class="hero-sub">Professional protection for cars, homes, and businesses across Nassau and Suffolk.</p>
+        <p class="hero-sub">25+ years of professional experience in automotive, residential, and commercial film solutions. We use top-grade materials and certified installation methods for long-lasting results.</p>
         <div class="hero-ctas">
           <a href="tel:6312264300" class="btn-primary">📞 Call 631-226-4300</a>
-          <a href="#services" class="btn-outline">View Services →</a>
+          <a href="#contact" class="btn-outline">Get a Free Quote →</a>
         </div>
       </div>
     </div>
@@ -1214,20 +1360,69 @@
       </div>
     </div>
 
-    <!-- Slide 3 — PPF + Video -->
-    <div class="carousel-slide">
+    <!-- Slide 3 — PPF + Nested Media Carousel -->
+    <div class="carousel-slide slide-ppf">
       <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238243881-SJ04PY7VASZ2R0BMUG3L/2474c9ecb87e50629613ad0ffea697df424e8530-6992f331ec980.webp')"></div>
       <div class="hero-gradient"></div>
       <div class="hero-grain"></div>
-      <div class="hero-content">
-        <div class="hero-badge">Core Service</div>
-        <h1 class="display">LIQUID<br>PAINT<br><span class="gold">PROTECTION.</span></h1>
-        <p class="hero-sub">Seamless paint protection that helps guard against scratches, chips, and sun damage.</p>
-        <div class="hero-ctas">
-          <a href="https://www.youtube.com/watch?v=Zta6OycRLfQ" target="_blank" class="btn-primary">▶ Watch Video</a>
-          <a href="tel:6312264300" class="btn-outline">📞 Call 631-226-4300</a>
+      <div class="hero-slide-layout">
+
+        <!-- Left: copy -->
+        <div class="hero-copy">
+          <div class="hero-badge">Core Service</div>
+          <h1 class="display">LIQUID<br>PAINT<br><span class="gold">PROTECTION.</span></h1>
+          <p class="hero-sub">Seamless paint protection that helps guard against scratches, chips, and sun damage.</p>
+          <div class="hero-ctas">
+            <a href="tel:6312264300" class="btn-primary">📞 Call 631-226-4300</a>
+            <a href="#contact" class="btn-outline">Get a Quote →</a>
+          </div>
         </div>
-      </div>
+
+        <!-- Right: nested media carousel -->
+        <div class="hero-video" onclick="event.stopPropagation()" onmousedown="event.stopPropagation()" ontouchstart="event.stopPropagation()">
+          <div class="video-frame">
+
+            <!-- Nested media carousel -->
+            <div class="media-carousel">
+
+              <!-- Item 1: YouTube -->
+              <div class="media-item active">
+                <iframe
+                  src="https://www.youtube.com/embed/Zta6OycRLfQ"
+                  title="Liquid Paint Protection Film Video"
+                  loading="lazy"
+                  allowfullscreen
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                ></iframe>
+              </div>
+
+              <!-- Item 2: MP4 -->
+              <div class="media-item">
+                <video
+                  controls
+                  loading="lazy"
+                  poster="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238243881-SJ04PY7VASZ2R0BMUG3L/2474c9ecb87e50629613ad0ffea697df424e8530-6992f331ec980.webp"
+                  playsinline
+                >
+                  <source src="https://cdn.shopify.com/videos/c/o/v/969179ff1cf049529c2e9f00cfd95103.mp4" type="video/mp4">
+                </video>
+              </div>
+
+            </div><!-- end .media-carousel -->
+
+            <!-- Nested controls -->
+            <button class="media-arrow media-prev" aria-label="Previous media" onclick="moveMedia(-1, event)">&#8592;</button>
+            <button class="media-arrow media-next" aria-label="Next media" onclick="moveMedia(1, event)">&#8594;</button>
+            <div class="media-dots">
+              <button class="media-dot active" onclick="goToMedia(0, event)"></button>
+              <button class="media-dot" onclick="goToMedia(1, event)"></button>
+            </div>
+
+          </div><!-- end .video-frame -->
+        </div><!-- end .hero-video -->
+
+      </div><!-- end .hero-slide-layout -->
     </div>
 
     <!-- Slide 4 -->
@@ -1246,7 +1441,7 @@
       </div>
     </div>
 
-    <!-- Slide 5 -->
+    <!-- Slide 5 — Residential -->
     <div class="carousel-slide">
       <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp')"></div>
       <div class="hero-gradient"></div>
@@ -1254,16 +1449,17 @@
       <div class="hero-content">
         <div class="hero-badge">Residential Service</div>
         <h1 class="display">RESIDENTIAL<br>WINDOW<br><span class="gold">TINTING.</span></h1>
-        <p class="hero-sub">Improve home comfort, reduce glare, and protect interiors from UV damage.</p>
-        <p class="hero-sub" style="font-size:0.8rem; margin-top:-0.5rem; opacity:0.7;">Serving Long Island, Nassau, Suffolk, Syosset, Plainview, and nearby areas.</p>
+        <p class="hero-sub" style="font-size:0.82rem; opacity:0.75; margin-bottom:0.4rem;">Long Island | Nassau &amp; Suffolk | Syosset, Plainview and beyond</p>
+        <p class="hero-sub">Improve home privacy, reduce glare, and keep rooms cooler with solar window film. Our film also helps protect furniture and interiors from UV damage.</p>
+        <p class="hero-sub" style="font-size:0.8rem; opacity:0.65;">Custom-fit solutions based on your home, glass type, and comfort goals.</p>
         <div class="hero-ctas">
-          <a href="residential.html" class="btn-primary">Request Home Quote</a>
+          <a href="residential.html" class="btn-primary">Request Residential Quote</a>
           <a href="tel:6312264300" class="btn-outline">📞 Call 631-226-4300</a>
         </div>
       </div>
     </div>
 
-    <!-- Slide 6 -->
+    <!-- Slide 6 — Commercial -->
     <div class="carousel-slide">
       <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238244421-ALZVV1E5XK0KIJ24E3AJ/5661107a15d618a3e31f45bb83d89202e68b63cb-6992f3324ad92.webp')"></div>
       <div class="hero-gradient"></div>
@@ -1271,8 +1467,9 @@
       <div class="hero-content">
         <div class="hero-badge">Commercial Service</div>
         <h1 class="display">COMMERCIAL<br>WINDOW<br><span class="gold">TINTING.</span></h1>
-        <p class="hero-sub">Improve privacy, cut glare, and lower cooling costs for your business space.</p>
-        <p class="hero-sub" style="font-size:0.8rem; margin-top:-0.5rem; opacity:0.7;">Serving Long Island, Nassau, Suffolk, Merrick, Bellmore, and nearby areas.</p>
+        <p class="hero-sub" style="font-size:0.82rem; opacity:0.75; margin-bottom:0.4rem;">Long Island | Nassau &amp; Suffolk | Merrick, Bellmore and beyond</p>
+        <p class="hero-sub">Improve privacy, reduce heat and glare, and create a cleaner professional look for your business. Commercial film can also help lower energy costs and improve comfort for staff and clients.</p>
+        <p class="hero-sub" style="font-size:0.8rem; opacity:0.65;">We provide consultative recommendations, not one-size-fits-all quotes.</p>
         <div class="hero-ctas">
           <a href="commercial.html" class="btn-primary">Request Commercial Quote</a>
           <a href="tel:6312264300" class="btn-outline">📞 Call 631-226-4300</a>
@@ -1896,6 +2093,33 @@
     this.style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
   });
+
+  // NESTED MEDIA CAROUSEL (PPF slide)
+  const mediaItems = document.querySelectorAll('.media-item');
+  const mediaDots = document.querySelectorAll('.media-dot');
+  let currentMedia = 0;
+
+  function goToMedia(n, e) {
+    if (e) { e.stopPropagation(); e.preventDefault(); }
+    mediaItems[currentMedia].classList.remove('active');
+    mediaDots[currentMedia].classList.remove('active');
+    currentMedia = (n + mediaItems.length) % mediaItems.length;
+    mediaItems[currentMedia].classList.add('active');
+    mediaDots[currentMedia].classList.add('active');
+  }
+
+  function moveMedia(dir, e) {
+    if (e) { e.stopPropagation(); e.preventDefault(); }
+    goToMedia(currentMedia + dir, e);
+  }
+
+  // Block ALL events on .hero-video from reaching main carousel
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo) {
+    ['touchstart','touchmove','touchend','mousedown','mousemove','mouseup','click'].forEach(ev => {
+      heroVideo.addEventListener(ev, e => e.stopPropagation(), { passive: false });
+    });
+  }
 
   // Nav scroll shrink
   window.addEventListener('scroll', function() {
