@@ -1018,6 +1018,144 @@
       .footer-grid { grid-template-columns: 1fr; }
       .stats-bar { grid-template-columns: 1fr 1fr; }
     }
+    /* CAROUSEL */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 100vh;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 3rem 7rem;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25) saturate(0.8);
+      transition: opacity 0.8s ease;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.55) 45%, rgba(8,8,8,0.15) 100%);
+    }
+
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 960px;
+    }
+
+    /* CAROUSEL CONTROLS */
+    .carousel-dots {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 3rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(240,237,232,0.3);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s;
+    }
+
+    .dot.active {
+      background: var(--gold);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(8,8,8,0.6);
+      border: 1px solid var(--border);
+      color: var(--white);
+      width: 44px;
+      height: 44px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-arrow:hover {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .carousel-prev { left: 1.5rem; }
+    .carousel-next { right: 1.5rem; }
+
+    .carousel-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(200,168,75,0.15);
+      z-index: 10;
+    }
+
+    .carousel-progress-bar {
+      height: 100%;
+      background: var(--gold);
+      width: 0%;
+      transition: width linear;
+    }
+
+    @media (max-width: 900px) {
+      .carousel-slide { padding: 0 1.5rem 5rem; }
+      .carousel-prev { left: 0.8rem; }
+      .carousel-next { right: 0.8rem; }
+      .carousel-dots { right: 1.5rem; bottom: 1.5rem; }
+      .carousel-arrow { width: 36px; height: 36px; font-size: 0.9rem; }
+    }
   </style>
 </head>
 <body>
@@ -1038,20 +1176,146 @@
   <a href="tel:6312264300" class="btn-call-nav">📞 Call 631-226-4300</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-gradient"></div>
-  <div class="hero-grain"></div>
-  <div class="hero-content">
-    <div class="hero-badge">Ceramic Pro Long Island &nbsp;·&nbsp; NanoPro Liquid PPF &nbsp;·&nbsp; 25+ Years</div>
-    <h1>PROTECT<br>YOUR<br><span class="gold">RIDE.</span></h1>
-    <p class="hero-sub">Certified full-time installers serving Nassau & Suffolk County for over 25 years. Window tinting, NanoPro Liquid PPF, and Ceramic Pro coating — no outside contractors, ever. For vehicles, homes, and businesses.</p>
-    <div class="hero-ctas">
-      <a href="tel:6312264300" class="btn-primary">📞 Call 631-226-4300</a>
-      <a href="#contact" class="btn-outline">Request a Quote →</a>
+<!-- HERO CAROUSEL -->
+<section class="hero" id="hero-carousel">
+
+  <!-- Slides -->
+  <div class="carousel-track">
+
+    <!-- Slide 1 -->
+    <div class="carousel-slide active">
+      <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/2441a3ea-9892-4244-bd0e-2eab886face1/ea6c252799294fe876f48933e948507f9a125cc1.webp')"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <div class="hero-badge">25+ Years Trusted on Long Island</div>
+        <h1 class="display">MASTERS<br>WINDOW<br><span class="gold">TINTING.</span></h1>
+        <p class="hero-sub">Professional protection for cars, homes, and businesses across Nassau and Suffolk.</p>
+        <div class="hero-ctas">
+          <a href="tel:6312264300" class="btn-primary">📞 Call 631-226-4300</a>
+          <a href="#services" class="btn-outline">View Services →</a>
+        </div>
+      </div>
     </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp')"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Core Service</div>
+        <h1 class="display">WINDOW<br><span class="gold">TINTING.</span></h1>
+        <p class="hero-sub">Cleaner look, better privacy, less heat, and UV protection for your vehicle.</p>
+        <div class="hero-ctas">
+          <a href="tel:6312264300" class="btn-primary">📞 Call Now</a>
+          <a href="#contact" class="btn-outline">Get a Quote →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 — PPF + Video -->
+    <div class="carousel-slide">
+      <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238243881-SJ04PY7VASZ2R0BMUG3L/2474c9ecb87e50629613ad0ffea697df424e8530-6992f331ec980.webp')"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Core Service</div>
+        <h1 class="display">LIQUID<br>PAINT<br><span class="gold">PROTECTION.</span></h1>
+        <p class="hero-sub">Seamless paint protection that helps guard against scratches, chips, and sun damage.</p>
+        <div class="hero-ctas">
+          <a href="https://www.youtube.com/watch?v=Zta6OycRLfQ" target="_blank" class="btn-primary">▶ Watch Video</a>
+          <a href="tel:6312264300" class="btn-outline">📞 Call 631-226-4300</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="carousel-slide">
+      <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp')"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Core Service</div>
+        <h1 class="display">CERAMIC<br>COATING<br><span class="gold">FOR CARS.</span></h1>
+        <p class="hero-sub">Long-lasting gloss and easier maintenance with durable surface protection.</p>
+        <div class="hero-ctas">
+          <a href="tel:6312264300" class="btn-primary">📞 Call Now</a>
+          <a href="#contact" class="btn-outline">Get a Quote →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="carousel-slide">
+      <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp')"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Residential Service</div>
+        <h1 class="display">RESIDENTIAL<br>WINDOW<br><span class="gold">TINTING.</span></h1>
+        <p class="hero-sub">Improve home comfort, reduce glare, and protect interiors from UV damage.</p>
+        <p class="hero-sub" style="font-size:0.8rem; margin-top:-0.5rem; opacity:0.7;">Serving Long Island, Nassau, Suffolk, Syosset, Plainview, and nearby areas.</p>
+        <div class="hero-ctas">
+          <a href="residential.html" class="btn-primary">Request Home Quote</a>
+          <a href="tel:6312264300" class="btn-outline">📞 Call 631-226-4300</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="carousel-slide">
+      <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238244421-ALZVV1E5XK0KIJ24E3AJ/5661107a15d618a3e31f45bb83d89202e68b63cb-6992f3324ad92.webp')"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Commercial Service</div>
+        <h1 class="display">COMMERCIAL<br>WINDOW<br><span class="gold">TINTING.</span></h1>
+        <p class="hero-sub">Improve privacy, cut glare, and lower cooling costs for your business space.</p>
+        <p class="hero-sub" style="font-size:0.8rem; margin-top:-0.5rem; opacity:0.7;">Serving Long Island, Nassau, Suffolk, Merrick, Bellmore, and nearby areas.</p>
+        <div class="hero-ctas">
+          <a href="commercial.html" class="btn-primary">Request Commercial Quote</a>
+          <a href="tel:6312264300" class="btn-outline">📞 Call 631-226-4300</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 7 -->
+    <div class="carousel-slide">
+      <div class="hero-bg" style="background-image:url('https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp')"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-grain"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Specialty Services</div>
+        <h1 class="display">GRAPHICS,<br>DETAILING &<br><span class="gold">CORRECTION.</span></h1>
+        <p class="hero-sub">Branding graphics plus detail and paint correction services to keep vehicles looking their best.</p>
+        <div class="hero-ctas">
+          <a href="#services" class="btn-primary">View Services →</a>
+          <a href="tel:6312264300" class="btn-outline">📞 Call 631-226-4300</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .carousel-track -->
+
+  <!-- Dots -->
+  <div class="carousel-dots">
+    <button class="dot active" onclick="goToSlide(0)"></button>
+    <button class="dot" onclick="goToSlide(1)"></button>
+    <button class="dot" onclick="goToSlide(2)"></button>
+    <button class="dot" onclick="goToSlide(3)"></button>
+    <button class="dot" onclick="goToSlide(4)"></button>
+    <button class="dot" onclick="goToSlide(5)"></button>
+    <button class="dot" onclick="goToSlide(6)"></button>
   </div>
+
+  <!-- Arrows -->
+  <button class="carousel-arrow carousel-prev" onclick="moveSlide(-1)">&#8592;</button>
+  <button class="carousel-arrow carousel-next" onclick="moveSlide(1)">&#8594;</button>
+
+  <!-- Progress bar -->
+  <div class="carousel-progress"><div class="carousel-progress-bar" id="progressBar"></div></div>
+
 </section>
 
 <!-- STATS BAR -->
@@ -1568,7 +1832,65 @@
 <a href="tel:6312264300" class="mobile-cta-bar">📞 TAP TO CALL · 631-226-4300 · Mon–Sat 9–5 · Sun 10–4</a>
 
 <script>
-  // Form submit handler
+  // CAROUSEL
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.dot');
+  const progressBar = document.getElementById('progressBar');
+  let current = 0;
+  let autoTimer, progressTimer;
+  const DURATION = 5000;
+
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    resetProgress();
+  }
+
+  function moveSlide(dir) {
+    goToSlide(current + dir);
+    resetAuto();
+  }
+
+  function resetProgress() {
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    setTimeout(() => {
+      progressBar.style.transition = `width ${DURATION}ms linear`;
+      progressBar.style.width = '100%';
+    }, 30);
+  }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => goToSlide(current + 1), DURATION);
+  }
+
+  // Init
+  resetProgress();
+  resetAuto();
+
+  // Pause on hover
+  document.getElementById('hero-carousel').addEventListener('mouseenter', () => {
+    clearInterval(autoTimer);
+    progressBar.style.transition = 'none';
+  });
+  document.getElementById('hero-carousel').addEventListener('mouseleave', () => {
+    resetProgress();
+    resetAuto();
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.getElementById('hero-carousel').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.getElementById('hero-carousel').addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { moveSlide(diff > 0 ? 1 : -1); }
+  });
+
+ handler
   document.getElementById('quoteForm').addEventListener('submit', function(e) {
     e.preventDefault();
     this.style.display = 'none';
