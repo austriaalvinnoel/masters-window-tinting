@@ -1507,6 +1507,213 @@
       .nanopro-promo { padding: 5rem 1.5rem; }
       .nanopro-video-wrap { max-width: 100%; }
     }
+    /* ── BOROGRAPH 2.0 FEATURED AD ── */
+    .borograph-ad {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 6rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle cinematic background texture */
+    .borograph-ad::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,168,75,0.05) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 80% at 5% 50%, rgba(200,168,75,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .borograph-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    /* LEFT: COPY */
+    .borograph-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(200,168,75,0.1);
+      border: 1px solid rgba(200,168,75,0.4);
+      color: var(--gold);
+      padding: 0.35rem 1rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .borograph-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 8vw, 8rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 0;
+    }
+
+    .borograph-headline span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .borograph-sub {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      margin-top: 0.3rem;
+    }
+
+    .borograph-body {
+      font-size: 1rem;
+      color: rgba(240,237,232,0.75);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 420px;
+      margin-bottom: 0.8rem;
+    }
+
+    .borograph-reserved {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 2.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .borograph-reserved::before {
+      content: '★';
+      font-size: 0.6rem;
+    }
+
+    .borograph-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .borograph-btn-primary {
+      background: var(--gold);
+      color: #000;
+      padding: 1rem 2rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .borograph-btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(200,168,75,0.3);
+    }
+
+    .borograph-btn-outline {
+      border: 1px solid rgba(200,168,75,0.35);
+      color: var(--white);
+      padding: 1rem 2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .borograph-btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* RIGHT: VIDEO */
+    .borograph-video-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .borograph-video-wrap {
+      position: relative;
+    }
+
+    .borograph-video-ratio {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid rgba(200,168,75,0.2);
+      box-shadow:
+        0 0 0 1px rgba(200,168,75,0.06),
+        0 24px 64px rgba(0,0,0,0.7),
+        0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    /* gold top-edge accent line */
+    .borograph-video-ratio::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+      z-index: 2;
+    }
+
+    .borograph-video-ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .borograph-video-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+      padding-right: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .borograph-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .borograph-ad { padding: 5rem 1.5rem; }
+      .borograph-headline { font-size: clamp(3.5rem, 14vw, 6rem); }
+      .borograph-video-tag { text-align: left; }
+    }
   </style>
 </head>
 <body>
@@ -1739,6 +1946,43 @@
     <div class="stat-label">Days a Week</div>
   </div>
 </div>
+
+<!-- BOROGRAPH 2.0 FEATURED AD -->
+<section class="borograph-ad">
+  <div class="borograph-inner">
+
+    <!-- Left: Copy -->
+    <div class="borograph-copy">
+      <div class="borograph-eyebrow">Featured Product · NanoPro Certified</div>
+      <h2 class="borograph-headline">BOROGRAPH<br><span>2.0</span></h2>
+      <p class="borograph-sub">Ceramic Coating</p>
+      <p class="borograph-body">Elite NanoPro protection with boron silicate and graphene oxide infused technology.</p>
+      <p class="borograph-reserved">Reserved for Elite NanoPro installers.</p>
+      <div class="borograph-ctas">
+        <a href="#contact" class="borograph-btn-primary">Get a Free Quote</a>
+        <a href="tel:6312264300" class="borograph-btn-outline">📞 631-226-4300</a>
+      </div>
+    </div>
+
+    <!-- Right: Video -->
+    <div class="borograph-video-col">
+      <div class="borograph-video-wrap">
+        <div class="borograph-video-ratio">
+          <iframe
+            src="https://www.youtube.com/embed/Y3OO205BxUU?rel=0&modestbranding=1&mute=0"
+            title="BOROGRAPH 2.0 Ceramic Coating — Masters Window Tinting"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          ></iframe>
+        </div>
+        <div class="borograph-video-tag">BOROGRAPH 2.0 · Official Product Video</div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- SERVICES -->
 <section class="section" id="services">
