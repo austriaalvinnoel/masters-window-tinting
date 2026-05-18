@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,258 +6,442 @@
 <title>Contact & Free Quote | Masters Window Tinting | Long Island, NY</title>
 <meta name="description" content="Contact Masters Window Tinting in West Babylon, NY. Get a free quote for window tinting, PPF, or ceramic coating. Call 631-226-4300 or fill out our form.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --red: #C8201A; --red-dark: #8f1410; --red-light: #e8352e; --gold: #D4961A;
-    --black: #0a0a0a; --off-black: #111111; --dark: #1a1a1a;
-    --gray: #888; --light-gray: #c0c0c0; --white: #f8f5f0;
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'DM Mono', monospace;
+    --black: #080808;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --gold: #C8A84B;
+    --gold-light: #E8C878;
+    --white: #F0EDE8;
+    --muted: #888888;
+    --border: rgba(200, 168, 75, 0.18);
   }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: var(--font-body); background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-  .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--red-light); display: inline-block; margin-bottom: 12px; }
-  .section-title { font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px); line-height: 0.95; color: var(--white); letter-spacing: 1px; }
-  .section-title span { color: var(--red-light); }
+  body { font-family: 'Outfit', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
-  /* TOPBAR */
-  .topbar { background: #050505; border-bottom: 1px solid rgba(200,32,26,0.2); padding: 8px 0; font-size: 12px; font-family: var(--font-mono); }
-  .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-  .topbar-left { display: flex; gap: 24px; }
-  .topbar-left a { color: var(--light-gray); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
-  .topbar-left a:hover { color: var(--red-light); }
-  .topbar-left a svg { width: 12px; height: 12px; }
-  .topbar-hours { color: var(--gray); }
-  .topbar-right { display: flex; gap: 10px; }
-  .social-btn { width: 26px; height: 26px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--gray); font-size: 11px; text-decoration: none; transition: all 0.2s; font-weight: 600; }
-  .social-btn:hover { border-color: var(--red); color: var(--red-light); }
-
   /* NAV */
-  nav { background: rgba(10,10,10,0.97); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
-  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .logo-mark { width: 44px; height: 44px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: #fff; letter-spacing: 1px; flex-shrink: 0; }
-  .logo-text .name { font-family: var(--font-display); font-size: 18px; color: var(--white); letter-spacing: 1px; line-height: 1; }
-  .logo-text .location { font-size: 10px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 2px; margin-top: 2px; }
-  .nav-links { display: flex; gap: 4px; list-style: none; }
-  .nav-links a { font-size: 12px; color: var(--gray); text-decoration: none; padding: 6px 12px; border-radius: 4px; font-family: var(--font-mono); letter-spacing: 0.5px; transition: all 0.2s; }
-  .nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
-  .nav-links a.active { color: var(--red-light); }
-  .nav-cta { background: var(--red); color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-body); transition: background 0.2s; text-decoration: none; white-space: nowrap; }
-  .nav-cta:hover { background: var(--red-light); }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(8,8,8,0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem; letter-spacing: 0.1em;
+    color: var(--white); text-decoration: none;
+    display: flex; flex-direction: column; line-height: 1.15;
+  }
+  .nav-logo span {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.58rem; font-weight: 600;
+    letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a.active { color: var(--gold); }
+
+  .btn-call-nav {
+    background: var(--gold); color: #000;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.2s; white-space: nowrap;
+  }
+  .btn-call-nav:hover { background: var(--gold-light); transform: translateY(-1px); }
 
   /* PAGE HERO */
-  .page-hero { background: var(--off-black); padding: 80px 0 60px; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(200,32,26,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(200,32,26,0.04) 1px, transparent 1px); background-size: 60px 60px; }
-  .page-hero-glow { position: absolute; width: 500px; height: 500px; background: radial-gradient(ellipse, rgba(200,32,26,0.12) 0%, transparent 70%); top: -200px; right: -100px; pointer-events: none; }
-  .breadcrumb { font-family: var(--font-mono); font-size: 11px; color: var(--gray); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-  .breadcrumb a { color: var(--gray); text-decoration: none; transition: color 0.2s; }
-  .breadcrumb a:hover { color: var(--red-light); }
-  .breadcrumb span { color: #444; }
-  .page-hero h1 { font-family: var(--font-display); font-size: clamp(52px, 8vw, 100px); line-height: 0.9; color: var(--white); letter-spacing: 1px; margin-bottom: 20px; position: relative; z-index: 1; }
-  .page-hero h1 span { color: var(--red-light); }
-  .page-hero p { font-size: 17px; color: #777; line-height: 1.75; max-width: 560px; position: relative; z-index: 1; }
+  .page-hero {
+    background: var(--surface);
+    padding: 9rem 0 5rem;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .page-hero-glow {
+    position: absolute; width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(200,168,75,0.08) 0%, transparent 70%);
+    top: -200px; right: -100px; pointer-events: none;
+  }
+  .breadcrumb {
+    font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+  }
+  .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb span { color: #333; }
+  .page-hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.88; letter-spacing: 0.04em;
+    color: var(--white); margin-bottom: 1.5rem; position: relative; z-index: 1;
+  }
+  .page-hero h1 span { color: var(--gold); }
+  .page-hero p {
+    font-size: 1rem; color: var(--muted);
+    line-height: 1.75; max-width: 560px; font-weight: 300; position: relative; z-index: 1;
+  }
 
   /* QUICK CONTACT CARDS */
-  .quick-contact { padding: 48px 0; background: var(--off-black); border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .quick-card { background: var(--dark); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px 20px; text-align: center; text-decoration: none; transition: all 0.25s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .quick-card:hover { border-color: rgba(200,32,26,0.4); transform: translateY(-2px); }
-  .quick-card .qc-icon { width: 48px; height: 48px; background: rgba(200,32,26,0.1); border: 1px solid rgba(200,32,26,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-  .quick-card .qc-icon svg { width: 20px; height: 20px; color: var(--red-light); }
-  .quick-card .qc-label { font-size: 10px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 1px; }
-  .quick-card .qc-value { font-size: 15px; font-weight: 600; color: var(--white); }
-  .quick-card .qc-sub { font-size: 11px; color: #555; font-family: var(--font-mono); }
+  .quick-contact {
+    padding: 3rem 0; background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
 
-  /* MAIN CONTENT */
-  .contact-main { padding: 80px 0; }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+  .quick-card {
+    background: var(--black);
+    padding: 2rem 1.5rem; text-align: center;
+    text-decoration: none; transition: background 0.25s;
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    cursor: pointer;
+  }
+  .quick-card:hover { background: #0e0e0e; }
 
-  /* LEFT INFO */
-  .contact-info h2 { font-family: var(--font-display); font-size: 40px; color: var(--white); letter-spacing: 0.5px; margin-bottom: 12px; }
-  .contact-info > p { font-size: 15px; color: #666; line-height: 1.8; margin-bottom: 32px; }
+  .qc-icon {
+    width: 48px; height: 48px;
+    background: rgba(200,168,75,0.1);
+    border: 1px solid rgba(200,168,75,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .qc-label {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+  }
+  .qc-value { font-size: 0.95rem; font-weight: 600; color: var(--white); }
+  .qc-sub { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
 
-  .hours-card { background: var(--off-black); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
-  .hours-card h3 { font-size: 12px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--gray); margin-bottom: 16px; }
-  .hours-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  /* MAIN CONTACT */
+  .contact-main { padding: 6rem 0; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+
+  /* LEFT: INFO */
+  .contact-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem; color: var(--white);
+    letter-spacing: 0.04em; margin-bottom: 0.8rem;
+  }
+  .contact-info > p { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+
+  /* HOURS CARD */
+  .hours-card {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 1.8rem; margin-bottom: 1.5rem;
+  }
+  .hours-card h3 {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .hours-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.65rem 0; border-bottom: 1px solid rgba(200,168,75,0.08);
+  }
   .hours-row:last-child { border-bottom: none; }
-  .hours-day { font-size: 13px; color: #777; }
-  .hours-time { font-size: 13px; font-weight: 500; color: var(--white); font-family: var(--font-mono); }
-  .hours-time.closed { color: #444; }
-  .open-badge { background: rgba(30,160,70,0.15); color: #4ade80; font-size: 10px; font-family: var(--font-mono); padding: 3px 8px; border-radius: 20px; letter-spacing: 1px; }
+  .hours-day { font-size: 0.85rem; color: var(--muted); }
+  .hours-time { font-size: 0.85rem; font-weight: 500; color: var(--white); }
 
-  .map-embed { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 24px; background: var(--dark); }
-  .map-placeholder { height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--dark); cursor: pointer; transition: background 0.2s; text-decoration: none; }
-  .map-placeholder:hover { background: #1d1d1d; }
-  .map-placeholder svg { width: 32px; height: 32px; color: var(--red-light); }
-  .map-placeholder h4 { font-size: 14px; font-weight: 500; color: var(--white); }
-  .map-placeholder p { font-size: 12px; color: var(--gray); font-family: var(--font-mono); }
+  /* MAP */
+  .map-embed { margin-bottom: 1.5rem; border: 1px solid var(--border); overflow: hidden; }
+  .map-embed iframe { display: block; filter: grayscale(30%) invert(5%); }
+  .map-link {
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    margin-top: 0.8rem; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); text-decoration: none; transition: color 0.2s;
+  }
+  .map-link:hover { color: var(--gold-light); }
 
-  .faq-section { margin-top: 8px; }
-  .faq-title { font-size: 12px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--gray); margin-bottom: 12px; }
-  .faq-item { border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
-  .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; background: var(--off-black); transition: background 0.2s; }
-  .faq-question:hover { background: #161616; }
-  .faq-question h4 { font-size: 14px; font-weight: 500; color: var(--white); }
-  .faq-question .faq-arrow { color: var(--red-light); font-size: 18px; transition: transform 0.3s; flex-shrink: 0; }
+  /* FAQ */
+  .faq-section { margin-top: 0.5rem; }
+  .faq-title {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.8rem;
+  }
+  .faq-item {
+    border: 1px solid var(--border);
+    overflow: hidden; margin-bottom: 4px;
+    transition: border-color 0.2s;
+  }
+  .faq-item.open { border-color: rgba(200,168,75,0.4); }
+  .faq-question {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.2rem; cursor: pointer;
+    background: var(--surface); transition: background 0.2s;
+  }
+  .faq-question:hover { background: var(--surface2); }
+  .faq-question h4 { font-size: 0.88rem; font-weight: 500; color: var(--white); }
+  .faq-arrow { color: var(--gold); font-size: 1.2rem; transition: transform 0.3s; flex-shrink: 0; font-weight: 300; }
   .faq-item.open .faq-arrow { transform: rotate(45deg); }
-  .faq-answer { font-size: 13px; color: #666; line-height: 1.7; padding: 0 18px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; }
-  .faq-item.open .faq-answer { max-height: 200px; padding: 0 18px 16px; }
+  .faq-answer {
+    font-size: 0.85rem; color: var(--muted); line-height: 1.75;
+    padding: 0 1.2rem; max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s; font-weight: 300;
+  }
+  .faq-item.open .faq-answer { max-height: 200px; padding: 0 1.2rem 1rem; }
 
-  /* FORM */
-  .form-box { background: var(--off-black); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 40px; position: relative; }
-  .form-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red), var(--red-light)); border-radius: 16px 16px 0 0; }
-  .form-title { font-family: var(--font-display); font-size: 32px; color: var(--white); margin-bottom: 4px; letter-spacing: 0.5px; }
-  .form-subtitle { font-size: 13px; color: var(--gray); margin-bottom: 28px; }
-  .form-section-label { font-size: 10px; font-family: var(--font-mono); letter-spacing: 2px; color: #444; margin: 20px 0 12px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 20px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  .field { display: flex; flex-direction: column; gap: 6px; }
-  .field label { font-size: 11px; color: var(--gray); font-family: var(--font-mono); letter-spacing: 1px; }
-  .field input, .field select, .field textarea { background: var(--dark); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px; font-size: 14px; color: var(--white); font-family: var(--font-body); transition: border-color 0.2s; width: 100%; outline: none; -webkit-appearance: none; }
-  .field input::placeholder, .field textarea::placeholder { color: #444; }
-  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--red); }
+  /* FORM BOX */
+  .form-box {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 2.8rem; position: relative;
+  }
+  .form-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  }
+  .form-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--white);
+    letter-spacing: 0.04em; margin-bottom: 0.3rem;
+  }
+  .form-subtitle { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; font-weight: 300; }
+
+  .form-section-label {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin: 1.8rem 0 1rem;
+    border-top: 1px solid var(--border); padding-top: 1.5rem;
+  }
+  .form-section-label:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field label {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    background: var(--black); border: 1px solid rgba(200,168,75,0.15);
+    padding: 0.85rem 1rem; font-size: 0.9rem;
+    color: var(--white); font-family: 'Outfit', sans-serif;
+    outline: none; transition: border-color 0.2s; width: 100%;
+    -webkit-appearance: none;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: rgba(136,136,136,0.4); }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus { border-color: var(--gold); }
   .field select { cursor: pointer; }
-  .field select option { background: var(--dark); }
+  .field select option { background: var(--surface); }
   .field textarea { resize: vertical; min-height: 100px; }
-  .services-check { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .service-check-item { display: flex; align-items: center; gap: 10px; background: var(--dark); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 10px 14px; cursor: pointer; transition: all 0.2s; }
-  .service-check-item:hover { border-color: rgba(200,32,26,0.3); }
-  .service-check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--red); flex-shrink: 0; cursor: pointer; }
-  .service-check-item label { font-size: 13px; color: #aaa; cursor: pointer; transition: color 0.2s; }
-  .service-check-item:has(input:checked) { border-color: rgba(200,32,26,0.4); background: rgba(200,32,26,0.06); }
+
+  .services-check { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .service-check-item {
+    display: flex; align-items: center; gap: 0.7rem;
+    background: var(--black); border: 1px solid rgba(200,168,75,0.12);
+    padding: 0.7rem 1rem; cursor: pointer; transition: all 0.2s;
+  }
+  .service-check-item:hover { border-color: rgba(200,168,75,0.35); }
+  .service-check-item input[type="checkbox"] {
+    width: 15px; height: 15px; accent-color: var(--gold);
+    flex-shrink: 0; cursor: pointer;
+  }
+  .service-check-item label { font-size: 0.82rem; color: var(--muted); cursor: pointer; transition: color 0.2s; }
+  .service-check-item:has(input:checked) { border-color: rgba(200,168,75,0.45); background: rgba(200,168,75,0.06); }
   .service-check-item:has(input:checked) label { color: var(--white); }
-  .form-submit { width: 100%; background: var(--red); color: #fff; border: none; padding: 15px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: var(--font-body); margin-top: 16px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .form-submit:hover { background: var(--red-light); transform: translateY(-1px); }
-  .form-submit svg { width: 16px; height: 16px; }
-  .form-note { font-size: 11px; color: #444; text-align: center; margin-top: 12px; font-family: var(--font-mono); line-height: 1.7; }
-  .success-state { display: none; text-align: center; padding: 40px 0; }
-  .success-state .check-circle { width: 64px; height: 64px; background: rgba(30,160,70,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-  .success-state .check-circle svg { width: 28px; height: 28px; color: #4ade80; }
-  .success-state h3 { font-family: var(--font-display); font-size: 28px; color: var(--white); margin-bottom: 8px; }
-  .success-state p { font-size: 14px; color: var(--gray); line-height: 1.7; }
+
+  .form-submit {
+    width: 100%; background: var(--gold); color: #000; border: none;
+    padding: 1.1rem; font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; font-family: 'Outfit', sans-serif;
+    margin-top: 1.5rem; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,168,75,0.2); }
+
+  .form-note {
+    font-size: 0.72rem; color: var(--muted);
+    text-align: center; margin-top: 1rem; line-height: 1.7;
+  }
+
+  /* SUCCESS STATE */
+  .success-state { display: none; text-align: center; padding: 3rem 0; }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: rgba(200,168,75,0.12);
+    border: 1px solid rgba(200,168,75,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.2rem; font-size: 1.8rem;
+  }
+  .success-state h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--gold);
+    letter-spacing: 0.06em; margin-bottom: 0.7rem;
+  }
+  .success-state p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .success-state a { color: var(--gold); text-decoration: none; }
 
   /* FOOTER */
-  footer { background: #050505; border-top: 1px solid rgba(255,255,255,0.06); padding: 60px 0 0; }
-  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
-  .footer-brand p { font-size: 13px; color: #555; line-height: 1.8; max-width: 280px; margin: 16px 0; }
-  .footer-socials { display: flex; gap: 10px; }
-  .footer-social-link { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
-  .footer-social-link:hover { border-color: var(--red); color: var(--red-light); }
-  .footer-col h4 { font-size: 11px; font-family: var(--font-mono); letter-spacing: 2px; color: var(--gray); margin-bottom: 16px; }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: 10px; }
-  .footer-col ul li a { font-size: 13px; color: #555; text-decoration: none; transition: color 0.2s; }
-  .footer-col ul li a:hover { color: var(--white); }
-  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.04); padding: 20px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-  .footer-bottom p { font-size: 11px; color: #333; font-family: var(--font-mono); }
-  .footer-bottom a { color: #444; text-decoration: none; }
-  .footer-bottom a:hover { color: var(--gray); }
-  .mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--red); z-index: 200; padding: 14px 20px; flex-direction: column; align-items: center; gap: 4px; }
-  .mobile-cta a { font-size: 17px; font-weight: 700; color: #fff; text-decoration: none; font-family: var(--font-display); letter-spacing: 2px; }
-  .mobile-cta span { font-size: 10px; color: rgba(255,255,255,0.7); font-family: var(--font-mono); letter-spacing: 1px; }
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 5rem 2.5rem 2.5rem;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem; max-width: 1200px; margin: 0 auto 4rem;
+  }
+  .footer-brand-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 0.08em;
+    color: var(--white); margin-bottom: 0.2rem;
+  }
+  .footer-brand-sub {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .footer-desc {
+    font-size: 0.85rem; color: var(--muted); line-height: 1.75;
+    font-weight: 300; margin-bottom: 1.8rem; max-width: 320px;
+  }
+  .footer-social { display: flex; gap: 0.7rem; }
+  .social-link {
+    width: 36px; height: 36px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); text-decoration: none;
+    font-size: 0.72rem; font-weight: 700; transition: all 0.2s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,0.08); }
+  .footer-col-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.95rem; letter-spacing: 0.15em;
+    color: var(--white); margin-bottom: 1.2rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 2rem;
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.73rem; color: var(--muted); flex-wrap: wrap; gap: 0.5rem;
+  }
+  .footer-bottom a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-bottom a:hover { color: var(--gold); }
 
+  /* MOBILE CTA */
+  .mobile-cta {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--gold); color: #000;
+    text-align: center; padding: 1.1rem;
+    font-weight: 700; font-size: 0.88rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; display: none; z-index: 99;
+  }
+
+  /* RESPONSIVE */
   @media (max-width: 900px) {
     .nav-links { display: none; }
     .quick-grid { grid-template-columns: repeat(2, 1fr); }
-    .contact-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .mobile-cta { display: flex; }
-    body { padding-bottom: 66px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .mobile-cta { display: block; }
+    body { padding-bottom: 58px; }
     .form-row { grid-template-columns: 1fr; }
     .services-check { grid-template-columns: 1fr; }
+    nav { padding: 0.9rem 1.5rem; }
+    .form-box { padding: 2rem 1.5rem; }
+  }
+  @media (max-width: 560px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .quick-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="container">
-    <div class="topbar-left">
-      <a href="tel:6312264300">
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 2h3l1 4-2 1a9 9 0 004 4l1-2 4 1v3a1 1 0 01-1 1A11 11 0 012 3a1 1 0 011-1z"/></svg>
-        631-226-4300
-      </a>
-      <a href="mailto:info@masterswindowtinting.com">
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="3" width="12" height="9" rx="1"/><path d="M1 5l6 4 6-4"/></svg>
-        info@masterswindowtinting.com
-      </a>
-    </div>
-    <div class="topbar-hours">MONâ€“SAT 9AMâ€“5PM &nbsp;Â·&nbsp; SUN 10AM-4PM</div>
-    <div class="topbar-right">
-      <a href="#" class="social-btn">IG</a>
-      <a href="#" class="social-btn">FB</a>
-    </div>
-  </div>
-</div>
-
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-mark">MWT</div>
-      <div class="logo-text">
-        <div class="name">Masters Window Tinting &amp; Detail</div>
-        <div class="location">WEST BABYLON Â· LONG ISLAND, NY</div>
-      </div>
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="index.html#services">PPF</a></li>
-      <li><a href="index.html#reviews">Reviews</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
-    </ul>
-    <a href="tel:6312264300" class="nav-cta">Call Now</a>
-  </div>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    Masters Window Tinting & Detail
+    <span>Ceramic Pro Long Island · NanoPro Liquid PPF</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="index.html#ppf-levels">PPF Levels</a></li>
+    <li><a href="index.html#reviews">Reviews</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="tel:6312264300" class="btn-call-nav">📞 Call 631-226-4300</a>
 </nav>
 
+<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="page-hero-glow"></div>
   <div class="container">
     <div class="breadcrumb">
       <a href="index.html">Home</a>
-      <span>â€º</span>
+      <span>›</span>
       <span style="color:var(--white)">Contact</span>
     </div>
     <h1>CALL<br><span>FIRST</span></h1>
-    <p>Phone is first priority for fastest booking. You can also submit the backup quote form below and we will follow up the same day.</p>
+    <p>Phone is first priority for fastest booking. Submit the backup quote form below and we'll follow up the same day.</p>
   </div>
 </section>
 
-<!-- QUICK CONTACT -->
+<!-- QUICK CONTACT CARDS -->
 <div class="quick-contact">
   <div class="container">
     <div class="quick-grid">
       <a href="tel:6312264300" class="quick-card">
-        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h3l1.5 4-2 1.2A10 10 0 009.8 12.5L11 10.5l4 1.5V16a1 1 0 01-1 1A14 14 0 010 3a1 1 0 011-1z"/></svg></div>
+        <div class="qc-icon">📞</div>
         <div class="qc-label">Call Us Now</div>
         <div class="qc-value">631-226-4300</div>
         <div class="qc-sub">Tap to call</div>
       </a>
       <a href="mailto:info@masterswindowtinting.com" class="quick-card">
-        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="16" height="13" rx="2"/><path d="M2 7l8 5 8-5"/></svg></div>
+        <div class="qc-icon">✉️</div>
         <div class="qc-label">Email Us</div>
-        <div class="qc-value" style="font-size:12px">info@masterswindowtinting.com</div>
+        <div class="qc-value" style="font-size:0.8rem;">info@masterswindowtinting.com</div>
         <div class="qc-sub">Same-day reply</div>
       </a>
       <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank" class="quick-card">
-        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="9" r="3.5"/><path d="M10 18S3 12.5 3 8a7 7 0 0114 0c0 4.5-7 10-7 10z"/></svg></div>
+        <div class="qc-icon">📍</div>
         <div class="qc-label">Find Us</div>
-        <div class="qc-value" style="font-size:13px">863 Rte 109, West Babylon</div>
-        <div class="qc-sub">Get directions â†’</div>
+        <div class="qc-value" style="font-size:0.85rem;">863 Rte 109, West Babylon</div>
+        <div class="qc-sub">Get directions →</div>
       </a>
-      <div class="quick-card" style="cursor:default">
-        <div class="qc-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="16" height="15" rx="2"/><path d="M6 3V1M14 3V1M2 8h16"/></svg></div>
+      <div class="quick-card" style="cursor:default;">
+        <div class="qc-icon">🕐</div>
         <div class="qc-label">Hours</div>
-        <div class="qc-value" style="font-size:13px">Monâ€“Sat 9amâ€“5pm</div>
-        <div class="qc-sub">Sun 10am-4pm</div>
+        <div class="qc-value" style="font-size:0.85rem;">Mon–Sat 9am–5pm</div>
+        <div class="qc-sub">Sun 10am–4pm</div>
       </div>
     </div>
   </div>
@@ -271,36 +455,32 @@
       <!-- LEFT: INFO -->
       <div class="contact-info reveal">
         <h2>Visit Our Shop</h2>
-        <p>We're located at 863 Rte 109 in West Babylon. Walk-ins are welcome for estimates â€” no appointment needed. For installations we recommend calling ahead to schedule.</p>
+        <p>We're located at 863 Rte 109 in West Babylon. Walk-ins are welcome for estimates. For installations, we recommend calling ahead to schedule so we can have the bay ready for your vehicle.</p>
 
         <div class="hours-card">
-          <h3>BUSINESS HOURS</h3>
-          <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">9:00 AM â€“ 5:00 PM</span></div>
-          <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">9:00 AM â€“ 5:00 PM</span></div>
-          <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">9:00 AM â€“ 5:00 PM</span></div>
-          <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">9:00 AM â€“ 5:00 PM</span></div>
-          <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">9:00 AM â€“ 5:00 PM</span></div>
-          <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">9:00 AM â€“ 5:00 PM</span></div>
-          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">10:00 AM - 4:00 PM</span></div>
+          <h3>Business Hours</h3>
+          <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">9:00 AM – 5:00 PM</span></div>
+          <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">10:00 AM – 4:00 PM</span></div>
         </div>
 
-        <div class="map-embed" style="margin-bottom:24px">
-          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.8!2d-73.3573!3d40.7078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e829a87c3e6c5d%3A0x1c0f3f1e2b4a6d8e!2s863%20NY-109%2C%20West%20Babylon%2C%20NY%2011704!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
-              width="100%" height="300" style="border:0;display:block;filter:grayscale(20%) invert(5%)"
-              allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
-          <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank"
-             style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:12px;color:var(--red-light);font-family:var(--font-mono);text-decoration:none;letter-spacing:0.5px">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="7" r="3"/><path d="M8 14S2 9.5 2 6a6 6 0 0112 0c0 3.5-6 8-6 8z"/></svg>
-            Open in Google Maps â†’
-          </a>
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.8!2d-73.3573!3d40.7078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e829a87c3e6c5d%3A0x1c0f3f1e2b4a6d8e!2s863%20NY-109%2C%20West%20Babylon%2C%20NY%2011704!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+            width="100%" height="260" style="border:0;"
+            allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
         </div>
+        <a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY+11704" target="_blank" class="map-link">
+          📍 Open in Google Maps →
+        </a>
 
-        <div class="faq-section">
-          <div class="faq-title">FREQUENTLY ASKED QUESTIONS</div>
+        <div class="faq-section" style="margin-top:2rem;">
+          <div class="faq-title">Frequently Asked Questions</div>
 
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(this)">
@@ -315,7 +495,7 @@
               <h4>How long does window tinting take?</h4>
               <span class="faq-arrow">+</span>
             </div>
-            <div class="faq-answer">A typical automotive window tint takes 2â€“4 hours depending on the vehicle. Larger vehicles or multiple services may take longer. We'll give you an estimated time when you schedule.</div>
+            <div class="faq-answer">A typical automotive window tint takes 2–4 hours depending on the vehicle. Larger vehicles or multiple services may take longer. We'll give you an estimated time when you schedule.</div>
           </div>
 
           <div class="faq-item">
@@ -323,7 +503,7 @@
               <h4>What's the difference between Liquid PPF and traditional PPF?</h4>
               <span class="faq-arrow">+</span>
             </div>
-            <div class="faq-answer">Traditional PPF is a thick plastic film that's cut to size and applied in sheets â€” it can leave seams and bubbles at panel edges. Our Liquid PPF is an all-in-one formula that goes on like a coating, leaving no seams, no visible edges, and full coverage for a fraction of the cost.</div>
+            <div class="faq-answer">Traditional PPF is a thick plastic film cut to size and applied in sheets — it can leave seams and bubbles at panel edges. Our NanoPro Liquid PPF is a spray-on formula that leaves no seams, no visible edges, and full coverage for a fraction of the cost.</div>
           </div>
 
           <div class="faq-item">
@@ -331,7 +511,7 @@
               <h4>Is there a warranty on your work?</h4>
               <span class="faq-arrow">+</span>
             </div>
-            <div class="faq-answer">Lifetime warranty covers bubbling, peeling, and fading with full replacement of failed material and workmanship. No refunds.</div>
+            <div class="faq-answer">Yes — lifetime warranty covers bubbling, peeling, and fading with full replacement of failed material and workmanship. We stand behind every job we do.</div>
           </div>
 
           <div class="faq-item">
@@ -339,8 +519,17 @@
               <h4>Do you serve areas outside West Babylon?</h4>
               <span class="faq-arrow">+</span>
             </div>
-            <div class="faq-answer">Our shop is in West Babylon, and we serve customers from across Nassau and Suffolk County â€” including Babylon, Amityville, Copiague, Lindenhurst, Deer Park, Bay Shore, and all of Long Island. Most customers find it's a short drive worth making.</div>
+            <div class="faq-answer">Our shop is in West Babylon and we serve customers from across Nassau and Suffolk County — including Babylon, Amityville, Copiague, Lindenhurst, Deer Park, Bay Shore, and all of Long Island. Most customers find it's a short drive worth making.</div>
           </div>
+
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <h4>Do you offer discounts?</h4>
+              <span class="faq-arrow">+</span>
+            </div>
+            <div class="faq-answer">Yes — we offer discounts for military, police, and first responders. Mention it when you call or submit the form.</div>
+          </div>
+
         </div>
       </div>
 
@@ -349,10 +538,10 @@
         <div class="form-box">
           <div id="form-content">
             <div class="form-title">Backup Quote Form</div>
-            <div class="form-subtitle">Phone calls are prioritized first. Submit this form as backup and we will follow up the same day.</div>
+            <div class="form-subtitle">Phone calls get priority. Submit this form as a backup and we'll follow up the same day during business hours.</div>
 
             <form onsubmit="handleSubmit(event)">
-              <div class="form-section-label">YOUR INFORMATION</div>
+              <div class="form-section-label">Your Information</div>
               <div class="form-row">
                 <div class="field"><label>First Name *</label><input type="text" name="fname" placeholder="John" required></div>
                 <div class="field"><label>Last Name *</label><input type="text" name="lname" placeholder="Smith" required></div>
@@ -361,94 +550,118 @@
                 <div class="field"><label>Phone Number *</label><input type="tel" name="phone" placeholder="631-555-0100" required></div>
                 <div class="field"><label>Email Address</label><input type="email" name="email" placeholder="you@email.com"></div>
               </div>
-              <div class="form-row" style="grid-template-columns:1fr">
-                <div class="field"><label>ZIP Code</label><input type="text" name="zip" placeholder="11704"></div>
+              <div class="field" style="margin-bottom:0;">
+                <label>ZIP Code</label>
+                <input type="text" name="zip" placeholder="11704">
               </div>
 
-              <div class="form-section-label">YOUR VEHICLE</div>
+              <div class="form-section-label">Your Vehicle</div>
               <div class="form-row">
                 <div class="field"><label>Year</label><input type="text" name="year" placeholder="2023"></div>
-                <div class="field"><label>Make</label><input type="text" name="make" placeholder="Toyota"></div>
+                <div class="field"><label>Make</label><input type="text" name="make" placeholder="BMW"></div>
               </div>
               <div class="form-row">
-                <div class="field"><label>Model *</label><input type="text" name="model" placeholder="Camry" required></div>
-                <div class="field"><label>Color</label><input type="text" name="color" placeholder="Silver"></div>
+                <div class="field"><label>Model *</label><input type="text" name="model" placeholder="M3 Competition" required></div>
+                <div class="field"><label>Color</label><input type="text" name="color" placeholder="Alpine White"></div>
               </div>
 
-              <div class="form-section-label">SERVICE NEEDED</div>
+              <div class="form-section-label">Service Needed</div>
               <div class="services-check">
                 <div class="service-check-item"><input type="checkbox" id="s1" name="service" value="window-tint"><label for="s1">Window Tinting</label></div>
                 <div class="service-check-item"><input type="checkbox" id="s2" name="service" value="ppf"><label for="s2">Paint Protection Film</label></div>
                 <div class="service-check-item"><input type="checkbox" id="s3" name="service" value="ceramic"><label for="s3">Ceramic Coating</label></div>
-                <div class="service-check-item"><input type="checkbox" id="s4" name="service" value="headlight"><label for="s4">Headlight/Taillight</label></div>
-                <div class="service-check-item"><input type="checkbox" id="s5" name="service" value="boat"><label for="s5">Boat/Marine</label></div>
-                <div class="service-check-item"><input type="checkbox" id="s6" name="service" value="residential"><label for="s6">Residential/Commercial</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s4" name="service" value="headlight"><label for="s4">Headlight / Taillight</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s5" name="service" value="boat"><label for="s5">Boat / Marine</label></div>
+                <div class="service-check-item"><input type="checkbox" id="s6" name="service" value="residential"><label for="s6">Residential / Commercial</label></div>
               </div>
 
-              <div class="form-section-label">ADDITIONAL DETAILS</div>
-              <div class="field" style="margin-bottom:0">
+              <div class="form-section-label">Additional Details</div>
+              <div class="field" style="margin-bottom:0;">
                 <label>Tell us more (optional)</label>
                 <textarea name="notes" placeholder="Any specific questions, details about your vehicle, or budget range..."></textarea>
               </div>
 
               <button type="submit" class="form-submit">
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M9 4l5 4-5 4"/></svg>
-                Send My Quote Request
+                Send My Quote Request →
               </button>
               <p class="form-note">We respond same day during business hours.<br>Your information is never shared or sold.</p>
             </form>
           </div>
 
           <div class="success-state" id="success">
-            <div class="check-circle">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12l4 4 10-10"/></svg>
-            </div>
+            <div class="success-icon">✅</div>
             <h3>Request Sent!</h3>
-            <p>Thanks â€” we got your quote request and will get back to you shortly. If it's urgent, give us a call at <a href="tel:6312264300" style="color:var(--red-light)">631-226-4300</a>.</p>
+            <p>We got your quote request and will follow up shortly.<br>Need it faster? Call <a href="tel:6312264300">631-226-4300</a>.</p>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="logo">
-          <div class="logo-mark">MWT</div>
-          <div class="logo-text">
-            <div class="name">Masters Window Tinting &amp; Detail</div>
-            <div class="location">WEST BABYLON Â· LONG ISLAND, NY</div>
-          </div>
-        </a>
-        <p>Long Island's trusted automotive protection specialists for 25+ years.</p>
-        <div class="footer-socials">
-          <a href="#" class="footer-social-link">IG</a>
-          <a href="#" class="footer-social-link">FB</a>
-        </div>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Masters Window Tinting & Detail</div>
+      <div class="footer-brand-sub">Ceramic Pro Long Island · NanoPro Liquid PPF</div>
+      <p class="footer-desc">Certified Ceramic Pro and NanoPro Liquid PPF specialists serving Nassau & Suffolk County for 25+ years. Full-time staff, no outside contractors, every job guaranteed.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/profile.php?id=100063773733742" target="_blank" class="social-link">FB</a>
+        <a href="https://www.instagram.com/Ceramic_pro_long_island" target="_blank" class="social-link">IG</a>
       </div>
-      <div class="footer-col"><h4>Services</h4><ul><li><a href="index.html#services">Window Tinting</a></li><li><a href="index.html#services">Paint Protection Film</a></li><li><a href="index.html#services">Ceramic Coating</a></li><li><a href="index.html#services">Headlight Tinting</a></li></ul></div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="index.html#reviews">Testimonials</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-      <div class="footer-col"><h4>Service Area</h4><ul><li><a href="#">Nassau County</a></li><li><a href="#">Suffolk County</a></li><li><a href="#">West Babylon</a></li><li><a href="#">Babylon</a></li><li><a href="#">Amityville</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <p>Â© 2026 Masters Window Tinting &amp; Detail Â· 863 Rte 109, West Babylon, NY 11704 Â· <a href="tel:6312264300">631-226-4300</a></p>
-      <p><a href="#">Privacy Policy</a></p>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="index.html#services">Window Tinting</a></li>
+        <li><a href="index.html#ppf-levels">Liquid PPF</a></li>
+        <li><a href="index.html#services">Ceramic Coating</a></li>
+        <li><a href="index.html#services">Headlight Tinting</a></li>
+        <li><a href="index.html#services">Boat & Marine</a></li>
+        <li><a href="index.html#services">Residential & Commercial</a></li>
+      </ul>
     </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="index.html#reviews">Reviews</a></li>
+        <li><a href="https://www.ceramicprolongisland.net/blog" target="_blank">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Service Area</div>
+      <ul class="footer-links">
+        <li><a href="#">Nassau County</a></li>
+        <li><a href="#">Suffolk County</a></li>
+        <li><a href="#">North Shore</a></li>
+        <li><a href="#">South Shore</a></li>
+        <li><a href="#">West Babylon</a></li>
+        <li><a href="#">Garden City</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Masters Window Tinting & Detail · 863 Rte 109 Suite A, West Babylon, NY 11704 · 631-226-4300</span>
+    <a href="#">Privacy Policy</a>
   </div>
 </footer>
 
-<div class="mobile-cta">
-  <a href="tel:6312264300">TAP TO CALL Â· 631-226-4300</a>
-  <span>Free quotes Â· Open 7 days</span>
-</div>
+<a href="tel:6312264300" class="mobile-cta">📞 TAP TO CALL · 631-226-4300</a>
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
 
@@ -464,11 +677,11 @@
     document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
     if (!isOpen) item.classList.add('open');
   }
+
+  window.addEventListener('scroll', function() {
+    const nav = document.getElementById('navbar');
+    nav.style.padding = window.scrollY > 60 ? '0.65rem 2.5rem' : '1rem 2.5rem';
+  });
 </script>
 </body>
 </html>
-
-
-
-
-
