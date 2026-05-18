@@ -1691,13 +1691,13 @@
 
   <!-- Dots -->
   <div class="carousel-dots">
-    <button class="dot active" onclick="goToSlide(0)"></button>
-    <button class="dot" onclick="goToSlide(1)"></button>
-    <button class="dot" onclick="goToSlide(2)"></button>
-    <button class="dot" onclick="goToSlide(3)"></button>
-    <button class="dot" onclick="goToSlide(4)"></button>
-    <button class="dot" onclick="goToSlide(5)"></button>
-    <button class="dot" onclick="goToSlide(6)"></button>
+    <button class="dot active" onclick="goToSlideManual(0)"></button>
+    <button class="dot" onclick="goToSlideManual(1)"></button>
+    <button class="dot" onclick="goToSlideManual(2)"></button>
+    <button class="dot" onclick="goToSlideManual(3)"></button>
+    <button class="dot" onclick="goToSlideManual(4)"></button>
+    <button class="dot" onclick="goToSlideManual(5)"></button>
+    <button class="dot" onclick="goToSlideManual(6)"></button>
   </div>
 
   <!-- Arrows -->
@@ -2277,8 +2277,8 @@
   const DURATION = 5000;
   let videoPaused = false; // flag: true while a video is playing
 
-  function goToSlide(n) {
-    if (videoPaused) return; // don't advance while video plays
+  function goToSlide(n, force) {
+    if (videoPaused && !force) return; // don't advance while video plays (unless forced)
     slides[current].classList.remove('active');
     dots[current].classList.remove('active');
     current = (n + slides.length) % slides.length;
@@ -2287,7 +2287,14 @@
     resetProgress();
   }
 
+  function goToSlideManual(n) {
+    videoPaused = false; // dot click always overrides video lock
+    goToSlide(n, true);
+    resetAuto();
+  }
+
   function moveSlide(dir) {
+    videoPaused = false; // manual nav always overrides video lock
     goToSlide(current + dir);
     resetAuto();
   }
@@ -2328,17 +2335,44 @@
     vid.addEventListener('ended',  () => resumeCarousel());
   });
 
-  // YouTube iframe detection via postMessage
-  window.addEventListener('message', function(e) {
-    try {
-      const data = JSON.parse(e.data);
-      // YouTube sends playerState: 1 = playing, 2 = paused, 0 = ended
-      if (data.event === 'onStateChange') {
-        if (data.info === 1) pauseCarousel();
-        if (data.info === 2 || data.info === 0) resumeCarousel();
+  // ── YouTube IFrame Player API ──────────────────────────────────────────────
+  // Give each carousel YouTube iframe a unique id so the API can target it
+  const ytCarouselIframe = document.querySelector('.carousel-track iframe[src*="youtube"]');
+  if (ytCarouselIframe && !ytCarouselIframe.id) {
+    ytCarouselIframe.id = 'yt-ppf-player';
+  }
+
+  // Load the YouTube IFrame API script once
+  if (!window._ytApiLoading) {
+    window._ytApiLoading = true;
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  }
+
+  // Called automatically by the API when ready
+  window.onYouTubeIframeAPIReady = function() {
+    // Only bind to the carousel PPF iframe, not the promo section
+    const iframeEl = document.getElementById('yt-ppf-player');
+    if (!iframeEl) return;
+
+    new YT.Player('yt-ppf-player', {
+      events: {
+        onStateChange: function(event) {
+          // YT.PlayerState: PLAYING=1, PAUSED=2, ENDED=0, BUFFERING=3
+          if (event.data === YT.PlayerState.PLAYING) {
+            pauseCarousel();
+          } else if (
+            event.data === YT.PlayerState.PAUSED ||
+            event.data === YT.PlayerState.ENDED
+          ) {
+            resumeCarousel();
+          }
+        }
       }
-    } catch(_) {}
-  });
+    });
+  };
+  // ──────────────────────────────────────────────────────────────────────────
 
   // Init
   resetProgress();
