@@ -1163,19 +1163,26 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      align-items: center;
+      align-items: end; /* bottom-align both columns like other slides */
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1rem;
     }
 
-    .hero-copy { display: flex; flex-direction: column; gap: 0; }
+    /* hero-copy: same bottom-aligned flex column, badge stays compact */
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: flex-start; /* keeps badge from stretching full width */
+    }
 
     .hero-video {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-end;
+      padding-bottom: 0.5rem;
     }
 
     .video-frame {
@@ -1274,19 +1281,22 @@
       border-radius: 4px;
     }
 
-    /* PPF slide — two-col layout, vertically centered with consistent nav clearance */
+    /* PPF slide — bottom-aligned, same padding as other slides */
     .slide-ppf {
-      align-items: center;
-      padding: 5rem 3rem 4rem;
+      align-items: flex-end;
+      padding: 0 3rem 7rem; /* exact match to .carousel-slide base padding */
     }
 
     .slide-ppf .hero-slide-layout {
-      padding-bottom: 2rem;
+      padding-bottom: 0;
     }
 
-    /* Match headline size on PPF slide to other slides */
+    /* Headline: same clamp as .hero h1 on other slides */
     .slide-ppf h1.display {
-      font-size: clamp(3.2rem, 7vw, 7.5rem);
+      font-size: clamp(4.5rem, 11vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.8rem;
     }
 
     @media (max-width: 900px) {
@@ -1302,6 +1312,7 @@
       }
       .hero-video {
         justify-content: flex-start;
+        align-items: flex-start;
         width: 100%;
       }
       .video-frame {
