@@ -163,21 +163,21 @@
 
     .hero h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4.5rem, 11vw, 10rem);
+      font-size: clamp(3.5rem, min(11vw, 12vh), 9rem);
       line-height: 0.88;
       letter-spacing: 0.04em;
       color: var(--white);
-      margin-bottom: 1.8rem;
+      margin-bottom: clamp(1rem, 2vh, 1.8rem);
     }
 
     .hero h1 .gold { color: var(--gold); }
 
     .hero-sub {
-      font-size: 1rem;
+      font-size: clamp(0.82rem, 1.5vh, 1rem);
       color: rgba(240,237,232,0.6);
       max-width: 560px;
-      line-height: 1.75;
-      margin-bottom: 2.2rem;
+      line-height: 1.65;
+      margin-bottom: clamp(1rem, 2.5vh, 2.2rem);
       font-weight: 300;
     }
 
@@ -1022,7 +1022,7 @@
       .slide-ppf { align-items: flex-start; padding: 7rem 1.5rem 5rem; overflow-y: auto; }
       .hero-slide-layout { grid-template-columns: 1fr; gap: 2rem; padding: 0; }
       .hero-video { justify-content: flex-start; align-items: flex-start; width: 100%; }
-      .video-frame { max-width: 240px; }
+      .video-frame { height: min(45vh, 360px); width: calc(min(45vh, 360px) * 9 / 16); max-width: 210px; }
 
       /* Stats */
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
@@ -1110,7 +1110,7 @@
       .hero-ctas { flex-direction: column; gap: 0.8rem; }
       .hero-ctas .btn-primary,
       .hero-ctas .btn-outline { text-align: center; justify-content: center; }
-      .video-frame { max-width: 180px; }
+      .video-frame { height: min(35vh, 280px); width: calc(min(35vh, 280px) * 9 / 16); max-width: 160px; }
 
       /* Borograph & NanoPro CTAs */
       .borograph-ctas { flex-direction: column; gap: 0.8rem; }
@@ -1175,7 +1175,7 @@
       min-height: 100vh;
       display: flex;
       align-items: flex-end;
-      padding: 0 3rem 7rem;
+      padding: 0 3rem clamp(3rem, 7vh, 7rem);
       opacity: 0;
       transition: opacity 0.8s ease;
       pointer-events: none;
@@ -1294,7 +1294,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
-      align-items: end; /* bottom-align both columns like other slides */
+      align-items: center;
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
@@ -1318,9 +1318,10 @@
 
     .video-frame {
       position: relative;
-      width: 100%;
-      max-width: 320px;
-      aspect-ratio: 9 / 16;
+      /* Width derived from capped height to preserve 9:16 ratio */
+      height: min(55vh, 480px);
+      width: calc(min(55vh, 480px) * 9 / 16);
+      max-width: 270px;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid rgba(200,168,75,0.3);
@@ -1412,22 +1413,22 @@
       border-radius: 4px;
     }
 
-    /* PPF slide — bottom-aligned, same padding as other slides */
+    /* PPF slide — vertically centered so video + headline fit in one screen */
     .slide-ppf {
-      align-items: flex-end;
-      padding: 0 3rem 7rem; /* exact match to .carousel-slide base padding */
+      align-items: center;
+      padding: clamp(5rem, 10vh, 8rem) 3rem clamp(2rem, 4vh, 4rem);
     }
 
     .slide-ppf .hero-slide-layout {
       padding-bottom: 0;
     }
 
-    /* Headline: same clamp as .hero h1 on other slides */
+    /* PPF headline: viewport-height-aware so it never overflows */
     .slide-ppf h1.display {
-      font-size: clamp(4.5rem, 11vw, 10rem);
+      font-size: clamp(2.8rem, min(9vw, 10vh), 7.5rem);
       line-height: 0.88;
       letter-spacing: 0.04em;
-      margin-bottom: 1.8rem;
+      margin-bottom: clamp(0.6rem, 1.2vh, 1.5rem);
     }
 
     /* PPF slide mobile handled in main breakpoints below */
