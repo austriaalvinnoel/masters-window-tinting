@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Detailing & Paint Correction | Masters Window Tinting | Long Island, NY</title>
+<meta name="description" content="Professional auto detailing and paint correction in West Babylon, Long Island. Swirl removal, full detail packages, and paint restoration. Call 631-226-4300.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#080808;--surface:#111111;--surface2:#1a1a1a;--gold:#C8A84B;--gold-light:#E8C878;--white:#F0EDE8;--muted:#888888;--border:rgba(200,168,75,0.18);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+  .reveal.visible{opacity:1;transform:none;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(8,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
+  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.1em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.15;}
+  .nav-logo span{font-family:'Outfit',sans-serif;font-size:0.58rem;font-weight:600;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;}
+  .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--white);}
+  .btn-call-nav{background:var(--gold);color:#000;padding:0.6rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+  .btn-call-nav:hover{background:var(--gold-light);}
+  .page-hero{background:var(--surface);padding:9rem 0 5rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+  .page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);background-size:60px 60px;}
+  .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(ellipse,rgba(200,168,75,0.08) 0%,transparent 70%);top:-200px;right:-100px;pointer-events:none;}
+  .breadcrumb{font-size:0.68rem;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;}
+  .breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
+  .breadcrumb a:hover{color:var(--gold);}
+  .page-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:0.88;letter-spacing:0.04em;color:var(--white);margin-bottom:1.5rem;position:relative;z-index:1;}
+  .page-hero h1 span{color:var(--gold);}
+  .page-hero p{font-size:1rem;color:var(--muted);line-height:1.75;max-width:560px;font-weight:300;position:relative;z-index:1;margin-bottom:2rem;}
+  .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-primary{background:var(--gold);color:#000;padding:1rem 2rem;font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
+  .btn-outline{border:1px solid rgba(240,237,232,0.25);color:var(--white);padding:1rem 2rem;font-size:0.85rem;letter-spacing:0.1em;text-decoration:none;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+  .section{padding:6rem 2.5rem;}
+  .section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;display:block;}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);color:var(--white);letter-spacing:0.04em;line-height:0.92;margin-bottom:1rem;}
+  .section-title span{color:var(--gold);}
+  .section-sub{color:var(--muted);font-size:0.95rem;line-height:1.75;max-width:560px;font-weight:300;}
+  .packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;background:var(--border);}
+  .package-card{background:var(--surface);padding:2.5rem 2rem;position:relative;transition:background 0.3s;}
+  .package-card:hover{background:var(--surface2);}
+  .package-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);}
+  .package-tag{font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .package-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.8rem;}
+  .package-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:1.2rem;}
+  .package-includes{list-style:none;display:flex;flex-direction:column;gap:0.45rem;}
+  .package-includes li{font-size:0.8rem;color:rgba(240,237,232,0.6);display:flex;align-items:center;gap:0.5rem;}
+  .package-includes li::before{content:'✓';color:var(--gold);font-size:0.72rem;font-weight:700;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;background:var(--border);}
+  .card{background:var(--black);padding:2.5rem 2rem;transition:background 0.3s;}
+  .card:hover{background:#0e0e0e;}
+  .card-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+  .card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.6rem;}
+  .card-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:300;}
+  .cta-strip{background:var(--gold);padding:5rem 2.5rem;}
+  .cta-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;max-width:1200px;margin:0 auto;}
+  .cta-strip h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,4rem);color:#000;line-height:0.95;letter-spacing:0.04em;}
+  .cta-strip p{font-size:0.95rem;color:rgba(0,0,0,0.65);margin-top:0.6rem;}
+  .btn-dark{background:#000;color:var(--gold);padding:1rem 2rem;font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:4rem 2.5rem 2rem;}
+  .footer-links-row{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2rem;}
+  .footer-links-row a{color:var(--muted);text-decoration:none;font-size:0.83rem;transition:color 0.2s;}
+  .footer-links-row a:hover{color:var(--gold);}
+  .footer-bottom{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.73rem;color:var(--muted);flex-wrap:wrap;gap:0.5rem;}
+  .footer-bottom a{color:var(--muted);text-decoration:none;}
+  .mobile-cta{position:fixed;bottom:0;left:0;right:0;background:var(--gold);color:#000;text-align:center;padding:1.1rem;font-weight:700;font-size:0.88rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;display:none;z-index:99;}
+  @media(max-width:900px){.nav-links{display:none;}.packages-grid,.grid3{grid-template-columns:1fr;}.mobile-cta{display:block;}body{padding-bottom:58px;}.cta-inner{flex-direction:column;text-align:center;}nav{padding:0.9rem 1.5rem;}}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Masters Window Tinting & Detail<span>Ceramic Pro Long Island · NanoPro Liquid PPF</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="index.html#services">Services</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="tel:6312264300" class="btn-call-nav">📞 Call 631-226-4300</a>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="index.html#services">Services</a><span>›</span><span style="color:var(--white)">Detailing</span></div>
+    <h1>DETAILING &<br><span>PAINT CORRECTION</span></h1>
+    <p>Professional auto detailing and paint correction by the same certified team that installs Ceramic Pro and Liquid PPF. Swirl removal, full details, and paint restoration for all vehicle types.</p>
+    <div class="hero-ctas">
+      <a href="tel:6312264300" class="btn-primary">📞 Call 631-226-4300</a>
+      <a href="contact.html" class="btn-outline">Get a Free Quote →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">Detail Packages</span>
+    <h2 class="section-title">CHOOSE YOUR <span>PACKAGE</span></h2>
+    <p class="section-sub">From a quick refresh to a full correction and protection — we have a detail package for every vehicle and budget.</p>
+    <div class="packages-grid">
+      <div class="package-card reveal">
+        <div class="package-tag">Essential</div>
+        <div class="package-name">Full Detail</div>
+        <p class="package-desc">A thorough interior and exterior clean that brings your vehicle back to showroom condition.</p>
+        <ul class="package-includes">
+          <li>Exterior hand wash & dry</li>
+          <li>Clay bar decontamination</li>
+          <li>Interior vacuum & wipe-down</li>
+          <li>Window cleaning (in & out)</li>
+          <li>Tire & trim dressing</li>
+          <li>Hand wax application</li>
+        </ul>
+      </div>
+      <div class="package-card featured reveal">
+        <div class="package-tag">Most Popular</div>
+        <div class="package-name">Paint Correction</div>
+        <p class="package-desc">Machine polish to remove swirl marks, light scratches, and oxidation — restoring deep gloss and clarity.</p>
+        <ul class="package-includes">
+          <li>Everything in Full Detail</li>
+          <li>Single or multi-stage polish</li>
+          <li>Swirl & scratch removal</li>
+          <li>Oxidation correction</li>
+          <li>Paint gloss restoration</li>
+          <li>Sealant protection applied</li>
+        </ul>
+      </div>
+      <div class="package-card reveal">
+        <div class="package-tag">Premium</div>
+        <div class="package-name">Correction + Ceramic</div>
+        <p class="package-desc">The ultimate treatment — full paint correction followed by Ceramic Pro coating for years of protection.</p>
+        <ul class="package-includes">
+          <li>Everything in Paint Correction</li>
+          <li>Full surface decontamination</li>
+          <li>Certified Ceramic Pro coating</li>
+          <li>Hydrophobic surface finish</li>
+          <li>Multi-year protection</li>
+          <li>Lifetime warranty</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section" style="background:var(--surface);padding:6rem 2.5rem;">
+  <div class="container">
+    <span class="section-label">Why Masters</span>
+    <h2 class="section-title">DETAIL DONE <span>RIGHT</span></h2>
+    <p class="section-sub">Our detailing team uses the same care and precision as our tint and coating installers — no shortcuts, no corners cut.</p>
+    <div class="grid3">
+      <div class="card reveal"><span class="card-icon">🔬</span><div class="card-title">Paint Correction</div><p class="card-desc">Machine polishing removes swirl marks, water spots, and light scratches that dull your paint — restoring the deep, wet-look gloss your vehicle had when it was new.</p></div>
+      <div class="card reveal"><span class="card-icon">✨</span><div class="card-title">Full Decontamination</div><p class="card-desc">Iron fallout removal, clay bar decontamination, and thorough surface prep before any coating or sealant is applied — the step most shops skip.</p></div>
+      <div class="card reveal"><span class="card-icon">🛡️</span><div class="card-title">Protection Ready</div><p class="card-desc">Every detail package prepares your paint for the next level of protection — whether that's a sealant, wax, or our full Ceramic Pro coating.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="cta-inner">
+    <div><h2>BOOK YOUR<br>DETAIL TODAY</h2><p>Call first — we'll recommend the right package for your vehicle.</p></div>
+    <a href="tel:6312264300" class="btn-dark">📞 Call 631-226-4300</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-links-row">
+      <a href="index.html">Home</a><a href="residential.html">Residential</a><a href="commercial.html">Commercial</a><a href="wall-graphics.html">Wall Graphics</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Masters Window Tinting & Detail · 863 Rte 109 Suite A, West Babylon, NY 11704 · 631-226-4300</span>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+<a href="tel:6312264300" class="mobile-cta">📞 TAP TO CALL · 631-226-4300</a>
+<script>
+  const reveals=document.querySelectorAll('.reveal');
+  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});},{threshold:0.08});
+  reveals.forEach(el=>obs.observe(el));
+  window.addEventListener('scroll',()=>{document.getElementById('navbar').style.padding=window.scrollY>60?'0.65rem 2.5rem':'1rem 2.5rem';});
+</script>
+</body>
+</html>

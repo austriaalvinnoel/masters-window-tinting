@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wall Graphics | Masters Window Tinting | Long Island, NY</title>
+<meta name="description" content="Custom wall graphics and wraps for homes, offices, and businesses across Long Island, NY. Call Masters Window Tinting at 631-226-4300.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#080808;--surface:#111111;--surface2:#1a1a1a;--gold:#C8A84B;--gold-light:#E8C878;--white:#F0EDE8;--muted:#888888;--border:rgba(200,168,75,0.18);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+  .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
+  .reveal.visible{opacity:1;transform:none;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(8,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
+  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.1em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.15;}
+  .nav-logo span{font-family:'Outfit',sans-serif;font-size:0.58rem;font-weight:600;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;}
+  .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--white);}
+  .btn-call-nav{background:var(--gold);color:#000;padding:0.6rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+  .btn-call-nav:hover{background:var(--gold-light);}
+  .page-hero{background:var(--surface);padding:9rem 0 5rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+  .page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);background-size:60px 60px;}
+  .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(ellipse,rgba(200,168,75,0.08) 0%,transparent 70%);top:-200px;right:-100px;pointer-events:none;}
+  .breadcrumb{font-size:0.68rem;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;}
+  .breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
+  .breadcrumb a:hover{color:var(--gold);}
+  .page-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:0.88;letter-spacing:0.04em;color:var(--white);margin-bottom:1.5rem;position:relative;z-index:1;}
+  .page-hero h1 span{color:var(--gold);}
+  .page-hero p{font-size:1rem;color:var(--muted);line-height:1.75;max-width:560px;font-weight:300;position:relative;z-index:1;margin-bottom:2rem;}
+  .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-primary{background:var(--gold);color:#000;padding:1rem 2rem;font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
+  .btn-outline{border:1px solid rgba(240,237,232,0.25);color:var(--white);padding:1rem 2rem;font-size:0.85rem;letter-spacing:0.1em;text-decoration:none;transition:all 0.2s;}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+  .section{padding:6rem 2.5rem;}
+  .section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;display:block;}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);color:var(--white);letter-spacing:0.04em;line-height:0.92;margin-bottom:1rem;}
+  .section-title span{color:var(--gold);}
+  .section-sub{color:var(--muted);font-size:0.95rem;line-height:1.75;max-width:560px;font-weight:300;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;background:var(--border);}
+  .card{background:var(--surface);padding:2.5rem 2rem;transition:background 0.3s;}
+  .card:hover{background:var(--surface2);}
+  .card-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+  .card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.6rem;}
+  .card-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:300;}
+  .use-cases{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:3rem;background:var(--border);}
+  .use-case{background:var(--black);padding:2rem;transition:background 0.3s;}
+  .use-case:hover{background:#0e0e0e;}
+  .use-case-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.5rem;}
+  .use-case-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:300;}
+  .cta-strip{background:var(--gold);padding:5rem 2.5rem;}
+  .cta-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;max-width:1200px;margin:0 auto;}
+  .cta-strip h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,4rem);color:#000;line-height:0.95;letter-spacing:0.04em;}
+  .cta-strip p{font-size:0.95rem;color:rgba(0,0,0,0.65);margin-top:0.6rem;}
+  .btn-dark{background:#000;color:var(--gold);padding:1rem 2rem;font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:4rem 2.5rem 2rem;}
+  .footer-links-row{display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:2rem;}
+  .footer-links-row a{color:var(--muted);text-decoration:none;font-size:0.83rem;transition:color 0.2s;}
+  .footer-links-row a:hover{color:var(--gold);}
+  .footer-bottom{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.73rem;color:var(--muted);flex-wrap:wrap;gap:0.5rem;}
+  .footer-bottom a{color:var(--muted);text-decoration:none;}
+  .mobile-cta{position:fixed;bottom:0;left:0;right:0;background:var(--gold);color:#000;text-align:center;padding:1.1rem;font-weight:700;font-size:0.88rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;display:none;z-index:99;}
+  @media(max-width:900px){.nav-links{display:none;}.grid3,.use-cases{grid-template-columns:1fr;}.mobile-cta{display:block;}body{padding-bottom:58px;}.cta-inner{flex-direction:column;text-align:center;}nav{padding:0.9rem 1.5rem;}}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Masters Window Tinting & Detail<span>Ceramic Pro Long Island · NanoPro Liquid PPF</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="index.html#services">Services</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="tel:6312264300" class="btn-call-nav">📞 Call 631-226-4300</a>
+</nav>
+
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><a href="index.html#services">Services</a><span>›</span><span style="color:var(--white)">Wall Graphics</span></div>
+    <h1>WALL<br><span>GRAPHICS</span></h1>
+    <p>Custom wall wraps, murals, and graphics for homes, offices, and businesses across Long Island. Transform any space with professional-grade vinyl graphics installed by our team.</p>
+    <div class="hero-ctas">
+      <a href="tel:6312264300" class="btn-primary">📞 Call 631-226-4300</a>
+      <a href="contact.html" class="btn-outline">Get a Free Quote →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="section-label">What We Offer</span>
+    <h2 class="section-title">TRANSFORM YOUR <span>SPACE</span></h2>
+    <p class="section-sub">From bold accent walls to full-room murals, our wall graphics are printed in high resolution and installed by experienced professionals.</p>
+    <div class="grid3">
+      <div class="card reveal"><span class="card-icon">🎨</span><div class="card-title">Custom Wall Murals</div><p class="card-desc">Full-wall photographic murals, abstract designs, or brand imagery printed at full resolution and seamlessly installed by our team.</p></div>
+      <div class="card reveal"><span class="card-icon">🏢</span><div class="card-title">Business Branding</div><p class="card-desc">Logo walls, mission statements, and branded environments for offices, retail spaces, and lobbies that make a lasting impression.</p></div>
+      <div class="card reveal"><span class="card-icon">🏠</span><div class="card-title">Residential Accents</div><p class="card-desc">Accent walls, kids' room themes, and custom artwork for homes — removable options available for renters and those who want flexibility.</p></div>
+      <div class="card reveal"><span class="card-icon">🖥️</span><div class="card-title">Frosted Glass Graphics</div><p class="card-desc">Frosted vinyl with cutout logos or patterns for office glass partitions and conference room windows — privacy with style.</p></div>
+      <div class="card reveal"><span class="card-icon">📐</span><div class="card-title">Precision Installation</div><p class="card-desc">Our installers handle every project with care — proper surface prep, bubble-free application, and clean edges every time.</p></div>
+      <div class="card reveal"><span class="card-icon">♻️</span><div class="card-title">Removable Options</div><p class="card-desc">Temporary or removable vinyl available for rental spaces, seasonal campaigns, or anyone who wants flexibility to change things up.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--surface);padding:6rem 2.5rem;">
+  <div class="container">
+    <span class="section-label">Use Cases</span>
+    <h2 class="section-title">WHERE WE <span>INSTALL</span></h2>
+    <div class="use-cases">
+      <div class="use-case reveal"><div class="use-case-title">🏪 Retail & Storefronts</div><p class="use-case-desc">Window graphics, promotional wraps, and branded wall installations that attract customers and reinforce your brand.</p></div>
+      <div class="use-case reveal"><div class="use-case-title">🏢 Corporate Offices</div><p class="use-case-desc">Company values, mission statements, and brand imagery for lobbies, conference rooms, and break areas.</p></div>
+      <div class="use-case reveal"><div class="use-case-title">🍽️ Restaurants & Bars</div><p class="use-case-desc">Atmosphere-building murals, menu graphics, and branded environments that enhance the dining experience.</p></div>
+      <div class="use-case reveal"><div class="use-case-title">🏠 Residential Homes</div><p class="use-case-desc">Accent walls, kids' rooms, home offices, and custom art pieces that bring personality to any living space.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="cta-inner">
+    <div><h2>READY TO TRANSFORM<br>YOUR SPACE?</h2><p>Call us to discuss your project — free quotes for all wall graphic installations.</p></div>
+    <a href="tel:6312264300" class="btn-dark">📞 Call 631-226-4300</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-links-row">
+      <a href="index.html">Home</a><a href="residential.html">Residential</a><a href="commercial.html">Commercial</a><a href="detailing.html">Detailing</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Masters Window Tinting & Detail · 863 Rte 109 Suite A, West Babylon, NY 11704 · 631-226-4300</span>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+<a href="tel:6312264300" class="mobile-cta">📞 TAP TO CALL · 631-226-4300</a>
+<script>
+  const reveals=document.querySelectorAll('.reveal');
+  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});},{threshold:0.08});
+  reveals.forEach(el=>obs.observe(el));
+  window.addEventListener('scroll',()=>{document.getElementById('navbar').style.padding=window.scrollY>60?'0.65rem 2.5rem':'1rem 2.5rem';});
+</script>
+</body>
+</html>
