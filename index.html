@@ -1274,33 +1274,230 @@
       border-radius: 4px;
     }
 
-    /* PPF slide — override .carousel-slide padding for two-col layout */
+    /* PPF slide — two-col layout, vertically centered with consistent nav clearance */
     .slide-ppf {
       align-items: center;
-      padding: 0 1.5rem;
+      padding: 5rem 3rem 4rem;
+    }
+
+    .slide-ppf .hero-slide-layout {
+      padding-bottom: 2rem;
+    }
+
+    /* Match headline size on PPF slide to other slides */
+    .slide-ppf h1.display {
+      font-size: clamp(3.2rem, 7vw, 7.5rem);
     }
 
     @media (max-width: 900px) {
+      .slide-ppf {
+        align-items: flex-start;
+        padding: 7rem 1.5rem 5rem;
+        overflow-y: auto;
+      }
       .hero-slide-layout {
         grid-template-columns: 1fr;
         gap: 2rem;
         padding: 0;
       }
-
-      .slide-ppf {
-        align-items: flex-start;
-        padding: 8rem 1.5rem 5rem;
-        flex-direction: column;
-      }
-
       .hero-video {
         justify-content: flex-start;
         width: 100%;
       }
-
       .video-frame {
         max-width: 200px;
       }
+    }
+    /* ── NANOPRO CERAMIC PROMO ── */
+    .nanopro-promo {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 7rem 2.5rem;
+      overflow: hidden;
+    }
+
+    .nanopro-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .nanopro-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(200,168,75,0.12);
+      border: 1px solid rgba(200,168,75,0.45);
+      color: var(--gold);
+      padding: 0.4rem 1.1rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+    }
+
+    .nanopro-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 6.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .nanopro-headline span { color: var(--gold); }
+
+    .nanopro-body {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 460px;
+      margin-bottom: 1.5rem;
+    }
+
+    .nanopro-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .nanopro-list li {
+      font-size: 0.85rem;
+      color: rgba(240,237,232,0.7);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .nanopro-list li::before {
+      content: '→';
+      color: var(--gold);
+      font-size: 0.72rem;
+      flex-shrink: 0;
+    }
+
+    .nanopro-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nanopro-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: #000;
+      padding: 1rem 2rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nanopro-btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(200,168,75,0.25);
+    }
+
+    .nanopro-btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(200,168,75,0.35);
+      color: var(--white);
+      padding: 1rem 2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nanopro-btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Video side */
+    .nanopro-media {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nanopro-video-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(200,168,75,0.25);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,75,0.08);
+      background: #000;
+    }
+
+    .nanopro-video-glow {
+      position: absolute;
+      inset: -60px;
+      background: radial-gradient(ellipse at center, rgba(200,168,75,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .nanopro-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 540px;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nanopro-video-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.85) 0%, transparent 60%);
+      padding: 1.5rem;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+    }
+
+    .nanopro-overlay-tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(200,168,75,0.12);
+      border: 1px solid rgba(200,168,75,0.35);
+      padding: 0.3rem 0.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .nanopro-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .nanopro-promo { padding: 5rem 1.5rem; }
+      .nanopro-video-wrap { max-width: 100%; }
     }
   </style>
 </head>
@@ -1388,7 +1585,7 @@
               <!-- Item 1: YouTube -->
               <div class="media-item active">
                 <iframe
-                  src="https://www.youtube.com/embed/Zta6OycRLfQ"
+                  src="https://www.youtube.com/embed/Zta6OycRLfQ?enablejsapi=1"
                   title="Liquid Paint Protection Film Video"
                   loading="lazy"
                   allowfullscreen
@@ -1860,6 +2057,52 @@
   </div>
 </section>
 
+<!-- NANOPRO CERAMIC PROMO -->
+<section class="nanopro-promo" id="nanopro">
+  <div class="nanopro-inner">
+
+    <!-- Left: Copy -->
+    <div class="nanopro-copy">
+      <div class="nanopro-badge">NanoPro Certified · Long Island</div>
+      <h2 class="nanopro-headline">CERAMIC<br>COATING<br><span>THAT LASTS.</span></h2>
+      <p class="nanopro-body">NanoPro Ceramic Coating delivers a deep, hydrophobic finish that protects your paint from UV rays, chemicals, and environmental damage — for years, not months.</p>
+      <ul class="nanopro-list">
+        <li>Mirror-like gloss enhancement</li>
+        <li>Hydrophobic water-beading surface</li>
+        <li>UV & chemical resistance</li>
+        <li>Easier to clean — dirt doesn't stick</li>
+        <li>Certified installer · Lifetime warranty</li>
+      </ul>
+      <div class="nanopro-ctas">
+        <a href="tel:6312264300" class="nanopro-btn-primary">📞 Call 631-226-4300</a>
+        <a href="#contact" class="nanopro-btn-outline">Get a Free Quote →</a>
+      </div>
+    </div>
+
+    <!-- Right: Video -->
+    <div class="nanopro-media">
+      <div class="nanopro-video-wrap">
+        <div class="nanopro-video-glow"></div>
+        <video
+          class="nanopro-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          poster="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp"
+        >
+          <source src="nanopro-ceramic-promo.mp4" type="video/mp4">
+        </video>
+        <div class="nanopro-video-overlay">
+          <div class="nanopro-overlay-tag">NanoPro Ceramic Coating</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="section" id="contact" style="background: var(--surface);">
   <div class="container">
@@ -2029,15 +2272,17 @@
 <a href="tel:6312264300" class="mobile-cta-bar">📞 TAP TO CALL · 631-226-4300 · Mon–Sat 9–5 · Sun 10–4</a>
 
 <script>
-  // CAROUSEL
+  // CAROUSEL — video-aware autoplay
   const slides = document.querySelectorAll('.carousel-slide');
   const dots = document.querySelectorAll('.dot');
   const progressBar = document.getElementById('progressBar');
   let current = 0;
-  let autoTimer, progressTimer;
+  let autoTimer;
   const DURATION = 5000;
+  let videoPaused = false; // flag: true while a video is playing
 
   function goToSlide(n) {
+    if (videoPaused) return; // don't advance while video plays
     slides[current].classList.remove('active');
     dots[current].classList.remove('active');
     current = (n + slides.length) % slides.length;
@@ -2060,21 +2305,57 @@
     }, 30);
   }
 
+  function pauseCarousel() {
+    videoPaused = true;
+    clearInterval(autoTimer);
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+  }
+
+  function resumeCarousel() {
+    videoPaused = false;
+    resetProgress();
+    resetAuto();
+  }
+
   function resetAuto() {
     clearInterval(autoTimer);
-    autoTimer = setInterval(() => goToSlide(current + 1), DURATION);
+    if (!videoPaused) {
+      autoTimer = setInterval(() => goToSlide(current + 1), DURATION);
+    }
   }
+
+  // HTML5 video play/pause detection
+  document.querySelectorAll('.carousel-track video').forEach(vid => {
+    vid.addEventListener('play',   () => pauseCarousel());
+    vid.addEventListener('pause',  () => resumeCarousel());
+    vid.addEventListener('ended',  () => resumeCarousel());
+  });
+
+  // YouTube iframe detection via postMessage
+  window.addEventListener('message', function(e) {
+    try {
+      const data = JSON.parse(e.data);
+      // YouTube sends playerState: 1 = playing, 2 = paused, 0 = ended
+      if (data.event === 'onStateChange') {
+        if (data.info === 1) pauseCarousel();
+        if (data.info === 2 || data.info === 0) resumeCarousel();
+      }
+    } catch(_) {}
+  });
 
   // Init
   resetProgress();
   resetAuto();
 
-  // Pause on hover
+  // Pause on hover (desktop)
   document.getElementById('hero-carousel').addEventListener('mouseenter', () => {
+    if (videoPaused) return;
     clearInterval(autoTimer);
     progressBar.style.transition = 'none';
   });
   document.getElementById('hero-carousel').addEventListener('mouseleave', () => {
+    if (videoPaused) return;
     resetProgress();
     resetAuto();
   });
@@ -2087,7 +2368,7 @@
     if (Math.abs(diff) > 50) { moveSlide(diff > 0 ? 1 : -1); }
   });
 
- handler
+  // Form submit handler
   document.getElementById('quoteForm').addEventListener('submit', function(e) {
     e.preventDefault();
     this.style.display = 'none';
