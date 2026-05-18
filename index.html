@@ -1451,22 +1451,19 @@
       background: #000;
     }
 
-    .nanopro-video-glow {
-      position: absolute;
-      inset: -60px;
-      background: radial-gradient(ellipse at center, rgba(200,168,75,0.12) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
+    .nanopro-iframe-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
     }
 
-    .nanopro-video {
-      display: block;
+    .nanopro-iframe-wrap iframe {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: auto;
-      max-height: 540px;
-      object-fit: cover;
-      position: relative;
-      z-index: 1;
+      height: 100%;
+      border: none;
+      display: block;
     }
 
     .nanopro-video-overlay {
@@ -2083,17 +2080,16 @@
     <div class="nanopro-media">
       <div class="nanopro-video-wrap">
         <div class="nanopro-video-glow"></div>
-        <video
-          class="nanopro-video"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          poster="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp"
-        >
-          <source src="nanopro-ceramic-promo.mp4" type="video/mp4">
-        </video>
+        <div class="nanopro-iframe-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/Y3OO205BxUU?rel=0&modestbranding=1&enablejsapi=1"
+            title="NanoPro Ceramic Coating — Masters Window Tinting"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          ></iframe>
+        </div>
         <div class="nanopro-video-overlay">
           <div class="nanopro-overlay-tag">NanoPro Ceramic Coating</div>
         </div>
