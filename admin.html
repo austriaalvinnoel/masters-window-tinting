@@ -169,7 +169,15 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);co
 .settings-section{margin-bottom:2rem;}
 .settings-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);letter-spacing:0.04em;margin-bottom:1rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);}
 
-/* CHANGELOG */
+/* STORAGE BAR */
+    .storage-bar-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* CHANGELOG */
 .change-item{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid rgba(200,168,75,0.08);}
 .change-badge{font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.5rem;flex-shrink:0;}
 .badge-gallery{background:rgba(200,168,75,0.15);color:var(--gold);}
@@ -290,30 +298,74 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);co
       <div id="panel-gallery" class="panel">
         <div class="panel-header">
           <div class="panel-title">GALLERY MANAGER</div>
-          <div class="panel-desc">Upload and manage photos for each service category.</div>
+          <div class="panel-desc">Upload and manage photos for each service category. Images are compressed automatically before saving.</div>
         </div>
+
+        <!-- Storage meter -->
+        <div class="storage-bar-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+            <span style="font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);">Local Storage Used</span>
+            <span id="storage-text" style="font-size:0.72rem;color:var(--muted);">0 KB / 5 MB</span>
+          </div>
+          <div style="height:4px;background:var(--surface3);border-radius:2px;">
+            <div id="storage-bar" style="height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.4s;"></div>
+          </div>
+        </div>
+
         <div class="cat-tabs" id="cat-tabs"></div>
+
         <div class="card" id="gallery-cat-panel">
           <div class="card-title" id="gallery-cat-title">WINDOW TINTING</div>
           <div class="img-grid" id="img-grid"></div>
-          <div class="img-add-row">
-            <div class="upload-area" onclick="document.getElementById('file-upload').click()">
-              <input type="file" id="file-upload" accept="image/*" multiple onchange="handleFileUpload(event)">
-              <div style="font-size:1.5rem;margin-bottom:0.4rem;">📁</div>
-              <div class="upload-label"><span>Click to upload</span> photos from your computer<br><span style="color:var(--muted);font-weight:300;font-size:0.72rem;">JPG, PNG, WEBP accepted</span></div>
+
+          <!-- Upload progress -->
+          <div id="upload-progress" style="display:none;margin-bottom:1rem;">
+            <div style="font-size:0.75rem;color:var(--gold);margin-bottom:0.4rem;" id="upload-progress-text">Compressing images...</div>
+            <div style="height:4px;background:var(--surface3);border-radius:2px;">
+              <div id="upload-progress-bar" style="height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.2s;"></div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:0.5rem;min-width:200px;">
-              <div class="form-group" style="margin:0;">
-                <label>Or paste image URL</label>
-                <input type="url" id="url-input" placeholder="https://example.com/photo.jpg">
+          </div>
+
+          <!-- Upload area -->
+          <div class="img-add-row">
+            <div class="upload-area" id="drop-zone"
+              onclick="document.getElementById('file-upload').click()"
+              ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
+              ondragleave="this.style.borderColor=''"
+              ondrop="event.preventDefault();this.style.borderColor='';handleFileUpload({target:{files:event.dataTransfer.files}})">
+              <input type="file" id="file-upload" accept="image/*" multiple onchange="handleFileUpload(event)">
+              <div style="font-size:1.8rem;margin-bottom:0.5rem;">📁</div>
+              <div class="upload-label">
+                <span>Click or drag & drop</span> photos here<br>
+                <span style="color:var(--muted);font-weight:300;font-size:0.72rem;">JPG, PNG, WEBP · Auto-compressed · Multiple files OK</span>
               </div>
-              <button class="btn btn-outline-gold" onclick="addImageUrl()">Add URL</button>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:0.7rem;min-width:220px;">
+              <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;">
+                <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;">📎 Add by URL</div>
+                <div class="form-group" style="margin:0 0 0.5rem;">
+                  <input type="url" id="url-input" placeholder="https://imgur.com/photo.jpg" style="font-size:0.8rem;">
+                </div>
+                <button class="btn btn-outline-gold btn-sm" style="width:100%;" onclick="addImageUrl()">Add Image URL</button>
+              </div>
+              <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;">
+                <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">💡 Free Image Hosts</div>
+                <div style="font-size:0.72rem;color:var(--muted);line-height:1.8;font-weight:300;">
+                  <a href="https://imgur.com/upload" target="_blank" style="color:var(--gold);display:block;">→ imgur.com</a>
+                  <a href="https://imgbb.com" target="_blank" style="color:var(--gold);display:block;">→ imgbb.com</a>
+                  <a href="https://cloudinary.com" target="_blank" style="color:var(--gold);display:block;">→ cloudinary.com</a>
+                  <span style="font-size:0.65rem;opacity:0.6;">Upload there, paste URL here</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div style="display:flex;gap:0.7rem;margin-top:0.5rem;">
+
+        <div style="display:flex;gap:0.7rem;margin-top:0.8rem;flex-wrap:wrap;align-items:center;">
           <button class="btn btn-gold" onclick="saveGallery()">💾 Save Gallery</button>
           <button class="btn btn-outline" onclick="clearCategoryImages()">🗑️ Clear Category</button>
+          <span id="save-status" style="font-size:0.78rem;color:var(--muted);"></span>
         </div>
       </div>
 
@@ -500,7 +552,10 @@ function loadState() {
   try { state.changelog = JSON.parse(localStorage.getItem('cms_changelog') || '[]'); } catch(e){}
 }
 
-function saveStateKey(key) { localStorage.setItem('cms_' + key, JSON.stringify(state[key])); }
+function saveStateKey(key) {
+  if (key === 'gallery') { saveGalleryToStorage(); return; }
+  try { localStorage.setItem('cms_' + key, JSON.stringify(state[key])); } catch(e) { showToast('Save failed — storage full', 'error'); }
+}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function initApp() {
@@ -512,6 +567,7 @@ function initApp() {
   renderGallery();
   renderChangelog();
   updateStats();
+  updateStorageMeter();
 }
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
@@ -526,6 +582,81 @@ function showPanel(id) {
 }
 
 // ── GALLERY ──────────────────────────────────────────────────────────────────
+
+// Compress an image file to a base64 JPEG under maxKB
+function compressImage(file, maxKB = 120, quality = 0.72) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        // Scale down if needed
+        let w = img.width, h = img.height;
+        const maxDim = 1200;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+          else { w = Math.round(w * maxDim / h); h = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        let q = quality;
+        let result = canvas.toDataURL('image/jpeg', q);
+        // Reduce quality if still too big
+        while (result.length > maxKB * 1024 * 1.37 && q > 0.3) {
+          q -= 0.08;
+          result = canvas.toDataURL('image/jpeg', q);
+        }
+        resolve(result);
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Save gallery to localStorage with chunking if needed
+function saveGalleryToStorage() {
+  try {
+    const data = JSON.stringify(state.gallery);
+    // Try single key first
+    localStorage.setItem('cms_gallery', data);
+    return true;
+  } catch(e) {
+    // Storage full — try removing old data and retry
+    try {
+      localStorage.removeItem('cms_gallery');
+      // Save only URL-type images (not base64) to recover space
+      const urlOnly = {};
+      Object.keys(state.gallery).forEach(cat => {
+        urlOnly[cat] = (state.gallery[cat] || []).filter(s => s.startsWith('http'));
+      });
+      localStorage.setItem('cms_gallery', JSON.stringify(urlOnly));
+      state.gallery = urlOnly;
+      return false; // partial save
+    } catch(e2) {
+      return false;
+    }
+  }
+}
+
+function updateStorageMeter() {
+  let total = 0;
+  for (let k in localStorage) {
+    if (localStorage.hasOwnProperty(k)) total += (localStorage[k].length + k.length) * 2;
+  }
+  const used = total / 1024; // KB
+  const max = 5120; // 5MB in KB
+  const pct = Math.min(100, (used / max) * 100);
+  const bar = document.getElementById('storage-bar');
+  const txt = document.getElementById('storage-text');
+  if (bar) {
+    bar.style.width = pct + '%';
+    bar.style.background = pct > 80 ? '#ef9a9a' : pct > 60 ? '#ffcc80' : 'var(--gold)';
+  }
+  if (txt) txt.textContent = `${used < 1024 ? used.toFixed(0) + ' KB' : (used/1024).toFixed(1) + ' MB'} / 5 MB (${pct.toFixed(0)}% used)`;
+}
+
 function buildCatTabs() {
   const el = document.getElementById('cat-tabs');
   el.innerHTML = CATEGORIES.map(c =>
@@ -543,43 +674,64 @@ function renderGallery() {
   const imgs = state.gallery[currentCat] || [];
   document.getElementById('gallery-cat-title').textContent = currentCat.toUpperCase();
   const grid = document.getElementById('img-grid');
-  grid.innerHTML = imgs.map((src, i) => `
+  grid.innerHTML = imgs.map((src, i) => {
+    const isUrl = src.startsWith('http');
+    return `
     <div class="img-slot">
-      <img src="${src}" alt="Gallery ${i+1}" onerror="this.style.display='none'">
+      <img src="${src}" alt="Gallery ${i+1}" onerror="this.parentElement.querySelector('.img-error').style.display='flex';this.style.display='none'">
+      <div class="img-error" style="display:none;position:absolute;inset:0;background:var(--surface2);align-items:center;justify-content:center;flex-direction:column;gap:0.3rem;font-size:0.65rem;color:var(--muted);">⚠️<span>Load failed</span></div>
+      <div class="img-type" style="position:absolute;top:5px;left:5px;font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:rgba(0,0,0,0.7);color:${isUrl?'#a5d6a7':'#90caf9'};padding:0.15rem 0.4rem;">${isUrl?'URL':'FILE'}</div>
       <button class="img-remove" title="Remove" onclick="removeImage(${i})">✕</button>
-    </div>
-  `).join('') + `
+    </div>`;
+  }).join('') + `
     <div class="img-slot" style="cursor:default;">
       <div class="img-slot-empty"><div class="plus">+</div><div>${imgs.length} photo${imgs.length!==1?'s':''}</div></div>
     </div>`;
+  updateStorageMeter();
 }
 
-function handleFileUpload(e) {
+async function handleFileUpload(e) {
   const files = [...e.target.files];
   if (!files.length) return;
-  let loaded = 0;
   if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      state.gallery[currentCat].push(ev.target.result);
-      loaded++;
-      if (loaded === files.length) { renderGallery(); updateStats(); }
-    };
-    reader.readAsDataURL(file);
-  });
-  e.target.value = '';
+
+  const prog = document.getElementById('upload-progress');
+  const progBar = document.getElementById('upload-progress-bar');
+  const progText = document.getElementById('upload-progress-text');
+  prog.style.display = 'block';
+
+  for (let i = 0; i < files.length; i++) {
+    progText.textContent = `Compressing ${i + 1} of ${files.length}: ${files[i].name}`;
+    progBar.style.width = ((i / files.length) * 100) + '%';
+    try {
+      const compressed = await compressImage(files[i]);
+      const sizeMB = (compressed.length * 0.75 / 1048576).toFixed(2);
+      state.gallery[currentCat].push(compressed);
+      progText.textContent = `✅ Added ${files[i].name} (~${sizeMB} MB compressed)`;
+    } catch(err) {
+      progText.textContent = `⚠️ Skipped ${files[i].name} — could not compress`;
+    }
+  }
+
+  progBar.style.width = '100%';
+  setTimeout(() => { prog.style.display = 'none'; progBar.style.width = '0%'; }, 2000);
+
+  if (e.target && e.target.value !== undefined) e.target.value = '';
+  renderGallery();
+  updateStats();
+  showToast(`${files.length} photo${files.length!==1?'s':''} added — click Save!`, 'success');
 }
 
 function addImageUrl() {
   const url = document.getElementById('url-input').value.trim();
   if (!url) { showToast('Please enter an image URL', 'error'); return; }
+  if (!url.startsWith('http')) { showToast('URL must start with http:// or https://', 'error'); return; }
   if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
   state.gallery[currentCat].push(url);
   document.getElementById('url-input').value = '';
   renderGallery();
   updateStats();
-  showToast('Image added!', 'success');
+  showToast('Image URL added — click Save!', 'success');
 }
 
 function removeImage(idx) {
@@ -594,12 +746,22 @@ function clearCategoryImages() {
   state.gallery[currentCat] = [];
   renderGallery();
   updateStats();
+  updateStorageMeter();
 }
 
 function saveGallery() {
-  saveStateKey('gallery');
-  logChange('gallery', `Gallery updated — ${currentCat}`);
-  showToast('Gallery saved!', 'success');
+  const status = document.getElementById('save-status');
+  const ok = saveGalleryToStorage();
+  if (ok) {
+    logChange('gallery', `Gallery updated — ${currentCat}`);
+    showToast('Gallery saved!', 'success');
+    if (status) status.textContent = '✅ Saved at ' + new Date().toLocaleTimeString();
+  } else {
+    showToast('Storage nearly full — large images removed. Use URLs instead.', 'error');
+    if (status) { status.textContent = '⚠️ Partial save — storage limit reached'; status.style.color = '#ffcc80'; }
+    renderGallery(); // re-render to show which images remain
+  }
+  updateStorageMeter();
 }
 
 // ── CAROUSEL ─────────────────────────────────────────────────────────────────
