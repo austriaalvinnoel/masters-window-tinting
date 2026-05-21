@@ -2891,6 +2891,51 @@
     });
   }
 
+  // CMS gallery loader — injects saved photos into homepage gallery grid
+  (async function loadHomeCmsGallery() {
+    const CAT_MAP = {
+      'Window Tinting':'tinting','Liquid PPF':'ppf','Ceramic Coating':'ceramic',
+      'Residential Tinting':'residential','Commercial Tinting':'commercial',
+      'Wall Graphics':'graphics','Detailing & Paint Correction':'detailing'
+    };
+    let gallery = null;
+
+    // Try localStorage first
+    try {
+      const local = localStorage.getItem('cms_gallery');
+      if (local) gallery = JSON.parse(local);
+    } catch(e) {}
+
+    // Fallback to GitHub published data
+    if (!gallery) {
+      try {
+        const r = await fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now());
+        if (r.ok) { const d = await r.json(); gallery = d.gallery; }
+      } catch(e) {}
+    }
+
+    if (!gallery) return;
+
+    const grid = document.getElementById('homeGalleryGrid');
+    if (!grid) return;
+
+    // Add up to 3 photos per category to the home grid
+    Object.keys(CAT_MAP).forEach(cat => {
+      const imgs = gallery[cat];
+      if (!imgs || !imgs.length) return;
+      // Take first 3 images from each category
+      imgs.slice(0, 3).forEach(src => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.dataset.cat = CAT_MAP[cat];
+        item.innerHTML = `
+          <img src="${src}" alt="${cat}" loading="lazy" onerror="this.parentElement.style.display='none'">
+          <div class="gallery-overlay"><div class="gallery-label">${cat}</div></div>`;
+        grid.insertBefore(item, grid.lastElementChild); // insert before the "View Full Gallery" slot
+      });
+    });
+  })();
+
   // Form submit handler
   document.getElementById('quoteForm').addEventListener('submit', function(e) {
     e.preventDefault();

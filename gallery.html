@@ -459,6 +459,111 @@
   // Open section from URL hash
   const hash = window.location.hash.replace('#','');
   if (hash) { setTimeout(() => scrollToSection(hash, document.querySelector(`.filter-btn[onclick*="${hash}"]`) || document.querySelector('.filter-btn')), 300); }
+
+  // ── CMS GALLERY LOADER ──────────────────────────────────────────────────────
+  // Map CMS category names → section IDs
+  const CMS_MAP = {
+    'Window Tinting':             'sec-tinting',
+    'Liquid PPF':                 'sec-ppf',
+    'Ceramic Coating':            'sec-ceramic',
+    'Residential Tinting':        'sec-residential',
+    'Commercial Tinting':         'sec-commercial',
+    'Wall Graphics':              'sec-graphics',
+    'Detailing & Paint Correction':'sec-detailing'
+  };
+
+  function buildCmsGrid(sectionId, images) {
+    if (!images || !images.length) return;
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    // Remove existing CMS grid if already injected
+    const existing = section.querySelector('.cms-photo-grid');
+    if (existing) existing.remove();
+
+    // Build grid
+    const grid = document.createElement('div');
+    grid.className = 'cms-photo-grid';
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:1.5rem;';
+
+    images.forEach((src, i) => {
+      const card = document.createElement('div');
+      card.className = 'photo-card reveal';
+      // Make every 5th card wide for visual variety
+      if (i % 5 === 0 && i > 0) card.classList.add('wide');
+      card.innerHTML = `
+        <img src="${src}" alt="Gallery image ${i+1}" loading="lazy"
+          onerror="this.parentElement.style.display='none'">
+        <div class="photo-overlay"><span class="photo-tag">Masters Work</span></div>`;
+      grid.appendChild(card);
+    });
+
+    // Insert BEFORE the existing static photo-grid (or upload-notice)
+    const staticGrid = section.querySelector('.photo-grid');
+    const uploadNotice = section.querySelector('.upload-notice');
+    if (staticGrid) {
+      section.querySelector('.service-header').after(grid);
+    } else if (uploadNotice) {
+      uploadNotice.before(grid);
+    } else {
+      section.appendChild(grid);
+    }
+
+    // Re-run scroll reveal on new cards
+    grid.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Hide placeholder cards in the static grid since we have real photos
+    const pholders = section.querySelectorAll('.photo-placeholder');
+    pholders.forEach(ph => ph.closest('.photo-card').style.display = 'none');
+  }
+
+  async function loadCmsGallery() {
+    // First try localStorage (same browser — instant)
+    try {
+      const local = localStorage.getItem('cms_gallery');
+      if (local) {
+        const gallery = JSON.parse(local);
+        let loaded = 0;
+        Object.keys(CMS_MAP).forEach(cat => {
+          const imgs = gallery[cat];
+          if (imgs && imgs.length) {
+            buildCmsGrid(CMS_MAP[cat], imgs);
+            loaded += imgs.length;
+          }
+        });
+        if (loaded > 0) {
+          console.log(`[CMS] Loaded ${loaded} images from localStorage`);
+          return;
+        }
+      }
+    } catch(e) {}
+
+    // Fallback: fetch cms-data.json from GitHub (published data)
+    try {
+      const repo = 'austriaalvinnoel/masters-window-tinting';
+      const branch = 'main';
+      const url = `https://raw.githubusercontent.com/${repo}/${branch}/cms-data.json?t=${Date.now()}`;
+      const r = await fetch(url);
+      if (!r.ok) return;
+      const data = await r.json();
+      if (!data.gallery) return;
+      let loaded = 0;
+      Object.keys(CMS_MAP).forEach(cat => {
+        const imgs = data.gallery[cat];
+        if (imgs && imgs.length) {
+          buildCmsGrid(CMS_MAP[cat], imgs);
+          loaded += imgs.length;
+        }
+      });
+      console.log(`[CMS] Loaded ${loaded} images from GitHub`);
+    } catch(e) {
+      console.log('[CMS] Could not load gallery data:', e.message);
+    }
+  }
+
+  // Load CMS gallery after page renders
+  loadCmsGallery();
+  // ──────────────────────────────────────────────────────────────────────────
 </script>
 </body>
 </html>
