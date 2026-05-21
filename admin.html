@@ -799,32 +799,65 @@ async function importDriveFolder() {
   res.innerHTML='🔄 Connecting to Google Drive...';
 
   const m = input.match(/folders\/([a-zA-Z0-9_-]+)/);
-  if(!m){ res.innerHTML='❌ Invalid folder URL.'; return; }
+  if(!m){ res.innerHTML='❌ Invalid folder URL — paste the full Google Drive folder link.'; return; }
   const fid = m[1];
 
-  try {
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`;
-    const r = await fetch(proxy);
-    const d = await r.json();
-    const html = d.contents||'';
-    const matches = [...html.matchAll(/\/file\/d\/([a-zA-Z0-9_-]{25,})/g)];
-    const ids = [...new Set(matches.map(m=>m[1]))];
+  // Try multiple CORS proxies in sequence
+  const proxies = [
+    `https://corsproxy.io/?${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
+  ];
 
-    if(!ids.length){
-      res.innerHTML='❌ No images found.<br>Make sure the folder is set to <strong>"Anyone with the link can view"</strong>.';
-      return;
-    }
-
-    if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
-    ids.forEach(id => state.gallery[currentCat].push(`https://drive.google.com/uc?export=view&id=${id}`));
-
-    res.innerHTML=`🎉 Imported ${ids.length} photos! Click <strong>Save Gallery</strong>.`;
-    document.getElementById('drive-url').value='';
-    renderGallery(); updateStats();
-    toast(`${ids.length} Drive photos imported — click Save!`,'success');
-  } catch(e) {
-    res.innerHTML=`❌ Error: ${e.message}<br>Make sure sharing is set to "Anyone with the link".`;
+  let html = '';
+  for (const proxy of proxies) {
+    try {
+      res.innerHTML = `🔄 Trying to read folder...`;
+      const r = await fetch(proxy, { signal: AbortSignal.timeout(8000) });
+      if (r.ok) {
+        html = await r.text();
+        if (html.length > 500) break; // got real content
+      }
+    } catch(e) { /* try next proxy */ }
   }
+
+  if (!html || html.length < 500) {
+    // Proxy failed — fall back to manual ID entry
+    res.innerHTML = `
+      <div style="color:#ffcc80;margin-bottom:0.8rem;">
+        ⚠️ Auto-import blocked by browser security. Use <strong>Bulk URLs</strong> tab instead:
+      </div>
+      <div style="font-size:0.75rem;color:var(--muted);line-height:1.9;">
+        <strong style="color:var(--white);">Here's how to get all image URLs from Drive:</strong><br>
+        1. Open your Drive folder<br>
+        2. Select all photos (Ctrl+A)<br>
+        3. Right-click → <strong style="color:var(--white);">Share</strong> → each image has a link like:<br>
+        <code style="color:var(--gold);font-size:0.72rem;">https://drive.google.com/file/d/FILE_ID/view</code><br>
+        4. Or use <a href="https://imgbb.com" target="_blank" style="color:var(--gold);">imgbb.com</a> — upload all at once, get direct links<br><br>
+        <strong style="color:var(--gold);">Fastest fix:</strong> Upload your photos to 
+        <a href="https://imgbb.com" target="_blank" style="color:var(--gold);">imgbb.com</a> in bulk,
+        then use the <strong style="color:var(--white);">Embed codes → Direct links</strong> option to get all URLs,
+        paste them in the <strong style="color:var(--white);">Bulk URLs</strong> tab.
+      </div>`;
+    return;
+  }
+
+  // Extract file IDs from HTML
+  const matches = [...html.matchAll(/\/file\/d\/([a-zA-Z0-9_-]{25,})/g)];
+  const ids = [...new Set(matches.map(m => m[1]))];
+
+  if (!ids.length) {
+    res.innerHTML = '❌ No image files found in the folder. Make sure the folder contains images (not sub-folders).';
+    return;
+  }
+
+  if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
+  ids.forEach(id => state.gallery[currentCat].push(`https://drive.google.com/uc?export=view&id=${id}`));
+
+  res.innerHTML = `🎉 Imported ${ids.length} photos! Click <strong>Save Gallery</strong>.`;
+  document.getElementById('drive-url').value = '';
+  renderGallery(); updateStats();
+  toast(`${ids.length} Drive photos imported — click Save!`, 'success');
 }
 
 function saveGallery() {
