@@ -426,6 +426,7 @@
 
         <div style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center;margin-top:0.5rem;">
           <button class="btn btn-gold" id="save-gallery-btn">💾 Save Gallery</button>
+          <button class="btn btn-outline-gold btn-sm" id="sync-github-btn">🔄 Sync from GitHub</button>
           <button class="btn btn-grey" id="clean-gallery-btn">🧹 Remove Broken</button>
           <button class="btn btn-danger btn-sm" id="clear-cat-btn">🗑️ Clear Category</button>
           <span id="save-status" style="font-size:0.78rem;color:var(--muted);"></span>
@@ -667,7 +668,7 @@ if (sessionStorage.getItem('cms_ok') === '1') {
 }
 
 // ── APP START ─────────────────────────────────────────────────────────────────
-function startApp() {
+async function startApp() {
   const app = document.getElementById('app');
   app.style.display = 'flex';
   loadState();
@@ -682,6 +683,53 @@ function startApp() {
   updateStorage();
   bindGalleryEvents();
   bindFormEvents();
+
+  // Auto-sync from GitHub if local gallery is empty
+  const totalLocal = Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length,0);
+  if (totalLocal === 0) {
+    syncFromGitHub();
+  }
+}
+
+async function syncFromGitHub() {
+  const ss = document.getElementById('save-status');
+  try {
+    const r = await fetch(
+      'https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now()
+    );
+    if (!r.ok) return;
+    const data = await r.json();
+    if (!data || !data.gallery) return;
+
+    // Count images in remote
+    const total = Object.values(data.gallery).reduce((a,v)=>a+(v||[]).length,0);
+    if (total === 0) return;
+
+    // Load into local state
+    state.gallery = data.gallery;
+    if (data.carousel) state.carousel = data.carousel;
+    if (data.siteinfo) state.siteinfo = data.siteinfo;
+
+    // Save to localStorage
+    saveKey('gallery', state.gallery);
+    saveKey('carousel', state.carousel);
+    saveKey('siteinfo', state.siteinfo);
+
+    // Re-render everything
+    renderGallery();
+    buildSlideEditors();
+    loadSiteInfo();
+    updateStats();
+    updateStorage();
+
+    toast(`✅ Synced ${total} photos from live site!`, 'success');
+    if (ss) {
+      ss.textContent = `✅ Synced ${total} photos from GitHub at ${new Date().toLocaleTimeString()}`;
+      ss.style.color = '#a5d6a7';
+    }
+  } catch(e) {
+    console.log('GitHub sync failed:', e.message);
+  }
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────────────────────
@@ -775,6 +823,10 @@ function bindGalleryEvents() {
 
   // Save / clean / clear
   document.getElementById('save-gallery-btn').addEventListener('click', saveGallery);
+  document.getElementById('sync-github-btn').addEventListener('click', () => {
+    toast('Syncing from GitHub...', 'success');
+    syncFromGitHub();
+  });
   document.getElementById('clean-gallery-btn').addEventListener('click', cleanGallery);
   document.getElementById('clear-cat-btn').addEventListener('click', () => {
     if(!confirm(`Clear all images for "${currentCat}"?`)) return;
