@@ -474,8 +474,14 @@
 
   function buildCmsGrid(sectionId, images) {
     if (!images || !images.length) return;
-    const section = document.getElementById(sectionId);
+
+    // Find the section — check both direct ID and container inside
+    let section = document.getElementById(sectionId);
     if (!section) return;
+
+    // Some sections have an inner wrapper div — find the real content container
+    const innerWrap = section.querySelector('div[style*="max-width:1200px"]') || section;
+    const contentEl = innerWrap !== section ? innerWrap : section;
 
     // Remove existing CMS grid if already injected
     const existing = section.querySelector('.cms-photo-grid');
@@ -484,37 +490,42 @@
     // Build grid
     const grid = document.createElement('div');
     grid.className = 'cms-photo-grid';
-    grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:1.5rem;';
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:3px;margin-bottom:1.5rem;';
 
     images.forEach((src, i) => {
       const card = document.createElement('div');
-      card.className = 'photo-card reveal';
-      // Make every 5th card wide for visual variety
-      if (i % 5 === 0 && i > 0) card.classList.add('wide');
+      card.className = 'photo-card';
+      card.style.cssText = 'position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--surface2);cursor:pointer;';
       card.innerHTML = `
         <img src="${src}" alt="Gallery image ${i+1}" loading="lazy"
+          style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease,filter 0.3s;filter:brightness(0.85);"
+          onmouseover="this.style.transform='scale(1.05)';this.style.filter='brightness(1)'"
+          onmouseout="this.style.transform='';this.style.filter='brightness(0.85)'"
           onerror="this.parentElement.style.display='none'">
         <div class="photo-overlay"><span class="photo-tag">Masters Work</span></div>`;
       grid.appendChild(card);
     });
 
-    // Insert BEFORE the existing static photo-grid (or upload-notice)
-    const staticGrid = section.querySelector('.photo-grid');
-    const uploadNotice = section.querySelector('.upload-notice');
-    if (staticGrid) {
-      section.querySelector('.service-header').after(grid);
+    // Insert after service-header, before static photo-grid
+    const serviceHeader = contentEl.querySelector('.service-header');
+    const staticGrid    = contentEl.querySelector('.photo-grid');
+    const uploadNotice  = contentEl.querySelector('.upload-notice');
+
+    if (serviceHeader) {
+      serviceHeader.insertAdjacentElement('afterend', grid);
+    } else if (staticGrid) {
+      staticGrid.insertAdjacentElement('beforebegin', grid);
     } else if (uploadNotice) {
-      uploadNotice.before(grid);
+      uploadNotice.insertAdjacentElement('beforebegin', grid);
     } else {
-      section.appendChild(grid);
+      contentEl.appendChild(grid);
     }
 
-    // Re-run scroll reveal on new cards
-    grid.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-    // Hide placeholder cards in the static grid since we have real photos
-    const pholders = section.querySelectorAll('.photo-placeholder');
-    pholders.forEach(ph => ph.closest('.photo-card').style.display = 'none');
+    // Hide placeholder slots since we have real photos
+    section.querySelectorAll('.photo-placeholder').forEach(ph => {
+      const card = ph.closest('.photo-card');
+      if (card) card.style.display = 'none';
+    });
   }
 
   async function loadCmsGallery() {

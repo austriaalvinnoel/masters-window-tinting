@@ -326,6 +326,12 @@
       <div id="panel-gallery" class="panel">
         <div class="panel-title">GALLERY MANAGER</div>
         <div class="panel-desc">Upload photos for each service. Images are auto-compressed before saving.</div>
+        <div style="background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.3);padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);">
+          <strong style="color:var(--gold);">How it works:</strong><br>
+          1. Upload photos below → click <strong>💾 Save Gallery</strong><br>
+          2. Click <strong>🚀 Publish Changes</strong> (top right) → photos go live for ALL visitors<br>
+          <span style="color:var(--muted);font-size:0.75rem;">On your browser: photos show immediately after Save. Other visitors need Publish.</span>
+        </div>
 
         <div class="storage-wrap">
           <div class="storage-header">
@@ -551,8 +557,22 @@ function loadState() {
 }
 
 function saveKey(key, val) {
-  try { localStorage.setItem('cms_'+key, JSON.stringify(val)); return true; }
-  catch(e) { toast('Storage full — use URL method instead of file uploads', 'error'); return false; }
+  try {
+    const serialized = JSON.stringify(val);
+    localStorage.setItem('cms_'+key, serialized);
+    // Verify it actually saved by reading back
+    const verify = localStorage.getItem('cms_'+key);
+    if (!verify) { toast('Save verification failed!', 'error'); return false; }
+    return true;
+  }
+  catch(e) {
+    if (e.name === 'QuotaExceededError') {
+      toast('Storage full — remove some file uploads or use URL method', 'error');
+    } else {
+      toast('Save failed: ' + e.message, 'error');
+    }
+    return false;
+  }
 }
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
@@ -861,11 +881,18 @@ async function importDriveFolder() {
 }
 
 function saveGallery() {
+  const imgs = state.gallery[currentCat] || [];
   const ok = saveKey('gallery', state.gallery);
   if(ok){
-    logChange('gallery',`Gallery updated — ${currentCat}`);
-    toast('Gallery saved!','success');
-    document.getElementById('save-status').textContent='✅ Saved '+new Date().toLocaleTimeString();
+    logChange('gallery',`Gallery updated — ${currentCat} (${imgs.length} photos)`);
+    toast(`Gallery saved! ${imgs.length} photos in ${currentCat}`,'success');
+    const ss = document.getElementById('save-status');
+    ss.textContent=`✅ ${imgs.length} photos saved at ${new Date().toLocaleTimeString()}`;
+    ss.style.color='#a5d6a7';
+  } else {
+    const ss = document.getElementById('save-status');
+    ss.textContent='⚠️ Save failed — storage full. Use URL method.';
+    ss.style.color='#ffcc80';
   }
   updateStorage();
 }
