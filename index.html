@@ -1431,7 +1431,50 @@
       margin-bottom: clamp(0.6rem, 1.2vh, 1.5rem);
     }
 
-    /* PPF slide mobile handled in main breakpoints below */
+    /* ── CERAMIC SLIDE LAYOUT ── */
+    .ceramic-layout {
+      align-items: center;
+    }
+
+    .ceramic-video-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 16:9 landscape frame for Facebook videos */
+    .ceramic-frame {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      aspect-ratio: 16 / 9 !important;
+      border-radius: 10px;
+    }
+
+    .slide-ceramic {
+      align-items: center;
+      padding: clamp(5rem, 10vh, 8rem) 3rem clamp(2rem, 4vh, 4rem);
+    }
+
+    .slide-ceramic h1.display {
+      font-size: clamp(2.8rem, min(9vw, 10vh), 7.5rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      margin-bottom: clamp(0.6rem, 1.2vh, 1.5rem);
+    }
+
+    @media (max-width: 900px) {
+      .slide-ceramic {
+        align-items: flex-start;
+        padding: 7rem 1.5rem 5rem;
+        overflow-y: auto;
+      }
+      .ceramic-frame {
+        max-width: 100%;
+      }
+    }
+
+    /* ── END CERAMIC SLIDE ── */
     /* ── NANOPRO CERAMIC PROMO ── */
     .nanopro-promo {
       background: var(--surface);
@@ -1937,19 +1980,73 @@
       </div><!-- end .hero-slide-layout -->
     </div>
 
-    <!-- Slide 4 -->
-    <div class="carousel-slide">
+    <!-- Slide 4 — Ceramic Coating + Facebook Videos -->
+    <div class="carousel-slide slide-ceramic" data-pause-on-enter="true">
       <div class="hero-bg" style="background-image:url('ceramic-hero.jpg'); background-position: center center;"></div>
       <div class="hero-gradient"></div>
       <div class="hero-grain"></div>
-      <div class="hero-content">
-        <div class="hero-badge">Core Service</div>
-        <h1 class="display">CERAMIC<br>COATING<br><span class="gold">FOR CARS.</span></h1>
-        <p class="hero-sub">Long-lasting gloss and easier maintenance with durable surface protection.</p>
-        <div class="hero-ctas">
-          <a href="tel:6312264300" class="btn-primary">📞 Call Now</a>
-          <a href="#contact" class="btn-outline">Get a Quote →</a>
+      <div class="hero-slide-layout ceramic-layout">
+
+        <!-- Left: copy -->
+        <div class="hero-copy">
+          <div class="hero-badge">Core Service</div>
+          <h1 class="display">CERAMIC<br>COATING<br><span class="gold">FOR CARS.</span></h1>
+          <p class="hero-sub">Long-lasting gloss and easier maintenance with durable surface protection.</p>
+          <div class="hero-ctas">
+            <a href="tel:6312264300" class="btn-primary">📞 Call Now</a>
+            <a href="#contact" class="btn-outline">Get a Quote →</a>
+          </div>
         </div>
+
+        <!-- Right: nested Facebook video carousel -->
+        <div class="hero-video ceramic-video-col"
+          onclick="event.stopPropagation()"
+          onmousedown="event.stopPropagation()"
+          ontouchstart="event.stopPropagation()">
+          <div class="video-frame ceramic-frame">
+
+            <div class="media-carousel" id="ceramicMediaCarousel">
+
+              <!-- Video 1 -->
+              <div class="media-item active">
+                <iframe
+                  src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D715530032805323&show_text=false&width=500&autoplay=0"
+                  title="Ceramic Coating Video 1 — Masters Window Tinting"
+                  loading="lazy"
+                  allowfullscreen
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  scrolling="no"
+                  frameborder="0"
+                ></iframe>
+              </div>
+
+              <!-- Video 2 -->
+              <div class="media-item">
+                <iframe
+                  src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fwatch%2F%3Fv%3D640097287089885&show_text=false&width=500&autoplay=0"
+                  title="Ceramic Coating Video 2 — Masters Window Tinting"
+                  loading="lazy"
+                  allowfullscreen
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  scrolling="no"
+                  frameborder="0"
+                ></iframe>
+              </div>
+
+            </div>
+
+            <button class="media-arrow media-prev" aria-label="Previous video" onclick="moveCeramicMedia(-1, event)">&#8592;</button>
+            <button class="media-arrow media-next" aria-label="Next video" onclick="moveCeramicMedia(1, event)">&#8594;</button>
+            <div class="media-dots">
+              <button class="media-dot active" onclick="goToCeramicMedia(0, event)"></button>
+              <button class="media-dot" onclick="goToCeramicMedia(1, event)"></button>
+            </div>
+
+          </div>
+
+          <div style="font-size:0.6rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(200,168,75,0.5); text-align:center; margin-top:0.6rem;">Tap video to play · Carousel paused</div>
+        </div>
+
       </div>
     </div>
 
@@ -2763,7 +2860,52 @@
     document.getElementById('formSuccess').style.display = 'block';
   });
 
-  // NESTED MEDIA CAROUSEL (PPF slide)
+  // ── CERAMIC MEDIA CAROUSEL (Facebook videos) ──────────────────────────────
+  const ceramicItems = document.querySelectorAll('#ceramicMediaCarousel .media-item');
+  const ceramicDots  = document.querySelectorAll('#ceramicMediaCarousel ~ .media-dots .media-dot');
+  let currentCeramic = 0;
+
+  function goToCeramicMedia(n, e) {
+    if (e) { e.stopPropagation(); e.preventDefault(); }
+    ceramicItems[currentCeramic].classList.remove('active');
+    ceramicDots[currentCeramic].classList.remove('active');
+    currentCeramic = (n + ceramicItems.length) % ceramicItems.length;
+    ceramicItems[currentCeramic].classList.add('active');
+    ceramicDots[currentCeramic].classList.add('active');
+  }
+
+  function moveCeramicMedia(dir, e) {
+    if (e) { e.stopPropagation(); e.preventDefault(); }
+    goToCeramicMedia(currentCeramic + dir, e);
+  }
+
+  // Block ALL pointer/touch events inside ceramic video col from reaching main carousel
+  const ceramicVideoCol = document.querySelector('.ceramic-video-col');
+  if (ceramicVideoCol) {
+    ['touchstart','touchmove','touchend','mousedown','mousemove','mouseup','click'].forEach(ev => {
+      ceramicVideoCol.addEventListener(ev, e => e.stopPropagation(), { passive: false });
+    });
+  }
+
+  // ── AUTO-PAUSE on ceramic slide entry ─────────────────────────────────────
+  // Find which slide index has data-pause-on-enter
+  const pauseOnEnterSlides = new Set();
+  document.querySelectorAll('.carousel-slide[data-pause-on-enter]').forEach((el, _) => {
+    const allSlides = [...document.querySelectorAll('.carousel-slide')];
+    pauseOnEnterSlides.add(allSlides.indexOf(el));
+  });
+
+  // Patch goToSlide to auto-pause when entering a pause-on-enter slide
+  const _origGoToSlide = goToSlide;
+  function goToSlide(n, force) {
+    const next = (n + slides.length) % slides.length;
+    _origGoToSlide(n, force);
+    if (pauseOnEnterSlides.has(next)) {
+      // Small delay so the slide finishes fading in first
+      setTimeout(() => pauseCarousel(), 50);
+    }
+  }
+  // ──────────────────────────────────────────────────────────────────────────
   const mediaItems = document.querySelectorAll('.media-item');
   const mediaDots = document.querySelectorAll('.media-dot');
   let currentMedia = 0;
