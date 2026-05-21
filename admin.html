@@ -14,12 +14,12 @@
   --red: #e53935; --green: #43a047;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow:hidden;}
+html{height:100%;}body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow:hidden;}
 
 /* ── LOGIN ── */
 #login-screen{
   position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:var(--black);z-index:1000;
+  background:var(--black);z-index:1000;overflow-y:auto;
   background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);
   background-size:60px 60px;
 }
@@ -216,7 +216,7 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);co
 </div>
 
 <!-- APP -->
-<div id="app" style="display:none;flex-direction:row;height:100vh;">
+<div id="app" style="display:none;flex-direction:row;height:100vh;width:100%;">
 
   <!-- SIDEBAR -->
   <div class="sidebar">
@@ -540,7 +540,7 @@ function doLogin() {
   if (u === c.user && p === c.pass) {
     sessionStorage.setItem('cms_auth', '1');
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'flex';
+    const appEl = document.getElementById('app'); appEl.style.display = 'flex'; appEl.style.flexDirection = 'row';
     initApp();
   } else {
     document.getElementById('login-error').style.display = 'block';
@@ -557,7 +557,7 @@ function doLogout() {
 
 if (sessionStorage.getItem('cms_auth') === '1') {
   document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
+  const appEl = document.getElementById('app'); appEl.style.display = 'flex'; appEl.style.flexDirection = 'row';
   setTimeout(initApp, 0);
 }
 
