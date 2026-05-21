@@ -488,7 +488,10 @@
         <div class="settings-section">
           <div class="settings-heading">GitHub Publishing</div>
           <div class="card">
-            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.2rem;font-weight:300;">Connect GitHub to publish changes directly to the live site via Vercel.</p>
+            <div style="background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.35);padding:1rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);">
+              <strong style="color:var(--gold);">⚡ Required for Live Updates</strong><br>
+              Once you add your GitHub token here, every time you click <strong>Save Gallery</strong>, <strong>Save Carousel</strong>, or <strong>Save Site Info</strong> — changes automatically go live for <strong>all visitors</strong> within 1–2 minutes. No manual publish needed.
+            </div>
             <div class="field2"><label>Repository</label><input type="text" id="gh-repo" placeholder="austriaalvinnoel/masters-window-tinting"></div>
             <div class="field2"><label>Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
             <div class="form-row">
@@ -571,6 +574,54 @@ function saveKey(key, val) {
     } else {
       toast('Save failed: ' + e.message, 'error');
     }
+    return false;
+  }
+}
+
+// ── AUTO PUBLISH TO GITHUB ───────────────────────────────────────────────────
+async function autoPublish(commitMsg) {
+  const token  = localStorage.getItem('gh_token');
+  const repo   = localStorage.getItem('gh_repo')   || 'austriaalvinnoel/masters-window-tinting';
+  const branch = localStorage.getItem('gh_branch') || 'main';
+  const author = localStorage.getItem('gh_author') || 'Masters Admin';
+
+  if (!token) return false; // no token configured — silent fail
+
+  const payload = {
+    gallery:   state.gallery,
+    carousel:  state.carousel,
+    siteinfo:  state.siteinfo,
+    publishedAt: new Date().toISOString()
+  };
+
+  try {
+    // Get current SHA of cms-data.json
+    const getR = await fetch(
+      `https://api.github.com/repos/${repo}/contents/cms-data.json`,
+      { headers: { Authorization: `token ${token}` } }
+    );
+    let sha = null;
+    if (getR.ok) { const d = await getR.json(); sha = d.sha; }
+
+    const fileContent = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const body = {
+      message: commitMsg || 'CMS update',
+      content: fileContent,
+      branch,
+      committer: { name: author, email: 'cms@masterswindowtinting.com' }
+    };
+    if (sha) body.sha = sha;
+
+    const putR = await fetch(
+      `https://api.github.com/repos/${repo}/contents/cms-data.json`,
+      {
+        method: 'PUT',
+        headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }
+    );
+    return putR.ok;
+  } catch(e) {
     return false;
   }
 }
@@ -880,21 +931,33 @@ async function importDriveFolder() {
   toast(`${ids.length} Drive photos imported — click Save!`, 'success');
 }
 
-function saveGallery() {
+async function saveGallery() {
   const imgs = state.gallery[currentCat] || [];
   const ok = saveKey('gallery', state.gallery);
-  if(ok){
-    logChange('gallery',`Gallery updated — ${currentCat} (${imgs.length} photos)`);
-    toast(`Gallery saved! ${imgs.length} photos in ${currentCat}`,'success');
-    const ss = document.getElementById('save-status');
-    ss.textContent=`✅ ${imgs.length} photos saved at ${new Date().toLocaleTimeString()}`;
-    ss.style.color='#a5d6a7';
-  } else {
-    const ss = document.getElementById('save-status');
-    ss.textContent='⚠️ Save failed — storage full. Use URL method.';
-    ss.style.color='#ffcc80';
+  const ss = document.getElementById('save-status');
+
+  if (!ok) {
+    ss.textContent = '⚠️ Save failed — storage full. Use URL method.';
+    ss.style.color = '#ffcc80';
+    return;
   }
+
+  ss.textContent = `✅ ${imgs.length} photos saved locally — publishing to live site...`;
+  ss.style.color = '#ffcc80';
+  logChange('gallery', `Gallery updated — ${currentCat} (${imgs.length} photos)`);
   updateStorage();
+
+  // Auto-publish to GitHub so all visitors see changes
+  const published = await autoPublish(`Update gallery — ${currentCat}`);
+  if (published) {
+    ss.textContent = `🌐 Live! ${imgs.length} photos published to site at ${new Date().toLocaleTimeString()}`;
+    ss.style.color = '#a5d6a7';
+    toast(`${imgs.length} photos live on site!`, 'success');
+  } else {
+    ss.textContent = `✅ Saved locally (${imgs.length} photos). Set GitHub token in Settings to auto-publish.`;
+    ss.style.color = '#a5d6a7';
+    toast(`Saved! Add GitHub token in Settings to go live automatically.`, 'success');
+  }
 }
 
 async function cleanGallery() {
@@ -939,7 +1002,10 @@ function buildSlideEditors() {
     }));
     saveKey('carousel',state.carousel);
     logChange('carousel','Carousel slides updated');
-    toast('Carousel saved!','success');
+    toast('Carousel saved! Publishing...','success');
+    autoPublish('Update carousel slides').then(ok => {
+      if(ok) toast('Carousel live on website!','success');
+    });
   });
 }
 
@@ -970,7 +1036,10 @@ function bindFormEvents() {
     };
     saveKey('siteinfo',state.siteinfo);
     logChange('info','Site info updated');
-    toast('Site info saved!','success');
+    toast('Site info saved! Publishing...','success');
+    autoPublish('Update site info').then(ok => {
+      if(ok) toast('Site info live on website!','success');
+    });
   });
 
   document.getElementById('change-pass-btn').addEventListener('click',()=>{

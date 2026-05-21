@@ -2891,7 +2891,7 @@
     });
   }
 
-  // CMS gallery loader — injects saved photos into homepage gallery grid
+  // CMS gallery loader — always fetch from GitHub so all visitors see same images
   (async function loadHomeCmsGallery() {
     const CAT_MAP = {
       'Window Tinting':'tinting','Liquid PPF':'ppf','Ceramic Coating':'ceramic',
@@ -2900,38 +2900,39 @@
     };
     let gallery = null;
 
-    // Try localStorage first
+    // Always try GitHub first — ensures all visitors see same content
     try {
-      const local = localStorage.getItem('cms_gallery');
-      if (local) gallery = JSON.parse(local);
+      const r = await fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now());
+      if (r.ok) { const d = await r.json(); if(d && d.gallery) gallery = d.gallery; }
     } catch(e) {}
 
-    // Fallback to GitHub published data
+    // Fallback to localStorage (admin's own browser before first publish)
     if (!gallery) {
       try {
-        const r = await fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now());
-        if (r.ok) { const d = await r.json(); gallery = d.gallery; }
+        const local = localStorage.getItem('cms_gallery');
+        if (local) gallery = JSON.parse(local);
       } catch(e) {}
     }
 
     if (!gallery) return;
-
     const grid = document.getElementById('homeGalleryGrid');
     if (!grid) return;
 
-    // Add up to 3 photos per category to the home grid
+    // Remove any previously injected CMS items to avoid duplicates
+    grid.querySelectorAll('.cms-injected').forEach(el => el.remove());
+
+    // Add up to 2 photos per category
     Object.keys(CAT_MAP).forEach(cat => {
       const imgs = gallery[cat];
       if (!imgs || !imgs.length) return;
-      // Take first 3 images from each category
-      imgs.slice(0, 3).forEach(src => {
+      imgs.slice(0, 2).forEach(src => {
         const item = document.createElement('div');
-        item.className = 'gallery-item';
+        item.className = 'gallery-item cms-injected';
         item.dataset.cat = CAT_MAP[cat];
         item.innerHTML = `
           <img src="${src}" alt="${cat}" loading="lazy" onerror="this.parentElement.style.display='none'">
           <div class="gallery-overlay"><div class="gallery-label">${cat}</div></div>`;
-        grid.insertBefore(item, grid.lastElementChild); // insert before the "View Full Gallery" slot
+        grid.insertBefore(item, grid.lastElementChild);
       });
     });
   })();

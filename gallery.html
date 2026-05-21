@@ -529,46 +529,39 @@
   }
 
   async function loadCmsGallery() {
-    // First try localStorage (same browser — instant)
+    let gallery = null;
+
+    // ALWAYS fetch from GitHub first — this ensures ALL visitors see the same images
     try {
-      const local = localStorage.getItem('cms_gallery');
-      if (local) {
-        const gallery = JSON.parse(local);
-        let loaded = 0;
-        Object.keys(CMS_MAP).forEach(cat => {
-          const imgs = gallery[cat];
-          if (imgs && imgs.length) {
-            buildCmsGrid(CMS_MAP[cat], imgs);
-            loaded += imgs.length;
-          }
-        });
-        if (loaded > 0) {
-          console.log(`[CMS] Loaded ${loaded} images from localStorage`);
-          return;
-        }
+      const url = `https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=${Date.now()}`;
+      const r = await fetch(url);
+      if (r.ok) {
+        const data = await r.json();
+        if (data && data.gallery) gallery = data.gallery;
       }
     } catch(e) {}
 
-    // Fallback: fetch cms-data.json from GitHub (published data)
-    try {
-      const repo = 'austriaalvinnoel/masters-window-tinting';
-      const branch = 'main';
-      const url = `https://raw.githubusercontent.com/${repo}/${branch}/cms-data.json?t=${Date.now()}`;
-      const r = await fetch(url);
-      if (!r.ok) return;
-      const data = await r.json();
-      if (!data.gallery) return;
-      let loaded = 0;
-      Object.keys(CMS_MAP).forEach(cat => {
-        const imgs = data.gallery[cat];
-        if (imgs && imgs.length) {
-          buildCmsGrid(CMS_MAP[cat], imgs);
-          loaded += imgs.length;
-        }
-      });
-      console.log(`[CMS] Loaded ${loaded} images from GitHub`);
-    } catch(e) {
-      console.log('[CMS] Could not load gallery data:', e.message);
+    // Fallback to localStorage (same browser as admin, before first publish)
+    if (!gallery) {
+      try {
+        const local = localStorage.getItem('cms_gallery');
+        if (local) gallery = JSON.parse(local);
+      } catch(e) {}
+    }
+
+    if (!gallery) return;
+
+    let totalLoaded = 0;
+    Object.keys(CMS_MAP).forEach(cat => {
+      const imgs = gallery[cat];
+      if (imgs && imgs.length) {
+        buildCmsGrid(CMS_MAP[cat], imgs);
+        totalLoaded += imgs.length;
+      }
+    });
+
+    if (totalLoaded > 0) {
+      console.log(`[CMS] Loaded ${totalLoaded} gallery images`);
     }
   }
 
