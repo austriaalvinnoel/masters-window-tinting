@@ -2732,6 +2732,14 @@
   const DURATION = 5000;
   let videoPaused = false; // flag: true while a video is playing
 
+  // Build set of slide indexes that should pause the carousel on entry
+  const pauseOnEnterIndexes = new Set(
+    [...document.querySelectorAll('.carousel-slide')].reduce((acc, el, i) => {
+      if (el.dataset.pauseOnEnter) acc.push(i);
+      return acc;
+    }, [])
+  );
+
   function goToSlide(n, force) {
     if (videoPaused && !force) return; // don't advance while video plays (unless forced)
     slides[current].classList.remove('active');
@@ -2740,6 +2748,10 @@
     slides[current].classList.add('active');
     dots[current].classList.add('active');
     resetProgress();
+    // Auto-pause when landing on a slide that has data-pause-on-enter
+    if (pauseOnEnterIndexes.has(current)) {
+      setTimeout(() => pauseCarousel(), 50);
+    }
   }
 
   function goToSlideManual(n) {
@@ -2887,25 +2899,7 @@
     });
   }
 
-  // ── AUTO-PAUSE on ceramic slide entry ─────────────────────────────────────
-  // Find which slide index has data-pause-on-enter
-  const pauseOnEnterSlides = new Set();
-  document.querySelectorAll('.carousel-slide[data-pause-on-enter]').forEach((el, _) => {
-    const allSlides = [...document.querySelectorAll('.carousel-slide')];
-    pauseOnEnterSlides.add(allSlides.indexOf(el));
-  });
-
-  // Patch goToSlide to auto-pause when entering a pause-on-enter slide
-  const _origGoToSlide = goToSlide;
-  function goToSlide(n, force) {
-    const next = (n + slides.length) % slides.length;
-    _origGoToSlide(n, force);
-    if (pauseOnEnterSlides.has(next)) {
-      // Small delay so the slide finishes fading in first
-      setTimeout(() => pauseCarousel(), 50);
-    }
-  }
-  // ──────────────────────────────────────────────────────────────────────────
+  // Auto-pause handled inside goToSlide below
   const mediaItems = document.querySelectorAll('.media-item');
   const mediaDots = document.querySelectorAll('.media-dot');
   let currentMedia = 0;
