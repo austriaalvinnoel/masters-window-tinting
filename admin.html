@@ -327,50 +327,80 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);co
           </div>
 
           <!-- Upload area -->
-          <div class="img-add-row">
+          <!-- Tab switcher for upload methods -->
+          <div style="display:flex;gap:2px;margin-bottom:1rem;flex-wrap:wrap;">
+            <button class="upload-tab active" id="tab-file" onclick="switchUploadTab('file')" style="background:var(--gold);color:#000;border:none;padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">📁 Upload Files</button>
+            <button class="upload-tab" id="tab-url" onclick="switchUploadTab('url')" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border);padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">📎 Single URL</button>
+            <button class="upload-tab" id="tab-bulk" onclick="switchUploadTab('bulk')" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border);padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">📋 Bulk URLs</button>
+            <button class="upload-tab" id="tab-drive" onclick="switchUploadTab('drive')" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border);padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">☁️ Google Drive</button>
+          </div>
+
+          <!-- FILE UPLOAD TAB -->
+          <div id="upload-tab-file">
             <div class="upload-area" id="drop-zone"
               onclick="document.getElementById('file-upload').click()"
               ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
               ondragleave="this.style.borderColor=''"
               ondrop="event.preventDefault();this.style.borderColor='';handleFileUpload({target:{files:event.dataTransfer.files}})">
               <input type="file" id="file-upload" accept="image/*" multiple onchange="handleFileUpload(event)">
-              <div style="font-size:1.8rem;margin-bottom:0.5rem;">📁</div>
+              <div style="font-size:2rem;margin-bottom:0.5rem;">📁</div>
               <div class="upload-label">
                 <span>Click or drag & drop</span> photos here<br>
                 <span style="color:var(--muted);font-weight:300;font-size:0.72rem;">JPG, PNG, WEBP · Auto-compressed · Multiple files OK</span>
               </div>
             </div>
+          </div>
 
-            <div style="display:flex;flex-direction:column;gap:0.7rem;min-width:220px;">
-              <!-- Single URL add -->
-              <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;">
-                <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;">📎 Add Single URL</div>
-                <div class="form-group" style="margin:0 0 0.5rem;">
-                  <input type="url" id="url-input" placeholder="https://i.ibb.co/... or https://ibb.co/..." style="font-size:0.8rem;">
-                </div>
-                <button class="btn btn-outline-gold btn-sm" style="width:100%;" onclick="addImageUrl()">Add Image URL</button>
+          <!-- SINGLE URL TAB -->
+          <div id="upload-tab-url" style="display:none;">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
+              <div style="font-size:0.7rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.6;">
+                Paste a direct image URL. Works best with <strong style="color:var(--gold);">i.ibb.co</strong> or <strong style="color:var(--gold);">i.imgur.com</strong> links.
               </div>
+              <div class="form-group" style="margin:0 0 0.8rem;">
+                <label>Image URL</label>
+                <input type="url" id="url-input" placeholder="https://i.ibb.co/ABC123/photo.jpg">
+              </div>
+              <button class="btn btn-gold" style="width:100%;" onclick="addImageUrl()">Add Image URL</button>
+              <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);">
+                <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">Free image hosts</div>
+                <a href="https://imgbb.com" target="_blank" style="color:var(--gold);font-size:0.78rem;display:block;margin-bottom:0.3rem;">→ imgbb.com (upload → copy Direct link)</a>
+                <a href="https://imgur.com/upload" target="_blank" style="color:var(--gold);font-size:0.78rem;display:block;">→ imgur.com</a>
+              </div>
+            </div>
+          </div>
 
-              <!-- Bulk URL paste -->
-              <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;">
-                <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">📋 Bulk Paste URLs</div>
-                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.5rem;font-weight:300;">Paste multiple image URLs — one per line</div>
-                <textarea id="bulk-url-input" placeholder="https://i.ibb.co/photo1.jpg&#10;https://i.ibb.co/photo2.jpg&#10;https://i.ibb.co/photo3.jpg" style="background:var(--black);border:1px solid rgba(200,168,75,0.15);color:var(--white);padding:0.6rem;font-size:0.72rem;font-family:monospace;width:100%;min-height:80px;resize:vertical;outline:none;"></textarea>
-                <button class="btn btn-gold btn-sm" style="width:100%;margin-top:0.5rem;" onclick="bulkAddUrls()">Import All URLs</button>
-                <div id="bulk-progress" style="display:none;font-size:0.72rem;color:var(--gold);margin-top:0.4rem;"></div>
+          <!-- BULK URL TAB -->
+          <div id="upload-tab-bulk" style="display:none;">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
+              <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.8rem;font-weight:300;line-height:1.6;">
+                Paste multiple image URLs, <strong style="color:var(--white);">one per line</strong>. All will be added at once.
               </div>
+              <textarea id="bulk-url-input" placeholder="https://i.ibb.co/photo1.jpg&#10;https://i.ibb.co/photo2.jpg&#10;https://i.ibb.co/photo3.jpg&#10;..." style="background:var(--black);border:1px solid rgba(200,168,75,0.2);color:var(--white);padding:0.8rem;font-size:0.78rem;font-family:monospace;width:100%;min-height:160px;resize:vertical;outline:none;margin-bottom:0.8rem;"></textarea>
+              <button class="btn btn-gold" style="width:100%;" onclick="bulkAddUrls()">📋 Import All URLs</button>
+              <div id="bulk-progress" style="display:none;font-size:0.78rem;color:var(--gold);margin-top:0.7rem;"></div>
+            </div>
+          </div>
 
-              <!-- Google Drive folder import -->
-              <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;">
-                <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">📁 Google Drive Folder</div>
-                <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.5rem;font-weight:300;">Paste a <strong style="color:var(--white);">public</strong> Drive folder link to import all photos at once</div>
-                <input type="url" id="drive-folder-url" placeholder="https://drive.google.com/drive/folders/..." style="background:var(--black);border:1px solid rgba(200,168,75,0.15);color:var(--white);padding:0.6rem;font-size:0.75rem;font-family:'Outfit',sans-serif;width:100%;outline:none;margin-bottom:0.5rem;">
-                <button class="btn btn-gold btn-sm" style="width:100%;" onclick="importDriveFolder()">📥 Import Drive Folder</button>
-                <div id="drive-progress" style="display:none;font-size:0.72rem;color:var(--gold);margin-top:0.5rem;line-height:1.6;"></div>
-                <div style="font-size:0.62rem;color:rgba(136,136,136,0.6);margin-top:0.5rem;line-height:1.6;">
-                  ⚠️ Folder must be set to<br>"Anyone with the link can view"
-                </div>
+          <!-- GOOGLE DRIVE TAB -->
+          <div id="upload-tab-drive" style="display:none;">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
+              <div style="font-size:0.7rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.7;">
+                Paste your Google Drive <strong style="color:var(--white);">folder</strong> link to import all photos at once.<br>
+                <span style="color:#ffcc80;">⚠️ The folder must be set to "Anyone with the link can view"</span>
               </div>
+              <div style="background:var(--black);border:1px solid var(--border);padding:1rem;margin-bottom:1rem;font-size:0.78rem;color:var(--muted);line-height:1.8;">
+                <strong style="color:var(--gold);">How to make folder public:</strong><br>
+                1. Right-click the folder in Drive<br>
+                2. Share → Change to "Anyone with the link"<br>
+                3. Copy the folder link and paste below
+              </div>
+              <div class="form-group" style="margin:0 0 0.8rem;">
+                <label>Google Drive Folder Link</label>
+                <input type="url" id="drive-folder-url" placeholder="https://drive.google.com/drive/folders/...">
+              </div>
+              <button class="btn btn-gold" style="width:100%;" onclick="importDriveFolder()">☁️ Import All Photos from Drive</button>
+              <div id="drive-progress" style="display:none;font-size:0.82rem;color:var(--gold);margin-top:0.8rem;line-height:1.7;padding:0.8rem;background:var(--black);border:1px solid var(--border);"></div>
             </div>
           </div>
         </div>
@@ -821,6 +851,26 @@ function verifyAndAddImage(url, inputEl) {
     showToast('⚠️ Added (may need Save to verify). If it shows broken, use i.ibb.co direct link.', 'success');
   };
   testImg.src = url + '?t=' + Date.now();
+}
+
+// ── UPLOAD TAB SWITCHER ──────────────────────────────────────────────────────
+function switchUploadTab(tab) {
+  ['file','url','bulk','drive'].forEach(t => {
+    const panel = document.getElementById('upload-tab-' + t);
+    const btn   = document.getElementById('tab-' + t);
+    if (panel) panel.style.display = t === tab ? 'block' : 'none';
+    if (btn) {
+      if (t === tab) {
+        btn.style.background = 'var(--gold)';
+        btn.style.color = '#000';
+        btn.style.border = 'none';
+      } else {
+        btn.style.background = 'var(--surface2)';
+        btn.style.color = 'var(--muted)';
+        btn.style.border = '1px solid var(--border)';
+      }
+    }
+  });
 }
 
 // ── BULK URL PASTE ───────────────────────────────────────────────────────────
