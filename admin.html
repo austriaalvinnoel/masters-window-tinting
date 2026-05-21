@@ -8,99 +8,120 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black: #080808; --surface: #111; --surface2: #1a1a1a; --surface3: #222;
-  --gold: #C8A84B; --gold-light: #E8C878; --gold-dim: rgba(200,168,75,0.15);
-  --white: #F0EDE8; --muted: #888; --border: rgba(200,168,75,0.18);
-  --red: #e53935; --green: #43a047;
+  --black:#080808; --surface:#111; --surface2:#1a1a1a; --surface3:#222;
+  --gold:#C8A84B; --gold-light:#E8C878; --gold-dim:rgba(200,168,75,0.12);
+  --white:#F0EDE8; --muted:#888; --border:rgba(200,168,75,0.18);
+  --red:#e53935; --green:#43a047;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{height:100%;}body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow:hidden;}
 
-/* ── LOGIN ── */
-#login-screen{
+/* LOGIN */
+#login-screen {
   position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:var(--black);z-index:1000;overflow-y:auto;
-  background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);
+  background:var(--black);z-index:1000;overflow-y:auto;font-family:'Outfit',sans-serif;
+  background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);
   background-size:60px 60px;
 }
-.login-card{
+.login-card {
   background:var(--surface);border:1px solid var(--border);padding:3rem 2.5rem;
-  width:100%;max-width:400px;
-  box-shadow:0 32px 80px rgba(0,0,0,0.7);
+  width:100%;max-width:400px;margin:2rem;
+  box-shadow:0 32px 80px rgba(0,0,0,0.8);
 }
-.login-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:var(--white);margin-bottom:0.2rem;}
-.login-sub{font-size:0.6rem;font-weight:700;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
-.login-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.5rem;}
-.login-desc{font-size:0.85rem;color:var(--muted);margin-bottom:2rem;font-weight:300;}
+.login-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.08em;color:var(--white);margin-bottom:0.2rem;}
+.login-tagline{font-size:0.58rem;font-weight:700;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
+.login-heading{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.4rem;}
+.login-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.8rem;font-weight:300;}
 .field{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
 .field label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
-.field input{background:var(--black);border:1px solid rgba(200,168,75,0.2);color:var(--white);padding:0.85rem 1rem;font-size:0.9rem;font-family:'Outfit',sans-serif;outline:none;transition:border-color 0.2s;width:100%;}
+.field input{
+  background:var(--black);border:1px solid rgba(200,168,75,0.2);color:var(--white);
+  padding:0.9rem 1rem;font-size:0.9rem;font-family:'Outfit',sans-serif;
+  outline:none;transition:border-color 0.2s;width:100%;
+}
 .field input:focus{border-color:var(--gold);}
 .field input::placeholder{color:rgba(136,136,136,0.4);}
-.btn-login{width:100%;background:var(--gold);color:#000;border:none;padding:1rem;font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:0.5rem;transition:all 0.2s;}
-.btn-login:hover{background:var(--gold-light);}
-.login-error{background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.3);color:#ef9a9a;padding:0.7rem 1rem;font-size:0.82rem;margin-bottom:1rem;display:none;}
-
-/* ── APP SHELL ── */
-#app{display:none;height:100vh;flex-direction:row;}
-.sidebar{
-  width:240px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;overflow-y:auto;
+#login-error{
+  background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.3);
+  color:#ef9a9a;padding:0.7rem 1rem;font-size:0.82rem;
+  margin-bottom:1rem;display:none;font-family:'Outfit',sans-serif;
 }
-.sidebar-header{padding:1.5rem;border-bottom:1px solid var(--border);}
-.sidebar-logo{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.08em;color:var(--white);line-height:1.2;}
-.sidebar-logo span{font-family:'Outfit',sans-serif;font-size:0.52rem;font-weight:600;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;display:block;}
-.nav-section{padding:1rem 0;}
-.nav-label{font-size:0.58rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);padding:0 1.2rem;margin-bottom:0.4rem;}
-.nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 1.2rem;cursor:pointer;font-size:0.83rem;font-weight:500;color:var(--muted);transition:all 0.18s;border-left:2px solid transparent;}
+.btn-login{
+  width:100%;background:var(--gold);color:#000;border:none;padding:1rem;
+  font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;font-family:'Outfit',sans-serif;margin-top:0.5rem;transition:all 0.2s;
+}
+.btn-login:hover{background:var(--gold-light);}
+
+/* APP SHELL */
+#app{display:none;height:100vh;width:100%;flex-direction:row;font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);}
+
+.sidebar{
+  width:240px;flex-shrink:0;background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;height:100vh;
+}
+.sidebar-brand{padding:1.4rem 1.2rem;border-bottom:1px solid var(--border);}
+.sidebar-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.08em;color:var(--white);line-height:1.3;}
+.sidebar-sub{font-size:0.52rem;font-weight:600;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-top:0.1rem;}
+
+.nav-section{padding:0.8rem 0;}
+.nav-label{font-size:0.56rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);padding:0 1.2rem;margin-bottom:0.4rem;}
+.nav-item{
+  display:flex;align-items:center;gap:0.7rem;padding:0.65rem 1.2rem;
+  cursor:pointer;font-size:0.82rem;font-weight:500;color:var(--muted);
+  transition:all 0.18s;border-left:2px solid transparent;
+}
 .nav-item:hover{color:var(--white);background:var(--surface2);}
 .nav-item.active{color:var(--gold);background:var(--gold-dim);border-left-color:var(--gold);}
-.nav-item .icon{font-size:1rem;width:20px;text-align:center;}
+.nav-icon{font-size:1rem;width:20px;text-align:center;}
+
 .sidebar-footer{margin-top:auto;padding:1.2rem;border-top:1px solid var(--border);}
-.user-badge{display:flex;align-items:center;gap:0.7rem;}
-.user-avatar{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;color:#000;flex-shrink:0;}
+.user-row{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.8rem;}
+.user-av{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;color:#000;flex-shrink:0;}
 .user-name{font-size:0.8rem;font-weight:600;color:var(--white);}
 .user-role{font-size:0.65rem;color:var(--muted);}
-.btn-logout{margin-top:0.8rem;width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.55rem;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
-.btn-logout:hover{border-color:var(--red);color:var(--red);}
+.btn-signout{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.55rem;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
+.btn-signout:hover{border-color:var(--red);color:var(--red);}
 
-/* ── MAIN ── */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100vh;}
+.topbar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 2rem;height:60px;display:flex;align-items:center;
+  justify-content:space-between;flex-shrink:0;
+}
 .topbar-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.06em;color:var(--white);}
-.topbar-actions{display:flex;gap:0.7rem;align-items:center;}
-.btn-publish{background:var(--gold);color:#000;border:none;padding:0.55rem 1.4rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem;}
+.topbar-right{display:flex;align-items:center;gap:0.8rem;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.status-txt{font-size:0.72rem;color:var(--muted);}
+.btn-publish{
+  background:var(--gold);color:#000;border:none;padding:0.55rem 1.4rem;
+  font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;
+  display:flex;align-items:center;gap:0.4rem;
+}
 .btn-publish:hover{background:var(--gold-light);}
-.btn-publish:disabled{opacity:0.5;cursor:not-allowed;}
-.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
-.status-text{font-size:0.72rem;color:var(--muted);}
 
 .content{flex:1;overflow-y:auto;padding:2rem;}
-
-/* PANEL */
 .panel{display:none;}
 .panel.active{display:block;}
-.panel-header{margin-bottom:2rem;}
 .panel-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.04em;color:var(--white);margin-bottom:0.3rem;}
-.panel-desc{font-size:0.88rem;color:var(--muted);font-weight:300;}
+.panel-desc{font-size:0.88rem;color:var(--muted);font-weight:300;margin-bottom:2rem;}
 
-/* CARDS */
+/* CARDS & FORMS */
 .card{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.2rem;}
-.card-title{font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;}
-
-/* FORM ELEMENTS */
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
-.form-group{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
-.form-group label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
-.form-group input,.form-group textarea,.form-group select{
+.card-label{font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.field2{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.field2 label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.field2 input,.field2 textarea,.field2 select{
   background:var(--black);border:1px solid rgba(200,168,75,0.15);color:var(--white);
   padding:0.75rem 0.9rem;font-size:0.88rem;font-family:'Outfit',sans-serif;
   outline:none;transition:border-color 0.2s;width:100%;
 }
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold);}
-.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(136,136,136,0.4);}
-.form-group textarea{resize:vertical;min-height:80px;}
-.form-group select option{background:var(--surface);}
+.field2 input:focus,.field2 textarea:focus,.field2 select:focus{border-color:var(--gold);}
+.field2 input::placeholder,.field2 textarea::placeholder{color:rgba(136,136,136,0.4);}
+.field2 textarea{resize:vertical;min-height:80px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 
 /* BUTTONS */
 .btn{border:none;padding:0.65rem 1.4rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
@@ -108,83 +129,98 @@ html{height:100%;}body{height:100%;font-family:'Outfit',sans-serif;background:va
 .btn-gold:hover{background:var(--gold-light);}
 .btn-outline-gold{background:transparent;border:1px solid var(--gold);color:var(--gold);}
 .btn-outline-gold:hover{background:var(--gold-dim);}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted);}
-.btn-outline:hover{border-color:var(--white);color:var(--white);}
+.btn-grey{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-grey:hover{border-color:var(--white);color:var(--white);}
 .btn-danger{background:transparent;border:1px solid rgba(229,57,53,0.3);color:#ef9a9a;}
 .btn-danger:hover{background:rgba(229,57,53,0.1);}
 .btn-sm{padding:0.4rem 0.9rem;font-size:0.68rem;}
 
 /* GALLERY */
-.cat-tabs{display:flex;gap:2px;margin-bottom:1.5rem;flex-wrap:wrap;}
-.cat-tab{padding:0.5rem 1.1rem;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;background:var(--surface2);color:var(--muted);border:1px solid var(--border);transition:all 0.2s;}
+.cat-tabs{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:1.2rem;}
+.cat-tab{padding:0.45rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;background:var(--surface2);color:var(--muted);border:1px solid var(--border);transition:all 0.2s;font-family:'Outfit',sans-serif;}
 .cat-tab.active{background:var(--gold);color:#000;border-color:var(--gold);}
-.cat-tab:hover:not(.active){color:var(--white);}
 
-.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:1.5rem;}
-.img-slot{position:relative;aspect-ratio:4/3;background:var(--surface2);border:1px solid var(--border);overflow:hidden;cursor:pointer;}
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:1.2rem;min-height:60px;}
+.img-slot{position:relative;aspect-ratio:4/3;background:var(--surface2);border:1px solid var(--border);overflow:hidden;}
 .img-slot img{width:100%;height:100%;object-fit:cover;display:block;}
-.img-slot-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:0.75rem;gap:0.4rem;}
-.img-slot-empty .plus{font-size:1.8rem;color:rgba(200,168,75,0.3);}
-.img-remove{position:absolute;top:5px;right:5px;background:rgba(0,0,0,0.8);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.75rem;display:none;align-items:center;justify-content:center;}
+.img-remove{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.85);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.7rem;display:none;align-items:center;justify-content:center;line-height:1;}
 .img-slot:hover .img-remove{display:flex;}
-.img-add-row{display:flex;gap:0.7rem;align-items:flex-end;flex-wrap:wrap;}
-.upload-area{border:2px dashed rgba(200,168,75,0.25);padding:1.5rem;text-align:center;cursor:pointer;transition:all 0.2s;flex:1;min-width:200px;}
-.upload-area:hover{border-color:var(--gold);background:var(--gold-dim);}
-.upload-area input[type=file]{display:none;}
-.upload-label{font-size:0.78rem;color:var(--muted);}
-.upload-label span{color:var(--gold);font-weight:600;}
+.img-type-badge{position:absolute;top:4px;left:4px;font-size:0.52rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(0,0,0,0.75);padding:0.15rem 0.4rem;}
+.img-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#2a2a2a;font-size:1.5rem;gap:0.3rem;}
+.img-empty span{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#333;}
 
-/* CAROUSEL EDITOR */
-.slide-editor{border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem;position:relative;}
-.slide-num{position:absolute;top:1rem;right:1rem;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:rgba(200,168,75,0.1);line-height:1;}
-.slide-name{font-size:0.65rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.upload-tabs{display:flex;gap:2px;margin-bottom:1rem;flex-wrap:wrap;}
+.utab{padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all 0.2s;}
+.utab.active{background:var(--gold);color:#000;border-color:var(--gold);}
+.utab-panel{display:none;}
+.utab-panel.active{display:block;}
+
+.upload-drop{
+  border:2px dashed rgba(200,168,75,0.25);padding:2rem;text-align:center;
+  cursor:pointer;transition:all 0.2s;background:transparent;
+}
+.upload-drop:hover,.upload-drop.drag-over{border-color:var(--gold);background:var(--gold-dim);}
+.upload-drop-icon{font-size:2rem;margin-bottom:0.5rem;}
+.upload-drop-text{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+.upload-drop-text strong{color:var(--gold);}
+
+.storage-wrap{background:var(--surface);border:1px solid var(--border);padding:1rem 1.4rem;margin-bottom:1.2rem;}
+.storage-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;}
+.storage-label{font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.storage-val{font-size:0.72rem;color:var(--muted);}
+.storage-track{height:4px;background:var(--surface3);border-radius:2px;}
+.storage-fill{height:100%;border-radius:2px;background:var(--gold);transition:width 0.4s;}
 
 /* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-bottom:2rem;}
 .stat-box{background:var(--surface);padding:1.5rem;text-align:center;}
-.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);}
-.stat-lbl{font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);line-height:1;}
+.stat-lbl{font-size:0.62rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.3rem;}
+
+/* PROGRESS BAR */
+.prog-wrap{display:none;margin-bottom:1rem;}
+.prog-text{font-size:0.75rem;color:var(--gold);margin-bottom:0.4rem;}
+.prog-track{height:4px;background:var(--surface3);border-radius:2px;}
+.prog-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.2s;}
+
+/* CHANGE LOG */
+.change-item{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 0;border-bottom:1px solid rgba(200,168,75,0.06);}
+.change-badge{font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.5rem;flex-shrink:0;}
+.badge-gallery{background:rgba(200,168,75,0.12);color:var(--gold);}
+.badge-carousel{background:rgba(100,149,237,0.12);color:#90caf9;}
+.badge-info{background:rgba(67,160,71,0.12);color:#a5d6a7;}
+.change-text{font-size:0.82rem;color:var(--muted);flex:1;}
+.change-time{font-size:0.68rem;color:rgba(136,136,136,0.5);flex-shrink:0;}
+
+/* MODAL */
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:500;display:none;align-items:center;justify-content:center;}
+.modal-back.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);padding:2rem;width:100%;max-width:480px;margin:1rem;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.4rem;}
+.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;}
+.modal-actions{display:flex;gap:0.7rem;justify-content:flex-end;margin-top:1.5rem;}
+.pub-status{font-size:0.83rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);margin-top:0.8rem;display:none;line-height:1.6;}
 
 /* TOAST */
 #toast{
   position:fixed;bottom:2rem;right:2rem;
   background:var(--surface);border:1px solid var(--border);
-  padding:0.9rem 1.4rem;font-size:0.85rem;
-  transform:translateY(100px);opacity:0;transition:all 0.35s;z-index:9999;
-  display:flex;align-items:center;gap:0.7rem;max-width:320px;
+  padding:0.9rem 1.4rem;font-size:0.85rem;font-family:'Outfit',sans-serif;
+  transform:translateY(120px);opacity:0;transition:all 0.35s;z-index:9999;
+  max-width:340px;
 }
 #toast.show{transform:translateY(0);opacity:1;}
 #toast.success{border-color:rgba(67,160,71,0.5);color:#a5d6a7;}
 #toast.error{border-color:rgba(229,57,53,0.5);color:#ef9a9a;}
 
-/* MODAL */
-.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;display:none;align-items:center;justify-content:center;}
-.modal-backdrop.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);padding:2rem;width:100%;max-width:480px;}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.4rem;}
-.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;}
-.modal-actions{display:flex;gap:0.7rem;justify-content:flex-end;margin-top:1.5rem;}
+/* SLIDE EDITOR */
+.slide-card{border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem;background:var(--surface);position:relative;}
+.slide-num{position:absolute;top:1rem;right:1.2rem;font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(200,168,75,0.08);line-height:1;user-select:none;}
+.slide-name-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
 
 /* SETTINGS */
 .settings-section{margin-bottom:2rem;}
-.settings-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);letter-spacing:0.04em;margin-bottom:1rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);}
-
-/* STORAGE BAR */
-    .storage-bar-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 1rem 1.5rem;
-      margin-bottom: 1.2rem;
-    }
-
-    /* CHANGELOG */
-.change-item{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid rgba(200,168,75,0.08);}
-.change-badge{font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.5rem;flex-shrink:0;}
-.badge-gallery{background:rgba(200,168,75,0.15);color:var(--gold);}
-.badge-carousel{background:rgba(100,149,237,0.15);color:#90caf9;}
-.badge-info{background:rgba(67,160,71,0.15);color:#a5d6a7;}
-.change-text{font-size:0.83rem;color:var(--muted);}
-.change-time{font-size:0.7rem;color:rgba(136,136,136,0.5);margin-left:auto;flex-shrink:0;}
+.settings-heading{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);letter-spacing:0.04em;padding-bottom:0.8rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
 
 @media(max-width:768px){
   .sidebar{width:200px;}
@@ -195,55 +231,56 @@ html{height:100%;}body{height:100%;font-family:'Outfit',sans-serif;background:va
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- ── LOGIN ── -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo">Masters Window Tinting & Detail</div>
-    <div class="login-sub">Admin Panel · CMS Access</div>
-    <div class="login-title">SIGN IN</div>
-    <div class="login-desc">Enter your credentials to access the website management panel.</div>
-    <div id="login-error" class="login-error">Incorrect username or password. Please try again.</div>
+    <div class="login-logo">Masters Window Tinting</div>
+    <div class="login-tagline">Admin CMS · Secure Access</div>
+    <div class="login-heading">SIGN IN</div>
+    <div class="login-sub">Enter your credentials to manage your website.</div>
+    <div id="login-error">Incorrect username or password.</div>
     <div class="field">
       <label>Username</label>
-      <input type="text" id="login-user" placeholder="masters" autocomplete="username">
+      <input type="text" id="lu" placeholder="masters" autocomplete="username">
     </div>
     <div class="field">
       <label>Password</label>
-      <input type="password" id="login-pass" placeholder="••••••••••" autocomplete="current-password">
+      <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password">
     </div>
-    <button class="btn-login" onclick="doLogin()">Sign In →</button>
+    <button class="btn-login" id="login-btn">Sign In →</button>
   </div>
 </div>
 
-<!-- APP -->
-<div id="app" style="display:none;flex-direction:row;height:100vh;width:100%;">
+<!-- ── APP ── -->
+<div id="app">
 
   <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">Masters Window Tinting<span>Admin · CMS Panel</span></div>
+    <div class="sidebar-brand">
+      <div class="sidebar-name">Masters Window Tinting</div>
+      <div class="sidebar-sub">Admin · CMS Panel</div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Main</div>
-      <div class="nav-item active" onclick="showPanel('dashboard')"><span class="icon">📊</span> Dashboard</div>
-      <div class="nav-item" onclick="showPanel('gallery')"><span class="icon">🖼️</span> Gallery Manager</div>
-      <div class="nav-item" onclick="showPanel('carousel')"><span class="icon">🎠</span> Carousel Editor</div>
-      <div class="nav-item" onclick="showPanel('siteinfo')"><span class="icon">📋</span> Site Info</div>
+      <div class="nav-item active" data-panel="dashboard"><span class="nav-icon">📊</span> Dashboard</div>
+      <div class="nav-item" data-panel="gallery"><span class="nav-icon">🖼️</span> Gallery Manager</div>
+      <div class="nav-item" data-panel="carousel"><span class="nav-icon">🎠</span> Carousel Editor</div>
+      <div class="nav-item" data-panel="siteinfo"><span class="nav-icon">📋</span> Site Info</div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Config</div>
-      <div class="nav-item" onclick="showPanel('settings')"><span class="icon">⚙️</span> Settings</div>
-      <div class="nav-item" onclick="window.open('/', '_blank')"><span class="icon">🌐</span> View Site</div>
+      <div class="nav-item" data-panel="settings"><span class="nav-icon">⚙️</span> Settings</div>
+      <div class="nav-item" id="view-site-link"><span class="nav-icon">🌐</span> View Live Site</div>
     </div>
     <div class="sidebar-footer">
-      <div class="user-badge">
-        <div class="user-avatar">M</div>
+      <div class="user-row">
+        <div class="user-av">M</div>
         <div>
           <div class="user-name">Masters Admin</div>
           <div class="user-role">Website Owner</div>
         </div>
       </div>
-      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+      <button class="btn-signout" id="signout-btn">Sign Out</button>
     </div>
   </div>
 
@@ -251,10 +288,10 @@ html{height:100%;}body{height:100%;font-family:'Outfit',sans-serif;background:va
   <div class="main">
     <div class="topbar">
       <div class="topbar-title" id="topbar-title">DASHBOARD</div>
-      <div class="topbar-actions">
+      <div class="topbar-right">
         <div class="status-dot"></div>
-        <div class="status-text">masters-window-tinting.vercel.app</div>
-        <button class="btn-publish" onclick="openPublishModal()">🚀 Publish Changes</button>
+        <div class="status-txt">masters-window-tinting.vercel.app</div>
+        <button class="btn-publish" id="pub-btn">🚀 Publish Changes</button>
       </div>
     </div>
 
@@ -262,257 +299,225 @@ html{height:100%;}body{height:100%;font-family:'Outfit',sans-serif;background:va
 
       <!-- DASHBOARD -->
       <div id="panel-dashboard" class="panel active">
-        <div class="panel-header">
-          <div class="panel-title">DASHBOARD</div>
-          <div class="panel-desc">Overview of your website content and recent activity.</div>
-        </div>
+        <div class="panel-title">DASHBOARD</div>
+        <div class="panel-desc">Your website overview.</div>
         <div class="stats-row">
-          <div class="stat-box"><div class="stat-val" id="stat-imgs">0</div><div class="stat-lbl">Gallery Images</div></div>
+          <div class="stat-box"><div class="stat-val" id="s-imgs">0</div><div class="stat-lbl">Gallery Images</div></div>
           <div class="stat-box"><div class="stat-val">7</div><div class="stat-lbl">Carousel Slides</div></div>
           <div class="stat-box"><div class="stat-val">7</div><div class="stat-lbl">Service Pages</div></div>
-          <div class="stat-box"><div class="stat-val" id="stat-changes">0</div><div class="stat-lbl">Unpublished Changes</div></div>
+          <div class="stat-box"><div class="stat-val" id="s-changes">0</div><div class="stat-lbl">Pending Changes</div></div>
         </div>
         <div class="card">
-          <div class="card-title">Quick Actions</div>
+          <div class="card-label">Quick Actions</div>
           <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
-            <button class="btn btn-gold" onclick="showPanel('gallery')">🖼️ Manage Gallery</button>
-            <button class="btn btn-outline-gold" onclick="showPanel('carousel')">🎠 Edit Carousel</button>
-            <button class="btn btn-outline-gold" onclick="showPanel('siteinfo')">📋 Edit Site Info</button>
-            <button class="btn btn-outline" onclick="window.open('/', '_blank')">🌐 View Live Site</button>
+            <button class="btn btn-gold" data-goto="gallery">🖼️ Gallery Manager</button>
+            <button class="btn btn-outline-gold" data-goto="carousel">🎠 Edit Carousel</button>
+            <button class="btn btn-outline-gold" data-goto="siteinfo">📋 Site Info</button>
+            <button class="btn btn-grey" id="dash-viewsite">🌐 View Site</button>
           </div>
         </div>
         <div class="card">
-          <div class="card-title">Recent Changes</div>
-          <div id="changelog">
-            <div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet. Start editing to track your updates.</div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">GitHub Publishing</div>
-          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:300;">Connect your GitHub repository to publish changes directly to your live site via Vercel's auto-deploy.</p>
-          <button class="btn btn-outline-gold" onclick="showPanel('settings')">⚙️ Configure GitHub Token</button>
+          <div class="card-label">Recent Changes</div>
+          <div id="changelog-list"><div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet.</div></div>
         </div>
       </div>
 
-      <!-- GALLERY MANAGER -->
+      <!-- GALLERY -->
       <div id="panel-gallery" class="panel">
-        <div class="panel-header">
-          <div class="panel-title">GALLERY MANAGER</div>
-          <div class="panel-desc">Upload and manage photos for each service category. Images are compressed automatically before saving.</div>
-        </div>
+        <div class="panel-title">GALLERY MANAGER</div>
+        <div class="panel-desc">Upload photos for each service. Images are auto-compressed before saving.</div>
 
-        <!-- Storage meter -->
-        <div class="storage-bar-wrap">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
-            <span style="font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);">Local Storage Used</span>
-            <span id="storage-text" style="font-size:0.72rem;color:var(--muted);">0 KB / 5 MB</span>
+        <div class="storage-wrap">
+          <div class="storage-header">
+            <span class="storage-label">Local Storage</span>
+            <span class="storage-val" id="storage-val">0 KB / 5 MB</span>
           </div>
-          <div style="height:4px;background:var(--surface3);border-radius:2px;">
-            <div id="storage-bar" style="height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.4s;"></div>
-          </div>
+          <div class="storage-track"><div class="storage-fill" id="storage-fill" style="width:0%"></div></div>
         </div>
 
         <div class="cat-tabs" id="cat-tabs"></div>
 
-        <div class="card" id="gallery-cat-panel">
-          <div class="card-title" id="gallery-cat-title">WINDOW TINTING</div>
+        <div class="card">
+          <div class="card-label" id="gal-cat-label">WINDOW TINTING</div>
           <div class="img-grid" id="img-grid"></div>
 
           <!-- Upload progress -->
-          <div id="upload-progress" style="display:none;margin-bottom:1rem;">
-            <div style="font-size:0.75rem;color:var(--gold);margin-bottom:0.4rem;" id="upload-progress-text">Compressing images...</div>
-            <div style="height:4px;background:var(--surface3);border-radius:2px;">
-              <div id="upload-progress-bar" style="height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.2s;"></div>
+          <div class="prog-wrap" id="up-prog">
+            <div class="prog-text" id="up-prog-text">Processing...</div>
+            <div class="prog-track"><div class="prog-fill" id="up-prog-fill"></div></div>
+          </div>
+
+          <!-- Upload method tabs -->
+          <div class="upload-tabs">
+            <button class="utab active" data-utab="file">📁 Upload Files</button>
+            <button class="utab" data-utab="url">📎 Single URL</button>
+            <button class="utab" data-utab="bulk">📋 Bulk URLs</button>
+            <button class="utab" data-utab="drive">☁️ Google Drive</button>
+          </div>
+
+          <!-- FILE -->
+          <div class="utab-panel active" id="utab-file">
+            <div class="upload-drop" id="drop-zone">
+              <input type="file" id="file-input" accept="image/*" multiple style="display:none;">
+              <div class="upload-drop-icon">📁</div>
+              <div class="upload-drop-text"><strong>Click or drag & drop</strong> photos here<br>JPG, PNG, WEBP · Auto-compressed · Multiple files OK</div>
             </div>
           </div>
 
-          <!-- Upload area -->
-          <!-- Tab switcher for upload methods -->
-          <div style="display:flex;gap:2px;margin-bottom:1rem;flex-wrap:wrap;">
-            <button class="upload-tab active" id="tab-file" onclick="switchUploadTab('file')" style="background:var(--gold);color:#000;border:none;padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">📁 Upload Files</button>
-            <button class="upload-tab" id="tab-url" onclick="switchUploadTab('url')" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border);padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">📎 Single URL</button>
-            <button class="upload-tab" id="tab-bulk" onclick="switchUploadTab('bulk')" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border);padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">📋 Bulk URLs</button>
-            <button class="upload-tab" id="tab-drive" onclick="switchUploadTab('drive')" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border);padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;">☁️ Google Drive</button>
-          </div>
-
-          <!-- FILE UPLOAD TAB -->
-          <div id="upload-tab-file">
-            <div class="upload-area" id="drop-zone"
-              onclick="document.getElementById('file-upload').click()"
-              ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
-              ondragleave="this.style.borderColor=''"
-              ondrop="event.preventDefault();this.style.borderColor='';handleFileUpload({target:{files:event.dataTransfer.files}})">
-              <input type="file" id="file-upload" accept="image/*" multiple onchange="handleFileUpload(event)">
-              <div style="font-size:2rem;margin-bottom:0.5rem;">📁</div>
-              <div class="upload-label">
-                <span>Click or drag & drop</span> photos here<br>
-                <span style="color:var(--muted);font-weight:300;font-size:0.72rem;">JPG, PNG, WEBP · Auto-compressed · Multiple files OK</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- SINGLE URL TAB -->
-          <div id="upload-tab-url" style="display:none;">
+          <!-- SINGLE URL -->
+          <div class="utab-panel" id="utab-url">
             <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
-              <div style="font-size:0.7rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.6;">
-                Paste a direct image URL. Works best with <strong style="color:var(--gold);">i.ibb.co</strong> or <strong style="color:var(--gold);">i.imgur.com</strong> links.
-              </div>
-              <div class="form-group" style="margin:0 0 0.8rem;">
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.6;">
+                Use a <strong style="color:var(--gold);">direct image URL</strong> — from i.ibb.co, i.imgur.com, or any link ending in .jpg/.png/.webp
+              </p>
+              <div class="field2">
                 <label>Image URL</label>
                 <input type="url" id="url-input" placeholder="https://i.ibb.co/ABC123/photo.jpg">
               </div>
-              <button class="btn btn-gold" style="width:100%;" onclick="addImageUrl()">Add Image URL</button>
-              <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);">
-                <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">Free image hosts</div>
-                <a href="https://imgbb.com" target="_blank" style="color:var(--gold);font-size:0.78rem;display:block;margin-bottom:0.3rem;">→ imgbb.com (upload → copy Direct link)</a>
-                <a href="https://imgur.com/upload" target="_blank" style="color:var(--gold);font-size:0.78rem;display:block;">→ imgur.com</a>
+              <button class="btn btn-gold" style="width:100%;" id="add-url-btn">Add Image</button>
+              <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted);line-height:1.8;">
+                <strong style="color:var(--gold);display:block;margin-bottom:0.3rem;">Free image hosts:</strong>
+                <a href="https://imgbb.com" target="_blank" style="color:var(--gold);">→ imgbb.com</a> — upload, click image, copy "Direct link"<br>
+                <a href="https://imgur.com/upload" target="_blank" style="color:var(--gold);">→ imgur.com</a>
               </div>
             </div>
           </div>
 
-          <!-- BULK URL TAB -->
-          <div id="upload-tab-bulk" style="display:none;">
+          <!-- BULK URLs -->
+          <div class="utab-panel" id="utab-bulk">
             <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
-              <div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.8rem;font-weight:300;line-height:1.6;">
-                Paste multiple image URLs, <strong style="color:var(--white);">one per line</strong>. All will be added at once.
-              </div>
-              <textarea id="bulk-url-input" placeholder="https://i.ibb.co/photo1.jpg&#10;https://i.ibb.co/photo2.jpg&#10;https://i.ibb.co/photo3.jpg&#10;..." style="background:var(--black);border:1px solid rgba(200,168,75,0.2);color:var(--white);padding:0.8rem;font-size:0.78rem;font-family:monospace;width:100%;min-height:160px;resize:vertical;outline:none;margin-bottom:0.8rem;"></textarea>
-              <button class="btn btn-gold" style="width:100%;" onclick="bulkAddUrls()">📋 Import All URLs</button>
-              <div id="bulk-progress" style="display:none;font-size:0.78rem;color:var(--gold);margin-top:0.7rem;"></div>
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;font-weight:300;">Paste multiple image URLs, one per line:</p>
+              <textarea id="bulk-input" rows="8" placeholder="https://i.ibb.co/photo1.jpg&#10;https://i.ibb.co/photo2.jpg&#10;https://i.ibb.co/photo3.jpg" style="background:var(--black);border:1px solid rgba(200,168,75,0.15);color:var(--white);padding:0.8rem;font-size:0.78rem;font-family:monospace;width:100%;resize:vertical;outline:none;margin-bottom:0.8rem;"></textarea>
+              <button class="btn btn-gold" style="width:100%;" id="bulk-add-btn">📋 Import All URLs</button>
+              <div id="bulk-result" style="display:none;font-size:0.78rem;color:var(--gold);margin-top:0.6rem;"></div>
             </div>
           </div>
 
-          <!-- GOOGLE DRIVE TAB -->
-          <div id="upload-tab-drive" style="display:none;">
+          <!-- GOOGLE DRIVE -->
+          <div class="utab-panel" id="utab-drive">
             <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
-              <div style="font-size:0.7rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.7;">
-                Paste your Google Drive <strong style="color:var(--white);">folder</strong> link to import all photos at once.<br>
-                <span style="color:#ffcc80;">⚠️ The folder must be set to "Anyone with the link can view"</span>
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.7;">
+                Import all photos from a Google Drive folder at once.<br>
+                <strong style="color:#ffcc80;">⚠️ The folder must be set to "Anyone with the link can view"</strong>
+              </p>
+              <div style="background:var(--black);border:1px solid var(--border);padding:1rem;margin-bottom:1rem;font-size:0.78rem;color:var(--muted);line-height:1.9;">
+                <strong style="color:var(--gold);">How to make public:</strong><br>
+                1. Right-click the folder in Google Drive<br>
+                2. Click <strong style="color:var(--white);">Share</strong><br>
+                3. Change from "Restricted" to <strong style="color:var(--white);">"Anyone with the link"</strong><br>
+                4. Click Done, then copy the folder link
               </div>
-              <div style="background:var(--black);border:1px solid var(--border);padding:1rem;margin-bottom:1rem;font-size:0.78rem;color:var(--muted);line-height:1.8;">
-                <strong style="color:var(--gold);">How to make folder public:</strong><br>
-                1. Right-click the folder in Drive<br>
-                2. Share → Change to "Anyone with the link"<br>
-                3. Copy the folder link and paste below
-              </div>
-              <div class="form-group" style="margin:0 0 0.8rem;">
+              <div class="field2">
                 <label>Google Drive Folder Link</label>
-                <input type="url" id="drive-folder-url" placeholder="https://drive.google.com/drive/folders/...">
+                <input type="url" id="drive-url" placeholder="https://drive.google.com/drive/folders/...">
               </div>
-              <button class="btn btn-gold" style="width:100%;" onclick="importDriveFolder()">☁️ Import All Photos from Drive</button>
-              <div id="drive-progress" style="display:none;font-size:0.82rem;color:var(--gold);margin-top:0.8rem;line-height:1.7;padding:0.8rem;background:var(--black);border:1px solid var(--border);"></div>
+              <button class="btn btn-gold" style="width:100%;" id="drive-import-btn">☁️ Import All Photos from Drive</button>
+              <div id="drive-result" style="display:none;font-size:0.82rem;color:var(--gold);margin-top:0.8rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);line-height:1.7;"></div>
             </div>
           </div>
+
         </div>
 
-        <div style="display:flex;gap:0.7rem;margin-top:0.8rem;flex-wrap:wrap;align-items:center;">
-          <button class="btn btn-gold" onclick="saveGallery()">💾 Save Gallery</button>
-          <button class="btn btn-outline" onclick="removeFailedImages()">🧹 Remove Failed Images</button>
-          <button class="btn btn-outline" onclick="clearCategoryImages()">🗑️ Clear Category</button>
+        <div style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center;margin-top:0.5rem;">
+          <button class="btn btn-gold" id="save-gallery-btn">💾 Save Gallery</button>
+          <button class="btn btn-grey" id="clean-gallery-btn">🧹 Remove Broken</button>
+          <button class="btn btn-danger btn-sm" id="clear-cat-btn">🗑️ Clear Category</button>
           <span id="save-status" style="font-size:0.78rem;color:var(--muted);"></span>
         </div>
       </div>
 
-      <!-- CAROUSEL EDITOR -->
+      <!-- CAROUSEL -->
       <div id="panel-carousel" class="panel">
-        <div class="panel-header">
-          <div class="panel-title">CAROUSEL EDITOR</div>
-          <div class="panel-desc">Edit the text and content for each homepage carousel slide.</div>
-        </div>
+        <div class="panel-title">CAROUSEL EDITOR</div>
+        <div class="panel-desc">Edit text content for each homepage carousel slide.</div>
         <div id="slide-editors"></div>
-        <button class="btn btn-gold" onclick="saveCarousel()">💾 Save All Slides</button>
+        <button class="btn btn-gold" id="save-carousel-btn">💾 Save All Slides</button>
       </div>
 
       <!-- SITE INFO -->
       <div id="panel-siteinfo" class="panel">
-        <div class="panel-header">
-          <div class="panel-title">SITE INFO</div>
-          <div class="panel-desc">Update your contact information and business hours.</div>
-        </div>
+        <div class="panel-title">SITE INFO</div>
+        <div class="panel-desc">Update contact info, hours, and social links.</div>
         <div class="card">
-          <div class="card-title">Contact Information</div>
+          <div class="card-label">Contact</div>
           <div class="form-row">
-            <div class="form-group"><label>Phone Number</label><input type="tel" id="info-phone" placeholder="631-226-4300"></div>
-            <div class="form-group"><label>Email Address</label><input type="email" id="info-email" placeholder="info@masterswindowtinting.com"></div>
+            <div class="field2"><label>Phone</label><input type="tel" id="i-phone" placeholder="631-226-4300"></div>
+            <div class="field2"><label>Email</label><input type="email" id="i-email" placeholder="info@masterswindowtinting.com"></div>
           </div>
-          <div class="form-group"><label>Street Address</label><input type="text" id="info-address" placeholder="863 Rte 109, Suite A, West Babylon, NY 11704"></div>
-          <div class="form-group"><label>Google Maps Link</label><input type="url" id="info-maps" placeholder="https://maps.google.com/..."></div>
+          <div class="field2"><label>Address</label><input type="text" id="i-addr" placeholder="863 Rte 109, Suite A, West Babylon, NY 11704"></div>
+          <div class="field2"><label>Google Maps URL</label><input type="url" id="i-maps"></div>
         </div>
         <div class="card">
-          <div class="card-title">Business Hours</div>
+          <div class="card-label">Business Hours</div>
           <div class="form-row">
-            <div class="form-group"><label>Mon–Sat Hours</label><input type="text" id="info-hours-weekday" placeholder="9:00 AM – 5:00 PM"></div>
-            <div class="form-group"><label>Sunday Hours</label><input type="text" id="info-hours-sunday" placeholder="10:00 AM – 4:00 PM"></div>
+            <div class="field2"><label>Mon–Sat</label><input type="text" id="i-hw" placeholder="9:00 AM – 5:00 PM"></div>
+            <div class="field2"><label>Sunday</label><input type="text" id="i-hs" placeholder="10:00 AM – 4:00 PM"></div>
           </div>
         </div>
         <div class="card">
-          <div class="card-title">Social Media</div>
+          <div class="card-label">Social Media</div>
           <div class="form-row">
-            <div class="form-group"><label>Facebook URL</label><input type="url" id="info-fb" placeholder="https://facebook.com/..."></div>
-            <div class="form-group"><label>Instagram URL</label><input type="url" id="info-ig" placeholder="https://instagram.com/..."></div>
+            <div class="field2"><label>Facebook URL</label><input type="url" id="i-fb"></div>
+            <div class="field2"><label>Instagram URL</label><input type="url" id="i-ig"></div>
           </div>
         </div>
-        <button class="btn btn-gold" onclick="saveSiteInfo()">💾 Save Site Info</button>
+        <button class="btn btn-gold" id="save-siteinfo-btn">💾 Save Site Info</button>
       </div>
 
       <!-- SETTINGS -->
       <div id="panel-settings" class="panel">
-        <div class="panel-header">
-          <div class="panel-title">SETTINGS</div>
-          <div class="panel-desc">Manage your login credentials and GitHub publishing configuration.</div>
-        </div>
+        <div class="panel-title">SETTINGS</div>
+        <div class="panel-desc">Change password and configure GitHub publishing.</div>
         <div class="settings-section">
-          <div class="settings-title">Change Password</div>
+          <div class="settings-heading">Change Password</div>
           <div class="card">
-            <div class="form-group"><label>Current Password</label><input type="password" id="cur-pass" placeholder="••••••••"></div>
+            <div class="field2"><label>Current Password</label><input type="password" id="cp-cur" placeholder="••••••••"></div>
             <div class="form-row">
-              <div class="form-group"><label>New Password</label><input type="password" id="new-pass" placeholder="••••••••"></div>
-              <div class="form-group"><label>Confirm New Password</label><input type="password" id="conf-pass" placeholder="••••••••"></div>
+              <div class="field2"><label>New Password</label><input type="password" id="cp-new" placeholder="••••••••"></div>
+              <div class="field2"><label>Confirm New</label><input type="password" id="cp-conf" placeholder="••••••••"></div>
             </div>
-            <button class="btn btn-gold" onclick="changePassword()">Update Password</button>
+            <button class="btn btn-gold" id="change-pass-btn">Update Password</button>
           </div>
         </div>
         <div class="settings-section">
-          <div class="settings-title">GitHub Publishing</div>
+          <div class="settings-heading">GitHub Publishing</div>
           <div class="card">
-            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.2rem;font-weight:300;">
-              To publish changes directly to GitHub (which triggers Vercel auto-deploy), enter your GitHub Personal Access Token with <code style="color:var(--gold);background:var(--black);padding:0.1rem 0.4rem;">repo</code> scope.
-            </p>
-            <div class="form-group"><label>GitHub Repository</label><input type="text" id="gh-repo" placeholder="austriaalvinnoel/masters-window-tinting"></div>
-            <div class="form-group"><label>GitHub Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.2rem;font-weight:300;">Connect GitHub to publish changes directly to the live site via Vercel.</p>
+            <div class="field2"><label>Repository</label><input type="text" id="gh-repo" placeholder="austriaalvinnoel/masters-window-tinting"></div>
+            <div class="field2"><label>Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
             <div class="form-row">
-              <div class="form-group"><label>Branch</label><input type="text" id="gh-branch" placeholder="main"></div>
-              <div class="form-group"><label>Commit Author Name</label><input type="text" id="gh-author" placeholder="Masters Admin"></div>
+              <div class="field2"><label>Branch</label><input type="text" id="gh-branch" placeholder="main"></div>
+              <div class="field2"><label>Author Name</label><input type="text" id="gh-author" placeholder="Masters Admin"></div>
             </div>
-            <div style="display:flex;gap:0.7rem;">
-              <button class="btn btn-gold" onclick="saveGithubSettings()">💾 Save GitHub Settings</button>
-              <button class="btn btn-outline-gold" onclick="testGithubConnection()">🔗 Test Connection</button>
+            <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
+              <button class="btn btn-gold" id="save-gh-btn">💾 Save Settings</button>
+              <button class="btn btn-outline-gold" id="test-gh-btn">🔗 Test Connection</button>
             </div>
           </div>
         </div>
         <div class="settings-section">
-          <div class="settings-title">Danger Zone</div>
+          <div class="settings-heading">Danger Zone</div>
           <div class="card">
-            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:300;">Clear all locally saved CMS data. This does not affect the live site.</p>
-            <button class="btn btn-danger" onclick="clearAllData()">🗑️ Clear All Local Data</button>
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:300;">Clear all locally saved CMS data. Does not affect the live site.</p>
+            <button class="btn btn-danger" id="clear-all-btn">🗑️ Clear All Local Data</button>
           </div>
         </div>
       </div>
 
-    </div><!-- end .content -->
-  </div><!-- end .main -->
-</div><!-- end #app -->
+    </div>
+  </div>
+</div>
 
 <!-- PUBLISH MODAL -->
-<div class="modal-backdrop" id="publish-modal">
+<div class="modal-back" id="pub-modal">
   <div class="modal">
     <div class="modal-title">PUBLISH CHANGES</div>
-    <div class="modal-sub">This will commit your saved changes to GitHub and trigger a live site update via Vercel.</div>
-    <div class="form-group"><label>Commit Message</label><input type="text" id="commit-msg" placeholder="Update gallery and carousel content"></div>
-    <div id="publish-status" style="font-size:0.83rem;color:var(--muted);display:none;padding:0.8rem;background:var(--black);border:1px solid var(--border);margin-top:0.5rem;"></div>
+    <div class="modal-sub">Commits your changes to GitHub and triggers a Vercel live deploy.</div>
+    <div class="field2"><label>Commit Message</label><input type="text" id="commit-msg" placeholder="Update gallery and site content"></div>
+    <div class="pub-status" id="pub-status"></div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closePublishModal()">Cancel</button>
-      <button class="btn btn-gold" id="btn-do-publish" onclick="doPublish()">🚀 Publish to GitHub</button>
+      <button class="btn btn-grey" id="pub-cancel">Cancel</button>
+      <button class="btn btn-gold" id="pub-confirm">🚀 Publish to GitHub</button>
     </div>
   </div>
 </div>
@@ -521,736 +526,537 @@ html{height:100%;}body{height:100%;font-family:'Outfit',sans-serif;background:va
 <div id="toast"></div>
 
 <script>
-// ── CREDENTIALS (stored in localStorage, changeable) ─────────────────────────
-const DEFAULT_USER = 'masters';
-const DEFAULT_PASS = 'Detail2026!';
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const CATS = ['Window Tinting','Liquid PPF','Ceramic Coating','Residential Tinting','Commercial Tinting','Wall Graphics','Detailing & Paint Correction'];
+const SLIDE_DEFAULTS = [
+  {name:'About Masters',badge:'Trusted on Long Island',headline:'MASTERS\nWINDOW\nTINTING.',sub:'25+ years of professional experience.',cta1:'Call 631-226-4300',cta2:'Get a Free Quote'},
+  {name:'Window Tinting',badge:'Core Service',headline:'WINDOW\nTINTING.',sub:'Cleaner look, better privacy, less heat.',cta1:'Call Now',cta2:'Get a Quote'},
+  {name:'Liquid PPF',badge:'Core Service',headline:'LIQUID\nPAINT\nPROTECTION.',sub:'Seamless protection against scratches and chips.',cta1:'Call Now',cta2:'Get a Quote'},
+  {name:'Ceramic Coating',badge:'Core Service',headline:'CERAMIC\nCOATING\nFOR CARS.',sub:'Long-lasting gloss and durable surface protection.',cta1:'Call Now',cta2:'Get a Quote'},
+  {name:'Residential',badge:'Residential Service',headline:'RESIDENTIAL\nWINDOW\nTINTING.',sub:'Improve home privacy and reduce glare.',cta1:'Request Quote',cta2:'Call 631-226-4300'},
+  {name:'Commercial',badge:'Commercial Service',headline:'COMMERCIAL\nWINDOW\nTINTING.',sub:'Improve privacy and lower cooling costs.',cta1:'Request Quote',cta2:'Call 631-226-4300'},
+  {name:'Specialty',badge:'Specialty Services',headline:'GRAPHICS,\nDETAILING &\nCORRECTION.',sub:'Wall graphics and paint correction services.',cta1:'View Services',cta2:'Call 631-226-4300'},
+];
+const SITEINFO_DEFAULTS = {phone:'631-226-4300',email:'info@masterswindowtinting.com',address:'863 Rte 109, Suite A, West Babylon, NY 11704',maps:'https://maps.google.com/?q=863+Rte+109+West+Babylon+NY',hw:'9:00 AM – 5:00 PM',hs:'10:00 AM – 4:00 PM',fb:'https://www.facebook.com/profile.php?id=100063773733742',ig:'https://www.instagram.com/Ceramic_pro_long_island'};
 
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {gallery:{}, carousel:[], siteinfo:{}, log:[]};
+let currentCat = CATS[0];
+
+function loadState() {
+  try { state.gallery  = JSON.parse(localStorage.getItem('cms_gallery')  || '{}'); } catch(e){ state.gallery={}; }
+  try { state.carousel = JSON.parse(localStorage.getItem('cms_carousel') || 'null') || SLIDE_DEFAULTS.map(s=>({...s})); } catch(e){ state.carousel=SLIDE_DEFAULTS.map(s=>({...s})); }
+  try { state.siteinfo = JSON.parse(localStorage.getItem('cms_siteinfo') || 'null') || {...SITEINFO_DEFAULTS}; } catch(e){ state.siteinfo={...SITEINFO_DEFAULTS}; }
+  try { state.log      = JSON.parse(localStorage.getItem('cms_log')      || '[]'); } catch(e){ state.log=[]; }
+}
+
+function saveKey(key, val) {
+  try { localStorage.setItem('cms_'+key, JSON.stringify(val)); return true; }
+  catch(e) { toast('Storage full — use URL method instead of file uploads', 'error'); return false; }
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
 function getCreds() {
   return {
-    user: localStorage.getItem('cms_user') || DEFAULT_USER,
-    pass: localStorage.getItem('cms_pass') || DEFAULT_PASS
+    user: localStorage.getItem('cms_user') || 'masters',
+    pass: localStorage.getItem('cms_pass') || 'Detail2026!'
   };
 }
 
-// ── LOGIN ────────────────────────────────────────────────────────────────────
+document.getElementById('login-btn').addEventListener('click', doLogin);
+document.getElementById('lp').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('lu').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('lp').focus(); });
+
 function doLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value;
+  const u = document.getElementById('lu').value.trim();
+  const p = document.getElementById('lp').value;
   const c = getCreds();
+  const err = document.getElementById('login-error');
   if (u === c.user && p === c.pass) {
-    sessionStorage.setItem('cms_auth', '1');
+    err.style.display = 'none';
+    sessionStorage.setItem('cms_ok','1');
     document.getElementById('login-screen').style.display = 'none';
-    const appEl = document.getElementById('app'); appEl.style.display = 'flex'; appEl.style.flexDirection = 'row';
-    initApp();
+    startApp();
   } else {
-    document.getElementById('login-error').style.display = 'block';
+    err.style.display = 'block';
+    document.getElementById('lp').value = '';
+    document.getElementById('lp').focus();
   }
 }
 
-document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-document.getElementById('login-user').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-pass').focus(); });
-
-function doLogout() {
-  sessionStorage.removeItem('cms_auth');
+document.getElementById('signout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('cms_ok');
   location.reload();
-}
+});
 
-if (sessionStorage.getItem('cms_auth') === '1') {
+// Auto-login if already authenticated
+if (sessionStorage.getItem('cms_ok') === '1') {
   document.getElementById('login-screen').style.display = 'none';
-  const appEl = document.getElementById('app'); appEl.style.display = 'flex'; appEl.style.flexDirection = 'row';
-  setTimeout(initApp, 0);
+  startApp();
 }
 
-// ── APP STATE ────────────────────────────────────────────────────────────────
-const CATEGORIES = [
-  'Window Tinting','Liquid PPF','Ceramic Coating',
-  'Residential Tinting','Commercial Tinting','Wall Graphics','Detailing & Paint Correction'
-];
-
-const SLIDE_DEFAULTS = [
-  { name:'About Masters', badge:'Trusted on Long Island', headline:'MASTERS\nWINDOW\nTINTING.', sub:'25+ years of professional experience in automotive, residential, and commercial film solutions.', cta1:'Call 631-226-4300', cta2:'Get a Free Quote' },
-  { name:'Window Tinting', badge:'Core Service', headline:'WINDOW\nTINTING.', sub:'Cleaner look, better privacy, less heat, and UV protection for your vehicle.', cta1:'Call Now', cta2:'Get a Quote' },
-  { name:'Liquid PPF', badge:'Core Service', headline:'LIQUID\nPAINT\nPROTECTION.', sub:'Seamless paint protection that helps guard against scratches, chips, and sun damage.', cta1:'Watch Video', cta2:'Call 631-226-4300' },
-  { name:'Ceramic Coating', badge:'Core Service', headline:'CERAMIC\nCOATING\nFOR CARS.', sub:'Long-lasting gloss and easier maintenance with durable surface protection.', cta1:'Call Now', cta2:'Get a Quote' },
-  { name:'Residential Tinting', badge:'Residential Service', headline:'RESIDENTIAL\nWINDOW\nTINTING.', sub:'Improve home privacy, reduce glare, and keep rooms cooler with solar window film.', cta1:'Request Residential Quote', cta2:'Call 631-226-4300' },
-  { name:'Commercial Tinting', badge:'Commercial Service', headline:'COMMERCIAL\nWINDOW\nTINTING.', sub:'Improve privacy, reduce heat and glare, and create a cleaner professional look.', cta1:'Request Commercial Quote', cta2:'Call 631-226-4300' },
-  { name:'Specialty Services', badge:'Specialty Services', headline:'GRAPHICS,\nDETAILING &\nCORRECTION.', sub:'Branding graphics plus detail and paint correction services.', cta1:'View Services', cta2:'Call 631-226-4300' },
-];
-
-const SITEINFO_DEFAULTS = {
-  phone:'631-226-4300', email:'info@masterswindowtinting.com',
-  address:'863 Rte 109, Suite A, West Babylon, NY 11704',
-  maps:'https://maps.google.com/?q=863+Rte+109+West+Babylon+NY',
-  hoursWeekday:'9:00 AM – 5:00 PM', hoursSunday:'10:00 AM – 4:00 PM',
-  facebook:'https://www.facebook.com/profile.php?id=100063773733742',
-  instagram:'https://www.instagram.com/Ceramic_pro_long_island'
-};
-
-let state = { gallery:{}, carousel:[], siteinfo:{}, changelog:[] };
-let currentCat = CATEGORIES[0];
-
-function loadState() {
-  try { state.gallery   = JSON.parse(localStorage.getItem('cms_gallery')   || '{}'); } catch(e){}
-  try { state.carousel  = JSON.parse(localStorage.getItem('cms_carousel')  || 'null') || SLIDE_DEFAULTS.map(s=>({...s})); } catch(e){ state.carousel = SLIDE_DEFAULTS.map(s=>({...s})); }
-  try { state.siteinfo  = JSON.parse(localStorage.getItem('cms_siteinfo')  || 'null') || {...SITEINFO_DEFAULTS}; } catch(e){ state.siteinfo = {...SITEINFO_DEFAULTS}; }
-  try { state.changelog = JSON.parse(localStorage.getItem('cms_changelog') || '[]'); } catch(e){}
-}
-
-function saveStateKey(key) {
-  if (key === 'gallery') { saveGalleryToStorage(); return; }
-  try { localStorage.setItem('cms_' + key, JSON.stringify(state[key])); } catch(e) { showToast('Save failed — storage full', 'error'); }
-}
-
-// ── INIT ─────────────────────────────────────────────────────────────────────
-function initApp() {
+// ── APP START ─────────────────────────────────────────────────────────────────
+function startApp() {
+  const app = document.getElementById('app');
+  app.style.display = 'flex';
   loadState();
+  bindNav();
   buildCatTabs();
   buildSlideEditors();
   loadSiteInfo();
-  loadGithubSettings();
+  loadGhSettings();
   renderGallery();
-  renderChangelog();
+  renderLog();
   updateStats();
-  updateStorageMeter();
+  updateStorage();
+  bindGalleryEvents();
+  bindFormEvents();
 }
 
-// ── NAVIGATION ───────────────────────────────────────────────────────────────
-const PANEL_TITLES = { dashboard:'DASHBOARD', gallery:'GALLERY MANAGER', carousel:'CAROUSEL EDITOR', siteinfo:'SITE INFO', settings:'SETTINGS' };
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+const TITLES = {dashboard:'DASHBOARD',gallery:'GALLERY MANAGER',carousel:'CAROUSEL EDITOR',siteinfo:'SITE INFO',settings:'SETTINGS'};
+
+function bindNav() {
+  document.querySelectorAll('.nav-item[data-panel]').forEach(el => {
+    el.addEventListener('click', () => showPanel(el.dataset.panel));
+  });
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', () => showPanel(el.dataset.goto));
+  });
+  document.getElementById('view-site-link').addEventListener('click', () => window.open('/', '_blank'));
+  document.getElementById('dash-viewsite').addEventListener('click', () => window.open('/', '_blank'));
+  document.getElementById('pub-btn').addEventListener('click', openPubModal);
+}
 
 function showPanel(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('active');
-  document.querySelector(`.nav-item[onclick="showPanel('${id}')"]`).classList.add('active');
-  document.getElementById('topbar-title').textContent = PANEL_TITLES[id] || id.toUpperCase();
+  document.querySelectorAll('.nav-item[data-panel]').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  const navEl = document.querySelector(`.nav-item[data-panel="${id}"]`);
+  if (navEl) navEl.classList.add('active');
+  document.getElementById('topbar-title').textContent = TITLES[id] || id.toUpperCase();
 }
 
-// ── GALLERY ──────────────────────────────────────────────────────────────────
-
-// Compress an image file to a base64 JPEG under maxKB
-function compressImage(file, maxKB = 120, quality = 0.72) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const img = new Image();
-      img.onload = () => {
-        // Scale down if needed
-        let w = img.width, h = img.height;
-        const maxDim = 1200;
-        if (w > maxDim || h > maxDim) {
-          if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
-          else { w = Math.round(w * maxDim / h); h = maxDim; }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        let q = quality;
-        let result = canvas.toDataURL('image/jpeg', q);
-        // Reduce quality if still too big
-        while (result.length > maxKB * 1024 * 1.37 && q > 0.3) {
-          q -= 0.08;
-          result = canvas.toDataURL('image/jpeg', q);
-        }
-        resolve(result);
-      };
-      img.src = ev.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// Save gallery to localStorage with chunking if needed
-function saveGalleryToStorage() {
-  try {
-    const data = JSON.stringify(state.gallery);
-    // Try single key first
-    localStorage.setItem('cms_gallery', data);
-    return true;
-  } catch(e) {
-    // Storage full — try removing old data and retry
-    try {
-      localStorage.removeItem('cms_gallery');
-      // Save only URL-type images (not base64) to recover space
-      const urlOnly = {};
-      Object.keys(state.gallery).forEach(cat => {
-        urlOnly[cat] = (state.gallery[cat] || []).filter(s => s.startsWith('http'));
-      });
-      localStorage.setItem('cms_gallery', JSON.stringify(urlOnly));
-      state.gallery = urlOnly;
-      return false; // partial save
-    } catch(e2) {
-      return false;
-    }
-  }
-}
-
-function updateStorageMeter() {
-  let total = 0;
-  for (let k in localStorage) {
-    if (localStorage.hasOwnProperty(k)) total += (localStorage[k].length + k.length) * 2;
-  }
-  const used = total / 1024; // KB
-  const max = 5120; // 5MB in KB
-  const pct = Math.min(100, (used / max) * 100);
-  const bar = document.getElementById('storage-bar');
-  const txt = document.getElementById('storage-text');
-  if (bar) {
-    bar.style.width = pct + '%';
-    bar.style.background = pct > 80 ? '#ef9a9a' : pct > 60 ? '#ffcc80' : 'var(--gold)';
-  }
-  if (txt) txt.textContent = `${used < 1024 ? used.toFixed(0) + ' KB' : (used/1024).toFixed(1) + ' MB'} / 5 MB (${pct.toFixed(0)}% used)`;
-}
-
+// ── GALLERY ───────────────────────────────────────────────────────────────────
 function buildCatTabs() {
-  const el = document.getElementById('cat-tabs');
-  el.innerHTML = CATEGORIES.map(c =>
-    `<div class="cat-tab${c===currentCat?' active':''}" onclick="switchCat('${c}')">${c}</div>`
+  document.getElementById('cat-tabs').innerHTML = CATS.map(c =>
+    `<div class="cat-tab${c===currentCat?' active':''}" data-cat="${c}">${c}</div>`
   ).join('');
-}
-
-function switchCat(cat) {
-  currentCat = cat;
-  buildCatTabs();
-  renderGallery();
+  document.querySelectorAll('.cat-tab').forEach(el => {
+    el.addEventListener('click', () => { currentCat=el.dataset.cat; buildCatTabs(); renderGallery(); });
+  });
 }
 
 function renderGallery() {
   const imgs = state.gallery[currentCat] || [];
-  document.getElementById('gallery-cat-title').textContent = currentCat.toUpperCase();
+  document.getElementById('gal-cat-label').textContent = currentCat.toUpperCase();
   const grid = document.getElementById('img-grid');
-  grid.innerHTML = imgs.map((src, i) => {
+  grid.innerHTML = imgs.map((src,i) => {
     const isUrl = src.startsWith('http');
-    return `
-    <div class="img-slot">
-      <img src="${src}" alt="Gallery ${i+1}" onerror="this.parentElement.querySelector('.img-error').style.display='flex';this.style.display='none'">
-      <div class="img-error" style="display:none;position:absolute;inset:0;background:var(--surface2);align-items:center;justify-content:center;flex-direction:column;gap:0.3rem;font-size:0.65rem;color:var(--muted);">⚠️<span>Load failed</span></div>
-      <div class="img-type" style="position:absolute;top:5px;left:5px;font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;background:rgba(0,0,0,0.7);color:${isUrl?'#a5d6a7':'#90caf9'};padding:0.15rem 0.4rem;">${isUrl?'URL':'FILE'}</div>
-      <button class="img-remove" title="Remove" onclick="removeImage(${i})">✕</button>
+    return `<div class="img-slot">
+      <img src="${src}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="img-empty" style="display:none;position:absolute;inset:0;background:var(--surface3);">⚠️<span>Failed</span></div>
+      <div class="img-type-badge" style="color:${isUrl?'#a5d6a7':'#90caf9'}">${isUrl?'URL':'FILE'}</div>
+      <button class="img-remove" data-idx="${i}">✕</button>
     </div>`;
-  }).join('') + `
-    <div class="img-slot" style="cursor:default;">
-      <div class="img-slot-empty"><div class="plus">+</div><div>${imgs.length} photo${imgs.length!==1?'s':''}</div></div>
-    </div>`;
-  updateStorageMeter();
-}
+  }).join('') + `<div class="img-slot"><div class="img-empty"><span style="font-size:1.8rem">+</span><span>${imgs.length} photos</span></div></div>`;
 
-async function handleFileUpload(e) {
-  const files = [...e.target.files];
-  if (!files.length) return;
-  if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
-
-  const prog = document.getElementById('upload-progress');
-  const progBar = document.getElementById('upload-progress-bar');
-  const progText = document.getElementById('upload-progress-text');
-  prog.style.display = 'block';
-
-  for (let i = 0; i < files.length; i++) {
-    progText.textContent = `Compressing ${i + 1} of ${files.length}: ${files[i].name}`;
-    progBar.style.width = ((i / files.length) * 100) + '%';
-    try {
-      const compressed = await compressImage(files[i]);
-      const sizeMB = (compressed.length * 0.75 / 1048576).toFixed(2);
-      state.gallery[currentCat].push(compressed);
-      progText.textContent = `✅ Added ${files[i].name} (~${sizeMB} MB compressed)`;
-    } catch(err) {
-      progText.textContent = `⚠️ Skipped ${files[i].name} — could not compress`;
-    }
-  }
-
-  progBar.style.width = '100%';
-  setTimeout(() => { prog.style.display = 'none'; progBar.style.width = '0%'; }, 2000);
-
-  if (e.target && e.target.value !== undefined) e.target.value = '';
-  renderGallery();
-  updateStats();
-  showToast(`${files.length} photo${files.length!==1?'s':''} added — click Save!`, 'success');
-}
-
-// ── Smart URL converter — handles viewer pages from common hosts ──────────────
-function convertToDirectUrl(url) {
-  // ibb.co viewer → i.ibb.co direct
-  // https://ibb.co/ABC123  →  needs API call, so we try common pattern
-  // https://ibb.co/JwqW1P58 → https://i.ibb.co/JwqW1P58/<filename>
-  // Best we can do without API: fetch the page and extract the direct URL
-  if (/^https?:\/\/(www\.)?ibb\.co\/[a-zA-Z0-9]+$/.test(url)) {
-    // Can't directly convert without the filename — flag for fetch
-    return { type: 'ibb_viewer', url };
-  }
-  // imgur viewer → direct
-  if (/^https?:\/\/(www\.)?imgur\.com\/([a-zA-Z0-9]+)$/.test(url)) {
-    const id = url.match(/imgur\.com\/([a-zA-Z0-9]+)$/)[1];
-    return { type: 'direct', url: `https://i.imgur.com/${id}.jpg` };
-  }
-  // Google Drive view → direct
-  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
-  if (driveMatch) {
-    return { type: 'direct', url: `https://drive.google.com/uc?export=view&id=${driveMatch[1]}` };
-  }
-  // Already direct
-  return { type: 'direct', url };
-}
-
-async function fetchIbbDirectUrl(viewerUrl) {
-  // Use allorigins proxy to fetch the ibb page and extract the direct image URL
-  try {
-    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(viewerUrl)}`;
-    const res = await fetch(proxy);
-    const data = await res.json();
-    // Extract the direct image URL from the page HTML
-    const match = data.contents.match(/https:\/\/i\.ibb\.co\/[^"'\s]+\.(jpg|jpeg|png|webp)/i);
-    if (match) return match[0];
-  } catch(e) {}
-  return null;
-}
-
-function addImageUrl() {
-  const rawUrl = document.getElementById('url-input').value.trim();
-  if (!rawUrl) { showToast('Please enter an image URL', 'error'); return; }
-  if (!rawUrl.startsWith('http')) { showToast('URL must start with https://', 'error'); return; }
-
-  const urlInput = document.getElementById('url-input');
-
-  // Handle ibb.co viewer pages specially
-  if (/^https?:\/\/(www\.)?ibb\.co\/[a-zA-Z0-9]+$/.test(rawUrl)) {
-    showToast('🔄 Converting ibb.co link...', 'success');
-    fetchIbbDirectUrl(rawUrl).then(directUrl => {
-      if (directUrl) {
-        verifyAndAddImage(directUrl, urlInput);
-      } else {
-        // Fallback: show instructions
-        showToast('❌ Could not auto-convert. On imgbb, click the image → copy "Direct link" (starts with i.ibb.co)', 'error');
-      }
+  document.querySelectorAll('.img-remove').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      state.gallery[currentCat].splice(parseInt(btn.dataset.idx),1);
+      renderGallery(); updateStats();
     });
-    return;
-  }
-
-  // Convert other viewer URLs
-  const converted = convertToDirectUrl(rawUrl);
-  verifyAndAddImage(converted.url, urlInput);
+  });
+  updateStorage();
 }
 
-function verifyAndAddImage(url, inputEl) {
-  showToast('🔄 Checking image...', 'success');
-  const testImg = new Image();
-  testImg.crossOrigin = 'anonymous';
-  testImg.onload = () => {
-    if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
-    state.gallery[currentCat].push(url);
-    if (inputEl) inputEl.value = '';
-    renderGallery();
-    updateStats();
-    showToast('✅ Image added — click Save!', 'success');
-  };
-  testImg.onerror = () => {
-    // Image might block cross-origin but still work on site — add with warning
-    if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
-    state.gallery[currentCat].push(url);
-    if (inputEl) inputEl.value = '';
-    renderGallery();
-    updateStats();
-    showToast('⚠️ Added (may need Save to verify). If it shows broken, use i.ibb.co direct link.', 'success');
-  };
-  testImg.src = url + '?t=' + Date.now();
-}
+function bindGalleryEvents() {
+  // Upload tab switcher
+  document.querySelectorAll('.utab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.utab;
+      document.querySelectorAll('.utab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.utab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('utab-'+t).classList.add('active');
+    });
+  });
 
-// ── UPLOAD TAB SWITCHER ──────────────────────────────────────────────────────
-function switchUploadTab(tab) {
-  ['file','url','bulk','drive'].forEach(t => {
-    const panel = document.getElementById('upload-tab-' + t);
-    const btn   = document.getElementById('tab-' + t);
-    if (panel) panel.style.display = t === tab ? 'block' : 'none';
-    if (btn) {
-      if (t === tab) {
-        btn.style.background = 'var(--gold)';
-        btn.style.color = '#000';
-        btn.style.border = 'none';
-      } else {
-        btn.style.background = 'var(--surface2)';
-        btn.style.color = 'var(--muted)';
-        btn.style.border = '1px solid var(--border)';
-      }
-    }
+  // Drop zone
+  const dz = document.getElementById('drop-zone');
+  const fi = document.getElementById('file-input');
+  dz.addEventListener('click', () => fi.click());
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+  fi.addEventListener('change', e => handleFiles(e.target.files));
+
+  // Single URL
+  document.getElementById('add-url-btn').addEventListener('click', addSingleUrl);
+  document.getElementById('url-input').addEventListener('keydown', e => { if(e.key==='Enter') addSingleUrl(); });
+
+  // Bulk
+  document.getElementById('bulk-add-btn').addEventListener('click', bulkAddUrls);
+
+  // Drive
+  document.getElementById('drive-import-btn').addEventListener('click', importDriveFolder);
+
+  // Save / clean / clear
+  document.getElementById('save-gallery-btn').addEventListener('click', saveGallery);
+  document.getElementById('clean-gallery-btn').addEventListener('click', cleanGallery);
+  document.getElementById('clear-cat-btn').addEventListener('click', () => {
+    if(!confirm(`Clear all images for "${currentCat}"?`)) return;
+    state.gallery[currentCat]=[];
+    renderGallery(); updateStats(); updateStorage();
   });
 }
 
-// ── BULK URL PASTE ───────────────────────────────────────────────────────────
-async function bulkAddUrls() {
-  const raw = document.getElementById('bulk-url-input').value.trim();
-  if (!raw) { showToast('Paste some URLs first', 'error'); return; }
-
-  const urls = raw.split('
-')
-    .map(u => u.trim())
-    .filter(u => u.startsWith('http'));
-
-  if (!urls.length) { showToast('No valid URLs found', 'error'); return; }
-
-  const prog = document.getElementById('bulk-progress');
-  prog.style.display = 'block';
-  if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
-
-  let added = 0;
-  for (let i = 0; i < urls.length; i++) {
-    prog.textContent = `Adding ${i+1} of ${urls.length}...`;
-    const converted = convertToDirectUrl(urls[i]);
-    state.gallery[currentCat].push(converted.url);
-    added++;
-  }
-
-  document.getElementById('bulk-url-input').value = '';
-  prog.textContent = `✅ Added ${added} image${added!==1?'s':''}! Click Save Gallery.`;
-  setTimeout(() => { prog.style.display = 'none'; }, 4000);
-  renderGallery();
-  updateStats();
-  showToast(`${added} images added — click Save!`, 'success');
+// File compression
+function compressImage(file, maxKB=120, q=0.72) {
+  return new Promise(resolve => {
+    const r = new FileReader();
+    r.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        let w=img.width, h=img.height, max=1200;
+        if(w>max||h>max){ if(w>h){h=Math.round(h*max/w);w=max;}else{w=Math.round(w*max/h);h=max;} }
+        const c=document.createElement('canvas'); c.width=w; c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        let result=c.toDataURL('image/jpeg',q);
+        while(result.length>maxKB*1024*1.37 && q>0.3){ q-=0.08; result=c.toDataURL('image/jpeg',q); }
+        resolve(result);
+      };
+      img.src=ev.target.result;
+    };
+    r.readAsDataURL(file);
+  });
 }
 
-// ── GOOGLE DRIVE FOLDER IMPORT ───────────────────────────────────────────────
-async function importDriveFolder() {
-  const input = document.getElementById('drive-folder-url').value.trim();
-  const prog = document.getElementById('drive-progress');
-  prog.style.display = 'block';
-  prog.innerHTML = '🔄 Reading folder...';
-
-  // Extract folder ID
-  const folderMatch = input.match(/folders\/([a-zA-Z0-9_-]+)/);
-  if (!folderMatch) {
-    prog.innerHTML = '❌ Invalid folder URL. Copy it from Google Drive → Share.';
-    return;
+async function handleFiles(files) {
+  if(!files||!files.length) return;
+  if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
+  const prog=document.getElementById('up-prog');
+  const pt=document.getElementById('up-prog-text');
+  const pf=document.getElementById('up-prog-fill');
+  prog.style.display='block';
+  for(let i=0;i<files.length;i++){
+    pt.textContent=`Compressing ${i+1} of ${files.length}: ${files[i].name}`;
+    pf.style.width=((i/files.length)*100)+'%';
+    try{ const d=await compressImage(files[i]); state.gallery[currentCat].push(d); }
+    catch(e){ pt.textContent=`Skipped ${files[i].name}`; }
   }
-  const folderId = folderMatch[1];
+  pf.style.width='100%';
+  pt.textContent=`✅ Done! Click Save Gallery.`;
+  setTimeout(()=>{ prog.style.display='none'; pf.style.width='0%'; },3000);
+  document.getElementById('file-input').value='';
+  renderGallery(); updateStats();
+  toast(`${files.length} photo${files.length!==1?'s':''} added — click Save!`,'success');
+}
+
+function convertUrl(url) {
+  // imgur viewer → direct
+  const im = url.match(/^https?:\/\/(www\.)?imgur\.com\/([a-zA-Z0-9]+)$/);
+  if(im) return `https://i.imgur.com/${im[2]}.jpg`;
+  // Google Drive file
+  const gd = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if(gd) return `https://drive.google.com/uc?export=view&id=${gd[1]}`;
+  return url;
+}
+
+function addSingleUrl() {
+  const raw = document.getElementById('url-input').value.trim();
+  if(!raw){ toast('Enter an image URL','error'); return; }
+  if(!raw.startsWith('http')){ toast('URL must start with https://','error'); return; }
+  const url = convertUrl(raw);
+  if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
+  state.gallery[currentCat].push(url);
+  document.getElementById('url-input').value='';
+  renderGallery(); updateStats();
+  toast('Image added — click Save!','success');
+}
+
+function bulkAddUrls() {
+  const raw = document.getElementById('bulk-input').value.trim();
+  if(!raw){ toast('Paste some URLs first','error'); return; }
+  const urls = raw.split('\n').map(u=>u.trim()).filter(u=>u.startsWith('http'));
+  if(!urls.length){ toast('No valid URLs found','error'); return; }
+  if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
+  urls.forEach(u => state.gallery[currentCat].push(convertUrl(u)));
+  document.getElementById('bulk-input').value='';
+  const res = document.getElementById('bulk-result');
+  res.style.display='block';
+  res.textContent=`✅ Added ${urls.length} image${urls.length!==1?'s':''}! Click Save Gallery.`;
+  setTimeout(()=>res.style.display='none',4000);
+  renderGallery(); updateStats();
+  toast(`${urls.length} images added — click Save!`,'success');
+}
+
+async function importDriveFolder() {
+  const input = document.getElementById('drive-url').value.trim();
+  const res   = document.getElementById('drive-result');
+  res.style.display='block';
+  res.innerHTML='🔄 Connecting to Google Drive...';
+
+  const m = input.match(/folders\/([a-zA-Z0-9_-]+)/);
+  if(!m){ res.innerHTML='❌ Invalid folder URL.'; return; }
+  const fid = m[1];
 
   try {
-    // Use Google Drive's public HTML view to extract file IDs
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(
-      `https://drive.google.com/drive/folders/${folderId}`
-    )}`;
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`;
+    const r = await fetch(proxy);
+    const d = await r.json();
+    const html = d.contents||'';
+    const matches = [...html.matchAll(/\/file\/d\/([a-zA-Z0-9_-]{25,})/g)];
+    const ids = [...new Set(matches.map(m=>m[1]))];
 
-    const res = await fetch(proxyUrl);
-    const data = await res.json();
-    const html = data.contents || '';
-
-    // Extract file IDs from the folder page
-    const fileIdMatches = [...html.matchAll(/\/file\/d\/([a-zA-Z0-9_-]{20,})/g)];
-    const fileIds = [...new Set(fileIdMatches.map(m => m[1]))];
-
-    if (!fileIds.length) {
-      prog.innerHTML = '❌ No images found. Make sure the folder is set to<br><strong>"Anyone with the link can view"</strong> and contains images.';
+    if(!ids.length){
+      res.innerHTML='❌ No images found.<br>Make sure the folder is set to <strong>"Anyone with the link can view"</strong>.';
       return;
     }
 
-    prog.innerHTML = `✅ Found ${fileIds.length} files. Adding to gallery...`;
+    if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
+    ids.forEach(id => state.gallery[currentCat].push(`https://drive.google.com/uc?export=view&id=${id}`));
 
-    if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
-
-    let added = 0;
-    fileIds.forEach(id => {
-      const directUrl = `https://drive.google.com/uc?export=view&id=${id}`;
-      state.gallery[currentCat].push(directUrl);
-      added++;
-    });
-
-    prog.innerHTML = `🎉 Imported ${added} photo${added!==1?'s':''}! Click <strong>Save Gallery</strong> to keep them.`;
-    document.getElementById('drive-folder-url').value = '';
-    renderGallery();
-    updateStats();
-    showToast(`${added} Drive photos imported — click Save!`, 'success');
-
+    res.innerHTML=`🎉 Imported ${ids.length} photos! Click <strong>Save Gallery</strong>.`;
+    document.getElementById('drive-url').value='';
+    renderGallery(); updateStats();
+    toast(`${ids.length} Drive photos imported — click Save!`,'success');
   } catch(e) {
-    prog.innerHTML = `❌ Could not read folder: ${e.message}<br>Make sure sharing is set to "Anyone with the link".`;
+    res.innerHTML=`❌ Error: ${e.message}<br>Make sure sharing is set to "Anyone with the link".`;
   }
-}
-
-function removeFailedImages() {
-  if (!state.gallery[currentCat] || !state.gallery[currentCat].length) {
-    showToast('No images to check', 'error'); return;
-  }
-  const imgs = state.gallery[currentCat];
-  let checked = 0, removed = 0;
-  const toKeep = [];
-  const checks = imgs.map(src => new Promise(resolve => {
-    if (!src.startsWith('http')) { toKeep.push(src); resolve(); return; } // keep base64
-    const t = new Image();
-    t.onload  = () => { toKeep.push(src); resolve(); };
-    t.onerror = () => { removed++; resolve(); };
-    t.src = src + '?t=' + Date.now(); // bust cache
-  }));
-  showToast('Checking all images...', 'success');
-  Promise.all(checks).then(() => {
-    state.gallery[currentCat] = toKeep;
-    renderGallery();
-    updateStats();
-    if (removed > 0) {
-      showToast(`Removed ${removed} broken image${removed!==1?'s':''}. Click Save!`, 'success');
-    } else {
-      showToast('All images look good!', 'success');
-    }
-  });
-}
-
-function removeImage(idx) {
-  if (!state.gallery[currentCat]) return;
-  state.gallery[currentCat].splice(idx, 1);
-  renderGallery();
-  updateStats();
-}
-
-function clearCategoryImages() {
-  if (!confirm(`Clear all images for "${currentCat}"?`)) return;
-  state.gallery[currentCat] = [];
-  renderGallery();
-  updateStats();
-  updateStorageMeter();
 }
 
 function saveGallery() {
-  const status = document.getElementById('save-status');
-  const ok = saveGalleryToStorage();
-  if (ok) {
-    logChange('gallery', `Gallery updated — ${currentCat}`);
-    showToast('Gallery saved!', 'success');
-    if (status) status.textContent = '✅ Saved at ' + new Date().toLocaleTimeString();
-  } else {
-    showToast('Storage nearly full — large images removed. Use URLs instead.', 'error');
-    if (status) { status.textContent = '⚠️ Partial save — storage limit reached'; status.style.color = '#ffcc80'; }
-    renderGallery(); // re-render to show which images remain
+  const ok = saveKey('gallery', state.gallery);
+  if(ok){
+    logChange('gallery',`Gallery updated — ${currentCat}`);
+    toast('Gallery saved!','success');
+    document.getElementById('save-status').textContent='✅ Saved '+new Date().toLocaleTimeString();
   }
-  updateStorageMeter();
+  updateStorage();
 }
 
-// ── CAROUSEL ─────────────────────────────────────────────────────────────────
+async function cleanGallery() {
+  const imgs = state.gallery[currentCat]||[];
+  if(!imgs.length){ toast('No images to check','error'); return; }
+  toast('Checking images...','success');
+  const keep=[];
+  await Promise.all(imgs.map(src=>new Promise(resolve=>{
+    if(!src.startsWith('http')){ keep.push(src); resolve(); return; }
+    const t=new Image(); t.onload=()=>{keep.push(src);resolve()}; t.onerror=resolve; t.src=src+'?t='+Date.now();
+  })));
+  const removed=imgs.length-keep.length;
+  state.gallery[currentCat]=keep;
+  renderGallery(); updateStats();
+  toast(removed>0?`Removed ${removed} broken image${removed!==1?'s':''}. Click Save!`:'All images OK ✅','success');
+}
+
+// ── CAROUSEL ──────────────────────────────────────────────────────────────────
 function buildSlideEditors() {
-  const container = document.getElementById('slide-editors');
-  container.innerHTML = state.carousel.map((s, i) => `
-    <div class="slide-editor">
+  document.getElementById('slide-editors').innerHTML = state.carousel.map((s,i)=>`
+    <div class="slide-card">
       <div class="slide-num">0${i+1}</div>
-      <div class="slide-name">SLIDE ${i+1} — ${s.name}</div>
+      <div class="slide-name-lbl">SLIDE ${i+1} — ${s.name}</div>
       <div class="form-row">
-        <div class="form-group"><label>Badge Label</label><input type="text" id="slide-${i}-badge" value="${s.badge}" placeholder="Core Service"></div>
-        <div class="form-group"><label>CTA Button 1</label><input type="text" id="slide-${i}-cta1" value="${s.cta1}"></div>
+        <div class="field2"><label>Badge</label><input type="text" id="s${i}-badge" value="${s.badge||''}"></div>
+        <div class="field2"><label>CTA 1</label><input type="text" id="s${i}-cta1" value="${s.cta1||''}"></div>
       </div>
-      <div class="form-group"><label>Headline (use \\n for line breaks)</label><input type="text" id="slide-${i}-headline" value="${s.headline.replace(/\n/g,'\\n')}"></div>
-      <div class="form-group"><label>Body Text</label><textarea id="slide-${i}-sub">${s.sub}</textarea></div>
-      <div class="form-row">
-        <div class="form-group"><label>CTA Button 2</label><input type="text" id="slide-${i}-cta2" value="${s.cta2}"></div>
-        <div class="form-group"><label>Background Image URL (optional)</label><input type="url" id="slide-${i}-bg" value="${s.bg||''}" placeholder="Leave empty to keep current"></div>
-      </div>
+      <div class="field2"><label>Headline (use \\n for line breaks)</label><input type="text" id="s${i}-hl" value="${(s.headline||'').replace(/\n/g,'\\n')}"></div>
+      <div class="field2"><label>Body Text</label><textarea id="s${i}-sub">${s.sub||''}</textarea></div>
+      <div class="field2"><label>CTA 2</label><input type="text" id="s${i}-cta2" value="${s.cta2||''}"></div>
     </div>
   `).join('');
+
+  document.getElementById('save-carousel-btn').addEventListener('click', ()=>{
+    state.carousel = state.carousel.map((s,i)=>({
+      ...s,
+      badge: document.getElementById(`s${i}-badge`).value,
+      headline: document.getElementById(`s${i}-hl`).value.replace(/\\n/g,'\n'),
+      sub: document.getElementById(`s${i}-sub`).value,
+      cta1: document.getElementById(`s${i}-cta1`).value,
+      cta2: document.getElementById(`s${i}-cta2`).value,
+    }));
+    saveKey('carousel',state.carousel);
+    logChange('carousel','Carousel slides updated');
+    toast('Carousel saved!','success');
+  });
 }
 
-function saveCarousel() {
-  state.carousel = state.carousel.map((s, i) => ({
-    ...s,
-    badge: document.getElementById(`slide-${i}-badge`).value,
-    headline: document.getElementById(`slide-${i}-headline`).value.replace(/\\n/g, '\n'),
-    sub: document.getElementById(`slide-${i}-sub`).value,
-    cta1: document.getElementById(`slide-${i}-cta1`).value,
-    cta2: document.getElementById(`slide-${i}-cta2`).value,
-    bg: document.getElementById(`slide-${i}-bg`).value || s.bg,
-  }));
-  saveStateKey('carousel');
-  logChange('carousel', 'Carousel slides updated');
-  showToast('Carousel saved!', 'success');
-}
-
-// ── SITE INFO ────────────────────────────────────────────────────────────────
+// ── SITE INFO ─────────────────────────────────────────────────────────────────
 function loadSiteInfo() {
-  const s = state.siteinfo;
-  document.getElementById('info-phone').value    = s.phone    || '';
-  document.getElementById('info-email').value    = s.email    || '';
-  document.getElementById('info-address').value  = s.address  || '';
-  document.getElementById('info-maps').value     = s.maps     || '';
-  document.getElementById('info-hours-weekday').value = s.hoursWeekday || '';
-  document.getElementById('info-hours-sunday').value  = s.hoursSunday  || '';
-  document.getElementById('info-fb').value       = s.facebook || '';
-  document.getElementById('info-ig').value       = s.instagram|| '';
+  const s=state.siteinfo;
+  document.getElementById('i-phone').value=s.phone||'';
+  document.getElementById('i-email').value=s.email||'';
+  document.getElementById('i-addr').value=s.address||'';
+  document.getElementById('i-maps').value=s.maps||'';
+  document.getElementById('i-hw').value=s.hw||'';
+  document.getElementById('i-hs').value=s.hs||'';
+  document.getElementById('i-fb').value=s.fb||'';
+  document.getElementById('i-ig').value=s.ig||'';
 }
 
-function saveSiteInfo() {
-  state.siteinfo = {
-    phone:        document.getElementById('info-phone').value,
-    email:        document.getElementById('info-email').value,
-    address:      document.getElementById('info-address').value,
-    maps:         document.getElementById('info-maps').value,
-    hoursWeekday: document.getElementById('info-hours-weekday').value,
-    hoursSunday:  document.getElementById('info-hours-sunday').value,
-    facebook:     document.getElementById('info-fb').value,
-    instagram:    document.getElementById('info-ig').value,
-  };
-  saveStateKey('siteinfo');
-  logChange('info', 'Site info updated');
-  showToast('Site info saved!', 'success');
+function bindFormEvents() {
+  document.getElementById('save-siteinfo-btn').addEventListener('click',()=>{
+    state.siteinfo={
+      phone:document.getElementById('i-phone').value,
+      email:document.getElementById('i-email').value,
+      address:document.getElementById('i-addr').value,
+      maps:document.getElementById('i-maps').value,
+      hw:document.getElementById('i-hw').value,
+      hs:document.getElementById('i-hs').value,
+      fb:document.getElementById('i-fb').value,
+      ig:document.getElementById('i-ig').value,
+    };
+    saveKey('siteinfo',state.siteinfo);
+    logChange('info','Site info updated');
+    toast('Site info saved!','success');
+  });
+
+  document.getElementById('change-pass-btn').addEventListener('click',()=>{
+    const cur=document.getElementById('cp-cur').value;
+    const nw=document.getElementById('cp-new').value;
+    const cf=document.getElementById('cp-conf').value;
+    if(cur!==getCreds().pass){ toast('Current password incorrect','error'); return; }
+    if(nw.length<8){ toast('New password must be 8+ characters','error'); return; }
+    if(nw!==cf){ toast('Passwords do not match','error'); return; }
+    localStorage.setItem('cms_pass',nw);
+    document.getElementById('cp-cur').value='';
+    document.getElementById('cp-new').value='';
+    document.getElementById('cp-conf').value='';
+    toast('Password updated!','success');
+  });
+
+  document.getElementById('save-gh-btn').addEventListener('click',()=>{
+    localStorage.setItem('gh_repo',document.getElementById('gh-repo').value.trim());
+    localStorage.setItem('gh_token',document.getElementById('gh-token').value.trim());
+    localStorage.setItem('gh_branch',document.getElementById('gh-branch').value.trim()||'main');
+    localStorage.setItem('gh_author',document.getElementById('gh-author').value.trim()||'Masters Admin');
+    toast('GitHub settings saved!','success');
+  });
+
+  document.getElementById('test-gh-btn').addEventListener('click', async()=>{
+    const token=document.getElementById('gh-token').value||localStorage.getItem('gh_token');
+    const repo=document.getElementById('gh-repo').value||localStorage.getItem('gh_repo');
+    if(!token){ toast('Enter a token first','error'); return; }
+    try{
+      const r=await fetch(`https://api.github.com/repos/${repo}`,{headers:{Authorization:`token ${token}`}});
+      const d=await r.json();
+      r.ok ? toast(`✅ Connected: ${d.full_name}`,'success') : toast(`❌ ${d.message}`,'error');
+    }catch(e){ toast('Connection failed','error'); }
+  });
+
+  document.getElementById('clear-all-btn').addEventListener('click',()=>{
+    if(!confirm('Clear all local CMS data?')) return;
+    ['cms_gallery','cms_carousel','cms_siteinfo','cms_log'].forEach(k=>localStorage.removeItem(k));
+    loadState(); buildCatTabs(); buildSlideEditors(); loadSiteInfo();
+    renderGallery(); renderLog(); updateStats(); updateStorage();
+    toast('Local data cleared','success');
+  });
 }
 
-// ── SETTINGS ─────────────────────────────────────────────────────────────────
-function loadGithubSettings() {
-  document.getElementById('gh-repo').value   = localStorage.getItem('gh_repo')   || 'austriaalvinnoel/masters-window-tinting';
-  document.getElementById('gh-branch').value = localStorage.getItem('gh_branch') || 'main';
-  document.getElementById('gh-author').value = localStorage.getItem('gh_author') || 'Masters Admin';
+// ── GH SETTINGS LOAD ─────────────────────────────────────────────────────────
+function loadGhSettings() {
+  document.getElementById('gh-repo').value=localStorage.getItem('gh_repo')||'austriaalvinnoel/masters-window-tinting';
+  document.getElementById('gh-branch').value=localStorage.getItem('gh_branch')||'main';
+  document.getElementById('gh-author').value=localStorage.getItem('gh_author')||'Masters Admin';
 }
 
-function saveGithubSettings() {
-  localStorage.setItem('gh_repo',   document.getElementById('gh-repo').value.trim());
-  localStorage.setItem('gh_token',  document.getElementById('gh-token').value.trim());
-  localStorage.setItem('gh_branch', document.getElementById('gh-branch').value.trim());
-  localStorage.setItem('gh_author', document.getElementById('gh-author').value.trim());
-  showToast('GitHub settings saved!', 'success');
+// ── PUBLISH ───────────────────────────────────────────────────────────────────
+function openPubModal() {
+  document.getElementById('commit-msg').value='Update website content via CMS';
+  document.getElementById('pub-status').style.display='none';
+  document.getElementById('pub-modal').classList.add('open');
 }
 
-async function testGithubConnection() {
-  const token = document.getElementById('gh-token').value || localStorage.getItem('gh_token');
-  const repo  = document.getElementById('gh-repo').value  || localStorage.getItem('gh_repo');
-  if (!token) { showToast('Enter a GitHub token first', 'error'); return; }
-  try {
-    const r = await fetch(`https://api.github.com/repos/${repo}`, { headers:{ Authorization:`token ${token}` } });
-    const d = await r.json();
-    if (r.ok) showToast(`✅ Connected: ${d.full_name}`, 'success');
-    else showToast(`❌ ${d.message}`, 'error');
-  } catch(e) { showToast('Connection failed', 'error'); }
-}
+document.getElementById('pub-cancel').addEventListener('click',()=>document.getElementById('pub-modal').classList.remove('open'));
 
-function changePassword() {
-  const cur  = document.getElementById('cur-pass').value;
-  const newp = document.getElementById('new-pass').value;
-  const conf = document.getElementById('conf-pass').value;
-  const c = getCreds();
-  if (cur !== c.pass) { showToast('Current password is incorrect', 'error'); return; }
-  if (newp.length < 8) { showToast('New password must be at least 8 characters', 'error'); return; }
-  if (newp !== conf) { showToast('Passwords do not match', 'error'); return; }
-  localStorage.setItem('cms_pass', newp);
-  document.getElementById('cur-pass').value = '';
-  document.getElementById('new-pass').value = '';
-  document.getElementById('conf-pass').value = '';
-  showToast('Password updated!', 'success');
-}
+document.getElementById('pub-confirm').addEventListener('click', async()=>{
+  const token=localStorage.getItem('gh_token');
+  const repo=localStorage.getItem('gh_repo')||'austriaalvinnoel/masters-window-tinting';
+  const branch=localStorage.getItem('gh_branch')||'main';
+  const author=localStorage.getItem('gh_author')||'Masters Admin';
+  const msg=document.getElementById('commit-msg').value||'Update via CMS';
+  const st=document.getElementById('pub-status');
+  st.style.display='block'; st.style.color='var(--gold)';
 
-function clearAllData() {
-  if (!confirm('This will clear all locally saved CMS data. The live site will not be affected. Continue?')) return;
-  ['cms_gallery','cms_carousel','cms_siteinfo','cms_changelog'].forEach(k => localStorage.removeItem(k));
-  loadState();
-  buildSlideEditors();
-  loadSiteInfo();
-  renderGallery();
-  renderChangelog();
-  updateStats();
-  showToast('All local data cleared', 'success');
-}
+  if(!token){ st.textContent='❌ No token. Go to Settings → GitHub Publishing.'; return; }
 
-// ── GITHUB PUBLISH ───────────────────────────────────────────────────────────
-function openPublishModal() {
-  document.getElementById('commit-msg').value = 'Update website content via CMS';
-  document.getElementById('publish-status').style.display = 'none';
-  document.getElementById('publish-modal').classList.add('open');
-}
+  const btn=document.getElementById('pub-confirm');
+  btn.disabled=true; btn.textContent='Publishing...';
+  st.textContent='🔄 Connecting to GitHub...';
 
-function closePublishModal() {
-  document.getElementById('publish-modal').classList.remove('open');
-}
-
-async function doPublish() {
-  const token  = localStorage.getItem('gh_token');
-  const repo   = localStorage.getItem('gh_repo')   || 'austriaalvinnoel/masters-window-tinting';
-  const branch = localStorage.getItem('gh_branch') || 'main';
-  const author = localStorage.getItem('gh_author') || 'Masters Admin';
-  const msg    = document.getElementById('commit-msg').value || 'Update website content via CMS';
-
-  if (!token) {
-    showStatus('❌ No GitHub token found. Go to Settings → GitHub Publishing to add one.', 'error');
-    return;
-  }
-
-  const btn = document.getElementById('btn-do-publish');
-  btn.disabled = true; btn.textContent = 'Publishing...';
-
-  // Build a summary of changes to write to a changes.json file
-  const changesPayload = {
-    gallery: state.gallery,
-    carousel: state.carousel,
-    siteinfo: state.siteinfo,
-    publishedAt: new Date().toISOString()
-  };
+  const payload={gallery:state.gallery,carousel:state.carousel,siteinfo:state.siteinfo,publishedAt:new Date().toISOString()};
 
   try {
-    // Get current file SHA
-    const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`, {
-      headers: { Authorization: `token ${token}` }
-    });
-    let sha = null;
-    if (getRes.ok) { const d = await getRes.json(); sha = d.sha; }
-
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(changesPayload, null, 2))));
-    const body = { message: msg, content, branch, committer: { name: author, email: 'cms@masterswindowtinting.com' } };
-    if (sha) body.sha = sha;
-
-    const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`, {
-      method:'PUT', headers:{ Authorization:`token ${token}`, 'Content-Type':'application/json' },
-      body: JSON.stringify(body)
-    });
-
-    if (putRes.ok) {
-      showStatus('✅ Published successfully! Vercel will deploy in ~1–2 minutes.', 'success');
-      state.changelog = [];
-      saveStateKey('changelog');
-      renderChangelog();
-      updateStats();
-      showToast('Published to GitHub!', 'success');
+    const getR=await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`,{headers:{Authorization:`token ${token}`}});
+    let sha=null;
+    if(getR.ok){ const d=await getR.json(); sha=d.sha; }
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(payload,null,2))));
+    const body={message:msg,content,branch,committer:{name:author,email:'cms@masterswindowtinting.com'}};
+    if(sha) body.sha=sha;
+    const putR=await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`,{method:'PUT',headers:{Authorization:`token ${token}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(putR.ok){
+      st.style.color='#a5d6a7';
+      st.textContent='✅ Published! Vercel will deploy in ~1–2 minutes.';
+      state.log=[]; saveKey('log',state.log); renderLog(); updateStats();
+      toast('Published to GitHub!','success');
     } else {
-      const err = await putRes.json();
-      showStatus(`❌ Publish failed: ${err.message}`, 'error');
+      const e=await putR.json();
+      st.style.color='#ef9a9a';
+      st.textContent=`❌ Failed: ${e.message}`;
     }
   } catch(e) {
-    showStatus(`❌ Error: ${e.message}`, 'error');
+    st.style.color='#ef9a9a';
+    st.textContent=`❌ Error: ${e.message}`;
   }
+  btn.disabled=false; btn.textContent='🚀 Publish to GitHub';
+});
 
-  btn.disabled = false; btn.textContent = '🚀 Publish to GitHub';
+// ── CHANGELOG ─────────────────────────────────────────────────────────────────
+function logChange(type,text) {
+  state.log.unshift({type,text,time:new Date().toLocaleTimeString()});
+  if(state.log.length>20) state.log.pop();
+  saveKey('log',state.log);
+  renderLog(); updateStats();
 }
 
-function showStatus(msg, type) {
-  const el = document.getElementById('publish-status');
-  el.textContent = msg;
-  el.style.display = 'block';
-  el.style.color = type === 'error' ? '#ef9a9a' : '#a5d6a7';
-}
-
-// ── CHANGELOG ────────────────────────────────────────────────────────────────
-function logChange(type, text) {
-  state.changelog.unshift({ type, text, time: new Date().toLocaleTimeString() });
-  if (state.changelog.length > 20) state.changelog.pop();
-  saveStateKey('changelog');
-  renderChangelog();
-  updateStats();
-}
-
-function renderChangelog() {
-  const el = document.getElementById('changelog');
-  if (!state.changelog.length) {
-    el.innerHTML = '<div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet.</div>';
-    return;
-  }
-  el.innerHTML = state.changelog.slice(0, 8).map(c => `
+function renderLog() {
+  const el=document.getElementById('changelog-list');
+  if(!state.log.length){ el.innerHTML='<div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet.</div>'; return; }
+  el.innerHTML=state.log.slice(0,8).map(c=>`
     <div class="change-item">
       <span class="change-badge badge-${c.type}">${c.type}</span>
       <span class="change-text">${c.text}</span>
       <span class="change-time">${c.time}</span>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
+// ── STATS & STORAGE ───────────────────────────────────────────────────────────
 function updateStats() {
-  const total = Object.values(state.gallery).reduce((a, v) => a + (v||[]).length, 0);
-  document.getElementById('stat-imgs').textContent = total;
-  document.getElementById('stat-changes').textContent = state.changelog.length;
+  const total=Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length,0);
+  document.getElementById('s-imgs').textContent=total;
+  document.getElementById('s-changes').textContent=state.log.length;
 }
 
-// ── TOAST ────────────────────────────────────────────────────────────────────
-let toastTimer;
-function showToast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
-  t.className = `show ${type}`;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.className = '', 3200);
+function updateStorage() {
+  let total=0;
+  for(let k in localStorage){ if(localStorage.hasOwnProperty(k)) total+=(localStorage[k].length+k.length)*2; }
+  const kb=total/1024, pct=Math.min(100,(kb/5120)*100);
+  const fill=document.getElementById('storage-fill');
+  const val=document.getElementById('storage-val');
+  if(fill){ fill.style.width=pct+'%'; fill.style.background=pct>80?'#ef9a9a':pct>60?'#ffcc80':'var(--gold)'; }
+  if(val) val.textContent=`${kb<1024?kb.toFixed(0)+' KB':(kb/1024).toFixed(1)+' MB'} / 5 MB (${pct.toFixed(0)}% used)`;
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+let toastT;
+function toast(msg,type='success') {
+  const t=document.getElementById('toast');
+  t.textContent=(type==='success'?'✅ ':'❌ ')+msg;
+  t.className='show '+type;
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>t.className='',3200);
 }
 </script>
 </body>
