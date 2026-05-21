@@ -364,6 +364,7 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);co
 
         <div style="display:flex;gap:0.7rem;margin-top:0.8rem;flex-wrap:wrap;align-items:center;">
           <button class="btn btn-gold" onclick="saveGallery()">💾 Save Gallery</button>
+          <button class="btn btn-outline" onclick="removeFailedImages()">🧹 Remove Failed Images</button>
           <button class="btn btn-outline" onclick="clearCategoryImages()">🗑️ Clear Category</button>
           <span id="save-status" style="font-size:0.78rem;color:var(--muted);"></span>
         </div>
@@ -725,13 +726,75 @@ async function handleFileUpload(e) {
 function addImageUrl() {
   const url = document.getElementById('url-input').value.trim();
   if (!url) { showToast('Please enter an image URL', 'error'); return; }
-  if (!url.startsWith('http')) { showToast('URL must start with http:// or https://', 'error'); return; }
-  if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
-  state.gallery[currentCat].push(url);
-  document.getElementById('url-input').value = '';
-  renderGallery();
-  updateStats();
-  showToast('Image URL added — click Save!', 'success');
+  if (!url.startsWith('http')) { showToast('URL must start with https://', 'error'); return; }
+
+  // Warn if URL doesn't look like a direct image
+  const looksLikeImage = /\.(jpg|jpeg|png|webp|gif|avif)(\?.*)?$/i.test(url) ||
+    url.includes('i.ibb.co') ||
+    url.includes('i.imgur.com') ||
+    url.includes('res.cloudinary.com') ||
+    url.includes('drive.google.com/uc?export=view');
+
+  if (!looksLikeImage) {
+    // Show warning but allow user to proceed
+    if (!confirm(
+      '⚠️ This URL may not be a direct image link.
+
+' +
+      'Direct image URLs usually:
+' +
+      '• Start with i.ibb.co, i.imgur.com, or res.cloudinary.com
+' +
+      '• End in .jpg, .png, or .webp
+
+' +
+      'Add it anyway?'
+    )) return;
+  }
+
+  // Test if image actually loads before saving
+  const testImg = new Image();
+  const urlInput = document.getElementById('url-input');
+  showToast('Checking URL...', 'success');
+  testImg.onload = () => {
+    if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
+    state.gallery[currentCat].push(url);
+    urlInput.value = '';
+    renderGallery();
+    updateStats();
+    showToast('✅ Image verified and added — click Save!', 'success');
+  };
+  testImg.onerror = () => {
+    showToast('❌ Image failed to load. Check the URL is a direct image link (i.ibb.co, i.imgur.com, etc)', 'error');
+  };
+  testImg.src = url;
+}
+
+function removeFailedImages() {
+  if (!state.gallery[currentCat] || !state.gallery[currentCat].length) {
+    showToast('No images to check', 'error'); return;
+  }
+  const imgs = state.gallery[currentCat];
+  let checked = 0, removed = 0;
+  const toKeep = [];
+  const checks = imgs.map(src => new Promise(resolve => {
+    if (!src.startsWith('http')) { toKeep.push(src); resolve(); return; } // keep base64
+    const t = new Image();
+    t.onload  = () => { toKeep.push(src); resolve(); };
+    t.onerror = () => { removed++; resolve(); };
+    t.src = src + '?t=' + Date.now(); // bust cache
+  }));
+  showToast('Checking all images...', 'success');
+  Promise.all(checks).then(() => {
+    state.gallery[currentCat] = toKeep;
+    renderGallery();
+    updateStats();
+    if (removed > 0) {
+      showToast(`Removed ${removed} broken image${removed!==1?'s':''}. Click Save!`, 'success');
+    } else {
+      showToast('All images look good!', 'success');
+    }
+  });
 }
 
 function removeImage(idx) {
