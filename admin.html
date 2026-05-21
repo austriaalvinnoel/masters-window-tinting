@@ -3,96 +3,839 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Access Disabled | Masters Window Tinting</title>
+<title>Masters CMS · Admin Panel</title>
 <meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #0a0a0a;
-    --panel: #121212;
-    --border: rgba(255, 255, 255, 0.08);
-    --text: #f8f5f0;
-    --muted: #8e8e8e;
-    --accent: #e8352e;
-    --font: "DM Sans", "Segoe UI", sans-serif;
-    --mono: "DM Mono", Consolas, monospace;
-  }
-  body {
-    min-height: 100vh;
-    background: radial-gradient(circle at 20% 0%, rgba(232, 53, 46, 0.18), transparent 40%), var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    display: grid;
-    place-items: center;
-    padding: 24px;
-  }
-  .card {
-    width: 100%;
-    max-width: 680px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px;
-  }
-  h1 {
-    font-size: 28px;
-    margin-bottom: 10px;
-    line-height: 1.1;
-  }
-  p {
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 14px;
-    font-size: 15px;
-  }
-  .tag {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 8px;
-  }
-  .btn {
-    text-decoration: none;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 13px;
-    font-weight: 600;
-    border: 1px solid var(--border);
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-    border-color: transparent;
-  }
-  .btn-secondary {
-    color: var(--text);
-    background: transparent;
-  }
+:root {
+  --black: #080808; --surface: #111; --surface2: #1a1a1a; --surface3: #222;
+  --gold: #C8A84B; --gold-light: #E8C878; --gold-dim: rgba(200,168,75,0.15);
+  --white: #F0EDE8; --muted: #888; --border: rgba(200,168,75,0.18);
+  --red: #e53935; --green: #43a047;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow:hidden;}
+
+/* ── LOGIN ── */
+#login-screen{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:var(--black);z-index:1000;
+  background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.login-card{
+  background:var(--surface);border:1px solid var(--border);padding:3rem 2.5rem;
+  width:100%;max-width:400px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.7);
+}
+.login-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.08em;color:var(--white);margin-bottom:0.2rem;}
+.login-sub{font-size:0.6rem;font-weight:700;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
+.login-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.5rem;}
+.login-desc{font-size:0.85rem;color:var(--muted);margin-bottom:2rem;font-weight:300;}
+.field{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.field label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.field input{background:var(--black);border:1px solid rgba(200,168,75,0.2);color:var(--white);padding:0.85rem 1rem;font-size:0.9rem;font-family:'Outfit',sans-serif;outline:none;transition:border-color 0.2s;width:100%;}
+.field input:focus{border-color:var(--gold);}
+.field input::placeholder{color:rgba(136,136,136,0.4);}
+.btn-login{width:100%;background:var(--gold);color:#000;border:none;padding:1rem;font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:0.5rem;transition:all 0.2s;}
+.btn-login:hover{background:var(--gold-light);}
+.login-error{background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.3);color:#ef9a9a;padding:0.7rem 1rem;font-size:0.82rem;margin-bottom:1rem;display:none;}
+
+/* ── APP SHELL ── */
+#app{display:none;height:100vh;flex-direction:row;}
+.sidebar{
+  width:240px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;
+}
+.sidebar-header{padding:1.5rem;border-bottom:1px solid var(--border);}
+.sidebar-logo{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.08em;color:var(--white);line-height:1.2;}
+.sidebar-logo span{font-family:'Outfit',sans-serif;font-size:0.52rem;font-weight:600;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;display:block;}
+.nav-section{padding:1rem 0;}
+.nav-label{font-size:0.58rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);padding:0 1.2rem;margin-bottom:0.4rem;}
+.nav-item{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 1.2rem;cursor:pointer;font-size:0.83rem;font-weight:500;color:var(--muted);transition:all 0.18s;border-left:2px solid transparent;}
+.nav-item:hover{color:var(--white);background:var(--surface2);}
+.nav-item.active{color:var(--gold);background:var(--gold-dim);border-left-color:var(--gold);}
+.nav-item .icon{font-size:1rem;width:20px;text-align:center;}
+.sidebar-footer{margin-top:auto;padding:1.2rem;border-top:1px solid var(--border);}
+.user-badge{display:flex;align-items:center;gap:0.7rem;}
+.user-avatar{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;color:#000;flex-shrink:0;}
+.user-name{font-size:0.8rem;font-weight:600;color:var(--white);}
+.user-role{font-size:0.65rem;color:var(--muted);}
+.btn-logout{margin-top:0.8rem;width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.55rem;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
+.btn-logout:hover{border-color:var(--red);color:var(--red);}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.topbar-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.06em;color:var(--white);}
+.topbar-actions{display:flex;gap:0.7rem;align-items:center;}
+.btn-publish{background:var(--gold);color:#000;border:none;padding:0.55rem 1.4rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:0.4rem;}
+.btn-publish:hover{background:var(--gold-light);}
+.btn-publish:disabled{opacity:0.5;cursor:not-allowed;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
+.status-text{font-size:0.72rem;color:var(--muted);}
+
+.content{flex:1;overflow-y:auto;padding:2rem;}
+
+/* PANEL */
+.panel{display:none;}
+.panel.active{display:block;}
+.panel-header{margin-bottom:2rem;}
+.panel-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.04em;color:var(--white);margin-bottom:0.3rem;}
+.panel-desc{font-size:0.88rem;color:var(--muted);font-weight:300;}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.2rem;}
+.card-title{font-size:0.65rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;}
+
+/* FORM ELEMENTS */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.form-group{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.form-group label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.form-group input,.form-group textarea,.form-group select{
+  background:var(--black);border:1px solid rgba(200,168,75,0.15);color:var(--white);
+  padding:0.75rem 0.9rem;font-size:0.88rem;font-family:'Outfit',sans-serif;
+  outline:none;transition:border-color 0.2s;width:100%;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold);}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(136,136,136,0.4);}
+.form-group textarea{resize:vertical;min-height:80px;}
+.form-group select option{background:var(--surface);}
+
+/* BUTTONS */
+.btn{border:none;padding:0.65rem 1.4rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
+.btn-gold{background:var(--gold);color:#000;}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-outline-gold{background:transparent;border:1px solid var(--gold);color:var(--gold);}
+.btn-outline-gold:hover{background:var(--gold-dim);}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-outline:hover{border-color:var(--white);color:var(--white);}
+.btn-danger{background:transparent;border:1px solid rgba(229,57,53,0.3);color:#ef9a9a;}
+.btn-danger:hover{background:rgba(229,57,53,0.1);}
+.btn-sm{padding:0.4rem 0.9rem;font-size:0.68rem;}
+
+/* GALLERY */
+.cat-tabs{display:flex;gap:2px;margin-bottom:1.5rem;flex-wrap:wrap;}
+.cat-tab{padding:0.5rem 1.1rem;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;background:var(--surface2);color:var(--muted);border:1px solid var(--border);transition:all 0.2s;}
+.cat-tab.active{background:var(--gold);color:#000;border-color:var(--gold);}
+.cat-tab:hover:not(.active){color:var(--white);}
+
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:1.5rem;}
+.img-slot{position:relative;aspect-ratio:4/3;background:var(--surface2);border:1px solid var(--border);overflow:hidden;cursor:pointer;}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.img-slot-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);font-size:0.75rem;gap:0.4rem;}
+.img-slot-empty .plus{font-size:1.8rem;color:rgba(200,168,75,0.3);}
+.img-remove{position:absolute;top:5px;right:5px;background:rgba(0,0,0,0.8);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.75rem;display:none;align-items:center;justify-content:center;}
+.img-slot:hover .img-remove{display:flex;}
+.img-add-row{display:flex;gap:0.7rem;align-items:flex-end;flex-wrap:wrap;}
+.upload-area{border:2px dashed rgba(200,168,75,0.25);padding:1.5rem;text-align:center;cursor:pointer;transition:all 0.2s;flex:1;min-width:200px;}
+.upload-area:hover{border-color:var(--gold);background:var(--gold-dim);}
+.upload-area input[type=file]{display:none;}
+.upload-label{font-size:0.78rem;color:var(--muted);}
+.upload-label span{color:var(--gold);font-weight:600;}
+
+/* CAROUSEL EDITOR */
+.slide-editor{border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem;position:relative;}
+.slide-num{position:absolute;top:1rem;right:1rem;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:rgba(200,168,75,0.1);line-height:1;}
+.slide-name{font-size:0.65rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-bottom:2rem;}
+.stat-box{background:var(--surface);padding:1.5rem;text-align:center;}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);}
+.stat-lbl{font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:2rem;right:2rem;
+  background:var(--surface);border:1px solid var(--border);
+  padding:0.9rem 1.4rem;font-size:0.85rem;
+  transform:translateY(100px);opacity:0;transition:all 0.35s;z-index:9999;
+  display:flex;align-items:center;gap:0.7rem;max-width:320px;
+}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.success{border-color:rgba(67,160,71,0.5);color:#a5d6a7;}
+#toast.error{border-color:rgba(229,57,53,0.5);color:#ef9a9a;}
+
+/* MODAL */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;display:none;align-items:center;justify-content:center;}
+.modal-backdrop.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);padding:2rem;width:100%;max-width:480px;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.4rem;}
+.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;}
+.modal-actions{display:flex;gap:0.7rem;justify-content:flex-end;margin-top:1.5rem;}
+
+/* SETTINGS */
+.settings-section{margin-bottom:2rem;}
+.settings-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);letter-spacing:0.04em;margin-bottom:1rem;padding-bottom:0.7rem;border-bottom:1px solid var(--border);}
+
+/* CHANGELOG */
+.change-item{display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid rgba(200,168,75,0.08);}
+.change-badge{font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.5rem;flex-shrink:0;}
+.badge-gallery{background:rgba(200,168,75,0.15);color:var(--gold);}
+.badge-carousel{background:rgba(100,149,237,0.15);color:#90caf9;}
+.badge-info{background:rgba(67,160,71,0.15);color:#a5d6a7;}
+.change-text{font-size:0.83rem;color:var(--muted);}
+.change-time{font-size:0.7rem;color:rgba(136,136,136,0.5);margin-left:auto;flex-shrink:0;}
+
+@media(max-width:768px){
+  .sidebar{width:200px;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
-  <main class="card">
-    <div class="tag">Security Notice</div>
-    <h1>Public Admin Access Is Disabled</h1>
-    <p>
-      The old browser-only admin panel has been removed from public use because it exposed sensitive access patterns.
-    </p>
-    <p>
-      If you need a secure dashboard, it should be reintroduced behind server-side authentication and protected routes.
-    </p>
-    <div class="actions">
-      <a class="btn btn-primary" href="index.html">Back To Website</a>
-      <a class="btn btn-secondary" href="contact.html">Contact Shop</a>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Masters Window Tinting & Detail</div>
+    <div class="login-sub">Admin Panel · CMS Access</div>
+    <div class="login-title">SIGN IN</div>
+    <div class="login-desc">Enter your credentials to access the website management panel.</div>
+    <div id="login-error" class="login-error">Incorrect username or password. Please try again.</div>
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="login-user" placeholder="masters" autocomplete="username">
     </div>
-  </main>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="••••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Sign In →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none;flex-direction:row;height:100vh;">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">Masters Window Tinting<span>Admin · CMS Panel</span></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active" onclick="showPanel('dashboard')"><span class="icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="showPanel('gallery')"><span class="icon">🖼️</span> Gallery Manager</div>
+      <div class="nav-item" onclick="showPanel('carousel')"><span class="icon">🎠</span> Carousel Editor</div>
+      <div class="nav-item" onclick="showPanel('siteinfo')"><span class="icon">📋</span> Site Info</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Config</div>
+      <div class="nav-item" onclick="showPanel('settings')"><span class="icon">⚙️</span> Settings</div>
+      <div class="nav-item" onclick="window.open('/', '_blank')"><span class="icon">🌐</span> View Site</div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-badge">
+        <div class="user-avatar">M</div>
+        <div>
+          <div class="user-name">Masters Admin</div>
+          <div class="user-role">Website Owner</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">DASHBOARD</div>
+      <div class="topbar-actions">
+        <div class="status-dot"></div>
+        <div class="status-text">masters-window-tinting.vercel.app</div>
+        <button class="btn-publish" onclick="openPublishModal()">🚀 Publish Changes</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div id="panel-dashboard" class="panel active">
+        <div class="panel-header">
+          <div class="panel-title">DASHBOARD</div>
+          <div class="panel-desc">Overview of your website content and recent activity.</div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-val" id="stat-imgs">0</div><div class="stat-lbl">Gallery Images</div></div>
+          <div class="stat-box"><div class="stat-val">7</div><div class="stat-lbl">Carousel Slides</div></div>
+          <div class="stat-box"><div class="stat-val">7</div><div class="stat-lbl">Service Pages</div></div>
+          <div class="stat-box"><div class="stat-val" id="stat-changes">0</div><div class="stat-lbl">Unpublished Changes</div></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Quick Actions</div>
+          <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
+            <button class="btn btn-gold" onclick="showPanel('gallery')">🖼️ Manage Gallery</button>
+            <button class="btn btn-outline-gold" onclick="showPanel('carousel')">🎠 Edit Carousel</button>
+            <button class="btn btn-outline-gold" onclick="showPanel('siteinfo')">📋 Edit Site Info</button>
+            <button class="btn btn-outline" onclick="window.open('/', '_blank')">🌐 View Live Site</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Recent Changes</div>
+          <div id="changelog">
+            <div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet. Start editing to track your updates.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">GitHub Publishing</div>
+          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:300;">Connect your GitHub repository to publish changes directly to your live site via Vercel's auto-deploy.</p>
+          <button class="btn btn-outline-gold" onclick="showPanel('settings')">⚙️ Configure GitHub Token</button>
+        </div>
+      </div>
+
+      <!-- GALLERY MANAGER -->
+      <div id="panel-gallery" class="panel">
+        <div class="panel-header">
+          <div class="panel-title">GALLERY MANAGER</div>
+          <div class="panel-desc">Upload and manage photos for each service category.</div>
+        </div>
+        <div class="cat-tabs" id="cat-tabs"></div>
+        <div class="card" id="gallery-cat-panel">
+          <div class="card-title" id="gallery-cat-title">WINDOW TINTING</div>
+          <div class="img-grid" id="img-grid"></div>
+          <div class="img-add-row">
+            <div class="upload-area" onclick="document.getElementById('file-upload').click()">
+              <input type="file" id="file-upload" accept="image/*" multiple onchange="handleFileUpload(event)">
+              <div style="font-size:1.5rem;margin-bottom:0.4rem;">📁</div>
+              <div class="upload-label"><span>Click to upload</span> photos from your computer<br><span style="color:var(--muted);font-weight:300;font-size:0.72rem;">JPG, PNG, WEBP accepted</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;min-width:200px;">
+              <div class="form-group" style="margin:0;">
+                <label>Or paste image URL</label>
+                <input type="url" id="url-input" placeholder="https://example.com/photo.jpg">
+              </div>
+              <button class="btn btn-outline-gold" onclick="addImageUrl()">Add URL</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.7rem;margin-top:0.5rem;">
+          <button class="btn btn-gold" onclick="saveGallery()">💾 Save Gallery</button>
+          <button class="btn btn-outline" onclick="clearCategoryImages()">🗑️ Clear Category</button>
+        </div>
+      </div>
+
+      <!-- CAROUSEL EDITOR -->
+      <div id="panel-carousel" class="panel">
+        <div class="panel-header">
+          <div class="panel-title">CAROUSEL EDITOR</div>
+          <div class="panel-desc">Edit the text and content for each homepage carousel slide.</div>
+        </div>
+        <div id="slide-editors"></div>
+        <button class="btn btn-gold" onclick="saveCarousel()">💾 Save All Slides</button>
+      </div>
+
+      <!-- SITE INFO -->
+      <div id="panel-siteinfo" class="panel">
+        <div class="panel-header">
+          <div class="panel-title">SITE INFO</div>
+          <div class="panel-desc">Update your contact information and business hours.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Contact Information</div>
+          <div class="form-row">
+            <div class="form-group"><label>Phone Number</label><input type="tel" id="info-phone" placeholder="631-226-4300"></div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="info-email" placeholder="info@masterswindowtinting.com"></div>
+          </div>
+          <div class="form-group"><label>Street Address</label><input type="text" id="info-address" placeholder="863 Rte 109, Suite A, West Babylon, NY 11704"></div>
+          <div class="form-group"><label>Google Maps Link</label><input type="url" id="info-maps" placeholder="https://maps.google.com/..."></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Business Hours</div>
+          <div class="form-row">
+            <div class="form-group"><label>Mon–Sat Hours</label><input type="text" id="info-hours-weekday" placeholder="9:00 AM – 5:00 PM"></div>
+            <div class="form-group"><label>Sunday Hours</label><input type="text" id="info-hours-sunday" placeholder="10:00 AM – 4:00 PM"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Social Media</div>
+          <div class="form-row">
+            <div class="form-group"><label>Facebook URL</label><input type="url" id="info-fb" placeholder="https://facebook.com/..."></div>
+            <div class="form-group"><label>Instagram URL</label><input type="url" id="info-ig" placeholder="https://instagram.com/..."></div>
+          </div>
+        </div>
+        <button class="btn btn-gold" onclick="saveSiteInfo()">💾 Save Site Info</button>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="panel-settings" class="panel">
+        <div class="panel-header">
+          <div class="panel-title">SETTINGS</div>
+          <div class="panel-desc">Manage your login credentials and GitHub publishing configuration.</div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-title">Change Password</div>
+          <div class="card">
+            <div class="form-group"><label>Current Password</label><input type="password" id="cur-pass" placeholder="••••••••"></div>
+            <div class="form-row">
+              <div class="form-group"><label>New Password</label><input type="password" id="new-pass" placeholder="••••••••"></div>
+              <div class="form-group"><label>Confirm New Password</label><input type="password" id="conf-pass" placeholder="••••••••"></div>
+            </div>
+            <button class="btn btn-gold" onclick="changePassword()">Update Password</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-title">GitHub Publishing</div>
+          <div class="card">
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.2rem;font-weight:300;">
+              To publish changes directly to GitHub (which triggers Vercel auto-deploy), enter your GitHub Personal Access Token with <code style="color:var(--gold);background:var(--black);padding:0.1rem 0.4rem;">repo</code> scope.
+            </p>
+            <div class="form-group"><label>GitHub Repository</label><input type="text" id="gh-repo" placeholder="austriaalvinnoel/masters-window-tinting"></div>
+            <div class="form-group"><label>GitHub Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
+            <div class="form-row">
+              <div class="form-group"><label>Branch</label><input type="text" id="gh-branch" placeholder="main"></div>
+              <div class="form-group"><label>Commit Author Name</label><input type="text" id="gh-author" placeholder="Masters Admin"></div>
+            </div>
+            <div style="display:flex;gap:0.7rem;">
+              <button class="btn btn-gold" onclick="saveGithubSettings()">💾 Save GitHub Settings</button>
+              <button class="btn btn-outline-gold" onclick="testGithubConnection()">🔗 Test Connection</button>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-title">Danger Zone</div>
+          <div class="card">
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:300;">Clear all locally saved CMS data. This does not affect the live site.</p>
+            <button class="btn btn-danger" onclick="clearAllData()">🗑️ Clear All Local Data</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end .content -->
+  </div><!-- end .main -->
+</div><!-- end #app -->
+
+<!-- PUBLISH MODAL -->
+<div class="modal-backdrop" id="publish-modal">
+  <div class="modal">
+    <div class="modal-title">PUBLISH CHANGES</div>
+    <div class="modal-sub">This will commit your saved changes to GitHub and trigger a live site update via Vercel.</div>
+    <div class="form-group"><label>Commit Message</label><input type="text" id="commit-msg" placeholder="Update gallery and carousel content"></div>
+    <div id="publish-status" style="font-size:0.83rem;color:var(--muted);display:none;padding:0.8rem;background:var(--black);border:1px solid var(--border);margin-top:0.5rem;"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closePublishModal()">Cancel</button>
+      <button class="btn btn-gold" id="btn-do-publish" onclick="doPublish()">🚀 Publish to GitHub</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── CREDENTIALS (stored in localStorage, changeable) ─────────────────────────
+const DEFAULT_USER = 'masters';
+const DEFAULT_PASS = 'Detail2026!';
+
+function getCreds() {
+  return {
+    user: localStorage.getItem('cms_user') || DEFAULT_USER,
+    pass: localStorage.getItem('cms_pass') || DEFAULT_PASS
+  };
+}
+
+// ── LOGIN ────────────────────────────────────────────────────────────────────
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const c = getCreds();
+  if (u === c.user && p === c.pass) {
+    sessionStorage.setItem('cms_auth', '1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    initApp();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('login-user').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-pass').focus(); });
+
+function doLogout() {
+  sessionStorage.removeItem('cms_auth');
+  location.reload();
+}
+
+if (sessionStorage.getItem('cms_auth') === '1') {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  setTimeout(initApp, 0);
+}
+
+// ── APP STATE ────────────────────────────────────────────────────────────────
+const CATEGORIES = [
+  'Window Tinting','Liquid PPF','Ceramic Coating',
+  'Residential Tinting','Commercial Tinting','Wall Graphics','Detailing & Paint Correction'
+];
+
+const SLIDE_DEFAULTS = [
+  { name:'About Masters', badge:'Trusted on Long Island', headline:'MASTERS\nWINDOW\nTINTING.', sub:'25+ years of professional experience in automotive, residential, and commercial film solutions.', cta1:'Call 631-226-4300', cta2:'Get a Free Quote' },
+  { name:'Window Tinting', badge:'Core Service', headline:'WINDOW\nTINTING.', sub:'Cleaner look, better privacy, less heat, and UV protection for your vehicle.', cta1:'Call Now', cta2:'Get a Quote' },
+  { name:'Liquid PPF', badge:'Core Service', headline:'LIQUID\nPAINT\nPROTECTION.', sub:'Seamless paint protection that helps guard against scratches, chips, and sun damage.', cta1:'Watch Video', cta2:'Call 631-226-4300' },
+  { name:'Ceramic Coating', badge:'Core Service', headline:'CERAMIC\nCOATING\nFOR CARS.', sub:'Long-lasting gloss and easier maintenance with durable surface protection.', cta1:'Call Now', cta2:'Get a Quote' },
+  { name:'Residential Tinting', badge:'Residential Service', headline:'RESIDENTIAL\nWINDOW\nTINTING.', sub:'Improve home privacy, reduce glare, and keep rooms cooler with solar window film.', cta1:'Request Residential Quote', cta2:'Call 631-226-4300' },
+  { name:'Commercial Tinting', badge:'Commercial Service', headline:'COMMERCIAL\nWINDOW\nTINTING.', sub:'Improve privacy, reduce heat and glare, and create a cleaner professional look.', cta1:'Request Commercial Quote', cta2:'Call 631-226-4300' },
+  { name:'Specialty Services', badge:'Specialty Services', headline:'GRAPHICS,\nDETAILING &\nCORRECTION.', sub:'Branding graphics plus detail and paint correction services.', cta1:'View Services', cta2:'Call 631-226-4300' },
+];
+
+const SITEINFO_DEFAULTS = {
+  phone:'631-226-4300', email:'info@masterswindowtinting.com',
+  address:'863 Rte 109, Suite A, West Babylon, NY 11704',
+  maps:'https://maps.google.com/?q=863+Rte+109+West+Babylon+NY',
+  hoursWeekday:'9:00 AM – 5:00 PM', hoursSunday:'10:00 AM – 4:00 PM',
+  facebook:'https://www.facebook.com/profile.php?id=100063773733742',
+  instagram:'https://www.instagram.com/Ceramic_pro_long_island'
+};
+
+let state = { gallery:{}, carousel:[], siteinfo:{}, changelog:[] };
+let currentCat = CATEGORIES[0];
+
+function loadState() {
+  try { state.gallery   = JSON.parse(localStorage.getItem('cms_gallery')   || '{}'); } catch(e){}
+  try { state.carousel  = JSON.parse(localStorage.getItem('cms_carousel')  || 'null') || SLIDE_DEFAULTS.map(s=>({...s})); } catch(e){ state.carousel = SLIDE_DEFAULTS.map(s=>({...s})); }
+  try { state.siteinfo  = JSON.parse(localStorage.getItem('cms_siteinfo')  || 'null') || {...SITEINFO_DEFAULTS}; } catch(e){ state.siteinfo = {...SITEINFO_DEFAULTS}; }
+  try { state.changelog = JSON.parse(localStorage.getItem('cms_changelog') || '[]'); } catch(e){}
+}
+
+function saveStateKey(key) { localStorage.setItem('cms_' + key, JSON.stringify(state[key])); }
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+function initApp() {
+  loadState();
+  buildCatTabs();
+  buildSlideEditors();
+  loadSiteInfo();
+  loadGithubSettings();
+  renderGallery();
+  renderChangelog();
+  updateStats();
+}
+
+// ── NAVIGATION ───────────────────────────────────────────────────────────────
+const PANEL_TITLES = { dashboard:'DASHBOARD', gallery:'GALLERY MANAGER', carousel:'CAROUSEL EDITOR', siteinfo:'SITE INFO', settings:'SETTINGS' };
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.querySelector(`.nav-item[onclick="showPanel('${id}')"]`).classList.add('active');
+  document.getElementById('topbar-title').textContent = PANEL_TITLES[id] || id.toUpperCase();
+}
+
+// ── GALLERY ──────────────────────────────────────────────────────────────────
+function buildCatTabs() {
+  const el = document.getElementById('cat-tabs');
+  el.innerHTML = CATEGORIES.map(c =>
+    `<div class="cat-tab${c===currentCat?' active':''}" onclick="switchCat('${c}')">${c}</div>`
+  ).join('');
+}
+
+function switchCat(cat) {
+  currentCat = cat;
+  buildCatTabs();
+  renderGallery();
+}
+
+function renderGallery() {
+  const imgs = state.gallery[currentCat] || [];
+  document.getElementById('gallery-cat-title').textContent = currentCat.toUpperCase();
+  const grid = document.getElementById('img-grid');
+  grid.innerHTML = imgs.map((src, i) => `
+    <div class="img-slot">
+      <img src="${src}" alt="Gallery ${i+1}" onerror="this.style.display='none'">
+      <button class="img-remove" title="Remove" onclick="removeImage(${i})">✕</button>
+    </div>
+  `).join('') + `
+    <div class="img-slot" style="cursor:default;">
+      <div class="img-slot-empty"><div class="plus">+</div><div>${imgs.length} photo${imgs.length!==1?'s':''}</div></div>
+    </div>`;
+}
+
+function handleFileUpload(e) {
+  const files = [...e.target.files];
+  if (!files.length) return;
+  let loaded = 0;
+  if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      state.gallery[currentCat].push(ev.target.result);
+      loaded++;
+      if (loaded === files.length) { renderGallery(); updateStats(); }
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+}
+
+function addImageUrl() {
+  const url = document.getElementById('url-input').value.trim();
+  if (!url) { showToast('Please enter an image URL', 'error'); return; }
+  if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
+  state.gallery[currentCat].push(url);
+  document.getElementById('url-input').value = '';
+  renderGallery();
+  updateStats();
+  showToast('Image added!', 'success');
+}
+
+function removeImage(idx) {
+  if (!state.gallery[currentCat]) return;
+  state.gallery[currentCat].splice(idx, 1);
+  renderGallery();
+  updateStats();
+}
+
+function clearCategoryImages() {
+  if (!confirm(`Clear all images for "${currentCat}"?`)) return;
+  state.gallery[currentCat] = [];
+  renderGallery();
+  updateStats();
+}
+
+function saveGallery() {
+  saveStateKey('gallery');
+  logChange('gallery', `Gallery updated — ${currentCat}`);
+  showToast('Gallery saved!', 'success');
+}
+
+// ── CAROUSEL ─────────────────────────────────────────────────────────────────
+function buildSlideEditors() {
+  const container = document.getElementById('slide-editors');
+  container.innerHTML = state.carousel.map((s, i) => `
+    <div class="slide-editor">
+      <div class="slide-num">0${i+1}</div>
+      <div class="slide-name">SLIDE ${i+1} — ${s.name}</div>
+      <div class="form-row">
+        <div class="form-group"><label>Badge Label</label><input type="text" id="slide-${i}-badge" value="${s.badge}" placeholder="Core Service"></div>
+        <div class="form-group"><label>CTA Button 1</label><input type="text" id="slide-${i}-cta1" value="${s.cta1}"></div>
+      </div>
+      <div class="form-group"><label>Headline (use \\n for line breaks)</label><input type="text" id="slide-${i}-headline" value="${s.headline.replace(/\n/g,'\\n')}"></div>
+      <div class="form-group"><label>Body Text</label><textarea id="slide-${i}-sub">${s.sub}</textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>CTA Button 2</label><input type="text" id="slide-${i}-cta2" value="${s.cta2}"></div>
+        <div class="form-group"><label>Background Image URL (optional)</label><input type="url" id="slide-${i}-bg" value="${s.bg||''}" placeholder="Leave empty to keep current"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function saveCarousel() {
+  state.carousel = state.carousel.map((s, i) => ({
+    ...s,
+    badge: document.getElementById(`slide-${i}-badge`).value,
+    headline: document.getElementById(`slide-${i}-headline`).value.replace(/\\n/g, '\n'),
+    sub: document.getElementById(`slide-${i}-sub`).value,
+    cta1: document.getElementById(`slide-${i}-cta1`).value,
+    cta2: document.getElementById(`slide-${i}-cta2`).value,
+    bg: document.getElementById(`slide-${i}-bg`).value || s.bg,
+  }));
+  saveStateKey('carousel');
+  logChange('carousel', 'Carousel slides updated');
+  showToast('Carousel saved!', 'success');
+}
+
+// ── SITE INFO ────────────────────────────────────────────────────────────────
+function loadSiteInfo() {
+  const s = state.siteinfo;
+  document.getElementById('info-phone').value    = s.phone    || '';
+  document.getElementById('info-email').value    = s.email    || '';
+  document.getElementById('info-address').value  = s.address  || '';
+  document.getElementById('info-maps').value     = s.maps     || '';
+  document.getElementById('info-hours-weekday').value = s.hoursWeekday || '';
+  document.getElementById('info-hours-sunday').value  = s.hoursSunday  || '';
+  document.getElementById('info-fb').value       = s.facebook || '';
+  document.getElementById('info-ig').value       = s.instagram|| '';
+}
+
+function saveSiteInfo() {
+  state.siteinfo = {
+    phone:        document.getElementById('info-phone').value,
+    email:        document.getElementById('info-email').value,
+    address:      document.getElementById('info-address').value,
+    maps:         document.getElementById('info-maps').value,
+    hoursWeekday: document.getElementById('info-hours-weekday').value,
+    hoursSunday:  document.getElementById('info-hours-sunday').value,
+    facebook:     document.getElementById('info-fb').value,
+    instagram:    document.getElementById('info-ig').value,
+  };
+  saveStateKey('siteinfo');
+  logChange('info', 'Site info updated');
+  showToast('Site info saved!', 'success');
+}
+
+// ── SETTINGS ─────────────────────────────────────────────────────────────────
+function loadGithubSettings() {
+  document.getElementById('gh-repo').value   = localStorage.getItem('gh_repo')   || 'austriaalvinnoel/masters-window-tinting';
+  document.getElementById('gh-branch').value = localStorage.getItem('gh_branch') || 'main';
+  document.getElementById('gh-author').value = localStorage.getItem('gh_author') || 'Masters Admin';
+}
+
+function saveGithubSettings() {
+  localStorage.setItem('gh_repo',   document.getElementById('gh-repo').value.trim());
+  localStorage.setItem('gh_token',  document.getElementById('gh-token').value.trim());
+  localStorage.setItem('gh_branch', document.getElementById('gh-branch').value.trim());
+  localStorage.setItem('gh_author', document.getElementById('gh-author').value.trim());
+  showToast('GitHub settings saved!', 'success');
+}
+
+async function testGithubConnection() {
+  const token = document.getElementById('gh-token').value || localStorage.getItem('gh_token');
+  const repo  = document.getElementById('gh-repo').value  || localStorage.getItem('gh_repo');
+  if (!token) { showToast('Enter a GitHub token first', 'error'); return; }
+  try {
+    const r = await fetch(`https://api.github.com/repos/${repo}`, { headers:{ Authorization:`token ${token}` } });
+    const d = await r.json();
+    if (r.ok) showToast(`✅ Connected: ${d.full_name}`, 'success');
+    else showToast(`❌ ${d.message}`, 'error');
+  } catch(e) { showToast('Connection failed', 'error'); }
+}
+
+function changePassword() {
+  const cur  = document.getElementById('cur-pass').value;
+  const newp = document.getElementById('new-pass').value;
+  const conf = document.getElementById('conf-pass').value;
+  const c = getCreds();
+  if (cur !== c.pass) { showToast('Current password is incorrect', 'error'); return; }
+  if (newp.length < 8) { showToast('New password must be at least 8 characters', 'error'); return; }
+  if (newp !== conf) { showToast('Passwords do not match', 'error'); return; }
+  localStorage.setItem('cms_pass', newp);
+  document.getElementById('cur-pass').value = '';
+  document.getElementById('new-pass').value = '';
+  document.getElementById('conf-pass').value = '';
+  showToast('Password updated!', 'success');
+}
+
+function clearAllData() {
+  if (!confirm('This will clear all locally saved CMS data. The live site will not be affected. Continue?')) return;
+  ['cms_gallery','cms_carousel','cms_siteinfo','cms_changelog'].forEach(k => localStorage.removeItem(k));
+  loadState();
+  buildSlideEditors();
+  loadSiteInfo();
+  renderGallery();
+  renderChangelog();
+  updateStats();
+  showToast('All local data cleared', 'success');
+}
+
+// ── GITHUB PUBLISH ───────────────────────────────────────────────────────────
+function openPublishModal() {
+  document.getElementById('commit-msg').value = 'Update website content via CMS';
+  document.getElementById('publish-status').style.display = 'none';
+  document.getElementById('publish-modal').classList.add('open');
+}
+
+function closePublishModal() {
+  document.getElementById('publish-modal').classList.remove('open');
+}
+
+async function doPublish() {
+  const token  = localStorage.getItem('gh_token');
+  const repo   = localStorage.getItem('gh_repo')   || 'austriaalvinnoel/masters-window-tinting';
+  const branch = localStorage.getItem('gh_branch') || 'main';
+  const author = localStorage.getItem('gh_author') || 'Masters Admin';
+  const msg    = document.getElementById('commit-msg').value || 'Update website content via CMS';
+
+  if (!token) {
+    showStatus('❌ No GitHub token found. Go to Settings → GitHub Publishing to add one.', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('btn-do-publish');
+  btn.disabled = true; btn.textContent = 'Publishing...';
+
+  // Build a summary of changes to write to a changes.json file
+  const changesPayload = {
+    gallery: state.gallery,
+    carousel: state.carousel,
+    siteinfo: state.siteinfo,
+    publishedAt: new Date().toISOString()
+  };
+
+  try {
+    // Get current file SHA
+    const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`, {
+      headers: { Authorization: `token ${token}` }
+    });
+    let sha = null;
+    if (getRes.ok) { const d = await getRes.json(); sha = d.sha; }
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(changesPayload, null, 2))));
+    const body = { message: msg, content, branch, committer: { name: author, email: 'cms@masterswindowtinting.com' } };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`, {
+      method:'PUT', headers:{ Authorization:`token ${token}`, 'Content-Type':'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (putRes.ok) {
+      showStatus('✅ Published successfully! Vercel will deploy in ~1–2 minutes.', 'success');
+      state.changelog = [];
+      saveStateKey('changelog');
+      renderChangelog();
+      updateStats();
+      showToast('Published to GitHub!', 'success');
+    } else {
+      const err = await putRes.json();
+      showStatus(`❌ Publish failed: ${err.message}`, 'error');
+    }
+  } catch(e) {
+    showStatus(`❌ Error: ${e.message}`, 'error');
+  }
+
+  btn.disabled = false; btn.textContent = '🚀 Publish to GitHub';
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById('publish-status');
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.style.color = type === 'error' ? '#ef9a9a' : '#a5d6a7';
+}
+
+// ── CHANGELOG ────────────────────────────────────────────────────────────────
+function logChange(type, text) {
+  state.changelog.unshift({ type, text, time: new Date().toLocaleTimeString() });
+  if (state.changelog.length > 20) state.changelog.pop();
+  saveStateKey('changelog');
+  renderChangelog();
+  updateStats();
+}
+
+function renderChangelog() {
+  const el = document.getElementById('changelog');
+  if (!state.changelog.length) {
+    el.innerHTML = '<div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet.</div>';
+    return;
+  }
+  el.innerHTML = state.changelog.slice(0, 8).map(c => `
+    <div class="change-item">
+      <span class="change-badge badge-${c.type}">${c.type}</span>
+      <span class="change-text">${c.text}</span>
+      <span class="change-time">${c.time}</span>
+    </div>
+  `).join('');
+}
+
+function updateStats() {
+  const total = Object.values(state.gallery).reduce((a, v) => a + (v||[]).length, 0);
+  document.getElementById('stat-imgs').textContent = total;
+  document.getElementById('stat-changes').textContent = state.changelog.length;
+}
+
+// ── TOAST ────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
+  t.className = `show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.className = '', 3200);
+}
+</script>
 </body>
 </html>
