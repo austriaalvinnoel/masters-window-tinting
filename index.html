@@ -509,6 +509,34 @@
       font-weight: 300;
     }
 
+    /* GALLERY FILTER TABS (homepage) */
+    .gallery-filter-tabs {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin: 2rem 0 1.5rem;
+    }
+
+    .gf-tab {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.45rem 1.1rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .gf-tab:hover { color: var(--white); border-color: rgba(200,168,75,0.35); }
+    .gf-tab.active { background: var(--gold); border-color: var(--gold); color: #000; }
+
+    .gallery-item { transition: opacity 0.3s, transform 0.3s; }
+    .gallery-item.hidden { display: none; }
+
     /* GALLERY */
     .gallery-grid {
       display: grid;
@@ -2388,43 +2416,60 @@
 <section class="section" id="gallery" style="background: var(--surface);">
   <div class="container">
     <div class="section-label">Our Work</div>
-    <h2 class="section-title">CARS WE'VE PROTECTED</h2>
-    <p class="section-sub">Real vehicles. Real results from our Long Island shop. No stock photos.</p>
-    <div class="gallery-grid">
+    <h2 class="section-title">RESULTS FROM<br><span style="color:var(--gold)">OUR SHOP</span></h2>
+    <p class="section-sub">Real work. Real vehicles. Real homes and businesses — done by our certified team right here in West Babylon, Long Island.</p>
 
-      <div class="gallery-item">
-        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp" alt="Window tinting work" loading="lazy">
+    <!-- Service filter tabs -->
+    <div class="gallery-filter-tabs" id="homeTabs">
+      <button class="gf-tab active" onclick="filterHomeGallery('all', this)">All Work</button>
+      <button class="gf-tab" onclick="filterHomeGallery('tinting', this)">Window Tinting</button>
+      <button class="gf-tab" onclick="filterHomeGallery('ceramic', this)">Ceramic Coating</button>
+      <button class="gf-tab" onclick="filterHomeGallery('ppf', this)">Liquid PPF</button>
+      <button class="gf-tab" onclick="filterHomeGallery('residential', this)">Residential</button>
+      <button class="gf-tab" onclick="filterHomeGallery('commercial', this)">Commercial</button>
+    </div>
+
+    <div class="gallery-grid" id="homeGalleryGrid">
+
+      <div class="gallery-item" data-cat="tinting">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp" alt="Window tinting" loading="lazy">
         <div class="gallery-overlay"><div class="gallery-label">Window Tinting</div></div>
       </div>
 
-      <div class="gallery-item">
-        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="Ceramic coating work" loading="lazy">
+      <div class="gallery-item" data-cat="ceramic">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="Ceramic coating" loading="lazy">
         <div class="gallery-overlay"><div class="gallery-label">Ceramic Coating</div></div>
       </div>
 
-      <div class="gallery-item">
-        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="Liquid PPF work" loading="lazy">
+      <div class="gallery-item" data-cat="ppf">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="Liquid PPF" loading="lazy">
         <div class="gallery-overlay"><div class="gallery-label">Liquid PPF</div></div>
       </div>
 
-      <div class="gallery-item">
-        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Paint protection work" loading="lazy">
-        <div class="gallery-overlay"><div class="gallery-label">Paint Protection</div></div>
-      </div>
-
-      <div class="gallery-item">
-        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238243881-SJ04PY7VASZ2R0BMUG3L/2474c9ecb87e50629613ad0ffea697df424e8530-6992f331ec980.webp" alt="Ceramic coating detail" loading="lazy">
+      <div class="gallery-item" data-cat="ceramic">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Ceramic coating detail" loading="lazy">
         <div class="gallery-overlay"><div class="gallery-label">Ceramic Coating</div></div>
       </div>
 
-      <div class="gallery-item">
-        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238244421-ALZVV1E5XK0KIJ24E3AJ/5661107a15d618a3e31f45bb83d89202e68b63cb-6992f3324ad92.webp" alt="Full detail work" loading="lazy">
-        <div class="gallery-overlay"><div class="gallery-label">Full Detail Package</div></div>
+      <div class="gallery-item" data-cat="residential">
+        <img src="residential-hero.jpg" alt="Residential window tinting" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-label">Residential Tinting</div></div>
+      </div>
+
+      <div class="gallery-item" data-cat="commercial">
+        <img src="commercial-hero.jpg" alt="Commercial window tinting" loading="lazy">
+        <div class="gallery-overlay"><div class="gallery-label">Commercial Tinting</div></div>
       </div>
 
     </div>
-    <div style="text-align:center; margin-top:2.5rem;">
-      <a href="https://www.ceramicprolongisland.net/gallery" target="_blank" class="btn-outline">See Full Gallery →</a>
+
+    <!-- CTA row -->
+    <div style="margin-top:3rem; display:flex; flex-direction:column; align-items:center; gap:1.2rem; text-align:center;">
+      <p style="font-size:0.85rem; color:var(--muted); font-weight:300; max-width:480px;">Browse our full portfolio by service — window tinting, ceramic coating, Liquid PPF, residential, commercial, wall graphics, and detailing.</p>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+        <a href="gallery.html" class="btn-primary">View Full Gallery →</a>
+        <a href="tel:6312264300" class="btn-outline">📞 Book Your Service</a>
+      </div>
     </div>
   </div>
 </section>
@@ -2832,6 +2877,19 @@
     const diff = touchStartX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) { moveSlide(diff > 0 ? 1 : -1); }
   });
+
+  // Home gallery filter
+  function filterHomeGallery(cat, btn) {
+    document.querySelectorAll('#homeTabs .gf-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#homeGalleryGrid .gallery-item').forEach(item => {
+      if (cat === 'all' || item.dataset.cat === cat) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+  }
 
   // Form submit handler
   document.getElementById('quoteForm').addEventListener('submit', function(e) {
