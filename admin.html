@@ -345,7 +345,7 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);co
               <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;">
                 <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;">📎 Add by URL</div>
                 <div class="form-group" style="margin:0 0 0.5rem;">
-                  <input type="url" id="url-input" placeholder="https://imgur.com/photo.jpg" style="font-size:0.8rem;">
+                  <input type="url" id="url-input" placeholder="https://ibb.co/... or https://i.ibb.co/..." style="font-size:0.8rem;">
                 </div>
                 <button class="btn btn-outline-gold btn-sm" style="width:100%;" onclick="addImageUrl()">Add Image URL</button>
               </div>
@@ -355,7 +355,7 @@ html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--black);co
                   <a href="https://imgur.com/upload" target="_blank" style="color:var(--gold);display:block;">→ imgur.com</a>
                   <a href="https://imgbb.com" target="_blank" style="color:var(--gold);display:block;">→ imgbb.com</a>
                   <a href="https://cloudinary.com" target="_blank" style="color:var(--gold);display:block;">→ cloudinary.com</a>
-                  <span style="font-size:0.65rem;opacity:0.6;">Upload there, paste URL here</span>
+                  <span style="font-size:0.65rem;opacity:0.6;">On imgbb: click image → "Direct link"<br>i.ibb.co links work best ✅</span>
                 </div>
               </div>
             </div>
@@ -723,51 +723,91 @@ async function handleFileUpload(e) {
   showToast(`${files.length} photo${files.length!==1?'s':''} added — click Save!`, 'success');
 }
 
+// ── Smart URL converter — handles viewer pages from common hosts ──────────────
+function convertToDirectUrl(url) {
+  // ibb.co viewer → i.ibb.co direct
+  // https://ibb.co/ABC123  →  needs API call, so we try common pattern
+  // https://ibb.co/JwqW1P58 → https://i.ibb.co/JwqW1P58/<filename>
+  // Best we can do without API: fetch the page and extract the direct URL
+  if (/^https?:\/\/(www\.)?ibb\.co\/[a-zA-Z0-9]+$/.test(url)) {
+    // Can't directly convert without the filename — flag for fetch
+    return { type: 'ibb_viewer', url };
+  }
+  // imgur viewer → direct
+  if (/^https?:\/\/(www\.)?imgur\.com\/([a-zA-Z0-9]+)$/.test(url)) {
+    const id = url.match(/imgur\.com\/([a-zA-Z0-9]+)$/)[1];
+    return { type: 'direct', url: `https://i.imgur.com/${id}.jpg` };
+  }
+  // Google Drive view → direct
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if (driveMatch) {
+    return { type: 'direct', url: `https://drive.google.com/uc?export=view&id=${driveMatch[1]}` };
+  }
+  // Already direct
+  return { type: 'direct', url };
+}
+
+async function fetchIbbDirectUrl(viewerUrl) {
+  // Use allorigins proxy to fetch the ibb page and extract the direct image URL
+  try {
+    const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(viewerUrl)}`;
+    const res = await fetch(proxy);
+    const data = await res.json();
+    // Extract the direct image URL from the page HTML
+    const match = data.contents.match(/https:\/\/i\.ibb\.co\/[^"'\s]+\.(jpg|jpeg|png|webp)/i);
+    if (match) return match[0];
+  } catch(e) {}
+  return null;
+}
+
 function addImageUrl() {
-  const url = document.getElementById('url-input').value.trim();
-  if (!url) { showToast('Please enter an image URL', 'error'); return; }
-  if (!url.startsWith('http')) { showToast('URL must start with https://', 'error'); return; }
+  const rawUrl = document.getElementById('url-input').value.trim();
+  if (!rawUrl) { showToast('Please enter an image URL', 'error'); return; }
+  if (!rawUrl.startsWith('http')) { showToast('URL must start with https://', 'error'); return; }
 
-  // Warn if URL doesn't look like a direct image
-  const looksLikeImage = /\.(jpg|jpeg|png|webp|gif|avif)(\?.*)?$/i.test(url) ||
-    url.includes('i.ibb.co') ||
-    url.includes('i.imgur.com') ||
-    url.includes('res.cloudinary.com') ||
-    url.includes('drive.google.com/uc?export=view');
+  const urlInput = document.getElementById('url-input');
 
-  if (!looksLikeImage) {
-    // Show warning but allow user to proceed
-    if (!confirm(
-      '⚠️ This URL may not be a direct image link.
-
-' +
-      'Direct image URLs usually:
-' +
-      '• Start with i.ibb.co, i.imgur.com, or res.cloudinary.com
-' +
-      '• End in .jpg, .png, or .webp
-
-' +
-      'Add it anyway?'
-    )) return;
+  // Handle ibb.co viewer pages specially
+  if (/^https?:\/\/(www\.)?ibb\.co\/[a-zA-Z0-9]+$/.test(rawUrl)) {
+    showToast('🔄 Converting ibb.co link...', 'success');
+    fetchIbbDirectUrl(rawUrl).then(directUrl => {
+      if (directUrl) {
+        verifyAndAddImage(directUrl, urlInput);
+      } else {
+        // Fallback: show instructions
+        showToast('❌ Could not auto-convert. On imgbb, click the image → copy "Direct link" (starts with i.ibb.co)', 'error');
+      }
+    });
+    return;
   }
 
-  // Test if image actually loads before saving
+  // Convert other viewer URLs
+  const converted = convertToDirectUrl(rawUrl);
+  verifyAndAddImage(converted.url, urlInput);
+}
+
+function verifyAndAddImage(url, inputEl) {
+  showToast('🔄 Checking image...', 'success');
   const testImg = new Image();
-  const urlInput = document.getElementById('url-input');
-  showToast('Checking URL...', 'success');
+  testImg.crossOrigin = 'anonymous';
   testImg.onload = () => {
     if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
     state.gallery[currentCat].push(url);
-    urlInput.value = '';
+    if (inputEl) inputEl.value = '';
     renderGallery();
     updateStats();
-    showToast('✅ Image verified and added — click Save!', 'success');
+    showToast('✅ Image added — click Save!', 'success');
   };
   testImg.onerror = () => {
-    showToast('❌ Image failed to load. Check the URL is a direct image link (i.ibb.co, i.imgur.com, etc)', 'error');
+    // Image might block cross-origin but still work on site — add with warning
+    if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
+    state.gallery[currentCat].push(url);
+    if (inputEl) inputEl.value = '';
+    renderGallery();
+    updateStats();
+    showToast('⚠️ Added (may need Save to verify). If it shows broken, use i.ibb.co direct link.', 'success');
   };
-  testImg.src = url;
+  testImg.src = url + '?t=' + Date.now();
 }
 
 function removeFailedImages() {
