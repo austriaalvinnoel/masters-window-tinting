@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,56 +6,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Masters CMS · Admin Panel</title>
 <meta name="robots" content="noindex, nofollow">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black:#080808; --surface:#111; --surface2:#1a1a1a; --surface3:#222;
-  --gold:#C8A84B; --gold-light:#E8C878; --gold-dim:rgba(200,168,75,0.12);
-  --white:#F0EDE8; --muted:#888; --border:rgba(200,168,75,0.18);
+  --black:#000000; --surface:#0e0e0e; --surface2:#161616; --surface3:#222222;
+  --gold:#ffffff; --gold-light:#ffffff; --gold-dim:rgba(255,255,255,0.08);
+  --white:#ffffff; --muted:#a9a9a9; --border:rgba(255,255,255,0.12);
   --red:#e53935; --green:#43a047;
+  --font:"Poppins",sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
 /* LOGIN */
 #login-screen {
   position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:var(--black);z-index:1000;overflow-y:auto;font-family:'Outfit',sans-serif;
-  background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);
+  background:var(--black);z-index:1000;overflow-y:auto;font-family:var(--font);
+  background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
   background-size:60px 60px;
 }
 .login-card {
   background:var(--surface);border:1px solid var(--border);padding:3rem 2.5rem;
-  width:100%;max-width:400px;margin:2rem;
+  width:100%;max-width:400px;margin:2rem;border-radius:6px;
   box-shadow:0 32px 80px rgba(0,0,0,0.8);
 }
-.login-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.08em;color:var(--white);margin-bottom:0.2rem;}
-.login-tagline{font-size:0.58rem;font-weight:700;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
-.login-heading{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.4rem;}
-.login-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.8rem;font-weight:300;}
+.login-logo{font-family:var(--font);font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;color:var(--white);margin-bottom:0.3rem;}
+.login-tagline{font-size:0.58rem;font-weight:700;letter-spacing:0.22em;color:var(--muted);text-transform:uppercase;margin-bottom:2rem;}
+.login-heading{font-family:var(--font);font-weight:800;font-size:2.2rem;color:var(--white);letter-spacing:-0.02em;margin-bottom:0.4rem;}
+.login-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.8rem;font-weight:400;}
 .field{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
 .field label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
 .field input{
-  background:var(--black);border:1px solid rgba(200,168,75,0.2);color:var(--white);
-  padding:0.9rem 1rem;font-size:0.9rem;font-family:'Outfit',sans-serif;
+  background:var(--black);border:1px solid var(--border);color:var(--white);
+  padding:0.9rem 1rem;font-size:0.9rem;font-family:var(--font);border-radius:3px;
   outline:none;transition:border-color 0.2s;width:100%;
 }
-.field input:focus{border-color:var(--gold);}
-.field input::placeholder{color:rgba(136,136,136,0.4);}
+.field input:focus{border-color:var(--white);}
+.field input::placeholder{color:rgba(169,169,169,0.4);}
 #login-error{
   background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.3);
-  color:#ef9a9a;padding:0.7rem 1rem;font-size:0.82rem;
-  margin-bottom:1rem;display:none;font-family:'Outfit',sans-serif;
+  color:#ef9a9a;padding:0.7rem 1rem;font-size:0.82rem;border-radius:3px;
+  margin-bottom:1rem;display:none;font-family:var(--font);
 }
 .btn-login{
-  width:100%;background:var(--gold);color:#000;border:none;padding:1rem;
-  font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-  cursor:pointer;font-family:'Outfit',sans-serif;margin-top:0.5rem;transition:all 0.2s;
+  width:100%;background:var(--white);color:#000;border:none;padding:1rem;border-radius:3px;
+  font-size:0.88rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  cursor:pointer;font-family:var(--font);margin-top:0.5rem;transition:all 0.2s;
 }
-.btn-login:hover{background:var(--gold-light);}
+.btn-login:hover{background:#d6d6d6;}
 
 /* APP SHELL */
-#app{display:none;height:100vh;width:100%;flex-direction:row;font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);}
+#app{display:none;height:100vh;width:100%;flex-direction:row;font-family:var(--font);background:var(--black);color:var(--white);}
 
 .sidebar{
   width:240px;flex-shrink:0;background:var(--surface);
@@ -62,8 +66,8 @@
   display:flex;flex-direction:column;overflow-y:auto;height:100vh;
 }
 .sidebar-brand{padding:1.4rem 1.2rem;border-bottom:1px solid var(--border);}
-.sidebar-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.08em;color:var(--white);line-height:1.3;}
-.sidebar-sub{font-size:0.52rem;font-weight:600;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-top:0.1rem;}
+.sidebar-name{font-family:var(--font);font-weight:800;font-size:0.98rem;letter-spacing:-0.01em;color:var(--white);line-height:1.3;}
+.sidebar-sub{font-size:0.52rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:0.25rem;}
 
 .nav-section{padding:0.8rem 0;}
 .nav-label{font-size:0.56rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);padding:0 1.2rem;margin-bottom:0.4rem;}
@@ -73,15 +77,15 @@
   transition:all 0.18s;border-left:2px solid transparent;
 }
 .nav-item:hover{color:var(--white);background:var(--surface2);}
-.nav-item.active{color:var(--gold);background:var(--gold-dim);border-left-color:var(--gold);}
+.nav-item.active{color:var(--white);background:var(--gold-dim);border-left-color:var(--white);}
 .nav-icon{font-size:1rem;width:20px;text-align:center;}
 
 .sidebar-footer{margin-top:auto;padding:1.2rem;border-top:1px solid var(--border);}
 .user-row{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.8rem;}
-.user-av{width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;color:#000;flex-shrink:0;}
+.user-av{width:32px;height:32px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-weight:800;font-size:0.85rem;color:#000;flex-shrink:0;}
 .user-name{font-size:0.8rem;font-weight:600;color:var(--white);}
 .user-role{font-size:0.65rem;color:var(--muted);}
-.btn-signout{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.55rem;font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
+.btn-signout{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.55rem;font-size:0.72rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;font-family:var(--font);border-radius:3px;transition:all 0.2s;}
 .btn-signout:hover{border-color:var(--red);color:var(--red);}
 
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100vh;}
@@ -90,44 +94,44 @@
   padding:0 2rem;height:60px;display:flex;align-items:center;
   justify-content:space-between;flex-shrink:0;
 }
-.topbar-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.06em;color:var(--white);}
+.topbar-title{font-family:var(--font);font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;color:var(--white);}
 .topbar-right{display:flex;align-items:center;gap:0.8rem;}
 .status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;}
 .status-txt{font-size:0.72rem;color:var(--muted);}
 .btn-publish{
-  background:var(--gold);color:#000;border:none;padding:0.55rem 1.4rem;
-  font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-  cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;
+  background:var(--white);color:#000;border:none;padding:0.55rem 1.4rem;border-radius:3px;
+  font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  cursor:pointer;font-family:var(--font);transition:all 0.2s;
   display:flex;align-items:center;gap:0.4rem;
 }
-.btn-publish:hover{background:var(--gold-light);}
+.btn-publish:hover{background:#d6d6d6;}
 
 .content{flex:1;overflow-y:auto;padding:2rem;}
 .panel{display:none;}
 .panel.active{display:block;}
-.panel-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.04em;color:var(--white);margin-bottom:0.3rem;}
-.panel-desc{font-size:0.88rem;color:var(--muted);font-weight:300;margin-bottom:2rem;}
+.panel-title{font-family:var(--font);font-weight:800;font-size:2rem;letter-spacing:-0.02em;color:var(--white);margin-bottom:0.3rem;}
+.panel-desc{font-size:0.88rem;color:var(--muted);font-weight:400;margin-bottom:2rem;}
 
 /* CARDS & FORMS */
-.card{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.2rem;}
-.card-label{font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.card{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.2rem;border-radius:6px;}
+.card-label{font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
 .field2{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
 .field2 label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
 .field2 input,.field2 textarea,.field2 select{
-  background:var(--black);border:1px solid rgba(200,168,75,0.15);color:var(--white);
-  padding:0.75rem 0.9rem;font-size:0.88rem;font-family:'Outfit',sans-serif;
+  background:var(--black);border:1px solid var(--border);color:var(--white);
+  padding:0.75rem 0.9rem;font-size:0.88rem;font-family:var(--font);border-radius:3px;
   outline:none;transition:border-color 0.2s;width:100%;
 }
-.field2 input:focus,.field2 textarea:focus,.field2 select:focus{border-color:var(--gold);}
-.field2 input::placeholder,.field2 textarea::placeholder{color:rgba(136,136,136,0.4);}
+.field2 input:focus,.field2 textarea:focus,.field2 select:focus{border-color:var(--white);}
+.field2 input::placeholder,.field2 textarea::placeholder{color:rgba(169,169,169,0.4);}
 .field2 textarea{resize:vertical;min-height:80px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 
 /* BUTTONS */
-.btn{border:none;padding:0.65rem 1.4rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;}
-.btn-gold{background:var(--gold);color:#000;}
-.btn-gold:hover{background:var(--gold-light);}
-.btn-outline-gold{background:transparent;border:1px solid var(--gold);color:var(--gold);}
+.btn{border:none;padding:0.65rem 1.4rem;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;font-family:var(--font);border-radius:3px;transition:all 0.2s;}
+.btn-gold{background:var(--white);color:#000;}
+.btn-gold:hover{background:#d6d6d6;}
+.btn-outline-gold{background:transparent;border:1px solid var(--white);color:var(--white);}
 .btn-outline-gold:hover{background:var(--gold-dim);}
 .btn-grey{background:transparent;border:1px solid var(--border);color:var(--muted);}
 .btn-grey:hover{border-color:var(--white);color:var(--white);}
@@ -137,75 +141,75 @@
 
 /* GALLERY */
 .cat-tabs{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:1.2rem;}
-.cat-tab{padding:0.45rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;background:var(--surface2);color:var(--muted);border:1px solid var(--border);transition:all 0.2s;font-family:'Outfit',sans-serif;}
-.cat-tab.active{background:var(--gold);color:#000;border-color:var(--gold);}
+.cat-tab{padding:0.45rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:var(--surface2);color:var(--muted);border:1px solid var(--border);transition:all 0.2s;font-family:var(--font);border-radius:3px;}
+.cat-tab.active{background:var(--white);color:#000;border-color:var(--white);}
 
 .img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:1.2rem;min-height:60px;}
-.img-slot{position:relative;aspect-ratio:4/3;background:var(--surface2);border:1px solid var(--border);overflow:hidden;}
+.img-slot{position:relative;aspect-ratio:4/3;background:var(--surface2);border:1px solid var(--border);overflow:hidden;border-radius:4px;}
 .img-slot img{width:100%;height:100%;object-fit:cover;display:block;}
 .img-remove{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.85);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.7rem;display:none;align-items:center;justify-content:center;line-height:1;}
 .img-slot:hover .img-remove{display:flex;}
-.img-type-badge{position:absolute;top:4px;left:4px;font-size:0.52rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(0,0,0,0.75);padding:0.15rem 0.4rem;}
-.img-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#2a2a2a;font-size:1.5rem;gap:0.3rem;}
-.img-empty span{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#333;}
+.img-type-badge{position:absolute;top:4px;left:4px;font-size:0.52rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(0,0,0,0.75);padding:0.15rem 0.4rem;border-radius:2px;}
+.img-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#3a3a3a;font-size:1.5rem;gap:0.3rem;}
+.img-empty span{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#444;}
 
 .upload-tabs{display:flex;gap:2px;margin-bottom:1rem;flex-wrap:wrap;}
-.utab{padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all 0.2s;}
-.utab.active{background:var(--gold);color:#000;border-color:var(--gold);}
+.utab{padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:var(--font);border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all 0.2s;border-radius:3px;}
+.utab.active{background:var(--white);color:#000;border-color:var(--white);}
 .utab-panel{display:none;}
 .utab-panel.active{display:block;}
 
 .upload-drop{
-  border:2px dashed rgba(200,168,75,0.25);padding:2rem;text-align:center;
+  border:2px dashed var(--border);padding:2rem;text-align:center;border-radius:6px;
   cursor:pointer;transition:all 0.2s;background:transparent;
 }
-.upload-drop:hover,.upload-drop.drag-over{border-color:var(--gold);background:var(--gold-dim);}
+.upload-drop:hover,.upload-drop.drag-over{border-color:var(--white);background:var(--gold-dim);}
 .upload-drop-icon{font-size:2rem;margin-bottom:0.5rem;}
 .upload-drop-text{font-size:0.82rem;color:var(--muted);line-height:1.6;}
-.upload-drop-text strong{color:var(--gold);}
+.upload-drop-text strong{color:var(--white);}
 
-.storage-wrap{background:var(--surface);border:1px solid var(--border);padding:1rem 1.4rem;margin-bottom:1.2rem;}
+.storage-wrap{background:var(--surface);border:1px solid var(--border);padding:1rem 1.4rem;margin-bottom:1.2rem;border-radius:6px;}
 .storage-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;}
 .storage-label{font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
 .storage-val{font-size:0.72rem;color:var(--muted);}
 .storage-track{height:4px;background:var(--surface3);border-radius:2px;}
-.storage-fill{height:100%;border-radius:2px;background:var(--gold);transition:width 0.4s;}
+.storage-fill{height:100%;border-radius:2px;background:var(--white);transition:width 0.4s;}
 
 /* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-bottom:2rem;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-bottom:2rem;border-radius:6px;overflow:hidden;}
 .stat-box{background:var(--surface);padding:1.5rem;text-align:center;}
-.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);line-height:1;}
-.stat-lbl{font-size:0.62rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.3rem;}
+.stat-val{font-family:var(--font);font-weight:800;font-size:2rem;color:var(--white);line-height:1;letter-spacing:-0.02em;}
+.stat-lbl{font-size:0.62rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;}
 
 /* PROGRESS BAR */
 .prog-wrap{display:none;margin-bottom:1rem;}
-.prog-text{font-size:0.75rem;color:var(--gold);margin-bottom:0.4rem;}
+.prog-text{font-size:0.75rem;color:var(--white);margin-bottom:0.4rem;}
 .prog-track{height:4px;background:var(--surface3);border-radius:2px;}
-.prog-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.2s;}
+.prog-fill{height:100%;background:var(--white);border-radius:2px;width:0%;transition:width 0.2s;}
 
 /* CHANGE LOG */
-.change-item{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 0;border-bottom:1px solid rgba(200,168,75,0.06);}
-.change-badge{font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.5rem;flex-shrink:0;}
-.badge-gallery{background:rgba(200,168,75,0.12);color:var(--gold);}
-.badge-carousel{background:rgba(100,149,237,0.12);color:#90caf9;}
-.badge-info{background:rgba(67,160,71,0.12);color:#a5d6a7;}
+.change-item{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.change-badge{font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.5rem;flex-shrink:0;border-radius:2px;}
+.badge-gallery{background:rgba(255,255,255,0.12);color:var(--white);}
+.badge-carousel{background:rgba(255,255,255,0.12);color:var(--white);}
+.badge-info{background:rgba(255,255,255,0.12);color:var(--white);}
 .change-text{font-size:0.82rem;color:var(--muted);flex:1;}
-.change-time{font-size:0.68rem;color:rgba(136,136,136,0.5);flex-shrink:0;}
+.change-time{font-size:0.68rem;color:rgba(169,169,169,0.5);flex-shrink:0;}
 
 /* MODAL */
-.modal-back{position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:500;display:none;align-items:center;justify-content:center;}
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:500;display:none;align-items:center;justify-content:center;}
 .modal-back.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);padding:2rem;width:100%;max-width:480px;margin:1rem;}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.4rem;}
-.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;}
+.modal{background:var(--surface);border:1px solid var(--border);padding:2rem;width:100%;max-width:480px;margin:1rem;border-radius:6px;}
+.modal-title{font-family:var(--font);font-weight:800;font-size:1.6rem;color:var(--white);letter-spacing:-0.02em;margin-bottom:0.4rem;}
+.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;font-weight:400;}
 .modal-actions{display:flex;gap:0.7rem;justify-content:flex-end;margin-top:1.5rem;}
-.pub-status{font-size:0.83rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);margin-top:0.8rem;display:none;line-height:1.6;}
+.pub-status{font-size:0.83rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);margin-top:0.8rem;display:none;line-height:1.6;border-radius:3px;}
 
 /* TOAST */
 #toast{
-  position:fixed;bottom:2rem;right:2rem;
+  position:fixed;bottom:2rem;right:2rem;border-radius:4px;
   background:var(--surface);border:1px solid var(--border);
-  padding:0.9rem 1.4rem;font-size:0.85rem;font-family:'Outfit',sans-serif;
+  padding:0.9rem 1.4rem;font-size:0.85rem;font-family:var(--font);
   transform:translateY(120px);opacity:0;transition:all 0.35s;z-index:9999;
   max-width:340px;
 }
@@ -214,13 +218,13 @@
 #toast.error{border-color:rgba(229,57,53,0.5);color:#ef9a9a;}
 
 /* SLIDE EDITOR */
-.slide-card{border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem;background:var(--surface);position:relative;}
-.slide-num{position:absolute;top:1rem;right:1.2rem;font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(200,168,75,0.08);line-height:1;user-select:none;}
-.slide-name-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.slide-card{border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem;background:var(--surface);position:relative;border-radius:6px;}
+.slide-num{position:absolute;top:1rem;right:1.2rem;font-family:var(--font);font-weight:800;font-size:2.6rem;color:rgba(255,255,255,0.06);line-height:1;user-select:none;}
+.slide-name-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--white);margin-bottom:1rem;}
 
 /* SETTINGS */
 .settings-section{margin-bottom:2rem;}
-.settings-heading{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);letter-spacing:0.04em;padding-bottom:0.8rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
+.settings-heading{font-family:var(--font);font-weight:800;font-size:1.25rem;color:var(--white);letter-spacing:-0.01em;padding-bottom:0.8rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
 
 @media(max-width:768px){
   .sidebar{width:200px;}
@@ -318,7 +322,7 @@
         </div>
         <div class="card">
           <div class="card-label">Recent Changes</div>
-          <div id="changelog-list"><div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet.</div></div>
+          <div id="changelog-list"><div style="font-size:0.85rem;color:var(--muted);font-weight:400;">No changes yet.</div></div>
         </div>
       </div>
 
@@ -326,8 +330,8 @@
       <div id="panel-gallery" class="panel">
         <div class="panel-title">GALLERY MANAGER</div>
         <div class="panel-desc">Upload photos for each service. Images are auto-compressed before saving.</div>
-        <div style="background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.3);padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);">
-          <strong style="color:var(--gold);">How it works:</strong><br>
+        <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);border-radius:6px;">
+          <strong style="color:var(--white);">How it works:</strong><br>
           1. Upload photos below → click <strong>💾 Save Gallery</strong><br>
           2. Click <strong>🚀 Publish Changes</strong> (top right) → photos go live for ALL visitors<br>
           <span style="color:var(--muted);font-size:0.75rem;">On your browser: photos show immediately after Save. Other visitors need Publish.</span>
@@ -372,9 +376,9 @@
 
           <!-- SINGLE URL -->
           <div class="utab-panel" id="utab-url">
-            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
-              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.6;">
-                Use a <strong style="color:var(--gold);">direct image URL</strong> — from i.ibb.co, i.imgur.com, or any link ending in .jpg/.png/.webp
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;border-radius:6px;">
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:400;line-height:1.6;">
+                Use a <strong style="color:var(--white);">direct image URL</strong> — from i.ibb.co, i.imgur.com, or any link ending in .jpg/.png/.webp
               </p>
               <div class="field2">
                 <label>Image URL</label>
@@ -382,32 +386,32 @@
               </div>
               <button class="btn btn-gold" style="width:100%;" id="add-url-btn">Add Image</button>
               <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted);line-height:1.8;">
-                <strong style="color:var(--gold);display:block;margin-bottom:0.3rem;">Free image hosts:</strong>
-                <a href="https://imgbb.com" target="_blank" style="color:var(--gold);">→ imgbb.com</a> — upload, click image, copy "Direct link"<br>
-                <a href="https://imgur.com/upload" target="_blank" style="color:var(--gold);">→ imgur.com</a>
+                <strong style="color:var(--white);display:block;margin-bottom:0.3rem;">Free image hosts:</strong>
+                <a href="https://imgbb.com" target="_blank" style="color:var(--white);">→ imgbb.com</a> — upload, click image, copy "Direct link"<br>
+                <a href="https://imgur.com/upload" target="_blank" style="color:var(--white);">→ imgur.com</a>
               </div>
             </div>
           </div>
 
           <!-- BULK URLs -->
           <div class="utab-panel" id="utab-bulk">
-            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
-              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;font-weight:300;">Paste multiple image URLs, one per line:</p>
-              <textarea id="bulk-input" rows="8" placeholder="https://i.ibb.co/photo1.jpg&#10;https://i.ibb.co/photo2.jpg&#10;https://i.ibb.co/photo3.jpg" style="background:var(--black);border:1px solid rgba(200,168,75,0.15);color:var(--white);padding:0.8rem;font-size:0.78rem;font-family:monospace;width:100%;resize:vertical;outline:none;margin-bottom:0.8rem;"></textarea>
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;border-radius:6px;">
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;font-weight:400;">Paste multiple image URLs, one per line:</p>
+              <textarea id="bulk-input" rows="8" placeholder="https://i.ibb.co/photo1.jpg&#10;https://i.ibb.co/photo2.jpg&#10;https://i.ibb.co/photo3.jpg" style="background:var(--black);border:1px solid var(--border);color:var(--white);padding:0.8rem;font-size:0.78rem;font-family:monospace;width:100%;resize:vertical;outline:none;margin-bottom:0.8rem;border-radius:3px;"></textarea>
               <button class="btn btn-gold" style="width:100%;" id="bulk-add-btn">📋 Import All URLs</button>
-              <div id="bulk-result" style="display:none;font-size:0.78rem;color:var(--gold);margin-top:0.6rem;"></div>
+              <div id="bulk-result" style="display:none;font-size:0.78rem;color:var(--white);margin-top:0.6rem;"></div>
             </div>
           </div>
 
           <!-- GOOGLE DRIVE -->
           <div class="utab-panel" id="utab-drive">
-            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;">
-              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:300;line-height:1.7;">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;border-radius:6px;">
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:400;line-height:1.7;">
                 Import all photos from a Google Drive folder at once.<br>
                 <strong style="color:#ffcc80;">⚠️ The folder must be set to "Anyone with the link can view"</strong>
               </p>
-              <div style="background:var(--black);border:1px solid var(--border);padding:1rem;margin-bottom:1rem;font-size:0.78rem;color:var(--muted);line-height:1.9;">
-                <strong style="color:var(--gold);">How to make public:</strong><br>
+              <div style="background:var(--black);border:1px solid var(--border);padding:1rem;margin-bottom:1rem;font-size:0.78rem;color:var(--muted);line-height:1.9;border-radius:3px;">
+                <strong style="color:var(--white);">How to make public:</strong><br>
                 1. Right-click the folder in Google Drive<br>
                 2. Click <strong style="color:var(--white);">Share</strong><br>
                 3. Change from "Restricted" to <strong style="color:var(--white);">"Anyone with the link"</strong><br>
@@ -418,7 +422,7 @@
                 <input type="url" id="drive-url" placeholder="https://drive.google.com/drive/folders/...">
               </div>
               <button class="btn btn-gold" style="width:100%;" id="drive-import-btn">☁️ Import All Photos from Drive</button>
-              <div id="drive-result" style="display:none;font-size:0.82rem;color:var(--gold);margin-top:0.8rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);line-height:1.7;"></div>
+              <div id="drive-result" style="display:none;font-size:0.82rem;color:var(--white);margin-top:0.8rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);line-height:1.7;border-radius:3px;"></div>
             </div>
           </div>
 
@@ -489,26 +493,21 @@
         <div class="settings-section">
           <div class="settings-heading">GitHub Publishing</div>
           <div class="card">
-            <div style="background:rgba(200,168,75,0.08);border:1px solid rgba(200,168,75,0.35);padding:1rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);">
-              <strong style="color:var(--gold);">⚡ Required for Live Updates</strong><br>
-              Once you add your GitHub token here, every time you click <strong>Save Gallery</strong>, <strong>Save Carousel</strong>, or <strong>Save Site Info</strong> — changes automatically go live for <strong>all visitors</strong> within 1–2 minutes. No manual publish needed.
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);border-radius:6px;">
+              <strong style="color:var(--white);">🔒 Secure publishing</strong><br>
+              Your GitHub token is stored safely on the server (Vercel environment variable) — never in this page. Enter your <strong>Publish Key</strong> below (the <code>CMS_PUBLISH_KEY</code> value you set in Vercel). Then Save Gallery / Carousel / Site Info will go live automatically.
             </div>
-            <div class="field2"><label>Repository</label><input type="text" id="gh-repo" placeholder="austriaalvinnoel/masters-window-tinting"></div>
-            <div class="field2"><label>Personal Access Token</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
-            <div class="form-row">
-              <div class="field2"><label>Branch</label><input type="text" id="gh-branch" placeholder="main"></div>
-              <div class="field2"><label>Author Name</label><input type="text" id="gh-author" placeholder="Masters Admin"></div>
-            </div>
+            <div class="field2"><label>Publish Key</label><input type="password" id="cms-key" placeholder="the CMS_PUBLISH_KEY you set in Vercel"></div>
             <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
-              <button class="btn btn-gold" id="save-gh-btn">💾 Save Settings</button>
-              <button class="btn btn-outline-gold" id="test-gh-btn">🔗 Test Connection</button>
+              <button class="btn btn-gold" id="save-gh-btn">💾 Save Key</button>
+              <button class="btn btn-outline-gold" id="test-gh-btn">🔗 Test Publish</button>
             </div>
           </div>
         </div>
         <div class="settings-section">
           <div class="settings-heading">Danger Zone</div>
           <div class="card">
-            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:300;">Clear all locally saved CMS data. Does not affect the live site.</p>
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:400;">Clear all locally saved CMS data. Does not affect the live site.</p>
             <button class="btn btn-danger" id="clear-all-btn">🗑️ Clear All Local Data</button>
           </div>
         </div>
@@ -564,7 +563,6 @@ function saveKey(key, val) {
   try {
     const serialized = JSON.stringify(val);
     localStorage.setItem('cms_'+key, serialized);
-    // Verify it actually saved by reading back
     const verify = localStorage.getItem('cms_'+key);
     if (!verify) { toast('Save verification failed!', 'error'); return false; }
     return true;
@@ -579,14 +577,12 @@ function saveKey(key, val) {
   }
 }
 
-// ── AUTO PUBLISH TO GITHUB ───────────────────────────────────────────────────
+// ── AUTO PUBLISH (via secure serverless function) ────────────────────────────
+// The GitHub token NEVER touches the browser. We POST to our own /api/publish
+// endpoint, which holds the token in a Vercel environment variable server-side.
 async function autoPublish(commitMsg) {
-  const token  = localStorage.getItem('gh_token');
-  const repo   = localStorage.getItem('gh_repo')   || 'austriaalvinnoel/masters-window-tinting';
-  const branch = localStorage.getItem('gh_branch') || 'main';
-  const author = localStorage.getItem('gh_author') || 'Masters Admin';
-
-  if (!token) return false; // no token configured — silent fail
+  const publishKey = localStorage.getItem('cms_publish_key');
+  if (!publishKey) return false; // not configured — silent fail
 
   const payload = {
     gallery:   state.gallery,
@@ -596,32 +592,12 @@ async function autoPublish(commitMsg) {
   };
 
   try {
-    // Get current SHA of cms-data.json
-    const getR = await fetch(
-      `https://api.github.com/repos/${repo}/contents/cms-data.json`,
-      { headers: { Authorization: `token ${token}` } }
-    );
-    let sha = null;
-    if (getR.ok) { const d = await getR.json(); sha = d.sha; }
-
-    const fileContent = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
-    const body = {
-      message: commitMsg || 'CMS update',
-      content: fileContent,
-      branch,
-      committer: { name: author, email: 'cms@masterswindowtinting.com' }
-    };
-    if (sha) body.sha = sha;
-
-    const putR = await fetch(
-      `https://api.github.com/repos/${repo}/contents/cms-data.json`,
-      {
-        method: 'PUT',
-        headers: { Authorization: `token ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      }
-    );
-    return putR.ok;
+    const r = await fetch('/api/publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-cms-key': publishKey },
+      body: JSON.stringify({ payload, message: commitMsg || 'CMS update' })
+    });
+    return r.ok;
   } catch(e) {
     return false;
   }
@@ -661,7 +637,6 @@ document.getElementById('signout-btn').addEventListener('click', () => {
   location.reload();
 });
 
-// Auto-login if already authenticated
 if (sessionStorage.getItem('cms_ok') === '1') {
   document.getElementById('login-screen').style.display = 'none';
   startApp();
@@ -684,7 +659,6 @@ async function startApp() {
   bindGalleryEvents();
   bindFormEvents();
 
-  // Auto-sync from GitHub if local gallery is empty
   const totalLocal = Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length,0);
   if (totalLocal === 0) {
     syncFromGitHub();
@@ -701,21 +675,17 @@ async function syncFromGitHub() {
     const data = await r.json();
     if (!data || !data.gallery) return;
 
-    // Count images in remote
     const total = Object.values(data.gallery).reduce((a,v)=>a+(v||[]).length,0);
     if (total === 0) return;
 
-    // Load into local state
     state.gallery = data.gallery;
     if (data.carousel) state.carousel = data.carousel;
     if (data.siteinfo) state.siteinfo = data.siteinfo;
 
-    // Save to localStorage
     saveKey('gallery', state.gallery);
     saveKey('carousel', state.carousel);
     saveKey('siteinfo', state.siteinfo);
 
-    // Re-render everything
     renderGallery();
     buildSlideEditors();
     loadSiteInfo();
@@ -775,7 +745,7 @@ function renderGallery() {
     return `<div class="img-slot">
       <img src="${src}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="img-empty" style="display:none;position:absolute;inset:0;background:var(--surface3);">⚠️<span>Failed</span></div>
-      <div class="img-type-badge" style="color:${isUrl?'#a5d6a7':'#90caf9'}">${isUrl?'URL':'FILE'}</div>
+      <div class="img-type-badge" style="color:#fff">${isUrl?'URL':'FILE'}</div>
       <button class="img-remove" data-idx="${i}">✕</button>
     </div>`;
   }).join('') + `<div class="img-slot"><div class="img-empty"><span style="font-size:1.8rem">+</span><span>${imgs.length} photos</span></div></div>`;
@@ -791,7 +761,6 @@ function renderGallery() {
 }
 
 function bindGalleryEvents() {
-  // Upload tab switcher
   document.querySelectorAll('.utab').forEach(btn => {
     btn.addEventListener('click', () => {
       const t = btn.dataset.utab;
@@ -802,7 +771,6 @@ function bindGalleryEvents() {
     });
   });
 
-  // Drop zone
   const dz = document.getElementById('drop-zone');
   const fi = document.getElementById('file-input');
   dz.addEventListener('click', () => fi.click());
@@ -811,17 +779,11 @@ function bindGalleryEvents() {
   dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
   fi.addEventListener('change', e => handleFiles(e.target.files));
 
-  // Single URL
   document.getElementById('add-url-btn').addEventListener('click', addSingleUrl);
   document.getElementById('url-input').addEventListener('keydown', e => { if(e.key==='Enter') addSingleUrl(); });
-
-  // Bulk
   document.getElementById('bulk-add-btn').addEventListener('click', bulkAddUrls);
-
-  // Drive
   document.getElementById('drive-import-btn').addEventListener('click', importDriveFolder);
 
-  // Save / clean / clear
   document.getElementById('save-gallery-btn').addEventListener('click', saveGallery);
   document.getElementById('sync-github-btn').addEventListener('click', () => {
     toast('Syncing from GitHub...', 'success');
@@ -835,7 +797,6 @@ function bindGalleryEvents() {
   });
 }
 
-// File compression
 function compressImage(file, maxKB=120, q=0.72) {
   return new Promise(resolve => {
     const r = new FileReader();
@@ -878,10 +839,8 @@ async function handleFiles(files) {
 }
 
 function convertUrl(url) {
-  // imgur viewer → direct
   const im = url.match(/^https?:\/\/(www\.)?imgur\.com\/([a-zA-Z0-9]+)$/);
   if(im) return `https://i.imgur.com/${im[2]}.jpg`;
-  // Google Drive file
   const gd = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
   if(gd) return `https://drive.google.com/uc?export=view&id=${gd[1]}`;
   return url;
@@ -925,7 +884,6 @@ async function importDriveFolder() {
   if(!m){ res.innerHTML='❌ Invalid folder URL — paste the full Google Drive folder link.'; return; }
   const fid = m[1];
 
-  // Try multiple CORS proxies in sequence
   const proxies = [
     `https://corsproxy.io/?${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
     `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
@@ -939,13 +897,12 @@ async function importDriveFolder() {
       const r = await fetch(proxy, { signal: AbortSignal.timeout(8000) });
       if (r.ok) {
         html = await r.text();
-        if (html.length > 500) break; // got real content
+        if (html.length > 500) break;
       }
     } catch(e) { /* try next proxy */ }
   }
 
   if (!html || html.length < 500) {
-    // Proxy failed — fall back to manual ID entry
     res.innerHTML = `
       <div style="color:#ffcc80;margin-bottom:0.8rem;">
         ⚠️ Auto-import blocked by browser security. Use <strong>Bulk URLs</strong> tab instead:
@@ -955,17 +912,16 @@ async function importDriveFolder() {
         1. Open your Drive folder<br>
         2. Select all photos (Ctrl+A)<br>
         3. Right-click → <strong style="color:var(--white);">Share</strong> → each image has a link like:<br>
-        <code style="color:var(--gold);font-size:0.72rem;">https://drive.google.com/file/d/FILE_ID/view</code><br>
-        4. Or use <a href="https://imgbb.com" target="_blank" style="color:var(--gold);">imgbb.com</a> — upload all at once, get direct links<br><br>
-        <strong style="color:var(--gold);">Fastest fix:</strong> Upload your photos to 
-        <a href="https://imgbb.com" target="_blank" style="color:var(--gold);">imgbb.com</a> in bulk,
+        <code style="color:var(--white);font-size:0.72rem;">https://drive.google.com/file/d/FILE_ID/view</code><br>
+        4. Or use <a href="https://imgbb.com" target="_blank" style="color:var(--white);">imgbb.com</a> — upload all at once, get direct links<br><br>
+        <strong style="color:var(--white);">Fastest fix:</strong> Upload your photos to 
+        <a href="https://imgbb.com" target="_blank" style="color:var(--white);">imgbb.com</a> in bulk,
         then use the <strong style="color:var(--white);">Embed codes → Direct links</strong> option to get all URLs,
         paste them in the <strong style="color:var(--white);">Bulk URLs</strong> tab.
       </div>`;
     return;
   }
 
-  // Extract file IDs from HTML
   const matches = [...html.matchAll(/\/file\/d\/([a-zA-Z0-9_-]{25,})/g)];
   const ids = [...new Set(matches.map(m => m[1]))];
 
@@ -999,7 +955,6 @@ async function saveGallery() {
   logChange('gallery', `Gallery updated — ${currentCat} (${imgs.length} photos)`);
   updateStorage();
 
-  // Auto-publish to GitHub so all visitors see changes
   const published = await autoPublish(`Update gallery — ${currentCat}`);
   if (published) {
     ss.textContent = `🌐 Live! ${imgs.length} photos published to site at ${new Date().toLocaleTimeString()}`;
@@ -1109,22 +1064,19 @@ function bindFormEvents() {
   });
 
   document.getElementById('save-gh-btn').addEventListener('click',()=>{
-    localStorage.setItem('gh_repo',document.getElementById('gh-repo').value.trim());
-    localStorage.setItem('gh_token',document.getElementById('gh-token').value.trim());
-    localStorage.setItem('gh_branch',document.getElementById('gh-branch').value.trim()||'main');
-    localStorage.setItem('gh_author',document.getElementById('gh-author').value.trim()||'Masters Admin');
-    toast('GitHub settings saved!','success');
+    localStorage.setItem('cms_publish_key',document.getElementById('cms-key').value.trim());
+    toast('Publish key saved!','success');
   });
 
   document.getElementById('test-gh-btn').addEventListener('click', async()=>{
-    const token=document.getElementById('gh-token').value||localStorage.getItem('gh_token');
-    const repo=document.getElementById('gh-repo').value||localStorage.getItem('gh_repo');
-    if(!token){ toast('Enter a token first','error'); return; }
+    const key=document.getElementById('cms-key').value||localStorage.getItem('cms_publish_key');
+    if(!key){ toast('Enter your publish key first','error'); return; }
     try{
-      const r=await fetch(`https://api.github.com/repos/${repo}`,{headers:{Authorization:`token ${token}`}});
-      const d=await r.json();
-      r.ok ? toast(`✅ Connected: ${d.full_name}`,'success') : toast(`❌ ${d.message}`,'error');
-    }catch(e){ toast('Connection failed','error'); }
+      const payload={gallery:state.gallery,carousel:state.carousel,siteinfo:state.siteinfo,publishedAt:new Date().toISOString()};
+      const r=await fetch('/api/publish',{method:'POST',headers:{'Content-Type':'application/json','x-cms-key':key},body:JSON.stringify({payload,message:'CMS test publish'})});
+      if(r.ok){ toast('✅ Connected — publishing works!','success'); }
+      else { const e=await r.json().catch(()=>({error:'error'})); toast(`❌ ${e.error}`,'error'); }
+    }catch(e){ toast('Connection failed — is /api/publish deployed?','error'); }
   });
 
   document.getElementById('clear-all-btn').addEventListener('click',()=>{
@@ -1136,18 +1088,12 @@ function bindFormEvents() {
   });
 }
 
-// ── GH SETTINGS LOAD ─────────────────────────────────────────────────────────
+// ── PUBLISH SETTINGS LOAD ─────────────────────────────────────────────────────
 function loadGhSettings() {
-  // Config assembled at runtime — no per-browser setup needed
-  const _a='Z2hwX3VDWmRPUmRoUUt1',_b='bTUxdmVoZEY0WEdDUjdq',_c='bEhqRTNlaXJyag==';
-  const _dt = () => atob(_a+_b+_c);
-  if (!localStorage.getItem('gh_token'))  localStorage.setItem('gh_token',  _dt());
-  if (!localStorage.getItem('gh_repo'))   localStorage.setItem('gh_repo',   'austriaalvinnoel/masters-window-tinting');
-  if (!localStorage.getItem('gh_branch')) localStorage.setItem('gh_branch', 'main');
-  if (!localStorage.getItem('gh_author')) localStorage.setItem('gh_author', 'Masters Admin');
-  document.getElementById('gh-repo').value   = localStorage.getItem('gh_repo');
-  document.getElementById('gh-branch').value = localStorage.getItem('gh_branch');
-  document.getElementById('gh-author').value = localStorage.getItem('gh_author');
+  // No GitHub token in this file or the browser — it lives server-side in Vercel.
+  // Only the publish key (which authorizes calls to /api/publish) is stored locally.
+  const key = localStorage.getItem('cms_publish_key');
+  if (key) document.getElementById('cms-key').value = key;
 }
 
 // ── PUBLISH ───────────────────────────────────────────────────────────────────
@@ -1160,39 +1106,34 @@ function openPubModal() {
 document.getElementById('pub-cancel').addEventListener('click',()=>document.getElementById('pub-modal').classList.remove('open'));
 
 document.getElementById('pub-confirm').addEventListener('click', async()=>{
-  const token=localStorage.getItem('gh_token');
-  const repo=localStorage.getItem('gh_repo')||'austriaalvinnoel/masters-window-tinting';
-  const branch=localStorage.getItem('gh_branch')||'main';
-  const author=localStorage.getItem('gh_author')||'Masters Admin';
+  const publishKey = localStorage.getItem('cms_publish_key');
   const msg=document.getElementById('commit-msg').value||'Update via CMS';
   const st=document.getElementById('pub-status');
-  st.style.display='block'; st.style.color='var(--gold)';
+  st.style.display='block'; st.style.color='var(--white)';
 
-  if(!token){ st.textContent='❌ No token. Go to Settings → GitHub Publishing.'; return; }
+  if(!publishKey){ st.textContent='❌ No publish key set. Go to Settings → GitHub Publishing.'; return; }
 
   const btn=document.getElementById('pub-confirm');
   btn.disabled=true; btn.textContent='Publishing...';
-  st.textContent='🔄 Connecting to GitHub...';
+  st.textContent='🔄 Publishing...';
 
   const payload={gallery:state.gallery,carousel:state.carousel,siteinfo:state.siteinfo,publishedAt:new Date().toISOString()};
 
   try {
-    const getR=await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`,{headers:{Authorization:`token ${token}`}});
-    let sha=null;
-    if(getR.ok){ const d=await getR.json(); sha=d.sha; }
-    const content=btoa(unescape(encodeURIComponent(JSON.stringify(payload,null,2))));
-    const body={message:msg,content,branch,committer:{name:author,email:'cms@masterswindowtinting.com'}};
-    if(sha) body.sha=sha;
-    const putR=await fetch(`https://api.github.com/repos/${repo}/contents/cms-data.json`,{method:'PUT',headers:{Authorization:`token ${token}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(putR.ok){
+    const r=await fetch('/api/publish',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-cms-key':publishKey},
+      body:JSON.stringify({payload,message:msg})
+    });
+    if(r.ok){
       st.style.color='#a5d6a7';
       st.textContent='✅ Published! Vercel will deploy in ~1–2 minutes.';
       state.log=[]; saveKey('log',state.log); renderLog(); updateStats();
       toast('Published to GitHub!','success');
     } else {
-      const e=await putR.json();
+      const e=await r.json().catch(()=>({error:'Unknown error'}));
       st.style.color='#ef9a9a';
-      st.textContent=`❌ Failed: ${e.message}`;
+      st.textContent=`❌ Failed: ${e.error}`;
     }
   } catch(e) {
     st.style.color='#ef9a9a';
@@ -1211,7 +1152,7 @@ function logChange(type,text) {
 
 function renderLog() {
   const el=document.getElementById('changelog-list');
-  if(!state.log.length){ el.innerHTML='<div style="font-size:0.85rem;color:var(--muted);font-weight:300;">No changes yet.</div>'; return; }
+  if(!state.log.length){ el.innerHTML='<div style="font-size:0.85rem;color:var(--muted);font-weight:400;">No changes yet.</div>'; return; }
   el.innerHTML=state.log.slice(0,8).map(c=>`
     <div class="change-item">
       <span class="change-badge badge-${c.type}">${c.type}</span>
@@ -1233,7 +1174,7 @@ function updateStorage() {
   const kb=total/1024, pct=Math.min(100,(kb/5120)*100);
   const fill=document.getElementById('storage-fill');
   const val=document.getElementById('storage-val');
-  if(fill){ fill.style.width=pct+'%'; fill.style.background=pct>80?'#ef9a9a':pct>60?'#ffcc80':'var(--gold)'; }
+  if(fill){ fill.style.width=pct+'%'; fill.style.background=pct>80?'#ef9a9a':pct>60?'#ffcc80':'var(--white)'; }
   if(val) val.textContent=`${kb<1024?kb.toFixed(0)+' KB':(kb/1024).toFixed(1)+' MB'} / 5 MB (${pct.toFixed(0)}% used)`;
 }
 
