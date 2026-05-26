@@ -151,15 +151,10 @@ header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);borde
 .ppf-copy p{color:var(--muted);font-size:17px;max-width:430px;margin:26px 0 34px}
 .ppf-actions{display:flex;gap:13px;flex-wrap:wrap}
 .ppf-video{position:relative;background:#0a0a0a;border-left:1px solid var(--line);display:grid;place-items:center;padding:30px}
-.ppf-video .frame{position:relative;width:100%;max-width:300px;aspect-ratio:9/16;border-radius:6px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);display:block;cursor:pointer}
-.ppf-video .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.ppf-video .frame:hover img{transform:scale(1.05)}
-.ppf-video .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.55))}
-.ppf-video .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.5);display:grid;place-items:center;transition:transform .3s,background .3s}
-.ppf-video .frame:hover .play{transform:translate(-50%,-50%) scale(1.1);background:rgba(0,0,0,.75)}
-.ppf-video .play span{display:block;width:0;height:0;border-style:solid;border-width:10px 0 10px 17px;border-color:transparent transparent transparent #fff;margin-left:4px}
-.ppf-video .vcaption{position:absolute;bottom:14px;left:0;right:0;z-index:3;text-align:center;font-size:13px;font-weight:600;color:#fff;letter-spacing:.02em}
+.ppf-video .frame{position:relative;width:100%;max-width:300px;aspect-ratio:9/16;border-radius:6px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);display:block;background:#000}
 .ppf-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ppf-video .vcaption{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:4;text-align:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:.02em;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:8px 14px;border-radius:99px;border:1px solid var(--line-2);transition:background .25s}
+.ppf-video .vcaption:hover{background:rgba(0,0,0,.85)}
 .ppf-video .vlabel{position:absolute;top:14px;left:14px;z-index:4;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:7px 11px;border-radius:99px;border:1px solid var(--line-2);pointer-events:none}
 .ppf-image{position:relative;border-left:1px solid var(--line);overflow:hidden;min-height:300px}
 .ppf-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.08) brightness(.92)}
@@ -422,6 +417,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
       <a href="#ppf-levels">PPF Levels</a>
       <a href="#gallery">Gallery</a>
       <a href="#reviews">Reviews</a>
+      <a href="about.html">About</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta">
@@ -438,6 +434,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
   <a href="#ppf-levels">PPF Levels</a>
   <a href="#gallery">Gallery</a>
   <a href="#reviews">Reviews</a>
+  <a href="about.html">About</a>
   <a href="#contact">Contact</a>
   <a href="tel:6312264300" class="mm-call">📞 631-226-4300</a>
 </div>
@@ -494,12 +491,17 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
     </div>
 
     <div class="ppf-video">
-      <a class="frame" href="https://www.youtube.com/@masterswindowtinting" target="_blank" rel="noopener" aria-label="Watch our Liquid PPF video on YouTube">
+      <div class="frame">
         <div class="vlabel">Masters · Liquid PPF Specialists</div>
-        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="Liquid PPF video preview">
-        <div class="play"><span></span></div>
-        <div class="vcaption">Watch on YouTube →</div>
-      </a>
+        <iframe
+          src="https://www.youtube.com/embed/Zta6OycRLfQ?autoplay=1&mute=1&loop=1&playlist=Zta6OycRLfQ&controls=0&playsinline=1&rel=0&modestbranding=1"
+          title="New Liquid Paint Protection Film"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+        <a class="vcaption" href="https://www.youtube.com/watch?v=Zta6OycRLfQ" target="_blank" rel="noopener">🔊 Watch with sound →</a>
+      </div>
     </div>
   </div>
 
@@ -837,7 +839,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
       <div class="foot-col">
         <h5>Company</h5>
         <ul>
-          <li><a href="#top">About Us</a></li>
+          <li><a href="about.html">About Us</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#reviews">Reviews</a></li>
           <li><a href="#contact">Contact</a></li>
