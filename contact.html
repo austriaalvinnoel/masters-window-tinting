@@ -7,22 +7,22 @@
 <meta name="description" content="Contact Masters Window Tinting in West Babylon, NY. Get a free quote for window tinting, PPF, or ceramic coating. Call 631-226-4300 or fill out our form.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #080808;
-    --surface: #111111;
-    --surface2: #1a1a1a;
-    --gold: #C8A84B;
-    --gold-light: #E8C878;
-    --white: #F0EDE8;
-    --muted: #888888;
-    --border: rgba(200, 168, 75, 0.18);
+    --black:#000000;
+    --surface:#0e0e0e;
+    --surface2:#161616;
+    --gold:#ffffff;
+    --gold-light:#ffffff;
+    --white:#ffffff;
+    --muted:#a9a9a9;
+    --border: rgba(255,255,255,0.18);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Outfit', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+  body { font-family: 'Poppins',sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
   .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
@@ -33,20 +33,20 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 2.5rem;
-    background: rgba(8,8,8,0.97);
+    background: rgba(0,0,0,0.92);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
     transition: padding 0.3s;
   }
 
   .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Poppins',sans-serif; font-weight: 800;
     font-size: 1.15rem; letter-spacing: 0.1em;
     color: var(--white); text-decoration: none;
     display: flex; flex-direction: column; line-height: 1.15;
   }
   .nav-logo span {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Poppins',sans-serif;
     font-size: 0.58rem; font-weight: 600;
     letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase;
   }
@@ -79,13 +79,13 @@
   .page-hero::before {
     content: ''; position: absolute; inset: 0;
     background-image:
-      linear-gradient(rgba(200,168,75,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(200,168,75,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
   .page-hero-glow {
     position: absolute; width: 600px; height: 600px;
-    background: radial-gradient(ellipse, rgba(200,168,75,0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(255,255,255,0.08) 0%, transparent 70%);
     top: -200px; right: -100px; pointer-events: none;
   }
   .breadcrumb {
@@ -97,7 +97,7 @@
   .breadcrumb a:hover { color: var(--gold); }
   .breadcrumb span { color: #333; }
   .page-hero h1 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Poppins',sans-serif; font-weight: 800;
     font-size: clamp(4rem, 10vw, 9rem);
     line-height: 0.88; letter-spacing: 0.04em;
     color: var(--white); margin-bottom: 1.5rem; position: relative; z-index: 1;
@@ -126,8 +126,8 @@
 
   .qc-icon {
     width: 48px; height: 48px;
-    background: rgba(200,168,75,0.1);
-    border: 1px solid rgba(200,168,75,0.25);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.3rem;
   }
@@ -144,7 +144,7 @@
 
   /* LEFT: INFO */
   .contact-info h2 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Poppins',sans-serif; font-weight: 700;
     font-size: 2.8rem; color: var(--white);
     letter-spacing: 0.04em; margin-bottom: 0.8rem;
   }
@@ -162,7 +162,7 @@
   }
   .hours-row {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0.65rem 0; border-bottom: 1px solid rgba(200,168,75,0.08);
+    padding: 0.65rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .hours-row:last-child { border-bottom: none; }
   .hours-day { font-size: 0.85rem; color: var(--muted); }
@@ -191,7 +191,7 @@
     overflow: hidden; margin-bottom: 4px;
     transition: border-color 0.2s;
   }
-  .faq-item.open { border-color: rgba(200,168,75,0.4); }
+  .faq-item.open { border-color: rgba(255,255,255,0.4); }
   .faq-question {
     display: flex; justify-content: space-between; align-items: center;
     padding: 1rem 1.2rem; cursor: pointer;
@@ -218,7 +218,7 @@
     background: linear-gradient(90deg, var(--gold), var(--gold-light));
   }
   .form-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Poppins',sans-serif; font-weight: 700;
     font-size: 2rem; color: var(--white);
     letter-spacing: 0.04em; margin-bottom: 0.3rem;
   }
@@ -242,9 +242,9 @@
   .field input,
   .field select,
   .field textarea {
-    background: var(--black); border: 1px solid rgba(200,168,75,0.15);
+    background: var(--black); border: 1px solid rgba(255,255,255,0.15);
     padding: 0.85rem 1rem; font-size: 0.9rem;
-    color: var(--white); font-family: 'Outfit', sans-serif;
+    color: var(--white); font-family: 'Poppins',sans-serif;
     outline: none; transition: border-color 0.2s; width: 100%;
     -webkit-appearance: none;
   }
@@ -260,27 +260,27 @@
   .services-check { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
   .service-check-item {
     display: flex; align-items: center; gap: 0.7rem;
-    background: var(--black); border: 1px solid rgba(200,168,75,0.12);
+    background: var(--black); border: 1px solid rgba(255,255,255,0.12);
     padding: 0.7rem 1rem; cursor: pointer; transition: all 0.2s;
   }
-  .service-check-item:hover { border-color: rgba(200,168,75,0.35); }
+  .service-check-item:hover { border-color: rgba(255,255,255,0.35); }
   .service-check-item input[type="checkbox"] {
     width: 15px; height: 15px; accent-color: var(--gold);
     flex-shrink: 0; cursor: pointer;
   }
   .service-check-item label { font-size: 0.82rem; color: var(--muted); cursor: pointer; transition: color 0.2s; }
-  .service-check-item:has(input:checked) { border-color: rgba(200,168,75,0.45); background: rgba(200,168,75,0.06); }
+  .service-check-item:has(input:checked) { border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.06); }
   .service-check-item:has(input:checked) label { color: var(--white); }
 
   .form-submit {
     width: 100%; background: var(--gold); color: #000; border: none;
     padding: 1.1rem; font-size: 0.9rem; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    cursor: pointer; font-family: 'Outfit', sans-serif;
+    cursor: pointer; font-family: 'Poppins',sans-serif;
     margin-top: 1.5rem; transition: all 0.2s;
     display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   }
-  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,168,75,0.2); }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(255,255,255,0.2); }
 
   .form-note {
     font-size: 0.72rem; color: var(--muted);
@@ -291,13 +291,13 @@
   .success-state { display: none; text-align: center; padding: 3rem 0; }
   .success-icon {
     width: 64px; height: 64px;
-    background: rgba(200,168,75,0.12);
-    border: 1px solid rgba(200,168,75,0.3);
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 1.2rem; font-size: 1.8rem;
   }
   .success-state h3 {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Poppins',sans-serif; font-weight: 700;
     font-size: 2rem; color: var(--gold);
     letter-spacing: 0.06em; margin-bottom: 0.7rem;
   }
@@ -315,7 +315,7 @@
     gap: 4rem; max-width: 1200px; margin: 0 auto 4rem;
   }
   .footer-brand-name {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Poppins',sans-serif; font-weight: 700;
     font-size: 1.5rem; letter-spacing: 0.08em;
     color: var(--white); margin-bottom: 0.2rem;
   }
@@ -334,9 +334,9 @@
     color: var(--muted); text-decoration: none;
     font-size: 0.72rem; font-weight: 700; transition: all 0.2s;
   }
-  .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,0.08); }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(255,255,255,0.08); }
   .footer-col-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Poppins',sans-serif; font-weight: 700;
     font-size: 0.95rem; letter-spacing: 0.15em;
     color: var(--white); margin-bottom: 1.2rem;
   }
