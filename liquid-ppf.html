@@ -69,6 +69,20 @@
   .level .bar i{display:block;height:100%;background:var(--white);}
   .level p{font-size:0.82rem;color:var(--muted);line-height:1.7;font-weight:400;}
   .level p b{color:var(--white);font-weight:600;}
+  .level .cov-label{font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);margin:1.2rem 0 0.6rem;padding-top:1rem;border-top:1px solid var(--border);}
+  .level .cov-list{list-style:none;display:flex;flex-direction:column;gap:0.4rem;}
+  .level .cov-list li{font-size:0.8rem;color:var(--muted);display:flex;align-items:flex-start;gap:0.5rem;line-height:1.5;}
+  .level .cov-list li::before{content:'✓';color:var(--white);font-weight:700;font-size:0.72rem;flex-shrink:0;}
+  /* ADVANTAGES LIST */
+  .adv-list{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:3rem;background:var(--border);border:1px solid var(--border);}
+  .adv-list li{background:var(--black);padding:1.1rem 1.4rem;font-size:0.9rem;color:var(--white);display:flex;align-items:center;gap:0.8rem;font-weight:500;}
+  .adv-list li::before{content:'✓';display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--white);color:#000;font-size:0.7rem;font-weight:700;flex-shrink:0;}
+  /* ALL-IN-ONE */
+  .allin{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center;}
+  .allin-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
+  .ais{background:var(--black);padding:1.8rem 1.5rem;display:flex;flex-direction:column;gap:0.5rem;}
+  .ais-n{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.5rem;color:var(--white);letter-spacing:-0.02em;line-height:1;}
+  .ais-l{font-size:0.8rem;color:var(--muted);line-height:1.5;}
   /* FAQ */
   .faq-wrap{max-width:820px;margin:3rem auto 0;}
   .faq-item{border:1px solid var(--border);overflow:hidden;margin-bottom:6px;transition:border-color 0.2s;}
@@ -93,8 +107,8 @@
   .footer-bottom{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.73rem;color:var(--muted);flex-wrap:wrap;gap:0.5rem;}
   .footer-bottom a{color:var(--muted);text-decoration:none;}
   .mobile-cta{position:fixed;bottom:0;left:0;right:0;background:var(--white);color:#000;text-align:center;padding:1.1rem;font-weight:700;font-size:0.88rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;display:none;z-index:99;}
-  @media(max-width:900px){.nav-links{display:none;}.feature{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr;}.levels{grid-template-columns:1fr 1fr;}.mobile-cta{display:block;}body{padding-bottom:58px;}.cta-inner{flex-direction:column;text-align:center;}nav{padding:0.9rem 1.5rem;}}
-  @media(max-width:560px){.levels{grid-template-columns:1fr;}}
+  @media(max-width:900px){.nav-links{display:none;}.feature{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr;}.levels{grid-template-columns:1fr 1fr;}.allin{grid-template-columns:1fr;gap:2.5rem;}.mobile-cta{display:block;}body{padding-bottom:58px;}.cta-inner{flex-direction:column;text-align:center;}nav{padding:0.9rem 1.5rem;}}
+  @media(max-width:560px){.levels{grid-template-columns:1fr;}.adv-list{grid-template-columns:1fr;}.allin-stats{grid-template-columns:1fr;}}
   .nav-links .has-dd{position:relative;}
   .nav-links .has-dd>a{display:inline-flex;align-items:center;gap:0.3rem;cursor:pointer;}
   .nav-links .has-dd>a::after{content:'\25BE';font-size:0.65em;opacity:0.7;}
@@ -183,6 +197,51 @@
   </div>
 </section>
 
+<!-- WHY IT'S BETTER (advantages list) -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">The Future of Vehicle Care</span>
+    <h2 class="section-title">WHY LIQUID PPF <span>WINS</span></h2>
+    <p class="section-sub">Liquid PPF delivers the same advanced protection as traditional cut-and-wrap film — without the seams, edges, cost, and hassle.</p>
+    <ul class="adv-list">
+      <li>No seams</li>
+      <li>No need to disassemble parts</li>
+      <li>No lifting of edges</li>
+      <li>No bubbles or film imperfections</li>
+      <li>A fraction of the cost and time to apply</li>
+      <li>Incredible long-lasting shine</li>
+      <li>No orange peel or hazing</li>
+      <li>The same protection against chips &amp; UV damage</li>
+      <li>No yellowing or dirt collecting on edges</li>
+      <li>No costly removal &amp; replacement down the road</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ALL-IN-ONE FORMULA -->
+<section class="section" style="background:var(--surface);">
+  <div class="container">
+    <div class="allin">
+      <div class="reveal">
+        <span class="section-label">All-in-One Formula</span>
+        <h2 class="section-title" style="margin-bottom:1.2rem;">PPF + CERAMIC<br><span>IN ONE</span></h2>
+        <p class="section-sub" style="max-width:none;margin-bottom:1.2rem;">Discover the ultimate vehicle protection with our revolutionary Liquid PPF and Ceramic Coating all-in-one formula. It delivers the same superior protection as traditional PPF — without seams, edges, or bubbles — while adding the hydrophobic brilliance of a ceramic coating.</p>
+        <p class="section-sub" style="max-width:none;">Enjoy a self-healing, high-gloss finish that resists chips, UV damage, and oxidation, all at a fraction of the cost. Our certified installers also offer premium Expel and 3M paint protection options for drivers who want a traditional clear bra.</p>
+        <div class="hero-ctas" style="margin-top:2rem;">
+          <a href="ceramic-coating.html" class="btn-primary">Explore Ceramic Coating →</a>
+          <a href="tel:6312264300" class="btn-outline">📞 631-226-4300</a>
+        </div>
+      </div>
+      <div class="allin-stats reveal" data-d="1">
+        <div class="ais"><span class="ais-n">2-in-1</span><span class="ais-l">PPF + Ceramic in a single application</span></div>
+        <div class="ais"><span class="ais-n">Self-Heal</span><span class="ais-l">Minor scratches vanish with heat</span></div>
+        <div class="ais"><span class="ais-n">Hydrophobic</span><span class="ais-l">Water beads &amp; rolls right off</span></div>
+        <div class="ais"><span class="ais-n">Seamless</span><span class="ais-l">No edges, seams, or lifting</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PROTECTION LEVELS -->
 <section class="section" id="levels">
   <div class="container">
@@ -194,25 +253,53 @@
         <span class="lv">01</span>
         <h4>Partial Front Protection</h4>
         <div class="bar"><i style="width:35%"></i></div>
-        <p><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips and road debris on high-impact zones.</p>
+        <p><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
+        <div class="cov-label">Coverage</div>
+        <ul class="cov-list">
+          <li>Front bumper</li>
+          <li>Headlights</li>
+          <li>Partial fenders</li>
+          <li>Side mirrors</li>
+          <li>Partial hood (18–24 in.)</li>
+        </ul>
       </div>
       <div class="level reveal" data-d="1">
         <span class="lv">02</span>
         <h4>Full Front Protection</h4>
         <div class="bar"><i style="width:60%"></i></div>
-        <p><b>Best for:</b> A seamless look with balanced protection against common driving wear. The most popular choice for sports and luxury cars.</p>
+        <p><b>Best for:</b> A seamless look with balanced protection for common driving wear — popular for sports and luxury cars.</p>
+        <div class="cov-label">Coverage</div>
+        <ul class="cov-list">
+          <li>Front bumper</li>
+          <li>Side mirrors</li>
+          <li>Headlights</li>
+          <li>Full fenders</li>
+          <li>Full hood</li>
+        </ul>
       </div>
       <div class="level reveal" data-d="2">
         <span class="lv">03</span>
         <h4>Track Pack Protection</h4>
         <div class="bar"><i style="width:82%"></i></div>
-        <p><b>Best for:</b> Performance drivers who push hard. Enhanced coverage across high-impact zones, side panels, and exposed surfaces.</p>
+        <p><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
+        <div class="cov-label">Coverage</div>
+        <ul class="cov-list">
+          <li>Full front coverage</li>
+          <li>A-pillars</li>
+          <li>Rocker panels</li>
+          <li>Door cups</li>
+          <li>Rear impact zones</li>
+        </ul>
       </div>
       <div class="level reveal" data-d="3">
         <span class="lv">04</span>
         <h4>Full Body Protection</h4>
         <div class="bar"><i style="width:100%"></i></div>
-        <p><b>Best for:</b> Ultimate protection for exotic vehicles or owners who want complete, head-to-toe peace of mind for the long haul.</p>
+        <p><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
+        <div class="cov-label">Coverage</div>
+        <ul class="cov-list">
+          <li>Every painted exterior surface</li>
+        </ul>
       </div>
     </div>
   </div>
