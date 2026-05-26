@@ -51,8 +51,8 @@
   .ppf-video{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:#000;}
   .ppf-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
   .vlabel{position:absolute;left:16px;top:16px;z-index:2;font-size:10px;letter-spacing:.18em;text-transform:uppercase;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border:1px solid var(--border);padding:8px 13px;border-radius:99px;color:var(--white);font-weight:600;}
-  .watch-sound{display:inline-block;margin-top:0.8rem;font-size:0.78rem;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;}
-  .watch-sound:hover{color:var(--white);}
+  .watch-sound{display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;font-size:0.82rem;font-weight:600;color:#000;background:var(--white);text-decoration:none;padding:0.7rem 1.3rem;border-radius:4px;transition:all 0.2s;}
+  .watch-sound:hover{background:#ccc;transform:translateY(-1px);}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;background:var(--border);}
   .card{background:var(--surface);padding:2.5rem 2rem;transition:background 0.3s;}
   .card:hover{background:var(--surface2);}
@@ -158,9 +158,9 @@
       <div class="reveal" data-d="1">
         <div class="ppf-video">
           <div class="vlabel">Masters · Liquid PPF Specialists</div>
-          <iframe src="https://www.youtube.com/embed/Zta6OycRLfQ?autoplay=1&mute=1&loop=1&playlist=Zta6OycRLfQ&controls=0&playsinline=1&rel=0&modestbranding=1" title="New Liquid Paint Protection Film" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe id="ppfVideo" src="https://www.youtube-nocookie.com/embed/Zta6OycRLfQ?autoplay=1&mute=1&loop=1&playlist=Zta6OycRLfQ&controls=0&playsinline=1&rel=0&modestbranding=1&showinfo=0&disablekb=1&iv_load_policy=3&enablejsapi=1" title="New Liquid Paint Protection Film" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <a href="https://www.youtube.com/watch?v=Zta6OycRLfQ" target="_blank" rel="noopener" class="watch-sound">▶ Watch with sound →</a>
+        <a href="#" id="watchSound" class="watch-sound" onclick="return enablePpfSound(event)">🔊 Watch with sound →</a>
       </div>
     </div>
   </div>
@@ -257,6 +257,19 @@
   const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});},{threshold:0.08});
   reveals.forEach(el=>obs.observe(el));
   function toggleFaq(el){const item=el.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
+  function enablePpfSound(e){
+    e.preventDefault();
+    var f=document.getElementById('ppfVideo');
+    if(!f)return false;
+    function cmd(func){f.contentWindow.postMessage(JSON.stringify({event:'command',func:func,args:[]}),'*');}
+    cmd('unMute');
+    cmd('setVolume',[100]);
+    f.contentWindow.postMessage(JSON.stringify({event:'command',func:'setVolume',args:[100]}),'*');
+    cmd('playVideo');
+    var btn=document.getElementById('watchSound');
+    if(btn){btn.innerHTML='🔊 Sound on';btn.style.opacity='0.6';btn.style.pointerEvents='none';}
+    return false;
+  }
   window.addEventListener('scroll',()=>{document.getElementById('navbar').style.padding=window.scrollY>60?'0.65rem 2.5rem':'1rem 2.5rem';});
 </script>
 </body>
