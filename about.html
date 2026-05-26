@@ -61,6 +61,16 @@ header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);borde
 .nav-links a:hover{color:var(--ink)}
 .nav-links a.current{color:var(--ink)}
 .nav-links a.current::after,.nav-links a:hover::after{width:100%}
+.nav-links .has-dd{position:relative;display:inline-block}
+.nav-links .has-dd .dd-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:.3rem}
+.nav-links .has-dd .dd-toggle::after{content:"\25BE";font-size:.7em;opacity:.7}
+.nav-links .has-dd .dd-toggle::before{display:none}
+.nav-links .dd{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);min-width:230px;background:#0e0e0e;border:1px solid var(--line-2);padding:8px 0;display:flex;flex-direction:column;gap:0;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:200}
+.nav-links .has-dd:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-links .dd::after{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.nav-links .dd a{padding:10px 20px;font-size:13px;white-space:nowrap}
+.nav-links .dd a::after{display:none}
+.nav-links .dd a:hover{background:rgba(255,255,255,.06);color:var(--ink)}
 .nav-cta{display:flex;align-items:center;gap:14px}
 .nav-phone{font-family:var(--mono);font-weight:700;font-size:14px;color:var(--ink);letter-spacing:.02em}
 .nav-phone:hover{color:var(--gold-bright)}
@@ -214,11 +224,21 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
       </span>
     </a>
     <nav class="nav-links">
-      <a href="index.html#services">Services</a>
-      <a href="index.html#ppf-levels">PPF Levels</a>
-      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html">Home</a>
+      <span class="has-dd"><a class="dd-toggle">Services</a>
+        <span class="dd">
+          <a href="window-tinting.html">Window Tinting</a>
+          <a href="liquid-ppf.html">Liquid PPF</a>
+          <a href="ceramic-coating.html">Ceramic Coating</a>
+          <a href="residential.html">Residential Tinting</a>
+          <a href="commercial.html">Commercial Tinting</a>
+          <a href="wall-graphics.html">Wall Graphics</a>
+          <a href="detailing.html">Detailing &amp; Paint Correction</a>
+        </span>
+      </span>
+      <a href="gallery.html">Gallery</a>
       <a href="about.html" class="current">About</a>
-      <a href="index.html#contact">Contact</a>
+      <a href="contact.html">Contact</a>
     </nav>
     <div class="nav-cta">
       <a href="tel:6312264300" class="nav-phone">631-226-4300</a>
@@ -230,11 +250,13 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
 
 <div class="mobile-menu" id="mobileMenu">
   <button class="mm-close" id="mmClose" aria-label="Close">&times;</button>
-  <a href="index.html#services">Services</a>
-  <a href="index.html#ppf-levels">PPF Levels</a>
-  <a href="index.html#gallery">Gallery</a>
+  <a href="index.html">Home</a>
+  <a href="window-tinting.html">Window Tinting</a>
+  <a href="liquid-ppf.html">Liquid PPF</a>
+  <a href="ceramic-coating.html">Ceramic Coating</a>
+  <a href="gallery.html">Gallery</a>
   <a href="about.html">About</a>
-  <a href="index.html#contact">Contact</a>
+  <a href="contact.html">Contact</a>
   <a href="tel:6312264300" class="mm-call">📞 631-226-4300</a>
 </div>
 
