@@ -7,57 +7,57 @@
 <meta name="description" content="Professional commercial window tinting for offices, storefronts, and buildings across Long Island, NY. Call 631-226-4300 for a free quote.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root { --black:#080808; --surface:#111111; --surface2:#1a1a1a; --gold:#C8A84B; --gold-light:#E8C878; --white:#F0EDE8; --muted:#888888; --border:rgba(200,168,75,0.18); }
+  :root { --black:#000000; --surface:#0e0e0e; --surface2:#161616; --gold:#ffffff; --gold-light:#ffffff; --white:#ffffff; --muted:#a9a9a9; --border:rgba(255,255,255,0.12); }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+  body{font-family:'Poppins',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
   .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
   .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
   .reveal.visible{opacity:1;transform:none;}
   nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(8,8,8,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
-  .nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.1em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.15;}
-  .nav-logo span{font-family:'Outfit',sans-serif;font-size:0.58rem;font-weight:600;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;}
+  .nav-logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-0.01em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.15;}
+  .nav-logo span{font-family:'Poppins',sans-serif;font-size:0.58rem;font-weight:600;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;}
   .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;}
   .nav-links a:hover{color:var(--white);}
   .btn-call-nav{background:var(--gold);color:#000;padding:0.6rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
   .btn-call-nav:hover{background:var(--gold-light);}
   .page-hero{background:var(--surface);padding:9rem 0 5rem;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
-  .page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.04) 1px,transparent 1px);background-size:60px 60px;}
-  .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(ellipse,rgba(200,168,75,0.08) 0%,transparent 70%);top:-200px;right:-100px;pointer-events:none;}
+  .page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:60px 60px;}
+  .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(ellipse,rgba(255,255,255,0.05) 0%,transparent 70%);top:-200px;right:-100px;pointer-events:none;}
   .breadcrumb{font-size:0.68rem;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;}
   .breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
   .breadcrumb a:hover{color:var(--gold);}
-  .page-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:0.88;letter-spacing:0.04em;color:var(--white);margin-bottom:1.5rem;position:relative;z-index:1;}
+  .page-hero h1{font-family:'Poppins',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:0.88;letter-spacing:0.04em;color:var(--white);margin-bottom:1.5rem;position:relative;z-index:1;}
   .page-hero h1 span{color:var(--gold);}
   .page-hero p{font-size:1rem;color:var(--muted);line-height:1.75;max-width:560px;font-weight:300;position:relative;z-index:1;margin-bottom:2rem;}
   .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1;}
   .btn-primary{background:var(--gold);color:#000;padding:1rem 2rem;font-weight:700;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
   .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);}
-  .btn-outline{border:1px solid rgba(240,237,232,0.25);color:var(--white);padding:1rem 2rem;font-size:0.85rem;letter-spacing:0.1em;text-decoration:none;transition:all 0.2s;}
+  .btn-outline{border:1px solid rgba(255,255,255,0.25);color:var(--white);padding:1rem 2rem;font-size:0.85rem;letter-spacing:0.1em;text-decoration:none;transition:all 0.2s;}
   .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
   .section{padding:6rem 2.5rem;}
   .section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;display:block;}
-  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);color:var(--white);letter-spacing:0.04em;line-height:0.92;margin-bottom:1rem;}
+  .section-title{font-family:'Poppins',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);color:var(--white);letter-spacing:0.04em;line-height:0.92;margin-bottom:1rem;}
   .section-title span{color:var(--gold);}
   .section-sub{color:var(--muted);font-size:0.95rem;line-height:1.75;max-width:560px;font-weight:300;}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;background:var(--border);}
   .card{background:var(--surface);padding:2.5rem 2rem;transition:background 0.3s;}
   .card:hover{background:var(--surface2);}
   .card-icon{font-size:2rem;margin-bottom:1rem;display:block;}
-  .card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.6rem;}
+  .card-title{font-family:'Poppins',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.6rem;}
   .card-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:300;}
   .industries-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:3rem;background:var(--border);}
   .industry-item{background:var(--black);padding:1.8rem 2rem;display:flex;align-items:flex-start;gap:1rem;transition:background 0.3s;}
   .industry-item:hover{background:#0e0e0e;}
   .industry-icon{font-size:1.5rem;flex-shrink:0;}
-  .industry-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.3rem;}
+  .industry-title{font-family:'Poppins',sans-serif;font-size:1.1rem;color:var(--white);letter-spacing:0.04em;margin-bottom:0.3rem;}
   .industry-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;font-weight:300;}
   .cta-strip{background:var(--gold);padding:5rem 2.5rem;}
   .cta-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;max-width:1200px;margin:0 auto;}
-  .cta-strip h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,4rem);color:#000;line-height:0.95;letter-spacing:0.04em;}
+  .cta-strip h2{font-family:'Poppins',sans-serif;font-size:clamp(2.2rem,5vw,4rem);color:#000;line-height:0.95;letter-spacing:0.04em;}
   .cta-strip p{font-size:0.95rem;color:rgba(0,0,0,0.65);margin-top:0.6rem;}
   .btn-dark{background:#000;color:var(--gold);padding:1rem 2rem;font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
   footer{background:var(--surface);border-top:1px solid var(--border);padding:4rem 2.5rem 2rem;}
