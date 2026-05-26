@@ -222,6 +222,10 @@ section{position:relative}
 .svc li{font-size:14px;color:var(--ink);display:flex;align-items:flex-start;gap:11px}
 .svc li::before{content:"";flex-shrink:0;width:6px;height:6px;margin-top:7px;background:var(--gold);transform:rotate(45deg)}
 .svc .more{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--gold-bright);text-transform:uppercase;display:inline-flex;align-items:center;gap:7px;transition:gap .25s}
+.svc .more::after{content:"";position:absolute;inset:0;z-index:1}
+.svc{cursor:pointer}
+.svc ul,.svc h3,.svc p,.svc .idx,.svc .badge{position:relative;z-index:2}
+.svc:hover .more{gap:12px}
 .svc .more:hover{gap:13px}
 
 .more-svc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
