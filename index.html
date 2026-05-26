@@ -89,6 +89,16 @@ header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);borde
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--gold);transition:width .3s}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{width:100%}
+.nav-links .has-dd{position:relative;display:inline-block}
+.nav-links .has-dd .dd-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:.3rem}
+.nav-links .has-dd .dd-toggle::after{content:"\25BE";font-size:.7em;opacity:.7}
+.nav-links .has-dd .dd-toggle::before{display:none}
+.nav-links .dd{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);min-width:230px;background:#0e0e0e;border:1px solid var(--line-2);padding:8px 0;display:flex;flex-direction:column;gap:0;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:200}
+.nav-links .has-dd:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-links .dd::after{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.nav-links .dd a{padding:10px 20px;font-size:13px;white-space:nowrap}
+.nav-links .dd a::after{display:none}
+.nav-links .dd a:hover{background:rgba(255,255,255,.06);color:var(--ink)}
 .nav-cta{display:flex;align-items:center;gap:14px}
 .nav-phone{font-family:var(--mono);font-weight:700;font-size:14px;color:var(--ink);letter-spacing:.02em}
 .nav-phone:hover{color:var(--gold-bright)}
@@ -413,10 +423,18 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
       </span>
     </a>
     <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#ppf-levels">PPF Levels</a>
+      <span class="has-dd"><a class="dd-toggle">Services</a>
+        <span class="dd">
+          <a href="window-tinting.html">Window Tinting</a>
+          <a href="liquid-ppf.html">Liquid PPF</a>
+          <a href="ceramic-coating.html">Ceramic Coating</a>
+          <a href="residential.html">Residential Tinting</a>
+          <a href="commercial.html">Commercial Tinting</a>
+          <a href="wall-graphics.html">Wall Graphics</a>
+          <a href="detailing.html">Detailing &amp; Paint Correction</a>
+        </span>
+      </span>
       <a href="#gallery">Gallery</a>
-      <a href="#reviews">Reviews</a>
       <a href="about.html">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -430,10 +448,10 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
 
 <div class="mobile-menu" id="mobileMenu">
   <button class="mm-close" id="mmClose" aria-label="Close">&times;</button>
-  <a href="#services">Services</a>
-  <a href="#ppf-levels">PPF Levels</a>
+  <a href="window-tinting.html">Window Tinting</a>
+  <a href="liquid-ppf.html">Liquid PPF</a>
+  <a href="ceramic-coating.html">Ceramic Coating</a>
   <a href="#gallery">Gallery</a>
-  <a href="#reviews">Reviews</a>
   <a href="about.html">About</a>
   <a href="#contact">Contact</a>
   <a href="tel:6312264300" class="mm-call">📞 631-226-4300</a>
@@ -548,7 +566,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
           <li>Headlight &amp; taillight tinting</li>
           <li>Lifetime warranty on film &amp; labor</li>
         </ul>
-        <a href="#contact" class="more">Get a quote →</a>
+        <a href="window-tinting.html" class="more">Learn more →</a>
       </article>
 
       <article class="svc reveal" data-d="1">
@@ -562,7 +580,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
           <li>Self-healing formula</li>
           <li>Full body or partial coverage</li>
         </ul>
-        <a href="#ppf-levels" class="more">View protection levels →</a>
+        <a href="liquid-ppf.html" class="more">Learn more →</a>
       </article>
 
       <article class="svc reveal" data-d="2">
@@ -576,15 +594,15 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
           <li>Chemical &amp; oxidation resistance</li>
           <li>Multi-year protection packages</li>
         </ul>
-        <a href="#contact" class="more">Get a quote →</a>
+        <a href="ceramic-coating.html" class="more">Learn more →</a>
       </article>
     </div>
 
     <div class="more-svc">
-      <a class="msvc reveal" href="#contact"><span class="k">Residential</span><h4>Home Window Tinting</h4><p>UV blocking, heat reduction, and privacy film for your home.</p><div class="ar">Learn more →</div></a>
-      <a class="msvc reveal" data-d="1" href="#contact"><span class="k">Commercial</span><h4>Commercial Tinting</h4><p>Office buildings, storefronts, and commercial spaces across LI.</p><div class="ar">Learn more →</div></a>
-      <a class="msvc reveal" data-d="2" href="#contact"><span class="k">Graphics</span><h4>Wall Graphics</h4><p>Custom wall wraps and graphics for homes, offices, businesses.</p><div class="ar">Learn more →</div></a>
-      <a class="msvc reveal" data-d="3" href="#contact"><span class="k">Detailing</span><h4>Detail &amp; Paint Correction</h4><p>Paint correction, swirl removal, and full detail packages.</p><div class="ar">Learn more →</div></a>
+      <a class="msvc reveal" href="residential.html"><span class="k">Residential</span><h4>Home Window Tinting</h4><p>UV blocking, heat reduction, and privacy film for your home.</p><div class="ar">Learn more →</div></a>
+      <a class="msvc reveal" data-d="1" href="commercial.html"><span class="k">Commercial</span><h4>Commercial Tinting</h4><p>Office buildings, storefronts, and commercial spaces across LI.</p><div class="ar">Learn more →</div></a>
+      <a class="msvc reveal" data-d="2" href="wall-graphics.html"><span class="k">Graphics</span><h4>Wall Graphics</h4><p>Custom wall wraps and graphics for homes, offices, businesses.</p><div class="ar">Learn more →</div></a>
+      <a class="msvc reveal" data-d="3" href="detailing.html"><span class="k">Detailing</span><h4>Detail &amp; Paint Correction</h4><p>Paint correction, swirl removal, and full detail packages.</p><div class="ar">Learn more →</div></a>
     </div>
   </div>
 </section>
