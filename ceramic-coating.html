@@ -70,6 +70,16 @@
   .package-includes{list-style:none;display:flex;flex-direction:column;gap:0.45rem;}
   .package-includes li{font-size:0.8rem;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:0.5rem;}
   .package-includes li::before{content:'✓';color:var(--white);font-size:0.72rem;font-weight:700;}
+  .package-price{display:flex;align-items:baseline;gap:0.4rem;margin:0.6rem 0 1rem;padding:0.8rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .package-price .pp-from{font-size:0.62rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+  .package-price .pp-amount{font-family:'Poppins',sans-serif;font-weight:800;font-size:2.2rem;color:var(--white);letter-spacing:-0.02em;line-height:1;}
+  .package-warranty{display:inline-block;font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--white);background:rgba(255,255,255,0.08);border:1px solid var(--border);padding:0.35rem 0.7rem;border-radius:99px;margin-bottom:1rem;}
+  .package-cta{display:block;text-align:center;background:var(--white);color:#000;padding:0.85rem 1rem;margin-top:1.4rem;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;}
+  .package-cta:hover{background:#ccc;}
+  .package-cta.outline{background:transparent;color:var(--white);border:1px solid var(--border);}
+  .package-cta.outline:hover{border-color:var(--white);background:rgba(255,255,255,0.05);}
+  .package-note{margin-top:2.5rem;padding:1.4rem 1.6rem;border:1px dashed var(--border);border-radius:6px;font-size:0.82rem;color:var(--muted);line-height:1.7;text-align:center;}
+  .package-note b{color:var(--white);font-weight:600;}
   /* FAQ */
   .faq-wrap{max-width:820px;margin:3rem auto 0;}
   .faq-item{border:1px solid var(--border);overflow:hidden;margin-bottom:6px;transition:border-color 0.2s;}
@@ -186,47 +196,70 @@
 <!-- PACKAGES -->
 <section class="section">
   <div class="container">
-    <span class="section-label">Coating Packages</span>
+    <span class="section-label">Exterior Coating Packages</span>
     <h2 class="section-title">CHOOSE YOUR <span>PACKAGE</span></h2>
-    <p class="section-sub">Every coating starts with full decontamination and prep. Choose the protection level that fits your goals — call for custom pricing.</p>
+    <p class="section-sub">Three Ceramic Pro exterior packages — Bronze, Silver, and Gold. Every package starts with full decontamination and prep. Never wax your car again. Good for cars, boats, motorcycles &amp; mobile homes.</p>
     <div class="packages-grid">
+
       <div class="package-card reveal">
-        <div class="package-tag">Essential</div>
-        <div class="package-name">Single-Year Coating</div>
-        <p class="package-desc">A strong entry-level ceramic layer for daily drivers who want easier washes and real gloss.</p>
+        <div class="package-tag">Bronze</div>
+        <div class="package-name">Exterior Package</div>
+        <span class="package-warranty">2-Year Warranty</span>
+        <p class="package-desc">Great exterior protection for your entire vehicle, with an unbeatable shine that never needs waxing.</p>
+        <div class="package-price">
+          <span class="pp-from">Starting at</span>
+          <span class="pp-amount">$499</span>
+        </div>
         <ul class="package-includes">
-          <li>Wash & decontamination</li>
-          <li>Single-layer ceramic coat</li>
-          <li>Hydrophobic finish</li>
-          <li>UV & oxidation resistance</li>
-          <li>1-year protection</li>
+          <li>1 layer of Ceramic Pro Light glass coating</li>
+          <li>1 layer of Ceramic Pro Light on plastics</li>
+          <li>1 layer of Ceramic Pro Rain on all windows &amp; glass</li>
+          <li>Full hydrophobic finish</li>
+          <li>UV &amp; oxidation resistance</li>
         </ul>
+        <a href="tel:6312264300" class="package-cta outline">📞 Book Bronze</a>
       </div>
+
       <div class="package-card featured reveal">
-        <div class="package-tag">Most Popular</div>
-        <div class="package-name">Multi-Year Ceramic Pro</div>
-        <p class="package-desc">Certified Ceramic Pro multi-layer system for lasting durability and the deepest gloss.</p>
+        <div class="package-tag">Silver · Most Popular</div>
+        <div class="package-name">Exterior Package</div>
+        <span class="package-warranty">5-Year Warranty</span>
+        <p class="package-desc">Excellent permanent exterior protection — great scratch resistance and unbeatable water beading.</p>
+        <div class="package-price">
+          <span class="pp-from">Starting at</span>
+          <span class="pp-amount">$899</span>
+        </div>
         <ul class="package-includes">
-          <li>Everything in Single-Year</li>
-          <li>Multi-layer Ceramic Pro</li>
-          <li>Enhanced gloss & depth</li>
-          <li>Chemical resistance</li>
-          <li>Multi-year warranty coverage</li>
+          <li>2 layers of Ceramic Pro 9H Shield</li>
+          <li>1 layer of Ceramic Pro 9H on plastics &amp; rims</li>
+          <li>1 layer of Ceramic Pro Rain on all windows &amp; glass</li>
+          <li>Outstanding scratch &amp; chemical resistance</li>
+          <li>Deep gloss with strong water-beading</li>
         </ul>
+        <a href="tel:6312264300" class="package-cta">📞 Book Silver</a>
       </div>
+
       <div class="package-card reveal">
-        <div class="package-tag">Premium</div>
-        <div class="package-name">BOROGRAPH 2.0</div>
-        <p class="package-desc">Our flagship graphene-oxide infused coating — the hardest, most durable surface we install.</p>
+        <div class="package-tag">Gold · Top Tier</div>
+        <div class="package-name">Exterior Package</div>
+        <span class="package-warranty">Lifetime Warranty</span>
+        <p class="package-desc">Maximum Ceramic Pro protection. Four layers of 9H glass shield with lifetime coverage on all painted surfaces.</p>
+        <div class="package-price">
+          <span class="pp-from">Starting at</span>
+          <span class="pp-amount">$1,499</span>
+        </div>
         <ul class="package-includes">
-          <li>Full paint correction prep</li>
-          <li>Graphene-oxide infused coat</li>
-          <li>Maximum gloss & hardness</li>
-          <li>Top-tier chemical resistance</li>
-          <li>Longest-lasting protection</li>
+          <li>4 layers of Ceramic Pro 9H Glass Shield on all painted surfaces</li>
+          <li>1 layer of Ceramic Pro Light top coat</li>
+          <li>1 layer of Ceramic Pro 9H on plastics</li>
+          <li>1 layer of Ceramic Pro Rain on all windows &amp; glass</li>
+          <li>1 layer of Ceramic Pro Wheel</li>
         </ul>
+        <a href="tel:6312264300" class="package-cta outline">📞 Book Gold</a>
       </div>
+
     </div>
+    <p class="package-note"><b>Please note:</b> Package prices are in addition to a full exterior detail (which includes paint restoration). Vans, trucks, SUVs, and boats are slightly higher. Call <a href="tel:6312264300" style="color:var(--white);">631-226-4300</a> for an exact quote for your vehicle.</p>
   </div>
 </section>
 
