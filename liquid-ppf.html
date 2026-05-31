@@ -170,6 +170,77 @@
     .lvl-row{grid-template-columns:1fr;gap:1.2rem;padding:1.2rem;}
     .lvl-car .cl{display:none;}
   }
+/* PROTECTION LEVELS — interactive viewer */
+  .lvl-interactive{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem;align-items:start;margin-bottom:2rem;}
+  /* LEFT: sticky car visualizer */
+  .lvl-viz{position:sticky;top:90px;}
+  .lvl-car{position:relative;border-radius:6px;overflow:hidden;background:#000;border:1px solid var(--border);}
+  .lvl-car img{width:100%;height:auto;display:block;}
+  .lvl-viz-hint{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:0.9rem;text-align:center;}
+  /* Spotlight masks — one shown at a time based on active level */
+  .vmask{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 0.45s ease;}
+  .vmask-1{background:radial-gradient(ellipse 38% 55% at 20% 72%, transparent 0%, transparent 35%, rgba(0,0,0,0.78) 100%);}
+  .vmask-2{background:radial-gradient(ellipse 58% 80% at 35% 58%, transparent 0%, transparent 50%, rgba(0,0,0,0.78) 100%);}
+  .vmask-3{background:radial-gradient(ellipse 70% 110% at 42% 60%, transparent 0%, transparent 65%, rgba(0,0,0,0.70) 100%);}
+  .lvl-interactive[data-active="1"] .vmask-1{opacity:1;}
+  .lvl-interactive[data-active="2"] .vmask-2{opacity:1;}
+  .lvl-interactive[data-active="3"] .vmask-3{opacity:1;}
+  /* Level 4: no mask shown — already absent from DOM, no-op */
+
+  /* Callout labels: position absolute, fade in/out per level */
+  .lvl-car .cl{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);font-size:10.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,0.85);border:1px solid rgba(255,255,255,0.4);padding:4px 9px;border-radius:99px;backdrop-filter:blur(4px);white-space:nowrap;pointer-events:none;z-index:5;opacity:0;transition:opacity 0.35s ease;}
+  .lvl-car .cl::before{content:"";position:absolute;left:-10px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,255,255,0.7);}
+  /* Per-level label visibility */
+  .lvl-interactive[data-active="1"] .lbl-headlights,
+  .lvl-interactive[data-active="1"] .lbl-bumper,
+  .lvl-interactive[data-active="1"] .lbl-mirrors{opacity:1;}
+  .lvl-interactive[data-active="2"] .lbl-headlights,
+  .lvl-interactive[data-active="2"] .lbl-bumper,
+  .lvl-interactive[data-active="2"] .lbl-mirrors,
+  .lvl-interactive[data-active="2"] .lbl-hood,
+  .lvl-interactive[data-active="2"] .lbl-fenders{opacity:1;}
+  .lvl-interactive[data-active="3"] .lbl-headlights,
+  .lvl-interactive[data-active="3"] .lbl-bumper,
+  .lvl-interactive[data-active="3"] .lbl-mirrors,
+  .lvl-interactive[data-active="3"] .lbl-hood,
+  .lvl-interactive[data-active="3"] .lbl-fenders,
+  .lvl-interactive[data-active="3"] .lbl-apillars,
+  .lvl-interactive[data-active="3"] .lbl-rockers{opacity:1;}
+  .lvl-interactive[data-active="4"] .cl{opacity:1;}
+
+  /* RIGHT: level cards */
+  .lvl-cards{display:flex;flex-direction:column;gap:0.8rem;}
+  .lvl-c{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.5rem;cursor:pointer;transition:all 0.3s ease;position:relative;}
+  .lvl-c::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--white);transform:scaleY(0);transform-origin:top;transition:transform 0.35s ease;}
+  .lvl-c:hover,.lvl-interactive[data-active="1"] .lvl-c[data-level="1"],.lvl-interactive[data-active="2"] .lvl-c[data-level="2"],.lvl-interactive[data-active="3"] .lvl-c[data-level="3"],.lvl-interactive[data-active="4"] .lvl-c[data-level="4"]{background:var(--surface2);border-color:rgba(255,255,255,0.25);}
+  .lvl-interactive[data-active="1"] .lvl-c[data-level="1"]::before,
+  .lvl-interactive[data-active="2"] .lvl-c[data-level="2"]::before,
+  .lvl-interactive[data-active="3"] .lvl-c[data-level="3"]::before,
+  .lvl-interactive[data-active="4"] .lvl-c[data-level="4"]::before{transform:scaleY(1);}
+  .lvl-c-head{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:0.5rem;}
+  .lvl-c-num{font-size:0.75rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);}
+  .lvl-c h3{font-size:1.05rem;font-weight:800;text-transform:uppercase;color:var(--white);line-height:1.2;letter-spacing:0.01em;}
+  .lvl-c-best{font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.9rem;}
+  .lvl-c-best b{color:var(--white);font-weight:600;}
+  .lvl-c-cov-label{font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);padding-top:0.8rem;border-top:1px solid var(--border);margin-bottom:0.5rem;}
+  .lvl-c-cov{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0.35rem 1rem;padding:0;margin:0;}
+  .lvl-c-cov li{font-size:0.78rem;color:var(--white);display:flex;align-items:flex-start;gap:0.4rem;line-height:1.45;}
+  .lvl-c-cov li::before{content:"✓";color:var(--white);font-weight:800;font-size:0.72rem;flex-shrink:0;}
+
+  /* Bottom CTA */
+  .lvl-bottom-cta{display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;margin-top:2rem;}
+  .btn-quote{display:inline-block;background:var(--white);color:#000;padding:0.95rem 2rem;font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:opacity 0.2s;}
+  .btn-quote:hover{opacity:0.85;}
+  .btn-quote-outline{display:inline-block;background:transparent;color:var(--white);border:1px solid var(--border);padding:0.95rem 2rem;font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;}
+  .btn-quote-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.05);}
+
+  @media(max-width:880px){
+    .lvl-interactive{grid-template-columns:1fr;gap:1.5rem;}
+    .lvl-viz{position:static;}
+    .lvl-car .cl{display:none;}
+    .lvl-viz-hint{display:none;}
+    .lvl-c-cov{grid-template-columns:1fr;}
+  }
 </style>
 </head>
 <body>
@@ -299,115 +370,107 @@
   <div class="container">
     <span class="section-label">NanoPro Liquid PPF</span>
     <h2 class="section-title">PROTECTION <span>LEVELS</span></h2>
-    <p class="section-sub">Choose the coverage that fits your vehicle and your needs. Each level shows which areas are protected (bright) versus uncovered (dim).</p>
+    <p class="section-sub">Hover or tap a level to see which areas are protected — from daily-driver chip defense to full exotic shielding.</p>
 
-    <!-- LEVEL 1 — Partial Front -->
-    <div class="lvl-row reveal">
-      <div class="lvl-car lvl-1">
-        <img src="protection-hero-lambo.png" alt="Partial Front protection on a Lamborghini">
-        <div class="mask-fade"></div>
-        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
-        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
-        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+    <div class="lvl-interactive" data-active="2">
+
+      <!-- LEFT: car visualizer (sticky on desktop) -->
+      <div class="lvl-viz">
+        <div class="lvl-car">
+          <img src="protection-hero-lambo.png" alt="NanoPro Liquid PPF protection on a Lamborghini">
+
+          <!-- Spotlight masks: one per level, only one shown at a time -->
+          <div class="vmask vmask-1"></div>
+          <div class="vmask vmask-2"></div>
+          <div class="vmask vmask-3"></div>
+          <!-- (level 4 has no mask: whole car bright) -->
+
+          <!-- Labels: shown/hidden per level via .lvl-interactive[data-active] selectors -->
+          <span class="cl lbl-headlights" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+          <span class="cl lbl-bumper" style="--x:14%;--y:80%;"><b>Bumper</b></span>
+          <span class="cl lbl-mirrors" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+          <span class="cl lbl-hood" style="--x:38%;--y:36%;"><b>Hood</b></span>
+          <span class="cl lbl-fenders" style="--x:72%;--y:60%;"><b>Fenders</b></span>
+          <span class="cl lbl-apillars" style="--x:48%;--y:28%;"><b>A-Pillars</b></span>
+          <span class="cl lbl-rockers" style="--x:80%;--y:88%;"><b>Rockers</b></span>
+          <span class="cl lbl-doors" style="--x:88%;--y:50%;"><b>Doors</b></span>
+        </div>
+        <div class="lvl-viz-hint">Hover a level →</div>
       </div>
-      <aside class="lvl-panel">
-        <div class="lvl-num">01</div>
-        <h3>Partial Front Protection</h3>
-        <p class="lvl-best"><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
-        <div class="lvl-cov-label">Coverage</div>
-        <ul class="lvl-cov">
-          <li>Front bumper</li>
-          <li>Headlights</li>
-          <li>Side mirrors</li>
-          <li>Partial fenders</li>
-          <li>Partial hood (18–24 in.)</li>
-        </ul>
-        <a href="#contact" class="lvl-cta">Get a Quote →</a>
-      </aside>
+
+      <!-- RIGHT: 4 level cards -->
+      <div class="lvl-cards">
+
+        <div class="lvl-c" data-level="1" onmouseenter="setLvl(1)" onclick="setLvl(1)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">01</span>
+            <h3>Partial Front Protection</h3>
+          </div>
+          <p class="lvl-c-best"><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
+          <div class="lvl-c-cov-label">Coverage</div>
+          <ul class="lvl-c-cov">
+            <li>Front bumper</li>
+            <li>Headlights</li>
+            <li>Side mirrors</li>
+            <li>Partial fenders</li>
+            <li>Partial hood (18–24 in.)</li>
+          </ul>
+        </div>
+
+        <div class="lvl-c" data-level="2" onmouseenter="setLvl(2)" onclick="setLvl(2)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">02</span>
+            <h3>Full Front Protection</h3>
+          </div>
+          <p class="lvl-c-best"><b>Best for:</b> A seamless look with balanced protection — popular for sports and luxury cars.</p>
+          <div class="lvl-c-cov-label">Coverage</div>
+          <ul class="lvl-c-cov">
+            <li>Full front bumper</li>
+            <li>Full hood</li>
+            <li>Headlights</li>
+            <li>Side mirrors</li>
+            <li>Full fenders</li>
+          </ul>
+        </div>
+
+        <div class="lvl-c" data-level="3" onmouseenter="setLvl(3)" onclick="setLvl(3)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">03</span>
+            <h3>Track Pack Protection</h3>
+          </div>
+          <p class="lvl-c-best"><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
+          <div class="lvl-c-cov-label">Coverage</div>
+          <ul class="lvl-c-cov">
+            <li>Full front coverage</li>
+            <li>A-pillars</li>
+            <li>Rocker panels</li>
+            <li>Door cups</li>
+            <li>Rear impact zones</li>
+          </ul>
+        </div>
+
+        <div class="lvl-c" data-level="4" onmouseenter="setLvl(4)" onclick="setLvl(4)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">04</span>
+            <h3>Full Body Protection</h3>
+          </div>
+          <p class="lvl-c-best"><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
+          <div class="lvl-c-cov-label">Coverage</div>
+          <ul class="lvl-c-cov">
+            <li>Every painted exterior surface</li>
+            <li>Full body wrap</li>
+            <li>Doors, roof, quarter panels</li>
+            <li>All hardware-accessible surfaces</li>
+          </ul>
+        </div>
+
+      </div>
+
     </div>
 
-    <!-- LEVEL 2 — Full Front -->
-    <div class="lvl-row reveal" data-d="1">
-      <div class="lvl-car lvl-2">
-        <img src="protection-hero-lambo.png" alt="Full Front protection on a Lamborghini">
-        <div class="mask-fade"></div>
-        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
-        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
-        <span class="cl" style="--x:38%;--y:36%;"><b>Hood</b></span>
-        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
-        <span class="cl" style="--x:72%;--y:60%;"><b>Fenders</b></span>
-      </div>
-      <aside class="lvl-panel">
-        <div class="lvl-num">02</div>
-        <h3>Full Front Protection</h3>
-        <p class="lvl-best"><b>Best for:</b> A seamless look with balanced protection for common driving wear — popular for sports and luxury cars.</p>
-        <div class="lvl-cov-label">Coverage</div>
-        <ul class="lvl-cov">
-          <li>Full front bumper</li>
-          <li>Full hood</li>
-          <li>Headlights</li>
-          <li>Side mirrors</li>
-          <li>Full fenders</li>
-        </ul>
-        <a href="#contact" class="lvl-cta">Get a Quote →</a>
-      </aside>
-    </div>
-
-    <!-- LEVEL 3 — Track Pack -->
-    <div class="lvl-row reveal" data-d="2">
-      <div class="lvl-car lvl-3">
-        <img src="protection-hero-lambo.png" alt="Track Pack protection on a Lamborghini">
-        <div class="mask-fade"></div>
-        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
-        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
-        <span class="cl" style="--x:38%;--y:36%;"><b>Hood</b></span>
-        <span class="cl" style="--x:48%;--y:28%;"><b>A-Pillars</b></span>
-        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
-        <span class="cl" style="--x:72%;--y:60%;"><b>Fenders</b></span>
-        <span class="cl" style="--x:80%;--y:88%;"><b>Rockers</b></span>
-      </div>
-      <aside class="lvl-panel">
-        <div class="lvl-num">03</div>
-        <h3>Track Pack Protection</h3>
-        <p class="lvl-best"><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
-        <div class="lvl-cov-label">Coverage</div>
-        <ul class="lvl-cov">
-          <li>Full front coverage</li>
-          <li>A-pillars</li>
-          <li>Rocker panels</li>
-          <li>Door cups</li>
-          <li>Rear impact zones</li>
-        </ul>
-        <a href="#contact" class="lvl-cta">Get a Quote →</a>
-      </aside>
-    </div>
-
-    <!-- LEVEL 4 — Full Body -->
-    <div class="lvl-row reveal" data-d="3">
-      <div class="lvl-car lvl-4">
-        <img src="protection-hero-lambo.png" alt="Full Body protection on a Lamborghini">
-        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
-        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
-        <span class="cl" style="--x:38%;--y:36%;"><b>Hood</b></span>
-        <span class="cl" style="--x:48%;--y:28%;"><b>A-Pillars</b></span>
-        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
-        <span class="cl" style="--x:72%;--y:60%;"><b>Fenders</b></span>
-        <span class="cl" style="--x:88%;--y:50%;"><b>Doors</b></span>
-        <span class="cl" style="--x:80%;--y:88%;"><b>Rockers</b></span>
-      </div>
-      <aside class="lvl-panel">
-        <div class="lvl-num">04</div>
-        <h3>Full Body Protection</h3>
-        <p class="lvl-best"><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
-        <div class="lvl-cov-label">Coverage</div>
-        <ul class="lvl-cov">
-          <li>Every painted exterior surface</li>
-          <li>Full body wrap</li>
-          <li>Doors, roof, quarter panels</li>
-          <li>All hardware-accessible surfaces</li>
-        </ul>
-        <a href="#contact" class="lvl-cta">Get a Quote →</a>
-      </aside>
+    <div class="lvl-bottom-cta">
+      <a href="#contact" class="btn-quote">Get a Custom Quote →</a>
+      <a href="tel:6312264300" class="btn-quote-outline">📞 631-226-4300</a>
     </div>
 
   </div>
@@ -451,6 +514,10 @@
   const reveals=document.querySelectorAll('.reveal');
   const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});},{threshold:0.08});
   reveals.forEach(el=>obs.observe(el));
+  function setLvl(n){
+    var c = document.querySelector('.lvl-interactive');
+    if(c) c.setAttribute('data-active', String(n));
+  }
   function toggleFaq(el){const item=el.parentElement;const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));if(!isOpen)item.classList.add('open');}
   function enablePpfSound(e){
     e.preventDefault();
