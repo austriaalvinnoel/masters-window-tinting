@@ -288,7 +288,30 @@ section{position:relative}
 .filt{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:10px 18px;border:1px solid var(--line);border-radius:99px;background:transparent;color:var(--muted);cursor:pointer;transition:.25s}
 .filt:hover{color:var(--ink);border-color:var(--line-2)}
 .filt.active{background:var(--gold);color:#0a0a0a;border-color:var(--gold)}
-.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+/* Gallery carousel */
+.gal-carousel{position:relative;margin-bottom:36px}
+.gal-viewport{overflow:hidden;border-radius:4px}
+.gal-track{display:flex;gap:16px;transition:transform .55s cubic-bezier(.4,.0,.2,1);will-change:transform}
+.gal-track .gcard{flex:0 0 calc((100% - 32px) / 3);aspect-ratio:4/3;border-radius:4px;overflow:hidden;border:1px solid var(--line);cursor:pointer;position:relative}
+.gal-track .gcard.hide{display:none}
+.gal-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.75);border:1px solid var(--line-2);color:var(--ink);font-size:22px;font-weight:300;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(8px);line-height:1;padding-bottom:3px}
+.gal-arrow:hover{background:#fff;color:#000;border-color:#fff}
+.gal-arrow:disabled{opacity:.3;cursor:not-allowed}
+.gal-arrow:disabled:hover{background:rgba(0,0,0,.75);color:var(--ink)}
+.gal-prev{left:-16px}
+.gal-next{right:-16px}
+.gal-dots{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.gal-dots button{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);border:0;cursor:pointer;padding:0;transition:all .25s}
+.gal-dots button.active{background:#fff;width:24px;border-radius:4px}
+.gal-dots button:hover{background:rgba(255,255,255,.5)}
+@media(max-width:1024px){
+  .gal-track .gcard{flex:0 0 calc((100% - 16px) / 2)}
+  .gal-prev{left:-8px} .gal-next{right:-8px}
+}
+@media(max-width:680px){
+  .gal-track .gcard{flex:0 0 100%}
+  .gal-arrow{width:38px;height:38px;font-size:18px}
+}
 .gcard{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);cursor:pointer}
 .gcard img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
 .gcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(8,9,11,.85));opacity:.85;transition:opacity .4s}
@@ -382,7 +405,7 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){
   .core,.diff-grid,.levels,.more-svc{grid-template-columns:repeat(2,1fr)}
-  .rev-grid,.gal-grid{grid-template-columns:repeat(2,1fr)}
+  .rev-grid,
   .feature-inner,.contact-grid{grid-template-columns:1fr;gap:44px}
   .product-visual{max-width:440px}
   .foot-grid{grid-template-columns:1fr 1fr}
@@ -416,6 +439,36 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
   .mobile-call{display:block}
   footer{padding-bottom:80px}
   .foot-bottom{flex-direction:column}
+}
+.ppf-hero{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:40px;background:#0a0a0a}
+.ppf-hero img{width:100%;height:auto;display:block}
+.ppf-levels-list{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px}
+.ppf-lvl{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:24px 22px;transition:.3s}
+.ppf-lvl:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.ppf-lvl .lv{font-family:var(--mono);font-size:12px;color:var(--ink);letter-spacing:.1em;opacity:.5}
+.ppf-lvl h4{font-family:var(--display);font-weight:800;font-size:1.1rem;text-transform:uppercase;margin:10px 0 10px;line-height:1.1}
+.ppf-lvl p{font-size:13px;color:var(--muted);line-height:1.55}
+.ppf-lvl p b{color:var(--ink);font-weight:600}
+@media(max-width:1024px){.ppf-levels-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.ppf-levels-list{grid-template-columns:1fr}}
+/* PPF Diagram (labeled hero) */
+.ppf-diagram{display:grid;grid-template-columns:1.6fr 1fr;gap:36px;align-items:center;margin-bottom:50px}
+.ppf-car{position:relative;background:#0a0a0a;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.ppf-car img{width:100%;height:auto;display:block}
+.ppf-car .cl{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.35);padding:5px 10px;border-radius:99px;backdrop-filter:blur(6px);white-space:nowrap;pointer-events:none}
+.ppf-car .cl::before{content:"";position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.7)}
+.ppf-coverage-panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:32px 30px}
+.pcp-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.ppf-coverage-panel h3{font-family:var(--display);font-weight:800;font-size:1.5rem;text-transform:uppercase;margin-bottom:14px;line-height:1.1}
+.ppf-coverage-panel p{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:20px}
+.pcp-list{list-style:none;display:flex;flex-direction:column;gap:8px;padding:0;margin:0 0 22px;border-top:1px solid var(--line);padding-top:18px}
+.pcp-list li{font-size:13.5px;color:var(--ink);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.pcp-list li::before{content:"✓";color:var(--ink);font-weight:800;font-size:13px;flex-shrink:0}
+.pcp-link{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--ink);text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:3px;transition:opacity .2s}
+.pcp-link:hover{opacity:.7}
+@media(max-width:900px){
+  .ppf-diagram{grid-template-columns:1fr;gap:24px}
+  .ppf-car .cl{display:none}
 }
 </style>
 </head>
@@ -647,65 +700,41 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
     <div class="sec-head reveal">
       <span class="eyebrow">NanoPro Liquid PPF</span>
       <h2>Protection Levels</h2>
-      <p>Choose the coverage that fits your vehicle and your needs — from daily-driver protection to full exotic shielding.</p>
+      <p>From daily-driver chip defense to full exotic-vehicle shielding — pick the coverage that fits your vehicle.</p>
     </div>
-    <div class="levels">
-      <div class="level reveal">
-        <span class="lv">01</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><!-- REAR section (trunk/rear bumper) --><path d="M28 100 L28 84 Q30 76 40 74 L92 74 L92 100 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- DOORS / mid body --><rect x="92" y="74" width="96" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- ROOF / cabin --><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- windows --><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><!-- A-pillar --><path d="M122 48 L126 56 L132 74 L126 74 L118 56 Z" fill="#262626" stroke="#383838" stroke-width="0.8"/><!-- FENDER (front, over wheel) --><rect x="214" y="74" width="44" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- HOOD --><path d="M214 74 L206 58 Q236 60 262 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- FRONT END (bumper) --><path d="M258 74 L262 74 Q292 78 300 92 L300 100 L258 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- headlight --><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- mirror --><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- rocker panel --><rect x="92" y="100" width="122" height="6" fill="#262626" stroke="#383838" stroke-width="1"/><!-- wheels --><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><path d="M240 67 Q252 64 262 74 L248 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.2"/></svg>
-        <h4>Partial Front Protection</h4>
-        <div class="bar"><i style="width:35%"></i></div>
-        <p><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips and road debris on high-impact zones.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
-          <li>Front bumper</li>
-          <li>Headlights</li>
-          <li>Partial fenders</li>
-          <li>Side mirrors</li>
-          <li>Partial hood (18–24 in.)</li>
-        </ul>
+    <div class="ppf-diagram reveal">
+      <div class="ppf-car">
+        <img src="protection-hero-lambo.png" alt="Liquid PPF protection coverage on a Lamborghini Aventador" loading="lazy">
+        <!-- Label callouts: pct-positioned to ride on top of the car at desktop -->
+        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+        <span class="cl" style="--x:14%;--y:78%;"><b>Bumper</b></span>
+        <span class="cl" style="--x:38%;--y:36%;"><b>Hood</b></span>
+        <span class="cl" style="--x:62%;--y:38%;"><b>Mirror</b></span>
+        <span class="cl" style="--x:72%;--y:60%;"><b>Fender</b></span>
+        <span class="cl" style="--x:80%;--y:76%;"><b>Wheels</b></span>
+        <span class="cl" style="--x:48%;--y:30%;"><b>A-Pillar</b></span>
       </div>
-      <div class="level reveal" data-d="1">
-        <span class="lv">02</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><!-- REAR section (trunk/rear bumper) --><path d="M28 100 L28 84 Q30 76 40 74 L92 74 L92 100 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- DOORS / mid body --><rect x="92" y="74" width="96" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- ROOF / cabin --><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- windows --><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><!-- A-pillar --><path d="M122 48 L126 56 L132 74 L126 74 L118 56 Z" fill="#262626" stroke="#383838" stroke-width="0.8"/><!-- FENDER (front, over wheel) --><rect x="214" y="74" width="44" height="26" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- HOOD --><path d="M214 74 L206 58 Q236 60 262 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- FRONT END (bumper) --><path d="M258 74 L262 74 Q292 78 300 92 L300 100 L258 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- headlight --><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- mirror --><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- rocker panel --><rect x="92" y="100" width="122" height="6" fill="#262626" stroke="#383838" stroke-width="1"/><!-- wheels --><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/></svg>
-        <h4>Full Front Protection</h4>
-        <div class="bar"><i style="width:60%"></i></div>
-        <p><b>Best for:</b> A seamless look with balanced protection against common driving wear. The most popular choice for sports and luxury cars.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
-          <li>Front bumper</li>
-          <li>Side mirrors</li>
-          <li>Headlights</li>
-          <li>Full fenders</li>
-          <li>Full hood</li>
-        </ul>
-      </div>
-      <div class="level reveal" data-d="2">
-        <span class="lv">03</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><!-- REAR section (trunk/rear bumper) --><path d="M28 100 L28 84 Q30 76 40 74 L92 74 L92 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- DOORS / mid body --><rect x="92" y="74" width="96" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- ROOF / cabin --><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- windows --><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><!-- A-pillar --><path d="M122 48 L126 56 L132 74 L126 74 L118 56 Z" fill="#ffffff" stroke="#ffffff" stroke-width="0.8"/><!-- FENDER (front, over wheel) --><rect x="214" y="74" width="44" height="26" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- HOOD --><path d="M214 74 L206 58 Q236 60 262 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- FRONT END (bumper) --><path d="M258 74 L262 74 Q292 78 300 92 L300 100 L258 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- headlight --><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- mirror --><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- rocker panel --><rect x="92" y="100" width="122" height="6" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- wheels --><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/></svg>
-        <h4>Track Pack Protection</h4>
-        <div class="bar"><i style="width:82%"></i></div>
-        <p><b>Best for:</b> Performance drivers who push hard. Enhanced coverage across high-impact zones, side panels, and exposed surfaces.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
-          <li>Full front coverage</li>
-          <li>A-pillars</li>
+      <aside class="ppf-coverage-panel">
+        <div class="pcp-eyebrow">Coverage shown</div>
+        <h3>Full Body Protection</h3>
+        <p>Every painted surface of the exterior is protected — the deepest level of NanoPro Liquid PPF coverage we install.</p>
+        <ul class="pcp-list">
+          <li>Hood</li>
+          <li>Front bumper &amp; headlights</li>
+          <li>Mirrors &amp; A-pillars</li>
+          <li>Fenders &amp; doors</li>
           <li>Rocker panels</li>
-          <li>Door cups</li>
-          <li>Rear impact zones</li>
+          <li>Rear quarter panels &amp; bumper</li>
+          <li>Roof</li>
         </ul>
-      </div>
-      <div class="level reveal" data-d="3">
-        <span class="lv">04</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><path d="M28 106 L28 84 Q30 76 40 74 L206 58 Q236 60 262 74 Q292 78 300 92 L300 106 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/></svg>
-        <h4>Full Body Protection</h4>
-        <div class="bar"><i style="width:100%"></i></div>
-        <p><b>Best for:</b> Ultimate protection for exotic vehicles or owners who want complete, head-to-toe peace of mind for the long haul.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
-          <li>Every painted exterior surface</li>
-        </ul>
-      </div>
+        <a href="liquid-ppf.html" class="pcp-link">See all coverage levels →</a>
+      </aside>
+    </div>
+    <div class="ppf-levels-list">
+      <div class="ppf-lvl reveal"><span class="lv">01</span><h4>Partial Front</h4><p>Front bumper, headlights, partial fenders, mirrors, partial hood. <b>Best for:</b> daily drivers &amp; leased vehicles.</p></div>
+      <div class="ppf-lvl reveal" data-d="1"><span class="lv">02</span><h4>Full Front</h4><p>Full front bumper, mirrors, headlights, full fenders, full hood. <b>Best for:</b> sports &amp; luxury cars.</p></div>
+      <div class="ppf-lvl reveal" data-d="2"><span class="lv">03</span><h4>Track Pack</h4><p>Full front + A-pillars, rocker panels, door cups, rear impact zones. <b>Best for:</b> performance drivers.</p></div>
+      <div class="ppf-lvl reveal" data-d="3"><span class="lv">04</span><h4>Full Body</h4><p>Every painted surface of the exterior — shown above. <b>Best for:</b> exotics &amp; long-term peace of mind.</p></div>
     </div>
     <div class="levels-cta reveal"><a href="liquid-ppf.html" class="btn btn-gold">See Full Liquid PPF Page →</a> <a href="#contact" class="btn btn-outline">Get a Custom Quote</a></div>
   </div>
@@ -753,7 +782,10 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
       <button class="filt" data-f="detail">Detailing</button>
     </div>
 
-    <div class="gal-grid" id="galGrid">
+    <div class="gal-carousel reveal" id="galCarousel">
+      <button class="gal-arrow gal-prev" aria-label="Previous photos" type="button">‹</button>
+      <div class="gal-viewport">
+        <div class="gal-track" id="galGrid">
       <div class="gcard reveal" data-cat="tint">
         <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp" alt="Window tinting work" loading="lazy">
         <div class="meta"><div class="c">Window Tinting</div><div class="t">Carbon &amp; Ceramic Film</div></div>
@@ -786,6 +818,10 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
         <img src="https://masters-window-tinting.vercel.app/detailing-hero.jpg" alt="Auto detailing and paint correction" loading="lazy" onerror="this.onerror=null;this.src='https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp'">
         <div class="meta"><div class="c">Detailing</div><div class="t">Paint Correction &amp; Gloss</div></div>
       </div>
+    </div>
+      </div>
+      <button class="gal-arrow gal-next" aria-label="Next photos" type="button">›</button>
+      <div class="gal-dots" id="galDots"></div>
     </div>
 
     <div class="gal-cta reveal">
@@ -955,18 +991,124 @@ const io=new IntersectionObserver((es)=>{
 },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-// gallery filter
-const filters=document.querySelectorAll('.filt');
-const cards=document.querySelectorAll('#galGrid .gcard');
-filters.forEach(f=>f.onclick=()=>{
-  filters.forEach(x=>x.classList.remove('active'));
-  f.classList.add('active');
-  const cat=f.dataset.f;
-  cards.forEach(c=>{
-    const show=cat==='all'||c.dataset.cat===cat;
-    c.classList.toggle('hide',!show);
+// gallery carousel + filter
+(function(){
+  const track = document.getElementById('galGrid');
+  const carousel = document.getElementById('galCarousel');
+  const prevBtn = carousel.querySelector('.gal-prev');
+  const nextBtn = carousel.querySelector('.gal-next');
+  const dotsEl = document.getElementById('galDots');
+  const filters = document.querySelectorAll('.filt');
+  const allCards = Array.from(track.querySelectorAll('.gcard'));
+  let visibleCards = allCards.slice();
+  let perView = 3;
+  let pageIndex = 0;
+  let autoTimer = null;
+  let paused = false;
+
+  function computePerView(){
+    const w = window.innerWidth;
+    if (w <= 680) return 1;
+    if (w <= 1024) return 2;
+    return 3;
+  }
+
+  function totalPages(){
+    return Math.max(1, Math.ceil(visibleCards.length / perView));
+  }
+
+  function buildDots(){
+    dotsEl.innerHTML = '';
+    const n = totalPages();
+    for (let i = 0; i < n; i++){
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', 'Go to page ' + (i+1));
+      if (i === pageIndex) b.classList.add('active');
+      b.addEventListener('click', () => { pageIndex = i; render(); restartAuto(); });
+      dotsEl.appendChild(b);
+    }
+  }
+
+  function render(){
+    // Position visible cards in order, hide others
+    allCards.forEach(c => c.style.display = 'none');
+    visibleCards.forEach(c => c.style.display = '');
+    // Slide to current page
+    const offsetPct = -(pageIndex * 100);
+    track.style.transform = 'translateX(' + offsetPct + '%)';
+    // Update dots
+    Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === pageIndex));
+    // Arrow disabled state
+    prevBtn.disabled = (pageIndex === 0);
+    nextBtn.disabled = (pageIndex >= totalPages() - 1);
+  }
+
+  function nextPage(){
+    if (pageIndex >= totalPages() - 1) pageIndex = 0;
+    else pageIndex++;
+    render();
+  }
+
+  function prevPage(){
+    if (pageIndex <= 0) pageIndex = totalPages() - 1;
+    else pageIndex--;
+    render();
+  }
+
+  function applyFilter(cat){
+    visibleCards = cat === 'all' ? allCards.slice() : allCards.filter(c => c.dataset.cat === cat);
+    // Re-order cards in DOM so visible ones come first in the track (CSS flex order)
+    visibleCards.forEach(c => track.appendChild(c));
+    allCards.filter(c => !visibleCards.includes(c)).forEach(c => track.appendChild(c));
+    pageIndex = 0;
+    buildDots();
+    render();
+  }
+
+  function startAuto(){
+    stopAuto();
+    autoTimer = setInterval(() => { if (!paused) nextPage(); }, 5000);
+  }
+  function stopAuto(){ if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+  function restartAuto(){ stopAuto(); startAuto(); }
+
+  // Wire up arrows
+  prevBtn.addEventListener('click', () => { prevPage(); restartAuto(); });
+  nextBtn.addEventListener('click', () => { nextPage(); restartAuto(); });
+
+  // Wire up filters
+  filters.forEach(f => f.addEventListener('click', () => {
+    filters.forEach(x => x.classList.remove('active'));
+    f.classList.add('active');
+    applyFilter(f.dataset.f);
+    restartAuto();
+  }));
+
+  // Pause on hover
+  carousel.addEventListener('mouseenter', () => { paused = true; });
+  carousel.addEventListener('mouseleave', () => { paused = false; });
+
+  // Responsive
+  let rzTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(rzTimer);
+    rzTimer = setTimeout(() => {
+      const newPerView = computePerView();
+      if (newPerView !== perView){
+        perView = newPerView;
+        pageIndex = 0;
+        buildDots();
+        render();
+      }
+    }, 150);
   });
-});
+
+  // Init
+  perView = computePerView();
+  buildDots();
+  render();
+  startAuto();
+})();
 
 // graceful image fallback
 document.querySelectorAll('img').forEach(img=>{
