@@ -60,6 +60,26 @@
   .card-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);letter-spacing:-0.01em;margin-bottom:0.6rem;}
   .card-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:400;}
   /* PROTECTION LEVELS */
+  .ppf-hero{position:relative;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2.5rem;background:#0a0a0a;}
+  .ppf-hero img{width:100%;height:auto;display:block;}
+  .ppf-diagram{display:grid;grid-template-columns:1.6fr 1fr;gap:2.2rem;align-items:center;margin-bottom:3rem;}
+  .ppf-car{position:relative;background:#0a0a0a;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .ppf-car img{width:100%;height:auto;display:block;}
+  .ppf-car .cl{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,0.72);border:1px solid rgba(255,255,255,0.35);padding:5px 10px;border-radius:99px;backdrop-filter:blur(6px);white-space:nowrap;pointer-events:none;}
+  .ppf-car .cl::before{content:"";position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,255,255,0.7);}
+  .ppf-coverage-panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:2rem 1.9rem;}
+  .pcp-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;}
+  .ppf-coverage-panel h3{font-weight:800;font-size:1.5rem;text-transform:uppercase;margin-bottom:0.9rem;line-height:1.1;color:var(--white);}
+  .ppf-coverage-panel p{font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem;}
+  .pcp-list{list-style:none;display:flex;flex-direction:column;gap:0.5rem;padding:1.2rem 0 1.4rem;margin:0;border-top:1px solid var(--border);}
+  .pcp-list li{font-size:0.85rem;color:var(--white);display:flex;align-items:flex-start;gap:0.6rem;line-height:1.5;}
+  .pcp-list li::before{content:"✓";color:var(--white);font-weight:800;font-size:0.8rem;flex-shrink:0;}
+  .pcp-link{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;color:var(--white);text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--white);padding-bottom:3px;transition:opacity 0.2s;}
+  .pcp-link:hover{opacity:0.7;}
+  @media(max-width:900px){
+    .ppf-diagram{grid-template-columns:1fr;gap:1.4rem;}
+    .ppf-car .cl{display:none;}
+  }
   .levels{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:4rem;background:var(--border);}
   .level{background:var(--surface);padding:2.2rem 1.8rem;transition:background 0.3s;}
   .level:hover{background:var(--surface2);}
@@ -119,6 +139,37 @@
   .nav-links .dd li{display:block;width:100%;}
   .nav-links .dd a{display:block;padding:0.6rem 1.4rem;font-size:0.72rem;white-space:nowrap;letter-spacing:0.08em;}
   .nav-links .dd a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+/* PROTECTION LEVELS — 4-row layout with overlay masking */
+  .lvl-row{display:grid;grid-template-columns:1.55fr 1fr;gap:2.2rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.6rem;margin-bottom:1.4rem;}
+  .lvl-car{position:relative;border-radius:4px;overflow:hidden;background:#000;}
+  .lvl-car img{width:100%;height:auto;display:block;}
+  .lvl-car .mask-fade{position:absolute;inset:0;pointer-events:none;}
+  /* Level 1: spotlight only on the front-left (bumper/headlight area) */
+  .lvl-1 .mask-fade{background:radial-gradient(ellipse 38% 55% at 20% 72%, transparent 0%, transparent 35%, rgba(0,0,0,0.78) 100%);}
+  /* Level 2: spotlight over the full front (hood, bumper, headlights, mirrors, fender) */
+  .lvl-2 .mask-fade{background:radial-gradient(ellipse 58% 80% at 35% 58%, transparent 0%, transparent 50%, rgba(0,0,0,0.78) 100%);}
+  /* Level 3: spotlight wider, includes side body and rockers */
+  .lvl-3 .mask-fade{background:radial-gradient(ellipse 70% 110% at 42% 60%, transparent 0%, transparent 65%, rgba(0,0,0,0.70) 100%);}
+  /* Level 4: no mask — whole car bright */
+  /* Callout labels overlaid */
+  .lvl-car .cl{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);font-size:10.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,0.82);border:1px solid rgba(255,255,255,0.4);padding:4px 9px;border-radius:99px;backdrop-filter:blur(4px);white-space:nowrap;pointer-events:none;z-index:5;}
+  .lvl-car .cl::before{content:"";position:absolute;left:-10px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,255,255,0.7);}
+  /* Right panel */
+  .lvl-panel{padding:0.4rem 0.6rem;}
+  .lvl-num{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);margin-bottom:0.5rem;}
+  .lvl-panel h3{font-size:1.4rem;font-weight:800;text-transform:uppercase;color:var(--white);margin-bottom:0.7rem;line-height:1.15;}
+  .lvl-best{font-size:0.86rem;color:var(--muted);line-height:1.6;margin-bottom:1.1rem;}
+  .lvl-best b{color:var(--white);font-weight:600;}
+  .lvl-cov-label{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);padding-top:1rem;border-top:1px solid var(--border);margin-bottom:0.6rem;}
+  .lvl-cov{list-style:none;display:flex;flex-direction:column;gap:0.42rem;padding:0;margin:0 0 1.2rem;}
+  .lvl-cov li{font-size:0.83rem;color:var(--white);display:flex;align-items:flex-start;gap:0.5rem;line-height:1.5;}
+  .lvl-cov li::before{content:"✓";color:var(--white);font-weight:800;font-size:0.78rem;flex-shrink:0;}
+  .lvl-cta{display:inline-block;font-size:0.74rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#000;background:var(--white);text-decoration:none;padding:0.7rem 1.2rem;border-radius:3px;transition:opacity 0.2s;}
+  .lvl-cta:hover{opacity:0.85;}
+  @media(max-width:880px){
+    .lvl-row{grid-template-columns:1fr;gap:1.2rem;padding:1.2rem;}
+    .lvl-car .cl{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -248,65 +299,117 @@
   <div class="container">
     <span class="section-label">NanoPro Liquid PPF</span>
     <h2 class="section-title">PROTECTION <span>LEVELS</span></h2>
-    <p class="section-sub">Choose the coverage that fits your vehicle and your needs — from daily-driver protection to full exotic shielding.</p>
-    <div class="levels">
-      <div class="level reveal">
-        <span class="lv">01</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><!-- REAR section (trunk/rear bumper) --><path d="M28 100 L28 84 Q30 76 40 74 L92 74 L92 100 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- DOORS / mid body --><rect x="92" y="74" width="96" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- ROOF / cabin --><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- windows --><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><!-- A-pillar --><path d="M122 48 L126 56 L132 74 L126 74 L118 56 Z" fill="#262626" stroke="#383838" stroke-width="0.8"/><!-- FENDER (front, over wheel) --><rect x="214" y="74" width="44" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- HOOD --><path d="M214 74 L206 58 Q236 60 262 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- FRONT END (bumper) --><path d="M258 74 L262 74 Q292 78 300 92 L300 100 L258 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- headlight --><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- mirror --><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- rocker panel --><rect x="92" y="100" width="122" height="6" fill="#262626" stroke="#383838" stroke-width="1"/><!-- wheels --><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><path d="M240 67 Q252 64 262 74 L248 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.2"/></svg>
-        <h4>Partial Front Protection</h4>
-        <div class="bar"><i style="width:35%"></i></div>
-        <p><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
+    <p class="section-sub">Choose the coverage that fits your vehicle and your needs. Each level shows which areas are protected (bright) versus uncovered (dim).</p>
+
+    <!-- LEVEL 1 — Partial Front -->
+    <div class="lvl-row reveal">
+      <div class="lvl-car lvl-1">
+        <img src="protection-hero-lambo.png" alt="Partial Front protection on a Lamborghini">
+        <div class="mask-fade"></div>
+        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
+        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+      </div>
+      <aside class="lvl-panel">
+        <div class="lvl-num">01</div>
+        <h3>Partial Front Protection</h3>
+        <p class="lvl-best"><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
+        <div class="lvl-cov-label">Coverage</div>
+        <ul class="lvl-cov">
           <li>Front bumper</li>
           <li>Headlights</li>
-          <li>Partial fenders</li>
           <li>Side mirrors</li>
+          <li>Partial fenders</li>
           <li>Partial hood (18–24 in.)</li>
         </ul>
+        <a href="#contact" class="lvl-cta">Get a Quote →</a>
+      </aside>
+    </div>
+
+    <!-- LEVEL 2 — Full Front -->
+    <div class="lvl-row reveal" data-d="1">
+      <div class="lvl-car lvl-2">
+        <img src="protection-hero-lambo.png" alt="Full Front protection on a Lamborghini">
+        <div class="mask-fade"></div>
+        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
+        <span class="cl" style="--x:38%;--y:36%;"><b>Hood</b></span>
+        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+        <span class="cl" style="--x:72%;--y:60%;"><b>Fenders</b></span>
       </div>
-      <div class="level reveal" data-d="1">
-        <span class="lv">02</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><!-- REAR section (trunk/rear bumper) --><path d="M28 100 L28 84 Q30 76 40 74 L92 74 L92 100 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- DOORS / mid body --><rect x="92" y="74" width="96" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- ROOF / cabin --><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- windows --><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><!-- A-pillar --><path d="M122 48 L126 56 L132 74 L126 74 L118 56 Z" fill="#262626" stroke="#383838" stroke-width="0.8"/><!-- FENDER (front, over wheel) --><rect x="214" y="74" width="44" height="26" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- HOOD --><path d="M214 74 L206 58 Q236 60 262 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- FRONT END (bumper) --><path d="M258 74 L262 74 Q292 78 300 92 L300 100 L258 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- headlight --><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- mirror --><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- rocker panel --><rect x="92" y="100" width="122" height="6" fill="#262626" stroke="#383838" stroke-width="1"/><!-- wheels --><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/></svg>
-        <h4>Full Front Protection</h4>
-        <div class="bar"><i style="width:60%"></i></div>
-        <p><b>Best for:</b> A seamless look with balanced protection for common driving wear — popular for sports and luxury cars.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
-          <li>Front bumper</li>
-          <li>Side mirrors</li>
-          <li>Headlights</li>
-          <li>Full fenders</li>
+      <aside class="lvl-panel">
+        <div class="lvl-num">02</div>
+        <h3>Full Front Protection</h3>
+        <p class="lvl-best"><b>Best for:</b> A seamless look with balanced protection for common driving wear — popular for sports and luxury cars.</p>
+        <div class="lvl-cov-label">Coverage</div>
+        <ul class="lvl-cov">
+          <li>Full front bumper</li>
           <li>Full hood</li>
+          <li>Headlights</li>
+          <li>Side mirrors</li>
+          <li>Full fenders</li>
         </ul>
+        <a href="#contact" class="lvl-cta">Get a Quote →</a>
+      </aside>
+    </div>
+
+    <!-- LEVEL 3 — Track Pack -->
+    <div class="lvl-row reveal" data-d="2">
+      <div class="lvl-car lvl-3">
+        <img src="protection-hero-lambo.png" alt="Track Pack protection on a Lamborghini">
+        <div class="mask-fade"></div>
+        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
+        <span class="cl" style="--x:38%;--y:36%;"><b>Hood</b></span>
+        <span class="cl" style="--x:48%;--y:28%;"><b>A-Pillars</b></span>
+        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+        <span class="cl" style="--x:72%;--y:60%;"><b>Fenders</b></span>
+        <span class="cl" style="--x:80%;--y:88%;"><b>Rockers</b></span>
       </div>
-      <div class="level reveal" data-d="2">
-        <span class="lv">03</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><!-- REAR section (trunk/rear bumper) --><path d="M28 100 L28 84 Q30 76 40 74 L92 74 L92 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- DOORS / mid body --><rect x="92" y="74" width="96" height="26" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- ROOF / cabin --><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#262626" stroke="#383838" stroke-width="1.4"/><!-- windows --><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><!-- A-pillar --><path d="M122 48 L126 56 L132 74 L126 74 L118 56 Z" fill="#ffffff" stroke="#ffffff" stroke-width="0.8"/><!-- FENDER (front, over wheel) --><rect x="214" y="74" width="44" height="26" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- HOOD --><path d="M214 74 L206 58 Q236 60 262 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- FRONT END (bumper) --><path d="M258 74 L262 74 Q292 78 300 92 L300 100 L258 100 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><!-- headlight --><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- mirror --><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- rocker panel --><rect x="92" y="100" width="122" height="6" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><!-- wheels --><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/></svg>
-        <h4>Track Pack Protection</h4>
-        <div class="bar"><i style="width:82%"></i></div>
-        <p><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
+      <aside class="lvl-panel">
+        <div class="lvl-num">03</div>
+        <h3>Track Pack Protection</h3>
+        <p class="lvl-best"><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
+        <div class="lvl-cov-label">Coverage</div>
+        <ul class="lvl-cov">
           <li>Full front coverage</li>
           <li>A-pillars</li>
           <li>Rocker panels</li>
           <li>Door cups</li>
           <li>Rear impact zones</li>
         </ul>
-      </div>
-      <div class="level reveal" data-d="3">
-        <span class="lv">04</span>
-        <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" class="lvl-svg" preserveAspectRatio="xMidYMid meet"><line x1="14" y1="120" x2="326" y2="120" stroke="#222" stroke-width="2"/><path d="M28 106 L28 84 Q30 76 40 74 L206 58 Q236 60 262 74 Q292 78 300 92 L300 106 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><path d="M104 74 L122 48 Q126 44 134 44 L188 44 Q198 46 206 58 L214 74 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.4"/><path d="M126 70 L136 52 L166 52 L166 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M172 70 L172 52 L186 52 Q196 54 201 64 L205 70 Z" fill="#0c0c0c" stroke="#333" stroke-width="1"/><ellipse cx="288" cy="84" rx="6" ry="4.5" fill="#0c0c0c" stroke="#333" stroke-width="1"/><path d="M206 58 l10 -4 q5 0 3 5 l-4 3 Z" fill="#ffffff" stroke="#ffffff" stroke-width="1"/><circle cx="92" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="92" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/><circle cx="246" cy="106" r="17" fill="#111" stroke="#333" stroke-width="2"/><circle cx="246" cy="106" r="8.5" fill="#1a1a1a" stroke="#2d2d2d" stroke-width="1.5"/></svg>
-        <h4>Full Body Protection</h4>
-        <div class="bar"><i style="width:100%"></i></div>
-        <p><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
-        <div class="cov-label">Coverage</div>
-        <ul class="cov-list">
-          <li>Every painted exterior surface</li>
-        </ul>
-      </div>
+        <a href="#contact" class="lvl-cta">Get a Quote →</a>
+      </aside>
     </div>
+
+    <!-- LEVEL 4 — Full Body -->
+    <div class="lvl-row reveal" data-d="3">
+      <div class="lvl-car lvl-4">
+        <img src="protection-hero-lambo.png" alt="Full Body protection on a Lamborghini">
+        <span class="cl" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+        <span class="cl" style="--x:14%;--y:80%;"><b>Bumper</b></span>
+        <span class="cl" style="--x:38%;--y:36%;"><b>Hood</b></span>
+        <span class="cl" style="--x:48%;--y:28%;"><b>A-Pillars</b></span>
+        <span class="cl" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+        <span class="cl" style="--x:72%;--y:60%;"><b>Fenders</b></span>
+        <span class="cl" style="--x:88%;--y:50%;"><b>Doors</b></span>
+        <span class="cl" style="--x:80%;--y:88%;"><b>Rockers</b></span>
+      </div>
+      <aside class="lvl-panel">
+        <div class="lvl-num">04</div>
+        <h3>Full Body Protection</h3>
+        <p class="lvl-best"><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
+        <div class="lvl-cov-label">Coverage</div>
+        <ul class="lvl-cov">
+          <li>Every painted exterior surface</li>
+          <li>Full body wrap</li>
+          <li>Doors, roof, quarter panels</li>
+          <li>All hardware-accessible surfaces</li>
+        </ul>
+        <a href="#contact" class="lvl-cta">Get a Quote →</a>
+      </aside>
+    </div>
+
   </div>
 </section>
 
