@@ -208,18 +208,24 @@
   .lvl-interactive[data-active="3"] .lbl-rockers{opacity:1;}
   .lvl-interactive[data-active="4"] .cl{opacity:1;}
 
-  /* RIGHT: level cards */
-  .lvl-cards{display:flex;flex-direction:column;gap:0.8rem;}
-  .lvl-c{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.4rem 1.5rem;cursor:pointer;transition:all 0.3s ease;position:relative;}
+  /* RIGHT: level cards — collapsed by default, expand on hover */
+  .lvl-cards{display:flex;flex-direction:column;gap:0.7rem;}
+  .lvl-c{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.1rem 1.5rem;cursor:pointer;transition:all 0.3s ease;position:relative;overflow:hidden;}
   .lvl-c::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--white);transform:scaleY(0);transform-origin:top;transition:transform 0.35s ease;}
-  .lvl-c:hover,.lvl-interactive[data-active="1"] .lvl-c[data-level="1"],.lvl-interactive[data-active="2"] .lvl-c[data-level="2"],.lvl-interactive[data-active="3"] .lvl-c[data-level="3"],.lvl-interactive[data-active="4"] .lvl-c[data-level="4"]{background:var(--surface2);border-color:rgba(255,255,255,0.25);}
-  .lvl-interactive[data-active="1"] .lvl-c[data-level="1"]::before,
-  .lvl-interactive[data-active="2"] .lvl-c[data-level="2"]::before,
-  .lvl-interactive[data-active="3"] .lvl-c[data-level="3"]::before,
-  .lvl-interactive[data-active="4"] .lvl-c[data-level="4"]::before{transform:scaleY(1);}
-  .lvl-c-head{display:flex;align-items:baseline;gap:0.8rem;margin-bottom:0.5rem;}
+  .lvl-c::after{content:"+";position:absolute;right:1.2rem;top:1.1rem;font-size:1.2rem;font-weight:300;color:var(--muted);transition:transform 0.3s ease,color 0.3s ease;}
+  .lvl-c:hover,
+  .lvl-interactive[data-active="1"] .lvl-c[data-level="1"]:hover,
+  .lvl-interactive[data-active="2"] .lvl-c[data-level="2"]:hover,
+  .lvl-interactive[data-active="3"] .lvl-c[data-level="3"]:hover,
+  .lvl-interactive[data-active="4"] .lvl-c[data-level="4"]:hover{background:var(--surface2);border-color:rgba(255,255,255,0.25);padding-bottom:1.5rem;}
+  .lvl-c:hover::before{transform:scaleY(1);}
+  .lvl-c:hover::after{transform:rotate(45deg);color:var(--white);}
+  .lvl-c-head{display:flex;align-items:baseline;gap:0.8rem;}
   .lvl-c-num{font-size:0.75rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);}
-  .lvl-c h3{font-size:1.05rem;font-weight:800;text-transform:uppercase;color:var(--white);line-height:1.2;letter-spacing:0.01em;}
+  .lvl-c h3{font-size:1.05rem;font-weight:800;text-transform:uppercase;color:var(--white);line-height:1.2;letter-spacing:0.01em;margin:0;}
+  /* Collapsible content */
+  .lvl-c-body{max-height:0;opacity:0;overflow:hidden;transition:max-height 0.45s ease,opacity 0.3s ease,margin-top 0.3s ease;margin-top:0;}
+  .lvl-c:hover .lvl-c-body{max-height:420px;opacity:1;margin-top:1rem;}
   .lvl-c-best{font-size:0.82rem;color:var(--muted);line-height:1.55;margin-bottom:0.9rem;}
   .lvl-c-best b{color:var(--white);font-weight:600;}
   .lvl-c-cov-label{font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);padding-top:0.8rem;border-top:1px solid var(--border);margin-bottom:0.5rem;}
@@ -372,7 +378,7 @@
     <h2 class="section-title">PROTECTION <span>LEVELS</span></h2>
     <p class="section-sub">Hover or tap a level to see which areas are protected — from daily-driver chip defense to full exotic shielding.</p>
 
-    <div class="lvl-interactive" data-active="2">
+    <div class="lvl-interactive" data-active="4">
 
       <!-- LEFT: car visualizer (sticky on desktop) -->
       <div class="lvl-viz">
@@ -395,7 +401,7 @@
           <span class="cl lbl-rockers" style="--x:80%;--y:88%;"><b>Rockers</b></span>
           <span class="cl lbl-doors" style="--x:88%;--y:50%;"><b>Doors</b></span>
         </div>
-        <div class="lvl-viz-hint">Hover a level →</div>
+        <div class="lvl-viz-hint">Hover a level to see coverage →</div>
       </div>
 
       <!-- RIGHT: 4 level cards -->
@@ -406,7 +412,8 @@
             <span class="lvl-c-num">01</span>
             <h3>Partial Front Protection</h3>
           </div>
-          <p class="lvl-c-best"><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
           <div class="lvl-c-cov-label">Coverage</div>
           <ul class="lvl-c-cov">
             <li>Front bumper</li>
@@ -415,6 +422,7 @@
             <li>Partial fenders</li>
             <li>Partial hood (18–24 in.)</li>
           </ul>
+          </div>
         </div>
 
         <div class="lvl-c" data-level="2" onmouseenter="setLvl(2)" onclick="setLvl(2)">
@@ -422,6 +430,7 @@
             <span class="lvl-c-num">02</span>
             <h3>Full Front Protection</h3>
           </div>
+          <div class="lvl-c-body">
           <p class="lvl-c-best"><b>Best for:</b> A seamless look with balanced protection — popular for sports and luxury cars.</p>
           <div class="lvl-c-cov-label">Coverage</div>
           <ul class="lvl-c-cov">
@@ -431,6 +440,7 @@
             <li>Side mirrors</li>
             <li>Full fenders</li>
           </ul>
+          </div>
         </div>
 
         <div class="lvl-c" data-level="3" onmouseenter="setLvl(3)" onclick="setLvl(3)">
@@ -438,7 +448,8 @@
             <span class="lvl-c-num">03</span>
             <h3>Track Pack Protection</h3>
           </div>
-          <p class="lvl-c-best"><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
           <div class="lvl-c-cov-label">Coverage</div>
           <ul class="lvl-c-cov">
             <li>Full front coverage</li>
@@ -447,6 +458,7 @@
             <li>Door cups</li>
             <li>Rear impact zones</li>
           </ul>
+          </div>
         </div>
 
         <div class="lvl-c" data-level="4" onmouseenter="setLvl(4)" onclick="setLvl(4)">
@@ -454,6 +466,7 @@
             <span class="lvl-c-num">04</span>
             <h3>Full Body Protection</h3>
           </div>
+          <div class="lvl-c-body">
           <p class="lvl-c-best"><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
           <div class="lvl-c-cov-label">Coverage</div>
           <ul class="lvl-c-cov">
@@ -462,6 +475,7 @@
             <li>Doors, roof, quarter panels</li>
             <li>All hardware-accessible surfaces</li>
           </ul>
+          </div>
         </div>
 
       </div>
