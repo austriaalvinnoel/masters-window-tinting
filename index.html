@@ -1195,7 +1195,84 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   buildDots();
   render();
   startAuto();
+
+  // Expose a rebuild function so CMS loader can re-init after adding cards
+  window.rebuildGalleryCarousel = function(){
+    // Re-collect all cards (including newly added CMS ones)
+    const refreshedCards = Array.from(track.querySelectorAll('.gcard'));
+    allCards.length = 0;
+    refreshedCards.forEach(c => allCards.push(c));
+    // Reset to "all" filter, page 0
+    visibleCards = allCards.slice();
+    pageIndex = 0;
+    perView = computePerView();
+    buildDots();
+    render();
+    restartAuto();
+  };
 })();
+
+// Auto-pull CMS gallery photos into the homepage carousel
+(function loadCmsGalleryToCarousel(){
+  // Map CMS category names → homepage filter short codes (must match the data-cat values)
+  const CAT_MAP = {
+    'Window Tinting':              'tint',
+    'Ceramic Coating':             'ceramic',
+    'Liquid PPF':                  'ppf',
+    'Residential Tinting':         'res',
+    'Commercial Tinting':          'com',
+    'Wall Graphics':               'graphics',
+    'Detailing & Paint Correction':'detail',
+    'Detailing':                   'detail'
+  };
+  // How many of the most-recent photos to pull per category
+  const PER_CAT = 4;
+
+  const track = document.getElementById('galGrid');
+  if (!track) return;
+
+  // Collect URLs already shown so we don't duplicate
+  const existingSrcs = new Set(
+    Array.from(track.querySelectorAll('img')).map(i => i.src)
+  );
+
+  fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now())
+    .then(r => r.ok ? r.json() : Promise.reject('fetch failed'))
+    .then(data => {
+      if (!data || !data.gallery) return;
+      let added = 0;
+      Object.entries(data.gallery).forEach(([catName, items]) => {
+        if (!Array.isArray(items) || items.length === 0) return;
+        const shortCat = CAT_MAP[catName];
+        if (!shortCat) return; // unknown category, skip
+        // Take the last PER_CAT items (most recent uploads)
+        const recent = items.slice(-PER_CAT);
+        recent.forEach(item => {
+          if (typeof item !== 'string' || !item) return;
+          // Skip if already in the carousel
+          if (existingSrcs.has(item)) return;
+          // Build a new .gcard
+          const card = document.createElement('div');
+          card.className = 'gcard reveal';
+          card.dataset.cat = shortCat;
+          card.innerHTML = '<img src="' + item.replace(/"/g, '&quot;') +
+            '" alt="' + catName + ' work" loading="lazy">' +
+            '<div class="meta"><div class="c">' + catName + '</div></div>';
+          track.appendChild(card);
+          existingSrcs.add(item);
+          added++;
+        });
+      });
+      if (added > 0 && typeof window.rebuildGalleryCarousel === 'function') {
+        window.rebuildGalleryCarousel();
+      }
+    })
+    .catch(err => {
+      // Silent fail — the 8 hardcoded fallback photos stay visible
+      console.warn('CMS gallery load skipped:', err);
+    });
+})();
+
 
 // graceful image fallback
 document.querySelectorAll('img').forEach(img=>{
