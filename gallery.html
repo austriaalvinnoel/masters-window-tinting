@@ -125,6 +125,33 @@
   .nav-links .dd li{display:block;width:100%;}
   .nav-links .dd a{display:block;padding:0.6rem 1.4rem;font-size:0.72rem;white-space:nowrap;letter-spacing:0.08em;}
   .nav-links .dd a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+
+  /* Section carousels — manual only, drag/touch enabled */
+  .gal-section-carousel{position:relative;margin-bottom:1.5rem;}
+  .gal-section-viewport{overflow:hidden;border-radius:4px;cursor:grab;}
+  .gal-section-viewport.dragging{cursor:grabbing;}
+  .gal-section-track{display:flex;gap:12px;transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);will-change:transform;user-select:none;}
+  .gal-section-track.no-transition{transition:none;}
+  .gal-section-track .photo-card{flex:0 0 calc((100% - 24px) / 3);aspect-ratio:4/3;border-radius:3px;overflow:hidden;cursor:pointer;}
+  .gal-section-track .photo-card img{pointer-events:none;}
+  .gsc-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(0,0,0,0.78);border:1px solid rgba(255,255,255,0.2);color:var(--white);font-size:22px;font-weight:300;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(8px);line-height:1;padding:0 0 3px 0;}
+  .gsc-arrow:hover{background:var(--white);color:#000;border-color:var(--white);}
+  .gsc-arrow:disabled{opacity:0.3;cursor:not-allowed;pointer-events:none;}
+  .gsc-arrow-prev{left:-18px;}
+  .gsc-arrow-next{right:-18px;}
+  .gsc-dots{display:flex;justify-content:center;gap:8px;margin-top:18px;flex-wrap:wrap;}
+  .gsc-dots button{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);border:0;cursor:pointer;padding:0;transition:all 0.25s;}
+  .gsc-dots button.active{background:var(--white);width:24px;border-radius:4px;}
+  .gsc-dots button:hover{background:rgba(255,255,255,0.5);}
+  @media(max-width:1024px){
+    .gal-section-track .photo-card{flex:0 0 calc((100% - 12px) / 2);}
+    .gsc-arrow-prev{left:-10px;} .gsc-arrow-next{right:-10px;}
+  }
+  @media(max-width:680px){
+    .gal-section-track .photo-card{flex:0 0 100%;}
+    .gsc-arrow{width:38px;height:38px;font-size:18px;}
+  }
+
 </style>
 </head>
 <body>
@@ -453,56 +480,59 @@
     'Residential Tinting':        'sec-residential',
     'Commercial Tinting':         'sec-commercial',
     'Wall Graphics':              'sec-graphics',
-    'Detailing':                  'sec-detailing'
+    'Detailing & Paint Correction':'sec-detailing'
   };
 
   function buildCmsGrid(sectionId, images) {
     if (!images || !images.length) return;
 
-    // Find the section — check both direct ID and container inside
     let section = document.getElementById(sectionId);
     if (!section) return;
 
-    // Some sections have an inner wrapper div — find the real content container
     const innerWrap = section.querySelector('div[style*="max-width:1200px"]') || section;
     const contentEl = innerWrap !== section ? innerWrap : section;
 
-    // Remove existing CMS grid if already injected
-    const existing = section.querySelector('.cms-photo-grid');
+    // Remove existing CMS carousel if already injected
+    const existing = section.querySelector('.gal-section-carousel');
     if (existing) existing.remove();
 
-    // Build grid
-    const grid = document.createElement('div');
-    grid.className = 'cms-photo-grid';
-    grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:3px;margin-bottom:1.5rem;';
+    // Build carousel structure
+    const carousel = document.createElement('div');
+    carousel.className = 'gal-section-carousel';
+    carousel.innerHTML = `
+      <button class="gsc-arrow gsc-arrow-prev" aria-label="Previous photos" type="button">‹</button>
+      <div class="gal-section-viewport">
+        <div class="gal-section-track"></div>
+      </div>
+      <button class="gsc-arrow gsc-arrow-next" aria-label="Next photos" type="button">›</button>
+      <div class="gsc-dots"></div>
+    `;
 
+    const track = carousel.querySelector('.gal-section-track');
     images.forEach((src, i) => {
       const card = document.createElement('div');
       card.className = 'photo-card';
-      card.style.cssText = 'position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--surface2);cursor:pointer;';
       card.innerHTML = `
         <img src="${src}" alt="Gallery image ${i+1}" loading="lazy"
           style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s ease,filter 0.3s;filter:brightness(0.92);"
-          onmouseover="this.style.transform='scale(1.05)';this.style.filter='brightness(1.05)'"
-          onmouseout="this.style.transform='';this.style.filter='brightness(0.92)'"
           onerror="this.parentElement.style.display='none'">
         <div class="photo-overlay"><span class="photo-tag">Masters Work</span></div>`;
-      grid.appendChild(card);
+      track.appendChild(card);
     });
 
-    // Insert after service-header, before static photo-grid
+    // Insert into section
     const serviceHeader = contentEl.querySelector('.service-header');
     const staticGrid    = contentEl.querySelector('.photo-grid');
     const uploadNotice  = contentEl.querySelector('.upload-notice');
 
     if (serviceHeader) {
-      serviceHeader.insertAdjacentElement('afterend', grid);
+      serviceHeader.insertAdjacentElement('afterend', carousel);
     } else if (staticGrid) {
-      staticGrid.insertAdjacentElement('beforebegin', grid);
+      staticGrid.insertAdjacentElement('beforebegin', carousel);
     } else if (uploadNotice) {
-      uploadNotice.insertAdjacentElement('beforebegin', grid);
+      uploadNotice.insertAdjacentElement('beforebegin', carousel);
     } else {
-      contentEl.appendChild(grid);
+      contentEl.appendChild(carousel);
     }
 
     // Hide placeholder slots since we have real photos
@@ -510,6 +540,133 @@
       const card = ph.closest('.photo-card');
       if (card) card.style.display = 'none';
     });
+
+    // Initialize carousel behavior
+    initSectionCarousel(carousel);
+  }
+
+  // Initialize one section carousel — handles arrows, dots, drag/touch
+  function initSectionCarousel(carousel) {
+    const track    = carousel.querySelector('.gal-section-track');
+    const viewport = carousel.querySelector('.gal-section-viewport');
+    const prevBtn  = carousel.querySelector('.gsc-arrow-prev');
+    const nextBtn  = carousel.querySelector('.gsc-arrow-next');
+    const dotsEl   = carousel.querySelector('.gsc-dots');
+    const cards    = Array.from(track.children);
+    if (cards.length === 0) return;
+
+    function computePerView() {
+      const w = window.innerWidth;
+      if (w <= 680) return 1;
+      if (w <= 1024) return 2;
+      return 3;
+    }
+
+    let perView = computePerView();
+    let pageIndex = 0;
+
+    function totalPages() {
+      return Math.max(1, Math.ceil(cards.length / perView));
+    }
+
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      const n = totalPages();
+      if (n <= 1) { dotsEl.style.display = 'none'; return; }
+      dotsEl.style.display = '';
+      for (let i = 0; i < n; i++) {
+        const b = document.createElement('button');
+        b.setAttribute('aria-label', 'Go to page ' + (i+1));
+        if (i === pageIndex) b.classList.add('active');
+        b.addEventListener('click', () => { pageIndex = i; render(); });
+        dotsEl.appendChild(b);
+      }
+    }
+
+    function render() {
+      const offsetPct = -(pageIndex * 100);
+      track.style.transform = 'translateX(' + offsetPct + '%)';
+      Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === pageIndex));
+      prevBtn.disabled = (totalPages() <= 1) || (pageIndex === 0);
+      nextBtn.disabled = (totalPages() <= 1) || (pageIndex >= totalPages() - 1);
+    }
+
+    function nextPage() {
+      if (totalPages() <= 1) return;
+      pageIndex = (pageIndex >= totalPages() - 1) ? 0 : pageIndex + 1;
+      render();
+    }
+    function prevPage() {
+      if (totalPages() <= 1) return;
+      pageIndex = (pageIndex <= 0) ? totalPages() - 1 : pageIndex - 1;
+      render();
+    }
+
+    prevBtn.addEventListener('click', prevPage);
+    nextBtn.addEventListener('click', nextPage);
+
+    // Drag / touch support
+    let dragStartX = 0;
+    let dragCurrentX = 0;
+    let isDragging = false;
+    let viewportWidth = 0;
+
+    function onDragStart(e) {
+      isDragging = true;
+      viewport.classList.add('dragging');
+      dragStartX = (e.touches ? e.touches[0].clientX : e.clientX);
+      dragCurrentX = dragStartX;
+      viewportWidth = viewport.offsetWidth;
+      track.classList.add('no-transition');
+    }
+    function onDragMove(e) {
+      if (!isDragging) return;
+      const clientX = (e.touches ? e.touches[0].clientX : e.clientX);
+      dragCurrentX = clientX;
+      const delta = clientX - dragStartX;
+      const offsetPct = -(pageIndex * 100) + (delta / viewportWidth * 100);
+      track.style.transform = 'translateX(' + offsetPct + '%)';
+    }
+    function onDragEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      viewport.classList.remove('dragging');
+      track.classList.remove('no-transition');
+      const delta = dragCurrentX - dragStartX;
+      const threshold = viewportWidth * 0.15;
+      if (delta < -threshold) nextPage();
+      else if (delta > threshold) prevPage();
+      else render();
+    }
+
+    viewport.addEventListener('mousedown', onDragStart);
+    viewport.addEventListener('touchstart', onDragStart, { passive: true });
+    window.addEventListener('mousemove', onDragMove);
+    window.addEventListener('touchmove', onDragMove, { passive: true });
+    window.addEventListener('mouseup', onDragEnd);
+    window.addEventListener('touchend', onDragEnd);
+
+    track.querySelectorAll('img').forEach(img => {
+      img.addEventListener('dragstart', e => e.preventDefault());
+    });
+
+    // Responsive
+    let rzTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(rzTimer);
+      rzTimer = setTimeout(() => {
+        const newPerView = computePerView();
+        if (newPerView !== perView) {
+          perView = newPerView;
+          pageIndex = 0;
+          buildDots();
+          render();
+        }
+      }, 150);
+    });
+
+    buildDots();
+    render();
   }
 
   async function loadCmsGallery() {
