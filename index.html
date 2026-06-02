@@ -318,9 +318,27 @@ section{position:relative}
 @media(max-width:880px){
   .lvl-interactive{grid-template-columns:1fr;gap:1.5rem}
   .lvl-viz{position:static}
-  .lvl-car .cl{display:none}
-  .lvl-viz-hint{display:none}
+  .lvl-car .cl{font-size:9px;padding:3px 7px}
+  .lvl-car .cl::before{width:5px;height:5px;left:-8px}
+  .lvl-viz-hint{display:block}
   .lvl-c-cov{grid-template-columns:1fr}
+  /* On mobile show labels for active level via tap */
+  .lvl-interactive[data-active="1"] .lbl-headlights,
+  .lvl-interactive[data-active="1"] .lbl-bumper,
+  .lvl-interactive[data-active="1"] .lbl-mirrors{opacity:1}
+  .lvl-interactive[data-active="2"] .lbl-headlights,
+  .lvl-interactive[data-active="2"] .lbl-bumper,
+  .lvl-interactive[data-active="2"] .lbl-mirrors,
+  .lvl-interactive[data-active="2"] .lbl-hood,
+  .lvl-interactive[data-active="2"] .lbl-fenders{opacity:1}
+  .lvl-interactive[data-active="3"] .lbl-headlights,
+  .lvl-interactive[data-active="3"] .lbl-bumper,
+  .lvl-interactive[data-active="3"] .lbl-mirrors,
+  .lvl-interactive[data-active="3"] .lbl-hood,
+  .lvl-interactive[data-active="3"] .lbl-fenders,
+  .lvl-interactive[data-active="3"] .lbl-apillars,
+  .lvl-interactive[data-active="3"] .lbl-rockers{opacity:1}
+  .lvl-interactive[data-active="4"] .cl{opacity:1}
 }
 
 /* ===== DIFFERENCE ===== */
@@ -772,7 +790,7 @@ section[id]{scroll-margin-top:170px}
       <p>Hover or tap a level to see which areas are protected — from daily-driver chip defense to full exotic shielding.</p>
     </div>
 
-    <div class="lvl-interactive reveal" data-active="4">
+    <div class="lvl-interactive reveal" data-active="4" id="lvl-interactive">
 
       <!-- LEFT: car visualizer -->
       <div class="lvl-viz">
@@ -792,7 +810,7 @@ section[id]{scroll-margin-top:170px}
           <span class="cl lbl-rockers" style="--x:80%;--y:88%;"><b>Rockers</b></span>
           <span class="cl lbl-doors" style="--x:88%;--y:50%;"><b>Doors</b></span>
         </div>
-        <div class="lvl-viz-hint">Hover a level to see coverage →</div>
+        <div class="lvl-viz-hint" id="lvl-hint">Hover or tap a level to see coverage →</div>
       </div>
 
       <!-- RIGHT: 4 level cards -->
@@ -1284,6 +1302,16 @@ section[id]{scroll-margin-top:170px}
   function setLvl(n){
     var c = document.querySelector('.lvl-interactive');
     if(c) c.setAttribute('data-active', String(n));
+    // Highlight active card
+    document.querySelectorAll('.lvl-c').forEach(function(el){
+      el.style.borderColor = el.dataset.level == n ? 'rgba(255,255,255,.4)' : '';
+      el.style.background  = el.dataset.level == n ? 'var(--surface-2)' : '';
+    });
+  }
+  // Set hint text based on touch device
+  if('ontouchstart' in window){
+    var h = document.getElementById('lvl-hint');
+    if(h) h.textContent = 'Tap a level to see coverage →';
   }
 // nav scroll state
 const nav=document.getElementById('nav');
