@@ -978,24 +978,188 @@ section[id]{scroll-margin-top:170px}
       <span class="eyebrow">Customer Reviews</span>
       <h2>What They Say</h2>
     </div>
-    <div class="rev-top reveal">
-      <div class="rev-score">4.9</div>
-      <div>
-        <div class="stars">★★★★★</div>
-        <div class="meta">Google Rating · Hundreds of Verified Reviews</div>
+
+    <!-- LIVE GOOGLE REVIEWS WIDGET -->
+    <div id="grev-widget" class="reveal" style="margin-bottom:48px">
+      <!-- Score bar -->
+      <div class="rev-top" id="grev-top" style="margin-bottom:32px">
+        <div class="rev-score" id="grev-score">4.9</div>
+        <div>
+          <div class="stars" id="grev-stars">★★★★★</div>
+          <div class="meta" id="grev-meta">Google Rating · Verified Reviews</div>
+        </div>
+        <div style="margin-left:auto">
+          <a href="https://www.google.com/maps/place/?q=place_id:ChIJZ4a23E4r6IkRkLddGi_QknQ" target="_blank" rel="noopener" class="btn btn-ghost" style="font-size:13px">View on Google →</a>
+        </div>
+      </div>
+
+      <!-- Live review cards carousel -->
+      <div style="position:relative">
+        <div id="grev-track-wrap" style="overflow:hidden;border-radius:4px">
+          <div id="grev-track" style="display:flex;gap:18px;transition:transform .55s cubic-bezier(.4,0,.2,1)">
+            <!-- Skeleton loaders -->
+            <div class="grev-skeleton" style="flex:0 0 calc((100% - 36px)/3);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 30px;min-height:220px;animation:grev-pulse 1.5s ease-in-out infinite">
+              <div style="height:14px;width:60%;background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:16px"></div>
+              <div style="height:13px;width:90%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:75%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:80%;background:rgba(255,255,255,.04);border-radius:3px"></div>
+            </div>
+            <div class="grev-skeleton" style="flex:0 0 calc((100% - 36px)/3);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 30px;min-height:220px;animation:grev-pulse 1.5s ease-in-out .2s infinite">
+              <div style="height:14px;width:55%;background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:16px"></div>
+              <div style="height:13px;width:85%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:70%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:90%;background:rgba(255,255,255,.04);border-radius:3px"></div>
+            </div>
+            <div class="grev-skeleton" style="flex:0 0 calc((100% - 36px)/3);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 30px;min-height:220px;animation:grev-pulse 1.5s ease-in-out .4s infinite">
+              <div style="height:14px;width:65%;background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:16px"></div>
+              <div style="height:13px;width:80%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:95%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:65%;background:rgba(255,255,255,.04);border-radius:3px"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Arrows -->
+        <button id="grev-prev" class="gal-arrow gal-prev" style="display:none" aria-label="Previous reviews">‹</button>
+        <button id="grev-next" class="gal-arrow gal-next" style="display:none" aria-label="Next reviews">›</button>
+        <!-- Dots -->
+        <div id="grev-dots" class="gal-dots" style="margin-top:20px"></div>
       </div>
     </div>
-    <div class="rev-grid">
-      <div class="review reveal"><div class="stars">★★★★★</div><p>"Great job on my Ceramic Pro coating! Love it! Love it! Love it! The finish is absolutely stunning and the team was incredibly professional throughout."</p><div class="who"><div class="av">NM</div><div><b>Nadia Mierau</b><span>Ceramic Pro Coating</span></div></div></div>
-      <div class="review reveal" data-d="1"><div class="stars">★★★★★</div><p>"Got my tail lights tinted on my new Range Rover — looks awesome! They also did LED strips. Quick, clean, and professional throughout."</p><div class="who"><div class="av">KA</div><div><b>Kayla Anderson</b><span>Window Tinting</span></div></div></div>
-      <div class="review reveal" data-d="2"><div class="stars">★★★★★</div><p>"Long overdue review — my tints are beautiful. Staff was accommodating, friendly, and knowledgeable. Highly recommend Masters Window Tinting!"</p><div class="who"><div class="av">SS</div><div><b>Sheila Sanders</b><span>Window Tinting</span></div></div></div>
-      <div class="review reveal"><div class="stars">★★★★★</div><p>"My car looks brand new after adding the ceramic coating and paint protection on the front. Excellent job — the attention to detail is second to none."</p><div class="who"><div class="av">GC</div><div><b>George C.</b><span>Ceramic Coating + PPF</span></div></div></div>
-      <div class="review reveal" data-d="1"><div class="stars">★★★★★</div><p>"The attention to detail is incredible. My car has never looked better. Thank you for the amazing service — I'll definitely be coming back."</p><div class="who"><div class="av">SL</div><div><b>Sean L.</b><span>Ceramic Coating</span></div></div></div>
-      <div class="review reveal" data-d="2"><div class="stars">★★★★★</div><p>"Got my windows tinted and the car ceramic coated. Could not have worked with a nicer bunch of guys. True professionals — highly recommend."</p><div class="who"><div class="av">RJ</div><div><b>Robert J.</b><span>Window Tint + Ceramic</span></div></div></div>
+
+    <!-- HARDCODED FALLBACK (hidden by default if live loads) -->
+    <div id="grev-fallback" style="display:none">
+      <div class="rev-top reveal">
+        <div class="rev-score">4.9</div>
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="meta">Google Rating · Hundreds of Verified Reviews</div>
+        </div>
+      </div>
+      <div class="rev-grid">
+        <div class="review reveal"><div class="stars">★★★★★</div><p>"Great job on my Ceramic Pro coating! Love it! Love it! Love it! The finish is absolutely stunning and the team was incredibly professional throughout."</p><div class="who"><div class="av">NM</div><div><b>Nadia Mierau</b><span>Ceramic Pro Coating</span></div></div></div>
+        <div class="review reveal" data-d="1"><div class="stars">★★★★★</div><p>"Got my tail lights tinted on my new Range Rover — looks awesome! They also did LED strips. Quick, clean, and professional throughout."</p><div class="who"><div class="av">KA</div><div><b>Kayla Anderson</b><span>Window Tinting</span></div></div></div>
+        <div class="review reveal" data-d="2"><div class="stars">★★★★★</div><p>"Long overdue review — my tints are beautiful. Staff was accommodating, friendly, and knowledgeable. Highly recommend Masters Window Tinting!"</p><div class="who"><div class="av">SS</div><div><b>Sheila Sanders</b><span>Window Tinting</span></div></div></div>
+        <div class="review reveal"><div class="stars">★★★★★</div><p>"My car looks brand new after adding the ceramic coating and paint protection on the front. Excellent job — the attention to detail is second to none."</p><div class="who"><div class="av">GC</div><div><b>George C.</b><span>Ceramic Coating + PPF</span></div></div></div>
+        <div class="review reveal" data-d="1"><div class="stars">★★★★★</div><p>"The attention to detail is incredible. My car has never looked better. Thank you for the amazing service — I'll definitely be coming back."</p><div class="who"><div class="av">SL</div><div><b>Sean L.</b><span>Ceramic Coating</span></div></div></div>
+        <div class="review reveal" data-d="2"><div class="stars">★★★★★</div><p>"Got my windows tinted and the car ceramic coated. Could not have worked with a nicer bunch of guys. True professionals — highly recommend."</p><div class="who"><div class="av">RJ</div><div><b>Robert J.</b><span>Window Tint + Ceramic</span></div></div></div>
+      </div>
     </div>
-    <div class="rev-cta reveal"><a href="https://www.google.com/search?q=Masters+Window+Tinting+West+Babylon+reviews" class="btn btn-ghost" target="_blank" rel="noopener">Read Google Reviews →</a></div>
+
+    <div class="rev-cta reveal"><a href="https://www.google.com/maps/place/?q=place_id:ChIJZ4a23E4r6IkRkLddGi_QknQ" target="_blank" rel="noopener" class="btn btn-ghost">Read All Google Reviews →</a></div>
   </div>
 </section>
+<style>
+@keyframes grev-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+@media(max-width:1024px){#grev-track .grev-card{flex:0 0 calc((100% - 18px)/2)!important}}
+@media(max-width:680px){#grev-track .grev-card{flex:0 0 100%!important}}
+</style>
+<script>
+(function(){
+  const PLACE_ID = "ChIJZ4a23E4r6IkRkLddGi_QknQ";
+  const FALLBACK_REVIEWS = [
+    {author:"Nadia Mierau",rating:5,text:"Great job on my Ceramic Pro coating! Love it! Love it! Love it! The finish is absolutely stunning and the team was incredibly professional throughout.",service:"Ceramic Pro Coating"},
+    {author:"Kayla Anderson",rating:5,text:"Got my tail lights tinted on my new Range Rover — looks awesome! They also did LED strips. Quick, clean, and professional throughout.",service:"Window Tinting"},
+    {author:"Sheila Sanders",rating:5,text:"Long overdue review — my tints are beautiful. Staff was accommodating, friendly, and knowledgeable. Highly recommend Masters Window Tinting!",service:"Window Tinting"},
+    {author:"George C.",rating:5,text:"My car looks brand new after adding the ceramic coating and paint protection on the front. Excellent job — the attention to detail is second to none.",service:"Ceramic Coating + PPF"},
+    {author:"Sean L.",rating:5,text:"The attention to detail is incredible. My car has never looked better. Thank you for the amazing service — I will definitely be coming back.",service:"Ceramic Coating"},
+    {author:"Robert J.",rating:5,text:"Got my windows tinted and the car ceramic coated. Could not have worked with a nicer bunch of guys. True professionals — highly recommend.",service:"Window Tint + Ceramic"},
+  ];
+
+  function stars(n){return "★".repeat(n)+"☆".repeat(5-n);}
+  function initials(name){return name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2);}
+  function truncate(t,n){return t.length>n?t.slice(0,n).trimEnd()+"…":t;}
+
+  function buildCards(reviews, rating, totalStr){
+    const track = document.getElementById("grev-track");
+    const prevBtn = document.getElementById("grev-prev");
+    const nextBtn = document.getElementById("grev-next");
+    const dotsEl  = document.getElementById("grev-dots");
+
+    // Update score bar
+    document.getElementById("grev-score").textContent = rating || "4.9";
+    document.getElementById("grev-stars").textContent = "★★★★★";
+    document.getElementById("grev-meta").textContent = "Google Rating · " + (totalStr || "Verified Reviews");
+
+    // Build cards
+    track.innerHTML = "";
+    reviews.forEach(r => {
+      const initls = initials(r.author || r.author_name || "G");
+      const txt = truncate(r.text || r.relative_time_description || "", 200);
+      const svc = r.service || "";
+      const card = document.createElement("div");
+      card.className = "review grev-card";
+      card.style.cssText = "flex:0 0 calc((100% - 36px)/3);flex-shrink:0";
+      card.innerHTML =
+        '<div class="stars">' + stars(r.rating||5) + '</div>' +
+        '<p style="font-size:15px;color:var(--ink);line-height:1.6;flex:1">' + txt + '</p>' +
+        '<div class="who" style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">' +
+          '<div class="av">' + initls + '</div>' +
+          '<div><b style="font-size:14px">' + (r.author||r.author_name||"Google Reviewer") + '</b>' +
+          (svc ? '<span style="font-size:12px;color:var(--muted)">' + svc + '</span>' :
+                 r.relative_time_description ? '<span style="font-size:12px;color:var(--muted)">' + r.relative_time_description + '</span>' : "") +
+          '</div></div>';
+      track.appendChild(card);
+    });
+
+    // Carousel logic
+    let page = 0;
+    function perView(){return window.innerWidth<=680?1:window.innerWidth<=1024?2:3;}
+    function pages(){return Math.max(1,Math.ceil(reviews.length/perView()));}
+    function render(){
+      track.style.transform="translateX(-"+(page*100)+"%)";
+      Array.from(dotsEl.children).forEach((d,i)=>d.classList.toggle("active",i===page));
+      prevBtn.disabled=(page===0);
+      nextBtn.disabled=(page>=pages()-1);
+    }
+    function buildDots(){
+      dotsEl.innerHTML="";
+      const n=pages();
+      if(n<=1){dotsEl.style.display="none";prevBtn.style.display="none";nextBtn.style.display="none";return;}
+      dotsEl.style.display="";
+      prevBtn.style.display="flex";nextBtn.style.display="flex";
+      for(let i=0;i<n;i++){
+        const b=document.createElement("button");
+        if(i===page)b.classList.add("active");
+        b.onclick=()=>{page=i;render();};
+        dotsEl.appendChild(b);
+      }
+    }
+    prevBtn.onclick=()=>{if(page>0){page--;render();buildDots();}};
+    nextBtn.onclick=()=>{if(page<pages()-1){page++;render();buildDots();}};
+    window.addEventListener("resize",()=>{page=0;buildDots();render();},{passive:true});
+    buildDots();render();
+
+    // Auto-rotate
+    setInterval(()=>{
+      page=page>=pages()-1?0:page+1;
+      render();
+      Array.from(dotsEl.children).forEach((d,i)=>d.classList.toggle("active",i===page));
+    },6000);
+  }
+
+  function loadFallback(){
+    buildCards(FALLBACK_REVIEWS,"4.9","Hundreds of Verified Reviews");
+  }
+
+  // Try fetching via allorigins proxy → Google Places API
+  const apiUrl = "https://maps.googleapis.com/maps/api/place/details/json?place_id="+PLACE_ID+"&fields=rating,user_ratings_total,reviews&language=en";
+  const proxyUrl = "https://api.allorigins.win/get?url="+encodeURIComponent(apiUrl);
+
+  fetch(proxyUrl, {signal: AbortSignal.timeout(5000)})
+    .then(r=>r.ok?r.json():Promise.reject("fetch failed"))
+    .then(data=>{
+      const parsed = typeof data.contents==="string" ? JSON.parse(data.contents) : null;
+      if(parsed && parsed.result && parsed.result.reviews && parsed.result.reviews.length){
+        const res = parsed.result;
+        const totalStr = res.user_ratings_total ? res.user_ratings_total.toLocaleString()+" Google Reviews" : "Verified Reviews";
+        buildCards(res.reviews, res.rating ? res.rating.toFixed(1) : "4.9", totalStr);
+      } else {
+        loadFallback();
+      }
+    })
+    .catch(()=>loadFallback());
+})();
+</script>
 
 <!-- CONTACT / QUOTE -->
 <section class="sec" id="contact">
