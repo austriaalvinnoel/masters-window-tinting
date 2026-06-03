@@ -19,7 +19,7 @@
 <meta name="description" content="Home window film on Long Island: heat reduction, UV blocking, privacy, and security. Energy savings and comfort. Free estimates in West Babylon, NY.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --black:#000000; --surface:#0e0e0e; --surface2:#161616;
@@ -32,7 +32,8 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: var(--font); background: var(--black); color: var(--white); overflow-x: hidden; }
+  body {
+  padding-top:108px; font-family: var(--font); background: var(--black); color: var(--white); overflow-x: hidden; }
   .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .reveal.visible { opacity: 1; transform: none; }
@@ -57,7 +58,7 @@
   .breadcrumb { font-size: 0.68rem; color: var(--muted); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
   .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .breadcrumb a:hover { color: var(--white); }
-  .page-hero h1 { font-family: var(--font); font-weight:800; font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.9; letter-spacing: -0.03em; color: var(--white); margin-bottom: 1.5rem; position: relative; z-index: 1; text-transform:uppercase; }
+  .page-hero h1 { font-family: var(--font); font-weight:400; font-size: clamp(3.5rem, 9vw, 8rem); line-height: 0.9; letter-spacing: -0.03em; color: var(--white); margin-bottom: 1.5rem; position: relative; z-index: 1; text-transform:uppercase; }
   .page-hero h1 span { color: var(--white); opacity:.55; }
   .page-hero p { font-size: 1rem; color: var(--muted); line-height: 1.75; max-width: 560px; font-weight: 400; position: relative; z-index: 1; margin-bottom: 2rem; }
   .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 1; }
@@ -91,7 +92,7 @@
 
   .cta-strip { background: var(--white); padding: 5rem 2.5rem; }
   .cta-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .cta-strip h2 { font-family: var(--font); font-weight:800; font-size: clamp(2.2rem, 5vw, 3.8rem); color: #000; line-height: 0.98; letter-spacing: -0.02em; text-transform:uppercase; }
+  .cta-strip h2 { font-family: var(--font); font-weight:400; font-size: clamp(2.2rem, 5vw, 3.8rem); color: #000; line-height: 0.98; letter-spacing: -0.02em; text-transform:uppercase; }
   .cta-strip p { font-size: 0.95rem; color: rgba(0,0,0,0.65); margin-top: 0.6rem; }
   .btn-dark { background: #000; color: #fff; padding: 1rem 2rem; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; border-radius:3px; transition: all 0.2s; }
   .btn-dark:hover { background: #222; }
@@ -348,6 +349,24 @@
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').style.padding = window.scrollY > 60 ? '0.65rem 2.5rem' : '1rem 2.5rem';
   });
+
+// nav scroll state
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+// mobile menu
+const mm=document.getElementById('mobileMenu');
+document.getElementById('burger').onclick=()=>mm.classList.add('open');
+document.getElementById('mmClose').onclick=()=>mm.classList.remove('open');
+mm.querySelectorAll('a').forEach(a=>a.onclick=()=>mm.classList.remove('open'));
+
+// scroll reveal
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// gallery carousel
 </script>
 </body>
 </html>
