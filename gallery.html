@@ -19,24 +19,27 @@
 <meta name="description" content="Browse our work: window tinting, ceramic coating, Liquid PPF, residential, commercial, and wall graphics. Real installations by our West Babylon team.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --black:#000000; --surface:#0e0e0e; --surface2:#161616;
     --gold:#ffffff; --gold-light:#ffffff; --white:#ffffff;
     --muted:#a9a9a9; --border:rgba(255,255,255,0.12);
-    --font:"Poppins",sans-serif;
+    --font:"Inter",sans-serif;
+    --display:"Bebas Neue",sans-serif;
+    --mono:"DM Mono",monospace;
+    --muted:#b8b8b8;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:var(--font);background:var(--black);color:var(--white);overflow-x:hidden;}
+  body{padding-top:108px;font-family:var(--font);background:var(--black);color:var(--white);overflow-x:hidden;}
   .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
   .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
   .reveal.visible{opacity:1;transform:none;}
 
   /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(0,0,0,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
-  .nav-logo{font-family:var(--font);font-weight:800;font-size:1.05rem;letter-spacing:-0.01em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.2;}
+  nav{position:fixed;top:108px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(0,0,0,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
+  .nav-logo{font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:1.05rem;letter-spacing:-0.01em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.2;}
   .nav-logo span{font-family:var(--font);font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
   .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
@@ -52,7 +55,7 @@
   .breadcrumb{font-size:0.68rem;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;}
   .breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
   .breadcrumb a:hover{color:var(--white);}
-  .page-hero h1{font-family:var(--font);font-weight:800;font-size:clamp(3.5rem,9vw,8rem);line-height:0.9;letter-spacing:-0.03em;color:var(--white);margin-bottom:1rem;position:relative;z-index:1;text-transform:uppercase;}
+  .page-hero h1{font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:clamp(3.5rem,9vw,8rem);line-height:0.9;letter-spacing:-0.03em;color:var(--white);margin-bottom:1rem;position:relative;z-index:1;text-transform:uppercase;}
   .page-hero h1 span{color:var(--white);opacity:.55;}
   .page-hero p{font-size:0.95rem;color:var(--muted);line-height:1.75;max-width:560px;font-weight:400;position:relative;z-index:1;}
 
@@ -69,7 +72,7 @@
   .service-section:last-child{border-bottom:none;}
   .service-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;}
   .service-label{font-size:0.6rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;}
-  .service-title{font-family:var(--font);font-weight:800;font-size:clamp(2rem,4vw,3.4rem);color:var(--white);letter-spacing:-0.02em;line-height:1.02;text-transform:uppercase;}
+  .service-title{font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:clamp(2rem,4vw,3.4rem);color:var(--white);letter-spacing:-0.02em;line-height:1.02;text-transform:uppercase;}
   .service-sub{font-size:0.85rem;color:var(--muted);font-weight:400;line-height:1.7;max-width:400px;margin-top:0.6rem;}
   .service-cta{display:inline-flex;align-items:center;gap:0.4rem;background:var(--gold);color:#000;padding:0.75rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;flex-shrink:0;border-radius:3px;transition:all 0.2s;}
   .service-cta:hover{background:#d6d6d6;}
@@ -86,7 +89,7 @@
   .photo-tag{font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--white);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);padding:0.25rem 0.7rem;border-radius:2px;}
 
   /* PLACEHOLDER */
-  .photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--surface2);background:var(--surface2);border:1px dashed rgba(255,255,255,0.1);font-family:var(--font);font-weight:800;font-size:2.4rem;gap:0.5rem;}
+  .photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--surface2);background:var(--surface2);border:1px dashed rgba(255,255,255,0.1);font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:2.4rem;gap:0.5rem;}
   .photo-placeholder .ph-txt{font-family:var(--font);font-size:0.65rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#3a3a3a;}
 
   /* UPLOAD CTA */
@@ -99,7 +102,7 @@
   /* FULL CTA STRIP */
   .cta-strip{background:var(--white);padding:5rem 2.5rem;}
   .cta-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;max-width:1200px;margin:0 auto;}
-  .cta-strip h2{font-family:var(--font);font-weight:800;font-size:clamp(2.2rem,5vw,3.8rem);color:#000;line-height:0.98;letter-spacing:-0.02em;text-transform:uppercase;}
+  .cta-strip h2{font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);color:#000;line-height:0.98;letter-spacing:-0.02em;text-transform:uppercase;}
   .cta-strip p{font-size:0.95rem;color:rgba(0,0,0,0.65);margin-top:0.5rem;}
   .btn-dark{background:#000;color:#fff;padding:1rem 2rem;font-size:0.88rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;}
   .btn-dark:hover{background:#222;}
@@ -164,10 +167,36 @@
     .gsc-arrow{width:38px;height:38px;font-size:18px;}
   }
 
+
+/* TOP BANNER */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:1001;background:#000;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-main{display:flex;align-items:center;gap:1.6rem;padding:14px 2.5rem 12px;max-width:1400px;margin:0 auto}
+.tb-logo-link{flex-shrink:0;line-height:0}
+.tb-logo{height:64px;width:auto;display:block}
+.tb-title{flex:1;font-family:"Inter",sans-serif;font-style:italic;font-weight:700;font-size:1.05rem;color:#fff;line-height:1.25;margin:0;letter-spacing:-0.005em}
+.tb-strip{background:#c8201a;color:#fff;text-align:center;padding:8px 1rem;font-family:"Inter",sans-serif;font-weight:600;font-size:0.82rem;letter-spacing:0.02em}
+.tb-strip a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+.tb-strip a:hover{border-color:#fff}
+@media(max-width:880px){.tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}.tb-logo{height:54px}.tb-title{font-size:0.95rem}.tb-strip{font-size:0.72rem;padding:7px .8rem}}
+@media(max-width:480px){.tb-title{font-size:0.85rem}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","AutomotiveBusiness"],"name":"Masters Window Tinting & Detail","alternateName":["Ceramic Pro Long Island","NanoPro Liquid PPF Long Island"],"image":"https://masters-window-tinting.vercel.app/og-cover.jpg","url":"https://masters-window-tinting.vercel.app/","telephone":"+1-631-226-4300","address":{"@type":"PostalAddress","streetAddress":"863 Rte 109, Suite A","addressLocality":"West Babylon","addressRegion":"NY","postalCode":"11704","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.7195,"longitude":-73.3543},"areaServed":[{"@type":"AdministrativeArea","name":"Nassau County, NY"},{"@type":"AdministrativeArea","name":"Suffolk County, NY"},{"@type":"Place","name":"Long Island, NY"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"10:00","closes":"16:00"}],"priceRange":"$$-$$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Automotive Protection Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automotive Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Ceramic Pro Coating"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"NanoPro Liquid PPF (Paint Protection Film)"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Auto Detailing & Paint Correction"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Residential Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Wall Graphics & Vinyl Signs"}}]},"sameAs":["https://www.facebook.com/profile.php?id=100063773733742","https://www.instagram.com/Ceramic_pro_long_island/","https://www.masterswindowtinting.com/"]}</script>
 </head>
 <body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <div class="tb-main">
+    <a href="index.html" class="tb-logo-link">
+      <img src="mwt_logo.png" alt="Masters Window Tinting" class="tb-logo">
+    </a>
+    <p class="tb-title">Masters Window Tinting, Paint Protection Film &mdash; PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
+  </div>
+  <div class="tb-strip">
+    Long Island, New York &mdash;&mdash; 863 Rte 109, West Babylon, NY &mdash;&mdash; <a href="tel:6312264300">631-226-4300</a>
+  </div>
+</div>
+
 
 <nav id="navbar">
   <a href="index.html" class="nav-logo">Masters Window Tinting & Detail<span>Ceramic Pro Long Island · NanoPro Liquid PPF</span></a>
