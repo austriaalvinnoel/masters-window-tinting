@@ -32,7 +32,8 @@
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{padding-top:108px;font-family:var(--font);background:var(--black);color:var(--white);overflow-x:hidden;}
+  body{
+  padding-top:108px;padding-top:108px;font-family:var(--font);background:var(--black);color:var(--white);overflow-x:hidden;}
   .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
   .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
   .reveal.visible{opacity:1;transform:none;}
@@ -40,7 +41,7 @@
   /* NAV */
   nav{position:fixed;top:108px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(0,0,0,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
   .nav-logo{font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:1.05rem;letter-spacing:-0.01em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.2;}
-  .nav-logo span{font-family:var(--font);font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
+  .nav-logo span{font-family:var(--font);font-size:0.6rem;font-weight:400;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
   .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
   .nav-links a:hover{color:var(--white);}
@@ -63,7 +64,7 @@
   .filter-bar{position:sticky;top:73px;z-index:50;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0;}
   .filter-scroll{display:flex;overflow-x:auto;scrollbar-width:none;gap:0;}
   .filter-scroll::-webkit-scrollbar{display:none;}
-  .filter-btn{flex-shrink:0;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--muted);padding:1.1rem 1.4rem;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:var(--font);transition:all 0.2s;white-space:nowrap;}
+  .filter-btn{flex-shrink:0;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--muted);padding:1.1rem 1.4rem;font-size:0.7rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-family:var(--font);transition:all 0.2s;white-space:nowrap;}
   .filter-btn:hover{color:var(--white);}
   .filter-btn.active{color:var(--white);border-bottom-color:var(--white);}
 
@@ -74,7 +75,7 @@
   .service-label{font-size:0.6rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--muted);margin-bottom:0.6rem;}
   .service-title{font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:clamp(2rem,4vw,3.4rem);color:var(--white);letter-spacing:-0.02em;line-height:1.02;text-transform:uppercase;}
   .service-sub{font-size:0.85rem;color:var(--muted);font-weight:400;line-height:1.7;max-width:400px;margin-top:0.6rem;}
-  .service-cta{display:inline-flex;align-items:center;gap:0.4rem;background:var(--gold);color:#000;padding:0.75rem 1.5rem;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;flex-shrink:0;border-radius:3px;transition:all 0.2s;}
+  .service-cta{display:inline-flex;align-items:center;gap:0.4rem;background:var(--gold);color:#000;padding:0.75rem 1.5rem;font-size:0.75rem;font-weight:400;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;flex-shrink:0;border-radius:3px;transition:all 0.2s;}
   .service-cta:hover{background:#d6d6d6;}
 
   /* PHOTO GRID */
@@ -96,7 +97,7 @@
   .upload-notice{display:none;background:var(--surface2);border:1px dashed rgba(255,255,255,0.2);padding:1.5rem 2rem;align-items:center;gap:1.5rem;margin-top:1.5rem;flex-wrap:wrap;border-radius:6px;}
   .upload-notice p{font-size:0.82rem;color:var(--muted);font-weight:400;line-height:1.6;}
   .upload-notice p strong{color:var(--white);}
-  .btn-admin{display:inline-flex;align-items:center;gap:0.4rem;border:1px solid rgba(255,255,255,0.25);color:var(--white);padding:0.6rem 1.2rem;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;flex-shrink:0;}
+  .btn-admin{display:inline-flex;align-items:center;gap:0.4rem;border:1px solid rgba(255,255,255,0.25);color:var(--white);padding:0.6rem 1.2rem;font-size:0.72rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;flex-shrink:0;}
   .btn-admin:hover{background:rgba(255,255,255,0.08);}
 
   /* FULL CTA STRIP */
@@ -104,7 +105,7 @@
   .cta-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;max-width:1200px;margin:0 auto;}
   .cta-strip h2{font-family:var(--display,"Bebas Neue",sans-serif);font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);color:#000;line-height:0.98;letter-spacing:-0.02em;text-transform:uppercase;}
   .cta-strip p{font-size:0.95rem;color:rgba(0,0,0,0.65);margin-top:0.5rem;}
-  .btn-dark{background:#000;color:#fff;padding:1rem 2rem;font-size:0.88rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;}
+  .btn-dark{background:#000;color:#fff;padding:1rem 2rem;font-size:0.88rem;font-weight:400;letter-spacing:0.04em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;}
   .btn-dark:hover{background:#222;}
 
   /* FOOTER */
@@ -748,6 +749,24 @@
   // Load CMS gallery after page renders
   loadCmsGallery();
   // ──────────────────────────────────────────────────────────────────────────
+
+// nav scroll state
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+// mobile menu
+const mm=document.getElementById('mobileMenu');
+document.getElementById('burger').onclick=()=>mm.classList.add('open');
+document.getElementById('mmClose').onclick=()=>mm.classList.remove('open');
+mm.querySelectorAll('a').forEach(a=>a.onclick=()=>mm.classList.remove('open'));
+
+// scroll reveal
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// gallery carousel
 </script>
 </body>
 </html>
