@@ -448,7 +448,7 @@
       <!-- SITE INFO -->
 
       <!-- BEFORE & AFTER PANEL -->
-      <div id="panel-beforeafter" class="panel" style="display:none">
+      <div id="panel-beforeafter" class="panel">
         <div class="panel-title">BEFORE &amp; AFTER</div>
         <div class="panel-desc">Add before &amp; after image pairs for each service. These appear in the Before &amp; After slider on the homepage.</div>
 
@@ -797,7 +797,7 @@ async function syncFromGitHub() {
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────────────────────
-const TITLES = {dashboard:'DASHBOARD',gallery:'GALLERY MANAGER',carousel:'CAROUSEL EDITOR',siteinfo:'SITE INFO',settings:'SETTINGS'};
+const TITLES = {dashboard:'DASHBOARD',gallery:'GALLERY MANAGER',carousel:'CAROUSEL EDITOR',beforeafter:'BEFORE & AFTER',siteinfo:'SITE INFO',settings:'SETTINGS'};
 
 function bindNav() {
   document.querySelectorAll('.nav-item[data-panel]').forEach(el => {
@@ -818,6 +818,7 @@ function showPanel(id) {
   const navEl = document.querySelector(`.nav-item[data-panel="${id}"]`);
   if (navEl) navEl.classList.add('active');
   document.getElementById('topbar-title').textContent = TITLES[id] || id.toUpperCase();
+  if (id === 'beforeafter') { setTimeout(renderBAList, 50); }
 }
 
 // ── GALLERY ───────────────────────────────────────────────────────────────────
