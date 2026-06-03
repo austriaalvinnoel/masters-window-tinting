@@ -558,6 +558,37 @@ function loadState() {
   try { state.log      = JSON.parse(localStorage.getItem('cms_log')      || '[]'); } catch(e){ state.log=[]; }
 }
 
+// Always sync gallery from GitHub on load — ensures all browsers see same data
+async function syncFromGitHub() {
+  try {
+    const url = 'https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now();
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data || !data.gallery) return;
+
+    // Merge GitHub data — GitHub is always the source of truth
+    const ghTotal = Object.values(data.gallery).reduce((a,v)=>a+(v||[]).length, 0);
+    const localTotal = Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length, 0);
+
+    // Always use GitHub data if it has more or equal images
+    if (ghTotal >= localTotal) {
+      state.gallery = data.gallery;
+      // Save to localStorage so it's cached for offline
+      localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+      renderGallery();
+      updateStats();
+      updateStorage();
+      const diff = ghTotal - localTotal;
+      if (diff > 0) {
+        toast('✅ Synced ' + diff + ' new photo' + (diff>1?'s':'') + ' from GitHub');
+      }
+    }
+  } catch(e) {
+    console.warn('GitHub sync skipped:', e);
+  }
+}
+
 function saveKey(key, val) {
   try {
     const serialized = JSON.stringify(val);
@@ -657,6 +688,8 @@ async function startApp() {
   updateStorage();
   bindGalleryEvents();
   bindFormEvents();
+  // Sync from GitHub in background — keeps all browsers in sync
+  setTimeout(syncFromGitHub, 800);
 
   const totalLocal = Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length,0);
   if (totalLocal === 0) {
