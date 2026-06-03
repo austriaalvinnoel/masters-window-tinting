@@ -19,12 +19,13 @@
 <meta name="description" content="Commercial and storefront window tinting for Long Island businesses. Solar control, security film, decorative films. Trusted by local offices and retail.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root { --black:#000000; --surface:#0e0e0e; --surface2:#161616; --gold:#ffffff; --gold-light:#ffffff; --white:#ffffff; --muted:#a9a9a9; --border:rgba(255,255,255,0.12); }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{padding-top:108px;font-family:"Inter",sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+  body{
+  padding-top:108px;padding-top:108px;font-family:"Inter",sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
   .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
   .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
   .reveal.visible{opacity:1;transform:none;}
@@ -210,6 +211,24 @@
   const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*80);obs.unobserve(e.target);}});},{threshold:0.08});
   reveals.forEach(el=>obs.observe(el));
   window.addEventListener('scroll',()=>{document.getElementById('navbar').style.padding=window.scrollY>60?'0.65rem 2.5rem':'1rem 2.5rem';});
+
+// nav scroll state
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+// mobile menu
+const mm=document.getElementById('mobileMenu');
+document.getElementById('burger').onclick=()=>mm.classList.add('open');
+document.getElementById('mmClose').onclick=()=>mm.classList.remove('open');
+mm.querySelectorAll('a').forEach(a=>a.onclick=()=>mm.classList.remove('open'));
+
+// scroll reveal
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// gallery carousel
 </script>
 </body>
 </html>
