@@ -816,6 +816,26 @@ function compressImage(file, maxKB=120, q=0.72) {
   });
 }
 
+
+// ── Cloudinary Upload ─────────────────────────────────────────────────────
+const CLOUDINARY_CLOUD = "dym8x61sp";
+const CLOUDINARY_PRESET = "masters_unsigned";
+
+async function uploadToCloudinary(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET);
+  formData.append('folder', 'masters-gallery');
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,
+    { method: 'POST', body: formData }
+  );
+  if (!res.ok) throw new Error('Cloudinary upload failed');
+  const data = await res.json();
+  return data.secure_url;
+}
+// ─────────────────────────────────────────────────────────────────────────
+
 async function handleFiles(files) {
   if(!files||!files.length) return;
   if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
@@ -824,10 +844,21 @@ async function handleFiles(files) {
   const pf=document.getElementById('up-prog-fill');
   prog.style.display='block';
   for(let i=0;i<files.length;i++){
-    pt.textContent=`Compressing ${i+1} of ${files.length}: ${files[i].name}`;
+    pt.textContent=`Uploading ${i+1} of ${files.length}: ${files[i].name}`;
     pf.style.width=((i/files.length)*100)+'%';
-    try{ const d=await compressImage(files[i]); state.gallery[currentCat].push(d); }
-    catch(e){ pt.textContent=`Skipped ${files[i].name}`; }
+    try{
+      // Try Cloudinary first — fast, cross-browser, permanent URL
+      const url = await uploadToCloudinary(files[i]);
+      state.gallery[currentCat].push(url);
+      pt.textContent=`✅ Uploaded ${i+1} of ${files.length}`;
+    } catch(cloudErr) {
+      // Fallback to compressed base64 if Cloudinary fails
+      try{
+        const d=await compressImage(files[i]);
+        state.gallery[currentCat].push(d);
+        pt.textContent=`⚠️ Saved locally ${i+1} of ${files.length}`;
+      } catch(e){ pt.textContent=`Skipped ${files[i].name}`; }
+    }
   }
   pf.style.width='100%';
   pt.textContent=`✅ Done! Click Save Gallery.`;
