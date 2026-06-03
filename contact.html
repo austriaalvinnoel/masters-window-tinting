@@ -34,7 +34,7 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Poppins',sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+  body { font-family: "Inter",sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
   .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
@@ -52,13 +52,13 @@
   }
 
   .nav-logo {
-    font-family: 'Poppins',sans-serif; font-weight: 800;
+    font-family: "Inter",sans-serif; font-weight: 800;
     font-size: 1.15rem; letter-spacing: 0.1em;
     color: var(--white); text-decoration: none;
     display: flex; flex-direction: column; line-height: 1.15;
   }
   .nav-logo span {
-    font-family: 'Poppins',sans-serif;
+    font-family: "Inter",sans-serif;
     font-size: 0.58rem; font-weight: 600;
     letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase;
   }
@@ -109,7 +109,7 @@
   .breadcrumb a:hover { color: var(--gold); }
   .breadcrumb span { color: #333; }
   .page-hero h1 {
-    font-family: 'Poppins',sans-serif; font-weight: 800;
+    font-family: "Inter",sans-serif; font-weight: 800;
     font-size: clamp(4rem, 10vw, 9rem);
     line-height: 0.88; letter-spacing: 0.04em;
     color: var(--white); margin-bottom: 1.5rem; position: relative; z-index: 1;
@@ -156,7 +156,7 @@
 
   /* LEFT: INFO */
   .contact-info h2 {
-    font-family: 'Poppins',sans-serif; font-weight: 700;
+    font-family: "Inter",sans-serif; font-weight: 700;
     font-size: 2.8rem; color: var(--white);
     letter-spacing: 0.04em; margin-bottom: 0.8rem;
   }
@@ -230,7 +230,7 @@
     background: linear-gradient(90deg, var(--gold), var(--gold-light));
   }
   .form-title {
-    font-family: 'Poppins',sans-serif; font-weight: 700;
+    font-family: "Inter",sans-serif; font-weight: 700;
     font-size: 2rem; color: var(--white);
     letter-spacing: 0.04em; margin-bottom: 0.3rem;
   }
@@ -256,7 +256,7 @@
   .field textarea {
     background: var(--black); border: 1px solid rgba(255,255,255,0.15);
     padding: 0.85rem 1rem; font-size: 0.9rem;
-    color: var(--white); font-family: 'Poppins',sans-serif;
+    color: var(--white); font-family: "Inter",sans-serif;
     outline: none; transition: border-color 0.2s; width: 100%;
     -webkit-appearance: none;
   }
@@ -288,7 +288,7 @@
     width: 100%; background: var(--gold); color: #000; border: none;
     padding: 1.1rem; font-size: 0.9rem; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    cursor: pointer; font-family: 'Poppins',sans-serif;
+    cursor: pointer; font-family: "Inter",sans-serif;
     margin-top: 1.5rem; transition: all 0.2s;
     display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   }
@@ -309,7 +309,7 @@
     margin: 0 auto 1.2rem; font-size: 1.8rem;
   }
   .success-state h3 {
-    font-family: 'Poppins',sans-serif; font-weight: 700;
+    font-family: "Inter",sans-serif; font-weight: 700;
     font-size: 2rem; color: var(--gold);
     letter-spacing: 0.06em; margin-bottom: 0.7rem;
   }
@@ -327,7 +327,7 @@
     gap: 4rem; max-width: 1200px; margin: 0 auto 4rem;
   }
   .footer-brand-name {
-    font-family: 'Poppins',sans-serif; font-weight: 700;
+    font-family: "Inter",sans-serif; font-weight: 700;
     font-size: 1.5rem; letter-spacing: 0.08em;
     color: var(--white); margin-bottom: 0.2rem;
   }
@@ -348,7 +348,7 @@
   }
   .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(255,255,255,0.08); }
   .footer-col-title {
-    font-family: 'Poppins',sans-serif; font-weight: 700;
+    font-family: "Inter",sans-serif; font-weight: 700;
     font-size: 0.95rem; letter-spacing: 0.15em;
     color: var(--white); margin-bottom: 1.2rem;
   }
@@ -400,10 +400,36 @@
   .nav-links .dd li{display:block;width:100%;}
   .nav-links .dd a{display:block;padding:0.6rem 1.4rem;font-size:0.72rem;white-space:nowrap;letter-spacing:0.08em;}
   .nav-links .dd a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+
+/* TOP BANNER */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:1001;background:#000;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-main{display:flex;align-items:center;gap:1.6rem;padding:14px 2.5rem 12px;max-width:1400px;margin:0 auto}
+.tb-logo-link{flex-shrink:0;line-height:0}
+.tb-logo{height:64px;width:auto;display:block}
+.tb-title{flex:1;font-family:"Inter",sans-serif;font-style:italic;font-weight:700;font-size:1.05rem;color:#fff;line-height:1.25;margin:0;letter-spacing:-0.005em}
+.tb-strip{background:#c8201a;color:#fff;text-align:center;padding:8px 1rem;font-family:"Inter",sans-serif;font-weight:600;font-size:0.82rem;letter-spacing:0.02em}
+.tb-strip a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+.tb-strip a:hover{border-color:#fff}
+@media(max-width:880px){.tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}.tb-logo{height:54px}.tb-title{font-size:0.95rem}.tb-strip{font-size:0.72rem;padding:7px .8rem}}
+@media(max-width:480px){.tb-title{font-size:0.85rem}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","AutomotiveBusiness"],"name":"Masters Window Tinting & Detail","alternateName":["Ceramic Pro Long Island","NanoPro Liquid PPF Long Island"],"image":"https://masters-window-tinting.vercel.app/og-cover.jpg","url":"https://masters-window-tinting.vercel.app/","telephone":"+1-631-226-4300","address":{"@type":"PostalAddress","streetAddress":"863 Rte 109, Suite A","addressLocality":"West Babylon","addressRegion":"NY","postalCode":"11704","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.7195,"longitude":-73.3543},"areaServed":[{"@type":"AdministrativeArea","name":"Nassau County, NY"},{"@type":"AdministrativeArea","name":"Suffolk County, NY"},{"@type":"Place","name":"Long Island, NY"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"10:00","closes":"16:00"}],"priceRange":"$$-$$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Automotive Protection Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automotive Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Ceramic Pro Coating"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"NanoPro Liquid PPF (Paint Protection Film)"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Auto Detailing & Paint Correction"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Residential Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Wall Graphics & Vinyl Signs"}}]},"sameAs":["https://www.facebook.com/profile.php?id=100063773733742","https://www.instagram.com/Ceramic_pro_long_island/","https://www.masterswindowtinting.com/"]}</script>
 </head>
 <body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <div class="tb-main">
+    <a href="index.html" class="tb-logo-link">
+      <img src="mwt_logo.png" alt="Masters Window Tinting" class="tb-logo">
+    </a>
+    <p class="tb-title">Masters Window Tinting, Paint Protection Film &mdash; PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
+  </div>
+  <div class="tb-strip">
+    Long Island, New York &mdash;&mdash; 863 Rte 109, West Babylon, NY &mdash;&mdash; <a href="tel:6312264300">631-226-4300</a>
+  </div>
+</div>
+
 
 <!-- NAV -->
 <nav id="navbar">
