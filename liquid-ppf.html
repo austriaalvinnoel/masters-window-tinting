@@ -8,9 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://masters-window-tinting.vercel.app/liquid-ppf.html">
 <meta property="og:title" content="NanoPro Liquid PPF Long Island NY | Masters Window Tinting">
-<meta property="og:description" content="NanoPro Liquid PPF in West Babylon, Long Island NY. Seamless spray-on paint protection film with no seams or panel edges. Certified installers. Call 631-226-4300.">
+<meta property="og:description" content="NanoPro Liquid PPF in West Babylon, Long Island NY. Seamless spray-on paint protection with no seams or edges. Certified installers. Lifetime warranty. Call 631-226-4300.">
 <meta property="og:image" content="https://masters-window-tinting.vercel.app/og-cover.jpg">
-<meta name="description" content="NanoPro Liquid PPF in West Babylon, Long Island NY. Seamless spray-on paint protection film with no seams or panel edges. Certified installers. Call 631-226-4300.">
+<meta name="description" content="Automotive, residential &amp; commercial window tinting on Long Island. Carbon &amp; ceramic film. Lifetime warranty. Masters Window Tinting — West Babylon, NY.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -543,6 +543,66 @@ section[id]{scroll-margin-top:170px}
 }
 
 </style>
+<style>
+/* ── Window Tinting Page Specific ── */
+.page-hero{position:relative;display:block;padding:60px 0 56px;overflow:hidden;border-bottom:1px solid var(--line)}
+.page-hero-bg{position:absolute;inset:0;z-index:0}
+.page-hero-grid{position:absolute;inset:0;z-index:1;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(80% 80% at 50% 30%,#000,transparent 80%)}
+.page-hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.34;filter:grayscale(1) contrast(1.08)}
+.page-hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 78% 20%,rgba(255,255,255,.05),transparent 55%),radial-gradient(80% 70% at 12% 90%,rgba(255,255,255,.12),transparent 60%),linear-gradient(180deg,rgba(8,9,11,.72) 0%,rgba(8,9,11,.55) 45%,var(--bg) 100%)}
+.page-hero-inner{position:relative;z-index:2;width:100%;padding-top:0}
+.page-hero .breadcrumb{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.page-hero .breadcrumb a{color:var(--muted);transition:color .2s}.page-hero .breadcrumb a:hover{color:var(--ink)}
+.page-hero h1{font-size:clamp(3rem,8vw,7rem);text-transform:uppercase;letter-spacing:.04em;line-height:.95;margin:16px 0 20px}
+.page-hero .lead{color:var(--muted);font-size:16px;max-width:560px;margin-bottom:28px}
+.page-hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.page-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:28px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.page-stat{padding:28px 20px;text-align:center;border-right:1px solid var(--line);background:rgba(255,255,255,.02)}
+.page-stat:last-child{border-right:none}
+.page-stat .num{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);letter-spacing:.04em;color:var(--ink)}
+.page-stat .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+/* Film cards */
+.film-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.film-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 28px;transition:.35s;position:relative;overflow:hidden}
+.film-card::before{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.film-card:hover{transform:translateY(-6px);border-color:var(--line-2)}.film-card:hover::before{transform:scaleX(1)}
+.film-card .film-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.film-card h3{font-size:1.8rem;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 10px}
+.film-card p{color:var(--muted);font-size:14px;margin-bottom:18px}
+.film-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.film-card li{font-size:13.5px;color:var(--ink);display:flex;align-items:flex-start;gap:10px}
+.film-card li::before{content:"";flex-shrink:0;width:5px;height:5px;margin-top:7px;background:var(--gold);transform:rotate(45deg)}
+/* shade selector */
+.shade-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.shade-btn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--line-2);border-radius:99px;background:transparent;color:var(--muted);cursor:pointer;transition:.25s}
+.shade-btn:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
+.shade-btn.active{background:#fff;color:#000;border-color:#fff}
+.shade-preview{position:relative;aspect-ratio:16/6;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.shade-preview img{width:100%;height:100%;object-fit:cover;transition:filter .4s}
+/* process steps */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.proc{padding:30px 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface);transition:.3s}
+.proc:hover{border-color:var(--line-2);transform:translateY(-4px)}
+.proc .num{font-family:var(--display);font-size:2.8rem;letter-spacing:.04em;color:rgba(255,255,255,.12);line-height:1}
+.proc h4{font-family:var(--display);font-size:1.3rem;text-transform:uppercase;letter-spacing:.04em;margin:8px 0 8px}
+.proc p{font-size:13.5px;color:var(--muted)}
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);padding:20px 0}
+.faq-q{font-family:var(--display);font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q::after{content:"+";font-size:1.4rem;font-weight:300;color:var(--muted);transition:transform .3s;font-family:"Inter",sans-serif}
+.faq-item.open .faq-q::after{transform:rotate(45deg);color:#fff}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0}
+.faq-item.open .faq-a{max-height:300px;opacity:1;margin-top:12px}
+.faq-a p{color:var(--muted);font-size:14.5px;line-height:1.7}
+/* CTA band */
+.cta-band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:80px 0;text-align:center}
+.cta-band h2{font-size:clamp(2.4rem,5vw,4rem);text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
+.cta-band p{color:var(--muted);margin-bottom:28px;font-size:16px}
+@media(max-width:1024px){.film-grid,.process-grid{grid-template-columns:repeat(2,1fr)}.page-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.film-grid,.process-grid,.page-stats{grid-template-columns:1fr}.page-hero{padding:130px 0 80px;min-height:auto}}
+</style>
 </head>
 <body>
 
@@ -605,20 +665,16 @@ section[id]{scroll-margin-top:170px}
 <!-- HERO -->
 <section class="page-hero" id="top">
   <div class="page-hero-bg">
-    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="NanoPro Liquid PPF Long Island NY | Masters Window Tinting">
-    <div class="page-hero-grid"></div>
+  <div class="page-hero-grid"></div>
+    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="Liquid<br>PPF">
   </div>
   <div class="wrap page-hero-inner">
     <div class="reveal" style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px">
-      <a href="index.html" style="color:var(--muted)">Home</a>
-      <span>›</span>
-      <a href="index.html#services" style="color:var(--muted)">Services</a>
-      <span>›</span>
-      <span style="color:var(--ink)">Liquid PPF</span>
+      <a href="index.html" style="color:var(--muted)">Home</a><span>›</span><a href="index.html#services" style="color:var(--muted)">Services</a><span>›</span><span style="color:var(--ink)">Liquid PPF</span>
     </div>
     <span class="eyebrow">NanoPro Certified · Long Island NY</span>
     <h1>Liquid<br>PPF</h1>
-    <p class="lead">NanoPro Liquid PPF — seamless, spray-on protection with no hard edges or visible seams. Self-healing formula. Invisible defense for every curve of your paint applied by our certified team.</p>
+    <p class="lead">NanoPro Liquid PPF — seamless, spray-on protection with no hard edges or visible seams. Self-healing formula. Invisible defense for every curve of your paint applied by our certified team in West Babylon.</p>
     <div class="page-hero-actions">
       <a href="tel:6312264300" class="btn btn-gold">📞 Call 631-226-4300</a>
       <a href="contact.html" class="btn btn-ghost">Get a Free Quote →</a>
@@ -626,55 +682,48 @@ section[id]{scroll-margin-top:170px}
     <div class="page-stats reveal">
       <div class="page-stat"><div class="num">∞</div><div class="lbl">Warranty</div></div>
       <div class="page-stat"><div class="num">0</div><div class="lbl">Seams or Edges</div></div>
-      <div class="page-stat"><div class="num">25+</div><div class="lbl">Years Experience</div></div>
-      <div class="page-stat"><div class="num">4.9★</div><div class="lbl">Avg. Rating</div></div>
+      <div class="page-stat"><div class="num">25+</div><div class="lbl">Years Exp.</div></div>
+      <div class="page-stat"><div class="num">4.9★</div><div class="lbl">Rating</div></div>
     </div>
   </div>
 </section>
 
-
-<!-- PPF LEVELS -->
+<!-- PROTECTION LEVELS -->
 <section class="sec" id="ppf-levels" style="background:var(--bg)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">NanoPro Certified</span>
+      <span class="eyebrow">Coverage Options</span>
       <h2>Protection Levels</h2>
-      <p>Choose your coverage level — from daily-driver chip defense to full exotic shielding.</p>
+      <p>Choose your coverage — from daily-driver chip defense to full exotic shielding. Every level applied seamlessly with no visible edges.</p>
     </div>
     <div class="core">
       <article class="svc reveal">
         <span class="idx">01</span><span class="badge">Entry</span>
         <h3>Partial Front</h3>
-        <p>Essential protection for the highest-impact zones on daily drivers and leased vehicles.</p>
-        <ul>
-          <li>Front bumper</li><li>Headlights</li><li>Side mirrors</li>
-          <li>Partial hood (18–24 in.)</li><li>Partial fenders</li>
-        </ul>
+        <p>Essential coverage for the highest-impact zones. Perfect for daily drivers and leased vehicles.</p>
+        <ul><li>Front bumper</li><li>Headlights</li><li>Side mirrors</li><li>Partial hood (18–24 in.)</li><li>Partial fenders</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
       <article class="svc reveal" data-d="1">
         <span class="idx">02</span><span class="badge">Popular</span>
         <h3>Full Front</h3>
-        <p>Balanced protection with a seamless look — most popular for sports and luxury vehicles.</p>
-        <ul>
-          <li>Full front bumper</li><li>Full hood</li><li>Headlights</li>
-          <li>Side mirrors</li><li>Full fenders</li>
-        </ul>
+        <p>Balanced protection with a seamless look — most popular for sports and luxury vehicles on Long Island.</p>
+        <ul><li>Full front bumper</li><li>Full hood</li><li>Headlights</li><li>Side mirrors</li><li>Full fenders</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
       <article class="svc reveal" data-d="2">
-        <span class="idx">03</span><span class="badge">Performance</span>
-        <h3>Track Pack</h3>
-        <p>Enhanced coverage for performance drivers who push hard on the road or track.</p>
-        <ul>
-          <li>Full front coverage</li><li>A-pillars</li><li>Rocker panels</li>
-          <li>Door cups</li><li>Rear impact zones</li>
-        </ul>
+        <span class="idx">03</span><span class="badge">Ultimate</span>
+        <h3>Full Body</h3>
+        <p>Complete protection for every painted surface. The choice for exotic cars and long-term ownership.</p>
+        <ul><li>Every painted surface</li><li>Doors, roof, quarters</li><li>A-pillars &amp; rockers</li><li>All hardware-accessible areas</li><li>Self-healing full coverage</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
     </div>
-    <div class="more-svc" style="margin-top:20px">
-      <a class="msvc reveal" href="contact.html"><span class="k">Ultimate</span><h4>Full Body</h4><p>Every painted exterior surface — doors, roof, quarter panels, all hardware.</p><div class="ar">Get a Quote →</div></a>
-      <a class="msvc reveal" data-d="1" href="contact.html"><span class="k">Custom</span><h4>Custom Package</h4><p>Not sure which level? We'll assess your vehicle and recommend the right coverage.</p><div class="ar">Talk to Us →</div></a>
-      <a class="msvc reveal" data-d="2" href="index.html#ppf-levels"><span class="k">Visual</span><h4>See Coverage Map</h4><p>Hover or tap each level to see exactly what areas are protected on your car.</p><div class="ar">View Map →</div></a>
-      <a class="msvc reveal" data-d="3" href="ceramic-coating.html"><span class="k">Combine</span><h4>PPF + Ceramic</h4><p>Stack Liquid PPF with Ceramic Pro for complete inside-out protection.</p><div class="ar">Learn More →</div></a>
+    <div class="more-svc">
+      <a class="msvc reveal" href="index.html#ppf-levels"><span class="k">Visual</span><h4>See Coverage Map</h4><p>Tap each level to see exactly what areas are protected on your car.</p><div class="ar">View Map →</div></a>
+      <a class="msvc reveal" data-d="1" href="ceramic-coating.html"><span class="k">Combine</span><h4>PPF + Ceramic</h4><p>Stack Liquid PPF with Ceramic Pro for complete protection.</p><div class="ar">Learn More →</div></a>
+      <a class="msvc reveal" data-d="2" href="contact.html"><span class="k">Custom</span><h4>Track Pack</h4><p>A-pillars, rocker panels, door cups — for performance drivers.</p><div class="ar">Get Quote →</div></a>
+      <a class="msvc reveal" data-d="3" href="contact.html"><span class="k">Premium</span><h4>Borograph 2.0</h4><p>Elite NanoPro with boron silicate &amp; graphene-oxide technology.</p><div class="ar">Learn More →</div></a>
     </div>
   </div>
 </section>
@@ -682,16 +731,16 @@ section[id]{scroll-margin-top:170px}
 <!-- WHY LIQUID PPF -->
 <section class="sec" style="background:var(--bg-2);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+    <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center">
       <div class="reveal">
         <span class="eyebrow">NanoPro Technology</span>
-        <h2 style="font-size:clamp(2rem,4vw,3.2rem);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 18px">Why Liquid PPF<br>vs Traditional Film</h2>
-        <p style="color:var(--muted);margin-bottom:20px">Traditional PPF has seams and edges. Liquid PPF doesn't. NanoPro bonds at the molecular level — no panel edges, no lifting, no visible seams ever.</p>
-        <div class="diff-grid" style="grid-template-columns:1fr 1fr;margin-top:24px">
-          <div class="diff"><span class="ic">🔬</span><h4>Self-Healing</h4><p>Light scratches disappear with heat. The formula repairs itself.</p></div>
-          <div class="diff"><span class="ic">👁️</span><h4>Invisible</h4><p>No visible seams or panel edges — looks completely stock.</p></div>
+        <h2 style="font-size:clamp(2rem,4vw,3.2rem);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 18px">Liquid PPF vs<br>Traditional Film</h2>
+        <p style="color:var(--muted);margin-bottom:20px">Traditional PPF has visible seams and panel edges. NanoPro Liquid PPF bonds at the molecular level — no edges, no lifting, no seams. Ever.</p>
+        <div class="diff-grid" style="margin-top:24px">
+          <div class="diff"><span class="ic">🔬</span><h4>Self-Healing</h4><p>Light scratches disappear with heat. The formula repairs itself automatically.</p></div>
+          <div class="diff"><span class="ic">👁️</span><h4>Invisible Finish</h4><p>No visible seams or panel edges — looks completely stock on your vehicle.</p></div>
           <div class="diff"><span class="ic">☀️</span><h4>UV Protection</h4><p>Blocks UV rays that fade and oxidize your paint over time.</p></div>
-          <div class="diff"><span class="ic">🛡️</span><h4>Rock Chips</h4><p>Absorbs impact from road debris, gravel, and small stones.</p></div>
+          <div class="diff"><span class="ic">🛡️</span><h4>Rock Chip Defense</h4><p>Absorbs impact from road debris and stone chips on Long Island highways.</p></div>
         </div>
       </div>
       <div class="product-visual reveal" data-d="1" style="aspect-ratio:4/5">
@@ -707,15 +756,15 @@ section[id]{scroll-margin-top:170px}
 <section class="sec" style="background:var(--bg)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Application Process</span>
-      <h2>How It's Applied</h2>
-      <p>NanoPro Liquid PPF is spray-applied by our certified installers — no pre-cut panels, no hard edges.</p>
+      <span class="eyebrow">How It Works</span>
+      <h2>Our Process</h2>
+      <p>NanoPro is spray-applied by our certified installers. No pre-cut panels. No hard edges. Just seamless protection.</p>
     </div>
     <div class="process-grid">
-      <div class="proc reveal"><div class="num">01</div><h4>Decontamination</h4><p>Full paint decontamination wash to remove any bonding-blocking contaminants.</p></div>
-      <div class="proc reveal" data-d="1"><div class="num">02</div><h4>Paint Prep</h4><p>Clay bar treatment and surface inspection. Any chips or scratches are noted.</p></div>
-      <div class="proc reveal" data-d="2"><div class="num">03</div><h4>Application</h4><p>NanoPro Liquid PPF sprayed evenly across all selected panels by our certified team.</p></div>
-      <div class="proc reveal" data-d="3"><div class="num">04</div><h4>Cure & Inspect</h4><p>Full cure and quality inspection before handover. We walk you through aftercare.</p></div>
+      <div class="proc reveal"><div class="num">01</div><h4>Decontamination</h4><p>Full paint decon wash to remove all bonding-blocking contaminants before application.</p></div>
+      <div class="proc reveal" data-d="1"><div class="num">02</div><h4>Paint Prep</h4><p>Clay bar treatment and surface inspection. Any chips or scratches are noted and addressed.</p></div>
+      <div class="proc reveal" data-d="2"><div class="num">03</div><h4>Application</h4><p>NanoPro sprayed evenly across all selected panels by our NanoPro certified installers.</p></div>
+      <div class="proc reveal" data-d="3"><div class="num">04</div><h4>Cure &amp; Inspect</h4><p>Full cure and quality inspection before handover. We walk you through aftercare.</p></div>
     </div>
   </div>
 </section>
@@ -726,25 +775,27 @@ section[id]{scroll-margin-top:170px}
     <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:start">
       <div class="reveal">
         <span class="eyebrow">Questions</span>
-        <h2 style="font-size:clamp(2.4rem,5vw,3.8rem);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 20px">Frequently Asked</h2>
+        <h2 style="font-size:clamp(2.4rem,5vw,3.8rem);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 20px">Frequently<br>Asked</h2>
         <p style="color:var(--muted);margin-bottom:28px">Have more questions? Call <a href="tel:6312264300" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.3)">631-226-4300</a></p>
         <a href="contact.html" class="btn btn-gold">Get a Free Quote →</a>
       </div>
       <div class="reveal" data-d="1">
-        <div class="faq-item"><div class="faq-q">Is Liquid PPF as strong as traditional film?</div><div class="faq-a"><p>For most driving conditions, yes. Liquid PPF handles daily driving, rock chips, and UV perfectly. For extreme off-road or racing, traditional film on the leading edges offers more physical thickness.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Is Liquid PPF as strong as traditional film?</div><div class="faq-a"><p>For most driving conditions, yes. Liquid PPF handles daily driving, rock chips, and UV perfectly. For extreme off-road, traditional film on the leading edges adds more physical thickness.</p></div></div>
         <div class="faq-item"><div class="faq-q">How long does Liquid PPF last?</div><div class="faq-a"><p>NanoPro Liquid PPF lasts 2–5 years depending on the package and maintenance. Our premium packages include a full replacement warranty.</p></div></div>
-        <div class="faq-item"><div class="faq-q">Can it be applied over existing paint damage?</div><div class="faq-a"><p>Liquid PPF is not a filler — it should be applied to clean, corrected paint. We can perform paint correction before application if needed.</p></div></div>
-        <div class="faq-item"><div class="faq-q">Can I combine it with ceramic coating?</div><div class="faq-a"><p>Yes — and we recommend it. Liquid PPF for physical chip protection, ceramic coating on top for gloss, hydrophobic protection, and ease of cleaning.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Can it be applied over existing paint damage?</div><div class="faq-a"><p>Liquid PPF bonds to the paint surface — it should be applied to clean, corrected paint. We can perform paint correction before application if needed.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Can I combine it with ceramic coating?</div><div class="faq-a"><p>Yes — and we highly recommend it. Liquid PPF for physical chip protection, ceramic coating on top for gloss, hydrophobic protection, and ease of cleaning.</p></div></div>
+        <div class="faq-item"><div class="faq-q">How long until I can wash my car?</div><div class="faq-a"><p>We recommend waiting 7 days before washing. Avoid high-pressure water on edges for the first 2 weeks to allow full cure.</p></div></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- CTA -->
 <section class="cta-band">
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center;display:inline-flex;margin-bottom:16px">NanoPro Certified · West Babylon, NY</span>
     <h2>Protect Your<br>Paint Today</h2>
-    <p>Call us for a free assessment or request a quote online.</p>
+    <p>Call us for a free assessment or request a quote online. Open 7 days a week.</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
       <a href="tel:6312264300" class="btn btn-gold">📞 631-226-4300</a>
       <a href="contact.html" class="btn btn-ghost">Get a Free Quote →</a>
