@@ -8,9 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://masters-window-tinting.vercel.app/detailing.html">
 <meta property="og:title" content="Auto Detailing & Paint Correction Long Island NY | Masters Window Tinting">
-<meta property="og:description" content="Professional auto detailing and paint correction in West Babylon, Long Island NY. Swirl removal, machine polish, full detail packages. Same team as Ceramic Pro installs. Call 631-226-4300.">
+<meta property="og:description" content="Professional auto detailing and paint correction in West Babylon, Long Island NY. Swirl removal, machine polish, full detail packages. Call 631-226-4300.">
 <meta property="og:image" content="https://masters-window-tinting.vercel.app/og-cover.jpg">
-<meta name="description" content="Professional auto detailing and paint correction in West Babylon, Long Island NY. Swirl removal, machine polish, full detail packages. Same team as Ceramic Pro installs. Call 631-226-4300.">
+<meta name="description" content="Automotive, residential &amp; commercial window tinting on Long Island. Carbon &amp; ceramic film. Lifetime warranty. Masters Window Tinting — West Babylon, NY.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -543,6 +543,66 @@ section[id]{scroll-margin-top:170px}
 }
 
 </style>
+<style>
+/* ── Window Tinting Page Specific ── */
+.page-hero{position:relative;display:block;padding:60px 0 56px;overflow:hidden;border-bottom:1px solid var(--line)}
+.page-hero-bg{position:absolute;inset:0;z-index:0}
+.page-hero-grid{position:absolute;inset:0;z-index:1;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(80% 80% at 50% 30%,#000,transparent 80%)}
+.page-hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.34;filter:grayscale(1) contrast(1.08)}
+.page-hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 78% 20%,rgba(255,255,255,.05),transparent 55%),radial-gradient(80% 70% at 12% 90%,rgba(255,255,255,.12),transparent 60%),linear-gradient(180deg,rgba(8,9,11,.72) 0%,rgba(8,9,11,.55) 45%,var(--bg) 100%)}
+.page-hero-inner{position:relative;z-index:2;width:100%;padding-top:0}
+.page-hero .breadcrumb{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.page-hero .breadcrumb a{color:var(--muted);transition:color .2s}.page-hero .breadcrumb a:hover{color:var(--ink)}
+.page-hero h1{font-size:clamp(3rem,8vw,7rem);text-transform:uppercase;letter-spacing:.04em;line-height:.95;margin:16px 0 20px}
+.page-hero .lead{color:var(--muted);font-size:16px;max-width:560px;margin-bottom:28px}
+.page-hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.page-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:28px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.page-stat{padding:28px 20px;text-align:center;border-right:1px solid var(--line);background:rgba(255,255,255,.02)}
+.page-stat:last-child{border-right:none}
+.page-stat .num{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);letter-spacing:.04em;color:var(--ink)}
+.page-stat .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+/* Film cards */
+.film-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.film-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 28px;transition:.35s;position:relative;overflow:hidden}
+.film-card::before{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.film-card:hover{transform:translateY(-6px);border-color:var(--line-2)}.film-card:hover::before{transform:scaleX(1)}
+.film-card .film-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.film-card h3{font-size:1.8rem;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 10px}
+.film-card p{color:var(--muted);font-size:14px;margin-bottom:18px}
+.film-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.film-card li{font-size:13.5px;color:var(--ink);display:flex;align-items:flex-start;gap:10px}
+.film-card li::before{content:"";flex-shrink:0;width:5px;height:5px;margin-top:7px;background:var(--gold);transform:rotate(45deg)}
+/* shade selector */
+.shade-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.shade-btn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--line-2);border-radius:99px;background:transparent;color:var(--muted);cursor:pointer;transition:.25s}
+.shade-btn:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
+.shade-btn.active{background:#fff;color:#000;border-color:#fff}
+.shade-preview{position:relative;aspect-ratio:16/6;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.shade-preview img{width:100%;height:100%;object-fit:cover;transition:filter .4s}
+/* process steps */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.proc{padding:30px 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface);transition:.3s}
+.proc:hover{border-color:var(--line-2);transform:translateY(-4px)}
+.proc .num{font-family:var(--display);font-size:2.8rem;letter-spacing:.04em;color:rgba(255,255,255,.12);line-height:1}
+.proc h4{font-family:var(--display);font-size:1.3rem;text-transform:uppercase;letter-spacing:.04em;margin:8px 0 8px}
+.proc p{font-size:13.5px;color:var(--muted)}
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);padding:20px 0}
+.faq-q{font-family:var(--display);font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q::after{content:"+";font-size:1.4rem;font-weight:300;color:var(--muted);transition:transform .3s;font-family:"Inter",sans-serif}
+.faq-item.open .faq-q::after{transform:rotate(45deg);color:#fff}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0}
+.faq-item.open .faq-a{max-height:300px;opacity:1;margin-top:12px}
+.faq-a p{color:var(--muted);font-size:14.5px;line-height:1.7}
+/* CTA band */
+.cta-band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:80px 0;text-align:center}
+.cta-band h2{font-size:clamp(2.4rem,5vw,4rem);text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
+.cta-band p{color:var(--muted);margin-bottom:28px;font-size:16px}
+@media(max-width:1024px){.film-grid,.process-grid{grid-template-columns:repeat(2,1fr)}.page-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.film-grid,.process-grid,.page-stats{grid-template-columns:1fr}.page-hero{padding:130px 0 80px;min-height:auto}}
+</style>
 </head>
 <body>
 
@@ -605,16 +665,12 @@ section[id]{scroll-margin-top:170px}
 <!-- HERO -->
 <section class="page-hero" id="top">
   <div class="page-hero-bg">
-    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Auto Detailing & Paint Correction Long Island NY | Masters Window Tinting">
-    <div class="page-hero-grid"></div>
+  <div class="page-hero-grid"></div>
+    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Detailing &<br>Paint Correction">
   </div>
   <div class="wrap page-hero-inner">
     <div class="reveal" style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px">
-      <a href="index.html" style="color:var(--muted)">Home</a>
-      <span>›</span>
-      <a href="index.html#services" style="color:var(--muted)">Services</a>
-      <span>›</span>
-      <span style="color:var(--ink)">Detailing & Paint Correction</span>
+      <a href="index.html" style="color:var(--muted)">Home</a><span>›</span><a href="index.html#services" style="color:var(--muted)">Services</a><span>›</span><span style="color:var(--ink)">Detailing</span>
     </div>
     <span class="eyebrow">Auto Detailing · West Babylon NY</span>
     <h1>Detailing &<br>Paint Correction</h1>
@@ -626,13 +682,13 @@ section[id]{scroll-margin-top:170px}
     <div class="page-stats reveal">
       <div class="page-stat"><div class="num">3</div><div class="lbl">Stage Correction</div></div>
       <div class="page-stat"><div class="num">100%</div><div class="lbl">Hand Finished</div></div>
-      <div class="page-stat"><div class="num">25+</div><div class="lbl">Years Experience</div></div>
-      <div class="page-stat"><div class="num">4.9★</div><div class="lbl">Avg. Rating</div></div>
+      <div class="page-stat"><div class="num">25+</div><div class="lbl">Years Exp.</div></div>
+      <div class="page-stat"><div class="num">4.9★</div><div class="lbl">Rating</div></div>
     </div>
   </div>
 </section>
 
-
+<!-- SERVICES -->
 <section class="sec" style="background:var(--bg)">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -642,56 +698,73 @@ section[id]{scroll-margin-top:170px}
     </div>
     <div class="core">
       <article class="svc reveal">
-        <span class="idx">01</span><span class="badge">Exterior</span>
-        <h3>Full Detail</h3>
-        <p>Complete interior and exterior detail. Hand wash, decontamination, glass cleaning, interior vacuum, and wipe-down.</p>
-        <ul>
-          <li>Exterior hand wash</li><li>Wheel & tire cleaning</li><li>Glass treatment</li>
-          <li>Interior vacuum</li><li>Dashboard & trim wipe-down</li>
-        </ul>
+        <span class="idx">01</span><span class="badge">Full Detail</span>
+        <h3>Complete Detail</h3>
+        <p>Interior and exterior detail — hand wash, decontamination, glass cleaning, interior vacuum, and full wipe-down.</p>
+        <ul><li>Exterior hand wash</li><li>Wheel &amp; tire cleaning</li><li>Glass treatment</li><li>Interior vacuum</li><li>Dashboard &amp; trim wipe-down</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
       <article class="svc reveal" data-d="1">
         <span class="idx">02</span><span class="badge">Popular</span>
         <h3>Paint Correction</h3>
-        <p>Machine polish to remove swirl marks, light scratches, water spots, and oxidation. Restore gloss to dull paint.</p>
-        <ul>
-          <li>Swirl mark removal</li><li>Light scratch removal</li><li>Water spot removal</li>
-          <li>Oxidation correction</li><li>Machine polish finish</li>
-        </ul>
+        <p>Machine polish to remove swirl marks, light scratches, water spots, and oxidation. Restore your paint's gloss.</p>
+        <ul><li>Swirl mark removal</li><li>Light scratch removal</li><li>Water spot removal</li><li>Oxidation correction</li><li>Machine polish finish</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
       <article class="svc reveal" data-d="2">
-        <span class="idx">03</span><span class="badge">Protection</span>
+        <span class="idx">03</span><span class="badge">Pre-Coating</span>
         <h3>Coating Prep</h3>
-        <p>Full paint decontamination and correction specifically designed to prep your vehicle for ceramic coating or PPF application.</p>
-        <ul>
-          <li>Full decontamination wash</li><li>Iron & tar removal</li><li>Clay bar treatment</li>
-          <li>Multi-stage machine polish</li><li>IPA panel wipe-down</li>
-        </ul>
+        <p>Full paint decontamination and correction to prep your vehicle for ceramic coating or Liquid PPF application.</p>
+        <ul><li>Full decontamination wash</li><li>Iron &amp; tar removal</li><li>Clay bar treatment</li><li>Multi-stage machine polish</li><li>IPA panel wipe-down</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
     </div>
   </div>
 </section>
 
+<!-- PROCESS -->
 <section class="sec" style="background:var(--bg-2);border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">The Process</span>
-      <h2>How We Detail</h2>
+      <span class="eyebrow">How We Detail</span>
+      <h2>Our Process</h2>
+      <p>Every vehicle inspected under proper lighting before we begin — we know every defect before we start correcting.</p>
     </div>
     <div class="process-grid">
-      <div class="proc reveal"><div class="num">01</div><h4>Inspection</h4><p>Full paint inspection under lighting to identify all defects before we begin.</p></div>
+      <div class="proc reveal"><div class="num">01</div><h4>Inspection</h4><p>Full paint inspection under lighting to identify all defects before we begin any work.</p></div>
       <div class="proc reveal" data-d="1"><div class="num">02</div><h4>Decontamination</h4><p>Pre-wash, snow foam, hand wash, iron decontamination, and clay bar treatment.</p></div>
       <div class="proc reveal" data-d="2"><div class="num">03</div><h4>Correction</h4><p>Machine polish to remove defects — single stage for light correction, multi-stage for deep work.</p></div>
-      <div class="proc reveal" data-d="3"><div class="num">04</div><h4>Protection</h4><p>Sealant, wax, or ceramic coating applied to protect and maintain the corrected surface.</p></div>
+      <div class="proc reveal" data-d="3"><div class="num">04</div><h4>Protection</h4><p>Sealant, wax, or ceramic coating applied to protect and lock in the corrected finish.</p></div>
     </div>
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="sec" style="background:var(--bg)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:start">
+      <div class="reveal">
+        <span class="eyebrow">Questions</span>
+        <h2 style="font-size:clamp(2.4rem,5vw,3.8rem);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 20px">Frequently<br>Asked</h2>
+        <p style="color:var(--muted);margin-bottom:28px">Call us at <a href="tel:6312264300" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.3)">631-226-4300</a></p>
+        <a href="contact.html" class="btn btn-gold">Get a Free Quote →</a>
+      </div>
+      <div class="reveal" data-d="1">
+        <div class="faq-item"><div class="faq-q">How long does paint correction take?</div><div class="faq-a"><p>Most single-stage corrections take 4–8 hours. Multi-stage correction on heavily swirled paint can take 1–2 full days. We'll assess your vehicle and give you an accurate timeline when you call.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Will paint correction remove all scratches?</div><div class="faq-a"><p>Paint correction removes defects that are in the clear coat — swirls, light scratches, and water spots. Deep scratches that go through to the paint or primer cannot be removed by polishing alone.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Should I get paint correction before ceramic coating?</div><div class="faq-a"><p>Yes — absolutely. Ceramic coating magnifies everything underneath it. Any uncorrected defects get locked in permanently. We always recommend correction before any coating application.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Do you do interior detailing?</div><div class="faq-a"><p>Yes — our full detail package includes complete interior cleaning. Vacuum, wipe-down, glass cleaning, and leather conditioning are all included.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
 <section class="cta-band">
   <div class="wrap">
-    <span class="eyebrow" style="justify-content:center;display:inline-flex;margin-bottom:16px">West Babylon · Long Island</span>
+    <span class="eyebrow" style="justify-content:center;display:inline-flex;margin-bottom:16px">West Babylon · Long Island · Open 7 Days</span>
     <h2>Restore Your<br>Paint's Gloss</h2>
-    <p>Call for availability or request a quote online.</p>
+    <p>Call for availability or request a quote online. Same certified team as our coating installs.</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
       <a href="tel:6312264300" class="btn btn-gold">📞 631-226-4300</a>
       <a href="contact.html" class="btn btn-ghost">Get a Free Quote →</a>
