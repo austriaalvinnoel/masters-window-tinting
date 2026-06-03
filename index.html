@@ -164,12 +164,13 @@ header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);borde
 .ppf-band{position:relative;background:#000;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .marquee{display:flex;overflow:hidden;user-select:none;border-bottom:1px solid var(--line);background:#050505}
 .marquee.bottom{border-bottom:0;border-top:1px solid var(--line)}
-.marquee .track{display:flex;flex-shrink:0;min-width:100%;align-items:center;gap:46px;padding:16px 0;white-space:nowrap;animation:scroll-l 32s linear infinite}
-.marquee.bottom .track{animation-name:scroll-r}
+.marquee-inner{display:flex;width:max-content;animation:scroll-l 28s linear infinite}
+.marquee.bottom .marquee-inner{animation-name:scroll-r}
+.marquee .track{display:flex;align-items:center;gap:46px;padding:16px 0;white-space:nowrap}
 .marquee span{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#fff;display:inline-flex;align-items:center;gap:46px}
 .marquee span::after{content:"◆";color:var(--gold);font-size:9px}
-@keyframes scroll-l{to{transform:translateX(-50%)}}
-@keyframes scroll-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes scroll-l{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scroll-r{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
 .ppf-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:0;align-items:stretch;min-height:520px}
 .ppf-copy{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
 .ppf-copy .eyebrow{margin-bottom:26px}
@@ -640,13 +641,27 @@ section[id]{scroll-margin-top:170px}
 <!-- LIQUID PPF BAND -->
 <section class="ppf-band" id="liquid-ppf">
   <div class="marquee">
-    <div class="track">
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
-    </div>
-    <div class="track" aria-hidden="true">
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
+    <div class="marquee-inner">
+      <div class="track">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
+      <div class="track" aria-hidden="true">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
     </div>
   </div>
 
@@ -676,13 +691,27 @@ section[id]{scroll-margin-top:170px}
   </div>
 
   <div class="marquee bottom">
-    <div class="track">
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
-    </div>
-    <div class="track" aria-hidden="true">
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
-      <span>Liquid Paint Protection Film</span><span>Liquid Paint Protection Film</span>
+    <div class="marquee-inner">
+      <div class="track">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
+      <div class="track" aria-hidden="true">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
     </div>
   </div>
 </section>
