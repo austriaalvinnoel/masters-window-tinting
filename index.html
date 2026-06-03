@@ -1191,6 +1191,44 @@ section[id]{scroll-margin-top:170px}
 
 <script>
 (function(){
+  // Load CMS before/after pairs from GitHub
+  fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      if (!data || !data.beforeafter || !data.beforeafter.length) return;
+      var slider = document.getElementById('baSlider');
+      var tabsEl = document.querySelector('.ba-tabs');
+      if (!slider || !tabsEl) return;
+      // Remove existing slides and tabs
+      slider.innerHTML = '';
+      tabsEl.innerHTML = '';
+      data.beforeafter.forEach(function(pair, i){
+        // Tab
+        var tab = document.createElement('button');
+        tab.className = 'ba-tab' + (i===0 ? ' active' : '');
+        tab.dataset.slide = i;
+        tab.textContent = pair.label || ('Slide '+(i+1));
+        tabsEl.appendChild(tab);
+        // Slide
+        var slide = document.createElement('div');
+        slide.className = 'ba-slide' + (i===0 ? ' active' : '');
+        slide.dataset.index = i;
+        slide.innerHTML =
+          '<div class="ba-container" id="baContainer'+i+'">' +
+            '<div class="ba-after"><img src="'+pair.after+'" alt="After '+pair.label+'"><span class="ba-label ba-label-after">AFTER</span></div>' +
+            '<div class="ba-before"><img src="'+pair.before+'" alt="Before '+pair.label+'"><span class="ba-label ba-label-before">BEFORE</span></div>' +
+            '<div class="ba-handle" id="baHandle'+i+'"><div class="ba-line"></div><div class="ba-circle"><span class="ba-arrows">&#8592;&#8594;</span></div></div>' +
+          '</div>' +
+          '<div class="ba-info"><span class="ba-service">'+pair.label+'</span></div>';
+        slider.appendChild(slide);
+      });
+      // Re-init tabs and sliders
+      initBATabs();
+      initBASliders();
+    })
+    .catch(function(){ initBATabs(); initBASliders(); });
+
+  function initBATabs(){
   // Tab switching
   document.querySelectorAll('.ba-tab').forEach(function(tab){
     tab.addEventListener('click', function(){
@@ -1231,6 +1269,28 @@ section[id]{scroll-margin-top:170px}
     window.addEventListener('mouseup', function(){ dragging=false; });
     window.addEventListener('touchend', function(){ dragging=false; });
   });
+  }
+
+  function initBASliders(){
+    var containers = document.querySelectorAll('.ba-container');
+    containers.forEach(function(container){
+      var before = container.querySelector('.ba-before');
+      var handle = container.querySelector('.ba-handle');
+      if(!container||!before||!handle) return;
+      var dragging = false;
+      function setPos(pct){ pct=Math.max(2,Math.min(98,pct)); before.style.width=pct+'%'; before.querySelector('img').style.width=(100/(pct/100))+'%'; handle.style.left=pct+'%'; }
+      setPos(50);
+      function getPos(e){ var rect=container.getBoundingClientRect(); var x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left; return(x/rect.width)*100; }
+      container.addEventListener('mousedown',function(e){dragging=true;setPos(getPos(e));e.preventDefault();});
+      container.addEventListener('touchstart',function(e){dragging=true;setPos(getPos(e));},{passive:true});
+      window.addEventListener('mousemove',function(e){if(dragging)setPos(getPos(e));});
+      window.addEventListener('touchmove',function(e){if(dragging)setPos(getPos(e));},{passive:true});
+      window.addEventListener('mouseup',function(){dragging=false;});
+      window.addEventListener('touchend',function(){dragging=false;});
+    });
+  }
+  initBATabs();
+  initBASliders();
 })();
 </script>
 
