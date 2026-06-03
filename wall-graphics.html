@@ -8,9 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://masters-window-tinting.vercel.app/wall-graphics.html">
 <meta property="og:title" content="Wall Graphics & Vinyl Long Island NY | Masters Window Tinting">
-<meta property="og:description" content="Custom wall graphics, wraps, and vinyl for homes and businesses on Long Island. Branded graphics, murals, frosted film, and more. West Babylon NY. Call 631-226-4300.">
+<meta property="og:description" content="Custom wall graphics, wraps, and vinyl for homes and businesses on Long Island. Branded graphics, murals, frosted film. West Babylon NY. Call 631-226-4300.">
 <meta property="og:image" content="https://masters-window-tinting.vercel.app/og-cover.jpg">
-<meta name="description" content="Custom wall graphics, wraps, and vinyl for homes and businesses on Long Island. Branded graphics, murals, frosted film, and more. West Babylon NY. Call 631-226-4300.">
+<meta name="description" content="Automotive, residential &amp; commercial window tinting on Long Island. Carbon &amp; ceramic film. Lifetime warranty. Masters Window Tinting — West Babylon, NY.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -543,6 +543,66 @@ section[id]{scroll-margin-top:170px}
 }
 
 </style>
+<style>
+/* ── Window Tinting Page Specific ── */
+.page-hero{position:relative;display:block;padding:60px 0 56px;overflow:hidden;border-bottom:1px solid var(--line)}
+.page-hero-bg{position:absolute;inset:0;z-index:0}
+.page-hero-grid{position:absolute;inset:0;z-index:1;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(80% 80% at 50% 30%,#000,transparent 80%)}
+.page-hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.34;filter:grayscale(1) contrast(1.08)}
+.page-hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 78% 20%,rgba(255,255,255,.05),transparent 55%),radial-gradient(80% 70% at 12% 90%,rgba(255,255,255,.12),transparent 60%),linear-gradient(180deg,rgba(8,9,11,.72) 0%,rgba(8,9,11,.55) 45%,var(--bg) 100%)}
+.page-hero-inner{position:relative;z-index:2;width:100%;padding-top:0}
+.page-hero .breadcrumb{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.page-hero .breadcrumb a{color:var(--muted);transition:color .2s}.page-hero .breadcrumb a:hover{color:var(--ink)}
+.page-hero h1{font-size:clamp(3rem,8vw,7rem);text-transform:uppercase;letter-spacing:.04em;line-height:.95;margin:16px 0 20px}
+.page-hero .lead{color:var(--muted);font-size:16px;max-width:560px;margin-bottom:28px}
+.page-hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.page-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:28px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.page-stat{padding:28px 20px;text-align:center;border-right:1px solid var(--line);background:rgba(255,255,255,.02)}
+.page-stat:last-child{border-right:none}
+.page-stat .num{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);letter-spacing:.04em;color:var(--ink)}
+.page-stat .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+/* Film cards */
+.film-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.film-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 28px;transition:.35s;position:relative;overflow:hidden}
+.film-card::before{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.film-card:hover{transform:translateY(-6px);border-color:var(--line-2)}.film-card:hover::before{transform:scaleX(1)}
+.film-card .film-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.film-card h3{font-size:1.8rem;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 10px}
+.film-card p{color:var(--muted);font-size:14px;margin-bottom:18px}
+.film-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.film-card li{font-size:13.5px;color:var(--ink);display:flex;align-items:flex-start;gap:10px}
+.film-card li::before{content:"";flex-shrink:0;width:5px;height:5px;margin-top:7px;background:var(--gold);transform:rotate(45deg)}
+/* shade selector */
+.shade-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.shade-btn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--line-2);border-radius:99px;background:transparent;color:var(--muted);cursor:pointer;transition:.25s}
+.shade-btn:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
+.shade-btn.active{background:#fff;color:#000;border-color:#fff}
+.shade-preview{position:relative;aspect-ratio:16/6;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.shade-preview img{width:100%;height:100%;object-fit:cover;transition:filter .4s}
+/* process steps */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.proc{padding:30px 24px;border:1px solid var(--line);border-radius:4px;background:var(--surface);transition:.3s}
+.proc:hover{border-color:var(--line-2);transform:translateY(-4px)}
+.proc .num{font-family:var(--display);font-size:2.8rem;letter-spacing:.04em;color:rgba(255,255,255,.12);line-height:1}
+.proc h4{font-family:var(--display);font-size:1.3rem;text-transform:uppercase;letter-spacing:.04em;margin:8px 0 8px}
+.proc p{font-size:13.5px;color:var(--muted)}
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);padding:20px 0}
+.faq-q{font-family:var(--display);font-size:1.2rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q::after{content:"+";font-size:1.4rem;font-weight:300;color:var(--muted);transition:transform .3s;font-family:"Inter",sans-serif}
+.faq-item.open .faq-q::after{transform:rotate(45deg);color:#fff}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .3s;opacity:0}
+.faq-item.open .faq-a{max-height:300px;opacity:1;margin-top:12px}
+.faq-a p{color:var(--muted);font-size:14.5px;line-height:1.7}
+/* CTA band */
+.cta-band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:80px 0;text-align:center}
+.cta-band h2{font-size:clamp(2.4rem,5vw,4rem);text-transform:uppercase;letter-spacing:.04em;margin-bottom:16px}
+.cta-band p{color:var(--muted);margin-bottom:28px;font-size:16px}
+@media(max-width:1024px){.film-grid,.process-grid{grid-template-columns:repeat(2,1fr)}.page-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.film-grid,.process-grid,.page-stats{grid-template-columns:1fr}.page-hero{padding:130px 0 80px;min-height:auto}}
+</style>
 </head>
 <body>
 
@@ -605,18 +665,14 @@ section[id]{scroll-margin-top:170px}
 <!-- HERO -->
 <section class="page-hero" id="top">
   <div class="page-hero-bg">
-    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Wall Graphics & Vinyl Long Island NY | Masters Window Tinting">
-    <div class="page-hero-grid"></div>
+  <div class="page-hero-grid"></div>
+    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Wall<br>Graphics">
   </div>
   <div class="wrap page-hero-inner">
     <div class="reveal" style="font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px">
-      <a href="index.html" style="color:var(--muted)">Home</a>
-      <span>›</span>
-      <a href="index.html#services" style="color:var(--muted)">Services</a>
-      <span>›</span>
-      <span style="color:var(--ink)">Wall Graphics</span>
+      <a href="index.html" style="color:var(--muted)">Home</a><span>›</span><a href="index.html#services" style="color:var(--muted)">Services</a><span>›</span><span style="color:var(--ink)">Wall Graphics</span>
     </div>
-    <span class="eyebrow">Wall Graphics · Long Island NY</span>
+    <span class="eyebrow">Wall Graphics & Vinyl · Long Island NY</span>
     <h1>Wall<br>Graphics</h1>
     <p class="lead">Custom wall wraps, murals, branded environments, and frosted glass graphics for homes, offices, restaurants, and businesses across Long Island. Professional installation by our experienced team.</p>
     <div class="page-hero-actions">
@@ -626,72 +682,89 @@ section[id]{scroll-margin-top:170px}
     <div class="page-stats reveal">
       <div class="page-stat"><div class="num">Any</div><div class="lbl">Size Project</div></div>
       <div class="page-stat"><div class="num">Custom</div><div class="lbl">Design Available</div></div>
-      <div class="page-stat"><div class="num">25+</div><div class="lbl">Years Experience</div></div>
-      <div class="page-stat"><div class="num">4.9★</div><div class="lbl">Avg. Rating</div></div>
+      <div class="page-stat"><div class="num">25+</div><div class="lbl">Years Exp.</div></div>
+      <div class="page-stat"><div class="num">4.9★</div><div class="lbl">Rating</div></div>
     </div>
   </div>
 </section>
 
-
+<!-- SERVICES -->
 <section class="sec" style="background:var(--bg)">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">What We Install</span>
-      <h2>Wall Graphics<br>& Vinyl</h2>
+      <h2>Graphics &amp;<br>Vinyl Solutions</h2>
       <p>Custom graphics for homes, offices, restaurants, retail spaces, and businesses across Long Island.</p>
     </div>
     <div class="core">
       <article class="svc reveal">
-        <span class="idx">01</span><span class="badge">Popular</span>
+        <span class="idx">01</span><span class="badge">Most Popular</span>
         <h3>Wall Wraps</h3>
         <p>Full or partial wall wraps with custom graphics, patterns, or brand imagery for any interior space.</p>
-        <ul>
-          <li>Custom design available</li><li>Any wall size</li><li>Residential & commercial</li>
-          <li>Removable or permanent options</li><li>Professional installation</li>
-        </ul>
+        <ul><li>Custom design available</li><li>Any wall size or shape</li><li>Residential &amp; commercial</li><li>Removable or permanent</li><li>Professional installation</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
       <article class="svc reveal" data-d="1">
         <span class="idx">02</span><span class="badge">Business</span>
         <h3>Branded Graphics</h3>
         <p>Office branding, lobby graphics, frosted glass, and vinyl signage for businesses across Long Island.</p>
-        <ul>
-          <li>Logo & brand graphics</li><li>Frosted glass film</li><li>Window lettering</li>
-          <li>Floor graphics</li><li>Vehicle wraps available</li>
-        </ul>
+        <ul><li>Logo &amp; brand graphics</li><li>Frosted glass film</li><li>Window lettering</li><li>Floor graphics</li><li>Conference room graphics</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
       <article class="svc reveal" data-d="2">
-        <span class="idx">03</span><span class="badge">Residential</span>
+        <span class="idx">03</span><span class="badge">Home</span>
         <h3>Home Graphics</h3>
-        <p>Accent walls, kids' room murals, kitchen backsplash wraps, and custom home décor vinyl.</p>
-        <ul>
-          <li>Accent walls & murals</li><li>Kitchen & bath wraps</li><li>Custom cut vinyl</li>
-          <li>Removable options</li><li>Any room or surface</li>
-        </ul>
+        <p>Accent walls, murals, kitchen backsplash wraps, and custom home décor vinyl for any room.</p>
+        <ul><li>Accent walls &amp; murals</li><li>Kitchen &amp; bath wraps</li><li>Custom cut vinyl</li><li>Removable options</li><li>Kids room graphics</li></ul>
+        <a href="contact.html" class="more">Get a Quote →</a>
       </article>
     </div>
   </div>
 </section>
 
+<!-- PROCESS -->
 <section class="sec" style="background:var(--bg-2);border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">How It Works</span>
       <h2>Our Process</h2>
+      <p>From concept to installation — we handle every step. Custom design available for any project.</p>
     </div>
     <div class="process-grid">
-      <div class="proc reveal"><div class="num">01</div><h4>Consultation</h4><p>We discuss your vision — size, design, material, and finish. Custom design available.</p></div>
-      <div class="proc reveal" data-d="1"><div class="num">02</div><h4>Design & Print</h4><p>We produce your graphics in-house with commercial-grade materials for lasting color.</p></div>
-      <div class="proc reveal" data-d="2"><div class="num">03</div><h4>Surface Prep</h4><p>Walls and surfaces are cleaned and prepped to ensure proper adhesion and a clean finish.</p></div>
-      <div class="proc reveal" data-d="3"><div class="num">04</div><h4>Installation</h4><p>Professional installation with zero air bubbles, perfect alignment, and clean edges.</p></div>
+      <div class="proc reveal"><div class="num">01</div><h4>Consultation</h4><p>We discuss your vision — size, design, material, finish. Custom design available for any project.</p></div>
+      <div class="proc reveal" data-d="1"><div class="num">02</div><h4>Design &amp; Print</h4><p>Graphics produced with commercial-grade materials for lasting color and sharp resolution.</p></div>
+      <div class="proc reveal" data-d="2"><div class="num">03</div><h4>Surface Prep</h4><p>Walls and surfaces cleaned and prepped to ensure proper adhesion and a clean, lasting finish.</p></div>
+      <div class="proc reveal" data-d="3"><div class="num">04</div><h4>Installation</h4><p>Professional installation — zero air bubbles, perfect alignment, and clean edges every time.</p></div>
     </div>
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="sec" style="background:var(--bg)">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:start">
+      <div class="reveal">
+        <span class="eyebrow">Questions</span>
+        <h2 style="font-size:clamp(2.4rem,5vw,3.8rem);text-transform:uppercase;letter-spacing:.04em;margin:16px 0 20px">Frequently<br>Asked</h2>
+        <p style="color:var(--muted);margin-bottom:28px">Call us at <a href="tel:6312264300" style="color:#fff;border-bottom:1px solid rgba(255,255,255,.3)">631-226-4300</a></p>
+        <a href="contact.html" class="btn btn-gold">Get a Free Quote →</a>
+      </div>
+      <div class="reveal" data-d="1">
+        <div class="faq-item"><div class="faq-q">Can I supply my own design?</div><div class="faq-a"><p>Yes — you can supply your own artwork. We accept high-resolution files (AI, PDF, PNG). We also offer custom design services if you need help creating your graphic.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Will wall graphics damage my walls?</div><div class="faq-a"><p>Removable vinyl is designed to come off cleanly without damaging paint or drywall. Permanent vinyl is very durable but may leave residue on removal — we'll recommend the right type for your situation.</p></div></div>
+        <div class="faq-item"><div class="faq-q">How long does installation take?</div><div class="faq-a"><p>Most single-wall installs take 2–4 hours. Large murals or multi-room projects may take a full day. We'll give you an accurate timeline when we see the space.</p></div></div>
+        <div class="faq-item"><div class="faq-q">Do you do vehicle wraps?</div><div class="faq-a"><p>Yes — we do partial and full vehicle wraps as well. Call us to discuss your vehicle project.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
 <section class="cta-band">
   <div class="wrap">
-    <span class="eyebrow" style="justify-content:center;display:inline-flex;margin-bottom:16px">Long Island · Nassau & Suffolk County</span>
+    <span class="eyebrow" style="justify-content:center;display:inline-flex;margin-bottom:16px">Long Island · Nassau &amp; Suffolk County</span>
     <h2>Transform Your<br>Space</h2>
-    <p>Call us to discuss your project or request a free quote online.</p>
+    <p>Call us to discuss your project or request a free quote online. Custom design available.</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
       <a href="tel:6312264300" class="btn btn-gold">📞 631-226-4300</a>
       <a href="contact.html" class="btn btn-ghost">Get a Free Quote →</a>
