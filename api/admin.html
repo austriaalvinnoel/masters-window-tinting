@@ -1495,20 +1495,20 @@ let cbFiltered    = [];
 let cbSelected    = new Set();
 let cbNextCursor  = null;
 
-function getCBAuth() {
-  try { return atob(CB_SECRET_B64_A + CB_SECRET_B64_B); } catch(e) { return ""; }
-}
+// Auth handled server-side via /api/cloudinary proxy
 
 async function loadCloudinaryImages() {
   const btn = document.getElementById('cb-load-btn');
   btn.textContent = '⏳ Loading...';
   btn.disabled = true;
-  cbAllImages = [];
-  cbSelected  = new Set();
+  cbAllImages  = [];
+  cbSelected   = new Set();
   cbNextCursor = null;
 
+  const folder = document.getElementById('cb-folder-filter')?.value || '';
+
   try {
-    await fetchCBPage();
+    await fetchCBPage(folder);
     filterCloudImages();
     btn.textContent = '🔄 Refresh';
     btn.disabled = false;
@@ -1520,11 +1520,11 @@ async function loadCloudinaryImages() {
 }
 
 async function fetchCBPage() {
-  const auth = btoa(CB_KEY + ':' + getCBAuth());
-  let url = `https://api.cloudinary.com/v1_1/${CB_CLOUD}/resources/image?type=upload&max_results=50`;
+  // Route through our serverless proxy to avoid CORS
+  let url = `/api/cloudinary?action=resources&max_results=50`;
   if (cbNextCursor) url += `&next_cursor=${cbNextCursor}`;
 
-  const res  = await fetch(url, {headers: {'Authorization': 'Basic ' + auth}});
+  const res  = await fetch(url);
   const data = await res.json();
 
   (data.resources || []).forEach(img => {
@@ -1540,7 +1540,8 @@ async function fetchCBPage() {
 
 async function loadMoreCloudImages() {
   if (!cbNextCursor) return;
-  await fetchCBPage();
+  const folder = document.getElementById('cb-folder-filter')?.value || '';
+  await fetchCBPage(folder);
   filterCloudImages();
 }
 
