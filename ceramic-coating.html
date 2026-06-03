@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --black:#000000; --surface:#0e0e0e; --surface2:#161616; --gold:#ffffff; --gold-light:#ffffff; --white:#ffffff; --muted:#a9a9a9; --border:rgba(255,255,255,0.12); }
+  :root { --black:#000000; --surface:#0e0e0e; --surface2:#161616; --gold:#ffffff; --gold-light:#ffffff; --white:#ffffff; --muted:#b8b8b8; --border:rgba(255,255,255,0.12); }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
@@ -139,6 +139,73 @@
 .tb-strip a:hover{border-color:#fff}
 @media(max-width:880px){.tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}.tb-logo{height:54px}.tb-title{font-size:0.95rem}.tb-strip{font-size:0.72rem;padding:7px .8rem}}
 @media(max-width:480px){.tb-title{font-size:0.85rem}}
+
+/* ===== TOP BANNER ===== */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:1001;background:#000;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-main{display:flex;align-items:center;gap:1.6rem;padding:14px 2.5rem 12px;max-width:1400px;margin:0 auto}
+.tb-logo-link{flex-shrink:0;line-height:0}
+.tb-logo{height:64px;width:auto;display:block}
+.tb-title{flex:1;font-family:"Inter",sans-serif;font-style:italic;font-weight:700;font-size:1.15rem;color:#fff;line-height:1.25;margin:0;letter-spacing:-0.005em}
+.tb-strip{background:#c8201a;color:#fff;text-align:center;padding:8px 1rem;font-family:"Inter",sans-serif;font-weight:600;font-size:0.82rem;letter-spacing:0.02em}
+.tb-strip a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+.tb-strip a:hover{border-color:#fff}
+/* Push nav below banner */
+header.nav{top:108px !important}
+body{padding-top:108px}
+section[id]{scroll-margin-top:170px}
+@media(max-width:880px){
+  .tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}
+  .tb-logo{height:54px}
+  .tb-title{font-size:0.95rem}
+  .tb-strip{font-size:0.72rem;padding:7px .8rem}
+  header.nav{top:158px !important}
+  body{padding-top:158px}
+  section[id]{scroll-margin-top:220px}
+}
+@media(max-width:480px){.tb-title{font-size:0.85rem}}
+
+/* ===== NAV ===== */
+header.nav{position:fixed;left:0;right:0;z-index:1000;transition:background .4s,backdrop-filter .4s,border-color .4s,padding .4s;border-bottom:1px solid transparent;padding:18px 0}
+header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);border-color:rgba(255,255,255,.10);padding:12px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-inner .nav-links{margin-left:auto;margin-right:auto}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;font-weight:600;color:#a9a9a9;position:relative;transition:color .25s;text-decoration:none}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:#fff;transition:width .3s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{width:100%}
+.nav-links .has-dd{position:relative;display:inline-block}
+.nav-links .has-dd .dd-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:.3rem}
+.nav-links .has-dd .dd-toggle::after{content:"BE";font-size:.7em;opacity:.7}
+.nav-links .has-dd .dd-toggle::before{display:none}
+.nav-links .dd{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);min-width:230px;background:#0e0e0e;border:1px solid rgba(255,255,255,.18);padding:8px 0;display:flex;flex-direction:column;gap:0;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:200}
+.nav-links .has-dd:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-links .dd::after{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.nav-links .dd a{padding:10px 20px;font-size:13px;white-space:nowrap}
+.nav-links .dd a::after{display:none}
+.nav-links .dd a:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.nav-phone{font-family:"DM Mono",monospace;font-weight:700;font-size:14px;color:#fff;letter-spacing:.02em;text-decoration:none}
+.nav-phone:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:"Inter",sans-serif;font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;border:1px solid transparent;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,border-color .25s,box-shadow .25s;white-space:nowrap}
+.btn-gold{background:#fff;color:#0a0a0a;box-shadow:0 0 0 0 rgba(255,255,255,.4)}
+.btn-gold:hover{background:#fff;transform:translateY(-2px);box-shadow:0 14px 40px -12px rgba(255,255,255,.5)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.18)}
+.btn-ghost:hover{border-color:#fff;color:#fff;transform:translateY(-2px)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:24px;height:2px;background:#fff;transition:.3s}
+.mobile-menu{display:none}
+@media(max-width:680px){
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  .burger{display:flex}
+  header.nav .nav-phone{display:none}
+  .mobile-menu{display:block;position:fixed;inset:0;z-index:1100;background:rgba(8,9,11,.97);backdrop-filter:blur(20px);transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);padding:90px 28px}
+  .mobile-menu.open{transform:none}
+  .mobile-menu a{display:block;font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:2rem;text-transform:uppercase;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.10);text-decoration:none;color:#fff}
+  .mobile-menu .mm-call{margin-top:30px;font-family:"DM Mono",monospace;font-size:1rem;color:#fff}
+  .mm-close{position:absolute;top:26px;right:24px;background:none;border:0;color:#fff;font-size:34px;cursor:pointer;line-height:1}
+}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","AutomotiveBusiness"],"name":"Masters Window Tinting & Detail","alternateName":["Ceramic Pro Long Island","NanoPro Liquid PPF Long Island"],"image":"https://masters-window-tinting.vercel.app/og-cover.jpg","url":"https://masters-window-tinting.vercel.app/","telephone":"+1-631-226-4300","address":{"@type":"PostalAddress","streetAddress":"863 Rte 109, Suite A","addressLocality":"West Babylon","addressRegion":"NY","postalCode":"11704","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.7195,"longitude":-73.3543},"areaServed":[{"@type":"AdministrativeArea","name":"Nassau County, NY"},{"@type":"AdministrativeArea","name":"Suffolk County, NY"},{"@type":"Place","name":"Long Island, NY"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"10:00","closes":"16:00"}],"priceRange":"$$-$$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Automotive Protection Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automotive Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Ceramic Pro Coating"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"NanoPro Liquid PPF (Paint Protection Film)"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Auto Detailing & Paint Correction"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Residential Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Wall Graphics & Vinyl Signs"}}]},"sameAs":["https://www.facebook.com/profile.php?id=100063773733742","https://www.instagram.com/Ceramic_pro_long_island/","https://www.masterswindowtinting.com/"]}</script>
 </head>
@@ -157,27 +224,47 @@
   </div>
 </div>
 
-<nav id="navbar">
-  <a href="index.html" class="nav-logo">Masters Window Tinting & Detail<span>Ceramic Pro Long Island · NanoPro Liquid PPF</span></a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-        <li class="has-dd"><a class="active">Services</a>
-      <ul class="dd">
-        <li><a href="window-tinting.html">Window Tinting</a></li>
-        <li><a href="liquid-ppf.html">Liquid PPF</a></li>
-        <li><a href="ceramic-coating.html">Ceramic Coating</a></li>
-        <li><a href="residential.html">Residential Tinting</a></li>
-        <li><a href="commercial.html">Commercial Tinting</a></li>
-        <li><a href="wall-graphics.html">Wall Graphics</a></li>
-        <li><a href="detailing.html">Detailing &amp; Paint Correction</a></li>
-      </ul>
-    </li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <a href="tel:6312264300" class="btn-call-nav">📞 Call 631-226-4300</a>
-</nav>
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <nav class="nav-links">
+      <span class="has-dd"><a class="dd-toggle">Services</a>
+        <span class="dd">
+          <a href="window-tinting.html">Window Tinting</a>
+          <a href="liquid-ppf.html">Liquid PPF</a>
+          <a href="ceramic-coating.html">Ceramic Coating</a>
+          <a href="residential.html">Residential Tinting</a>
+          <a href="commercial.html">Commercial Tinting</a>
+          <a href="wall-graphics.html">Wall Graphics</a>
+          <a href="detailing.html">Detailing &amp; Paint Correction</a>
+        </span>
+      </span>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="tel:6312264300" class="nav-phone">631-226-4300</a>
+      <a href="contact.html" class="btn btn-gold">Free Quote</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mm-close" id="mmClose" aria-label="Close">&times;</button>
+  <a href="window-tinting.html">Window Tinting</a>
+  <a href="liquid-ppf.html">Liquid PPF</a>
+  <a href="ceramic-coating.html">Ceramic Coating</a>
+  <a href="residential.html">Residential Tinting</a>
+  <a href="commercial.html">Commercial Tinting</a>
+  <a href="wall-graphics.html">Wall Graphics</a>
+  <a href="detailing.html">Detailing</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:6312264300" class="mm-call">📞 631-226-4300</a>
+</div>
 
 <section class="page-hero">
   <div class="hero-glow"></div>
