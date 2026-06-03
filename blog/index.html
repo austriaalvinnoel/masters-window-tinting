@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | Masters Window Tinting Long Island NY</title>
+<link rel="canonical" href="https://masters-window-tinting.vercel.app/blog/">
+<meta name="description" content="Expert tips on window tinting, ceramic coating, PPF, and car care from Masters Window Tinting — Long Island's trusted auto protection specialists since 1999.">
+<meta property="og:title" content="Blog | Masters Window Tinting Long Island NY">
+<meta property="og:description" content="Expert tips on window tinting, ceramic coating, PPF and car care from Long Island's trusted auto protection specialists.">
+<meta property="og:image" content="https://masters-window-tinting.vercel.app/og-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--bg-2:#070707;--surface:#0e0e0e;--line:rgba(255,255,255,.10);--line-2:rgba(255,255,255,.18);--ink:#fff;--muted:#b8b8b8;--gold:#fff;--maxw:1240px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Inter",sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:108px}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* TOP BANNER */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:1001;background:#000;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-main{display:flex;align-items:center;gap:1.6rem;padding:14px 2.5rem 12px;max-width:1400px;margin:0 auto}
+.tb-logo{height:64px;width:auto}
+.tb-title{flex:1;font-style:italic;font-weight:700;font-size:1.05rem;color:#fff;line-height:1.25}
+.tb-strip{background:#c8201a;color:#fff;text-align:center;padding:8px 1rem;font-size:0.82rem;font-weight:600}
+.tb-strip a{color:#fff;border-bottom:1px solid rgba(255,255,255,.4)}
+header.nav{position:fixed;top:108px;left:0;right:0;z-index:1000;background:rgba(8,9,11,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:12px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-phone{font-family:"DM Mono",monospace;font-weight:700;font-size:14px}
+.nav-phone:hover{color:var(--gold)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:"Inter",sans-serif;font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;border:1px solid transparent;transition:all .25s;white-space:nowrap}
+.btn-gold{background:#fff;color:#000}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 40px -12px rgba(255,255,255,.4)}
+
+/* PAGE */
+.page-hero{padding:72px 0 60px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:"DM Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
+h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:.04em;text-transform:uppercase;line-height:.95;margin-bottom:18px}
+.page-hero p{color:var(--muted);font-size:16px;max-width:540px}
+
+/* BLOG GRID */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:72px 0}
+.blog-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:.35s;position:relative}
+.blog-card:hover{transform:translateY(-6px);border-color:var(--line-2)}
+.blog-card-img{aspect-ratio:16/9;overflow:hidden;background:var(--bg-2)}
+.blog-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.blog-card:hover .blog-card-img img{transform:scale(1.05)}
+.blog-card-body{padding:24px}
+.blog-cat{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block}
+.blog-card h2{font-family:"Bebas Neue",sans-serif;font-size:1.6rem;letter-spacing:.04em;text-transform:uppercase;line-height:1.05;margin-bottom:10px}
+.blog-card p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.blog-read{font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;display:inline-flex;align-items:center;gap:6px}
+.blog-read::after{content:"→"}
+.blog-card::after{content:"";position:absolute;inset:0;z-index:1}
+
+/* CTA */
+.blog-cta{padding:72px 0;border-top:1px solid var(--line);text-align:center}
+.blog-cta h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(2.4rem,5vw,4rem);letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px}
+.blog-cta p{color:var(--muted);margin-bottom:28px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(--muted)}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.foot-bottom a:hover{color:#fff}
+
+@media(max-width:1024px){.blog-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.blog-grid{grid-template-columns:1fr}.tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}.tb-logo{height:54px}header.nav{top:158px}body{padding-top:158px}}
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+  <div class="tb-main">
+    <a href="/"><img src="/mwt_logo.png" alt="Masters Window Tinting" class="tb-logo"></a>
+    <p class="tb-title">Masters Window Tinting, Paint Protection Film — PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
+  </div>
+  <div class="tb-strip">Long Island, New York —— 863 Rte 109, West Babylon, NY —— <a href="tel:6312264300">631-226-4300</a></div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <nav style="display:flex;align-items:center;gap:32px">
+      <a href="/" style="font-size:14px;font-weight:600;color:var(--muted)">Home</a>
+      <a href="/#services" style="font-size:14px;font-weight:600;color:var(--muted)">Services</a>
+      <a href="/gallery.html" style="font-size:14px;font-weight:600;color:var(--muted)">Gallery</a>
+      <a href="/blog/" style="font-size:14px;font-weight:600;color:#fff">Blog</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px">
+      <a href="tel:6312264300" class="nav-phone">631-226-4300</a>
+      <a href="/#contact" class="btn btn-gold">Free Quote</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <span class="eyebrow">Expert Tips & Guides</span>
+    <h1>Auto Protection<br>Blog</h1>
+    <p>Window tinting, ceramic coating, PPF, and car care tips from Long Island's most trusted auto protection specialists.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="blog-grid">
+
+    <article class="blog-card">
+      <div class="blog-card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="Ceramic coating vs PPF" loading="lazy">
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-cat">Paint Protection</span>
+        <h2>Ceramic Coating vs PPF: Which Does Your Car Need?</h2>
+        <p>Two of the most popular protection options — but they do very different things. Here's how to choose the right one for your vehicle and budget.</p>
+        <a href="/blog/ceramic-coating-vs-ppf.html" class="blog-read">Read Article</a>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="blog-card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp" alt="Best window tint Long Island" loading="lazy">
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-cat">Window Tinting</span>
+        <h2>Best Window Tint for Long Island Heat & Sun</h2>
+        <p>Long Island summers are brutal on your car's interior. Here's which tint film works best for blocking heat and UV on the South Shore and North Shore.</p>
+        <a href="/blog/best-window-tint-long-island.html" class="blog-read">Read Article</a>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="blog-card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="How long does ceramic coating last" loading="lazy">
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-cat">Ceramic Coating</span>
+        <h2>How Long Does Ceramic Coating Actually Last?</h2>
+        <p>Marketing says 5–10 years. Reality is more nuanced. Here's what determines how long your ceramic coating holds up — and how to make it last longer.</p>
+        <a href="/blog/how-long-does-ceramic-coating-last.html" class="blog-read">Read Article</a>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="blog-card-img">
+        <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Liquid PPF vs traditional PPF" loading="lazy">
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-cat">Liquid PPF</span>
+        <h2>Liquid PPF vs Traditional PPF: What's the Difference?</h2>
+        <p>Traditional paint protection film has seams and edges. Liquid PPF doesn't. Here's a full breakdown of how NanoPro Liquid PPF compares to traditional film.</p>
+        <a href="/blog/liquid-ppf-vs-traditional-ppf.html" class="blog-read">Read Article</a>
+      </div>
+    </article>
+
+    <article class="blog-card">
+      <div class="blog-card-img">
+        <img src="https://masters-window-tinting.vercel.app/residential-hero.jpg" alt="Residential window tinting Long Island" loading="lazy">
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-cat">Residential</span>
+        <h2>Does Home Window Tinting Really Reduce Energy Bills?</h2>
+        <p>Solar film for homes is one of the most cost-effective upgrades a Long Island homeowner can make. Here's the real data on energy savings and ROI.</p>
+        <a href="/blog/home-window-tinting-energy-savings.html" class="blog-read">Read Article</a>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<section class="blog-cta">
+  <div class="wrap">
+    <h2>Ready to Protect Your Vehicle?</h2>
+    <p>Call us or request a free quote online — we serve all of Nassau &amp; Suffolk County.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="tel:6312264300" class="btn btn-gold">📞 631-226-4300</a>
+      <a href="/#contact" class="btn" style="border:1px solid rgba(255,255,255,.3);color:#fff">Get Free Quote →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 Masters Window Tinting & Detail · 863 Rte 109 Suite A, West Babylon, NY 11704</span>
+      <span><a href="tel:6312264300">631-226-4300</a> · <a href="/privacy-policy.html">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
