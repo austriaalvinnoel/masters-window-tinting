@@ -19,7 +19,7 @@
 <meta name="description" content="Family-owned since 1999. Long Island's certified Ceramic Pro & NanoPro Liquid PPF installer. Meet the team behind Masters Window Tinting.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#000000;
@@ -35,13 +35,14 @@
   --gold-bright:#ffffff;
   --glass:#cfcfcf;
   --maxw:1240px;
-  --display:"Poppins",sans-serif;
-  --body:"Poppins",sans-serif;
-  --mono:"Poppins",sans-serif;
+  --display:"Bebas Neue",sans-serif;
+  --body:"Inter",sans-serif;
+  --mono:"DM Mono",monospace;
+  --muted:#b8b8b8;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 ::selection{background:var(--gold);color:#0a0a0a}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
@@ -57,7 +58,7 @@ h1,h2,h3{font-family:var(--display);font-weight:800;line-height:.98;letter-spaci
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
 
 /* NAV */
-header.nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:background .4s,backdrop-filter .4s,border-color .4s,padding .4s;border-bottom:1px solid transparent;padding:18px 0;}
+header.nav{position:fixed;top:108px;left:0;right:0;z-index:1000;transition:background .4s,backdrop-filter .4s,border-color .4s,padding .4s;border-bottom:1px solid transparent;padding:18px 0;}
 header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);border-color:var(--line);padding:12px 0}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:flex;align-items:center;gap:13px}
@@ -65,7 +66,7 @@ header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);borde
 .brand .mark span{font-family:var(--display);font-weight:800;font-size:22px;color:var(--gold-bright);line-height:1}
 .brand .mark::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);transform:translateX(-120%);transition:transform .6s}
 .brand:hover .mark::after{transform:translateX(120%)}
-.brand b{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:-.01em;line-height:1}
+.brand b{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:-.01em;line-height:1}
 .brand small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--muted-2);text-transform:uppercase;margin-top:3px}
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a{font-size:14px;font-weight:600;color:var(--muted);position:relative;transition:color .25s}
@@ -221,10 +222,36 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
   footer{padding-bottom:80px}
   .foot-bottom{flex-direction:column}
 }
+
+/* TOP BANNER */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:1001;background:#000;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-main{display:flex;align-items:center;gap:1.6rem;padding:14px 2.5rem 12px;max-width:1400px;margin:0 auto}
+.tb-logo-link{flex-shrink:0;line-height:0}
+.tb-logo{height:64px;width:auto;display:block}
+.tb-title{flex:1;font-family:"Inter",sans-serif;font-style:italic;font-weight:700;font-size:1.05rem;color:#fff;line-height:1.25;margin:0;letter-spacing:-0.005em}
+.tb-strip{background:#c8201a;color:#fff;text-align:center;padding:8px 1rem;font-family:"Inter",sans-serif;font-weight:600;font-size:0.82rem;letter-spacing:0.02em}
+.tb-strip a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+.tb-strip a:hover{border-color:#fff}
+@media(max-width:880px){.tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}.tb-logo{height:54px}.tb-title{font-size:0.95rem}.tb-strip{font-size:0.72rem;padding:7px .8rem}}
+@media(max-width:480px){.tb-title{font-size:0.85rem}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","AutomotiveBusiness"],"name":"Masters Window Tinting & Detail","alternateName":["Ceramic Pro Long Island","NanoPro Liquid PPF Long Island"],"image":"https://masters-window-tinting.vercel.app/og-cover.jpg","url":"https://masters-window-tinting.vercel.app/","telephone":"+1-631-226-4300","address":{"@type":"PostalAddress","streetAddress":"863 Rte 109, Suite A","addressLocality":"West Babylon","addressRegion":"NY","postalCode":"11704","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.7195,"longitude":-73.3543},"areaServed":[{"@type":"AdministrativeArea","name":"Nassau County, NY"},{"@type":"AdministrativeArea","name":"Suffolk County, NY"},{"@type":"Place","name":"Long Island, NY"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"10:00","closes":"16:00"}],"priceRange":"$$-$$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Automotive Protection Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automotive Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Ceramic Pro Coating"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"NanoPro Liquid PPF (Paint Protection Film)"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Auto Detailing & Paint Correction"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Residential Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Wall Graphics & Vinyl Signs"}}]},"sameAs":["https://www.facebook.com/profile.php?id=100063773733742","https://www.instagram.com/Ceramic_pro_long_island/","https://www.masterswindowtinting.com/"]}</script>
 </head>
 <body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <div class="tb-main">
+    <a href="index.html" class="tb-logo-link">
+      <img src="mwt_logo.png" alt="Masters Window Tinting" class="tb-logo">
+    </a>
+    <p class="tb-title">Masters Window Tinting, Paint Protection Film &mdash; PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
+  </div>
+  <div class="tb-strip">
+    Long Island, New York &mdash;&mdash; 863 Rte 109, West Babylon, NY &mdash;&mdash; <a href="tel:6312264300">631-226-4300</a>
+  </div>
+</div>
+
 
 <!-- NAV -->
 <header class="nav" id="nav">
