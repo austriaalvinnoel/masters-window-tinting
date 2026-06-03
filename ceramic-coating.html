@@ -24,13 +24,13 @@
   :root { --black:#000000; --surface:#0e0e0e; --surface2:#161616; --gold:#ffffff; --gold-light:#ffffff; --white:#ffffff; --muted:#a9a9a9; --border:rgba(255,255,255,0.12); }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Poppins',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+  body{padding-top:108px;font-family:"Inter",sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
   .container{max-width:1200px;margin:0 auto;padding:0 2rem;}
   .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;}
   .reveal.visible{opacity:1;transform:none;}
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(0,0,0,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
-  .nav-logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-0.01em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.2;}
-  .nav-logo span{font-family:'Poppins',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
+  nav{position:fixed;top:108px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(0,0,0,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding 0.3s;}
+  .nav-logo{font-family:"Inter",sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-0.01em;color:var(--white);text-decoration:none;display:flex;flex-direction:column;line-height:1.2;}
+  .nav-logo span{font-family:"Inter",sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
   .nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
   .nav-links a:hover,.nav-links a.active{color:var(--white);}
@@ -42,7 +42,7 @@
   .breadcrumb{font-size:0.68rem;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;}
   .breadcrumb a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
   .breadcrumb a:hover{color:var(--white);}
-  .page-hero h1{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(3.5rem,9vw,8rem);line-height:0.9;letter-spacing:-0.03em;color:var(--white);margin-bottom:1.5rem;position:relative;z-index:1;text-transform:uppercase;}
+  .page-hero h1{font-family:"Inter",sans-serif;font-weight:800;font-size:clamp(3.5rem,9vw,8rem);line-height:0.9;letter-spacing:-0.03em;color:var(--white);margin-bottom:1.5rem;position:relative;z-index:1;text-transform:uppercase;}
   .page-hero h1 span{color:var(--white);opacity:.5;}
   .page-hero p{font-size:1rem;color:var(--muted);line-height:1.75;max-width:560px;font-weight:400;position:relative;z-index:1;margin-bottom:2rem;}
   .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;position:relative;z-index:1;}
@@ -52,7 +52,7 @@
   .btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,0.05);}
   .section{padding:6rem 2.5rem;}
   .section-label{font-size:0.65rem;font-weight:700;letter-spacing:0.32em;text-transform:uppercase;color:var(--white);margin-bottom:0.8rem;display:block;}
-  .section-title{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4.5rem);color:var(--white);letter-spacing:-0.02em;line-height:1;margin-bottom:1rem;text-transform:uppercase;}
+  .section-title{font-family:"Inter",sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4.5rem);color:var(--white);letter-spacing:-0.02em;line-height:1;margin-bottom:1rem;text-transform:uppercase;}
   .section-title span{color:var(--white);opacity:.5;}
   .section-sub{color:var(--muted);font-size:0.95rem;line-height:1.75;max-width:560px;font-weight:400;}
   /* FEATURE / BOROGRAPH */
@@ -61,7 +61,7 @@
   .feature-img img{width:100%;height:100%;object-fit:cover;display:block;}
   .feature-ring{position:absolute;top:18px;right:18px;width:74px;height:74px;border-radius:50%;border:1px solid var(--white);display:grid;place-items:center;font-size:9px;letter-spacing:.1em;text-align:center;text-transform:uppercase;color:var(--white);background:rgba(0,0,0,.55);backdrop-filter:blur(6px);font-weight:600;}
   .feature-tag{position:absolute;left:18px;bottom:18px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border:1px solid var(--border);padding:9px 14px;border-radius:99px;color:var(--white);font-weight:600;}
-  .feature h2{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);line-height:0.95;letter-spacing:-0.03em;text-transform:uppercase;margin-bottom:0.5rem;}
+  .feature h2{font-family:"Inter",sans-serif;font-weight:800;font-size:clamp(2.5rem,5vw,4rem);line-height:0.95;letter-spacing:-0.03em;text-transform:uppercase;margin-bottom:0.5rem;}
   .feature .sub{font-size:0.7rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;}
   .feature p.body{font-size:0.95rem;color:var(--muted);line-height:1.8;margin-bottom:1rem;font-weight:400;}
   .feature p.reserved{font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.6rem;}
@@ -69,7 +69,7 @@
   .card{background:var(--surface);padding:2.5rem 2rem;transition:background 0.3s;}
   .card:hover{background:var(--surface2);}
   .card-icon{font-size:2rem;margin-bottom:1rem;display:block;}
-  .card-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);letter-spacing:-0.01em;margin-bottom:0.6rem;}
+  .card-title{font-family:"Inter",sans-serif;font-weight:700;font-size:1.2rem;color:var(--white);letter-spacing:-0.01em;margin-bottom:0.6rem;}
   .card-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:400;}
   /* PACKAGES */
   .packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;background:var(--border);}
@@ -77,14 +77,14 @@
   .package-card:hover{background:var(--surface2);}
   .package-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--white);}
   .package-tag{font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--white);margin-bottom:0.5rem;}
-  .package-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.5rem;color:var(--white);letter-spacing:-0.01em;margin-bottom:0.8rem;}
+  .package-name{font-family:"Inter",sans-serif;font-weight:700;font-size:1.5rem;color:var(--white);letter-spacing:-0.01em;margin-bottom:0.8rem;}
   .package-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;font-weight:400;margin-bottom:1.2rem;}
   .package-includes{list-style:none;display:flex;flex-direction:column;gap:0.45rem;}
   .package-includes li{font-size:0.8rem;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:0.5rem;}
   .package-includes li::before{content:'✓';color:var(--white);font-size:0.72rem;font-weight:700;}
   .package-price{display:flex;align-items:baseline;gap:0.4rem;margin:0.6rem 0 1rem;padding:0.8rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
   .package-price .pp-from{font-size:0.62rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
-  .package-price .pp-amount{font-family:'Poppins',sans-serif;font-weight:800;font-size:2.2rem;color:var(--white);letter-spacing:-0.02em;line-height:1;}
+  .package-price .pp-amount{font-family:"Inter",sans-serif;font-weight:800;font-size:2.2rem;color:var(--white);letter-spacing:-0.02em;line-height:1;}
   .package-warranty{display:inline-block;font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--white);background:rgba(255,255,255,0.08);border:1px solid var(--border);padding:0.35rem 0.7rem;border-radius:99px;margin-bottom:1rem;}
   .package-cta{display:block;text-align:center;background:var(--white);color:#000;padding:0.85rem 1rem;margin-top:1.4rem;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.2s;}
   .package-cta:hover{background:#ccc;}
@@ -105,7 +105,7 @@
   .faq-item.open .faq-a{max-height:240px;padding:0 1.4rem 1.2rem;}
   .cta-strip{background:var(--white);padding:5rem 2.5rem;}
   .cta-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem;max-width:1200px;margin:0 auto;}
-  .cta-strip h2{font-family:'Poppins',sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,4rem);color:#000;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;}
+  .cta-strip h2{font-family:"Inter",sans-serif;font-weight:800;font-size:clamp(2.2rem,5vw,4rem);color:#000;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;}
   .cta-strip p{font-size:0.95rem;color:rgba(0,0,0,0.65);margin-top:0.6rem;}
   .btn-dark{background:#000;color:#fff;padding:1rem 2rem;font-size:0.88rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
   .btn-dark:hover{background:#222;}
@@ -126,10 +126,36 @@
   .nav-links .dd li{display:block;width:100%;}
   .nav-links .dd a{display:block;padding:0.6rem 1.4rem;font-size:0.72rem;white-space:nowrap;letter-spacing:0.08em;}
   .nav-links .dd a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+
+/* TOP BANNER */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:1001;background:#000;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-main{display:flex;align-items:center;gap:1.6rem;padding:14px 2.5rem 12px;max-width:1400px;margin:0 auto}
+.tb-logo-link{flex-shrink:0;line-height:0}
+.tb-logo{height:64px;width:auto;display:block}
+.tb-title{flex:1;font-family:"Inter",sans-serif;font-style:italic;font-weight:700;font-size:1.05rem;color:#fff;line-height:1.25;margin:0;letter-spacing:-0.005em}
+.tb-strip{background:#c8201a;color:#fff;text-align:center;padding:8px 1rem;font-family:"Inter",sans-serif;font-weight:600;font-size:0.82rem;letter-spacing:0.02em}
+.tb-strip a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+.tb-strip a:hover{border-color:#fff}
+@media(max-width:880px){.tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}.tb-logo{height:54px}.tb-title{font-size:0.95rem}.tb-strip{font-size:0.72rem;padding:7px .8rem}}
+@media(max-width:480px){.tb-title{font-size:0.85rem}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","AutomotiveBusiness"],"name":"Masters Window Tinting & Detail","alternateName":["Ceramic Pro Long Island","NanoPro Liquid PPF Long Island"],"image":"https://masters-window-tinting.vercel.app/og-cover.jpg","url":"https://masters-window-tinting.vercel.app/","telephone":"+1-631-226-4300","address":{"@type":"PostalAddress","streetAddress":"863 Rte 109, Suite A","addressLocality":"West Babylon","addressRegion":"NY","postalCode":"11704","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.7195,"longitude":-73.3543},"areaServed":[{"@type":"AdministrativeArea","name":"Nassau County, NY"},{"@type":"AdministrativeArea","name":"Suffolk County, NY"},{"@type":"Place","name":"Long Island, NY"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"10:00","closes":"16:00"}],"priceRange":"$$-$$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Automotive Protection Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automotive Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Ceramic Pro Coating"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"NanoPro Liquid PPF (Paint Protection Film)"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Auto Detailing & Paint Correction"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Residential Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Wall Graphics & Vinyl Signs"}}]},"sameAs":["https://www.facebook.com/profile.php?id=100063773733742","https://www.instagram.com/Ceramic_pro_long_island/","https://www.masterswindowtinting.com/"]}</script>
 </head>
 <body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <div class="tb-main">
+    <a href="index.html" class="tb-logo-link">
+      <img src="mwt_logo.png" alt="Masters Window Tinting" class="tb-logo">
+    </a>
+    <p class="tb-title">Masters Window Tinting, Paint Protection Film &mdash; PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
+  </div>
+  <div class="tb-strip">
+    Long Island, New York &mdash;&mdash; 863 Rte 109, West Babylon, NY &mdash;&mdash; <a href="tel:6312264300">631-226-4300</a>
+  </div>
+</div>
+
 <nav id="navbar">
   <a href="index.html" class="nav-logo">Masters Window Tinting & Detail<span>Ceramic Pro Long Island · NanoPro Liquid PPF</span></a>
   <ul class="nav-links">
