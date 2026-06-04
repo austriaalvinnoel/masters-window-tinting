@@ -976,7 +976,7 @@ section[id]{scroll-margin-top:170px}
     </div>
 
     <!-- Cards + Video side by side -->
-    <div style="display:grid;grid-template-columns:1fr 200px;gap:24px;align-items:start">
+    <div style="display:grid;grid-template-columns:1fr 200px;gap:24px;align-items:stretch">
 
       <!-- Left: cards + certs -->
       <div>
@@ -994,8 +994,8 @@ section[id]{scroll-margin-top:170px}
       </div>
 
       <!-- Right: YouTube Short — aligned to cards -->
-      <div class="reveal" data-d="1" style="position:sticky;top:140px">
-        <div style="border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);aspect-ratio:9/16;background:#000;position:relative;max-height:420px">
+      <div class="reveal" data-d="1" style="display:flex;flex-direction:column">
+        <div style="border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);background:#000;position:relative;height:100%;min-height:200px">
           <iframe
             id="yt-diff"
             src="https://www.youtube.com/embed/Qoh-hpNHPXA?autoplay=1&mute=1&loop=1&playlist=Qoh-hpNHPXA&controls=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
