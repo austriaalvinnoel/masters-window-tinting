@@ -198,6 +198,27 @@ header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);borde
   .marquee span{font-size:13px}
 }
 
+
+/* ── YouTube Sound Button ── */
+.yt-sound-btn{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.25);border-radius:99px;
+  padding:8px 16px;cursor:pointer;
+  font-family:"Inter",sans-serif;font-size:12px;font-weight:600;
+  color:#fff;letter-spacing:.04em;transition:all .25s;
+  white-space:nowrap;
+}
+.yt-sound-btn:hover{background:rgba(0,0,0,.85);border-color:rgba(255,255,255,.5);transform:translateX(-50%) translateY(-2px)}
+.yt-sound-btn.unmuted{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.yt-sound-btn-abs{
+  bottom:14px;right:14px;left:auto;transform:none;padding:8px 12px;
+}
+.yt-sound-btn-abs:hover{transform:translateY(-2px)}
+.yt-sound-btn-abs.unmuted{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.yt-sound-icon{font-size:14px;line-height:1}
+
 /* ===== STATS ===== */
 .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
@@ -687,13 +708,18 @@ section[id]{scroll-margin-top:170px}
       <div class="frame">
         <div class="vlabel">Masters · Liquid PPF Specialists</div>
         <iframe
-          src="https://www.youtube.com/embed/Zta6OycRLfQ?autoplay=1&mute=1&loop=1&playlist=Zta6OycRLfQ&controls=0&playsinline=1&rel=0&modestbranding=1"
+          id="yt-ppf"
+          src="https://www.youtube.com/embed/Zta6OycRLfQ?autoplay=1&mute=1&loop=1&playlist=Zta6OycRLfQ&controls=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
           title="New Liquid Paint Protection Film"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen></iframe>
-        <a class="vcaption" href="https://www.youtube.com/watch?v=Zta6OycRLfQ" target="_blank" rel="noopener">🔊 Watch with sound →</a>
+        <!-- Custom sound control -->
+        <button class="yt-sound-btn" id="yt-ppf-btn" onclick="toggleYTSound('yt-ppf','yt-ppf-btn')" title="Toggle sound">
+          <span class="yt-sound-icon">🔇</span>
+          <span class="yt-sound-label">Tap for Sound</span>
+        </button>
       </div>
     </div>
   </div>
@@ -967,13 +993,18 @@ section[id]{scroll-margin-top:170px}
         <div style="position:sticky;top:140px">
           <div style="border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);aspect-ratio:9/16;background:#000;position:relative">
             <iframe
-              src="https://www.youtube.com/embed/Qoh-hpNHPXA?autoplay=1&mute=1&loop=1&playlist=Qoh-hpNHPXA&controls=0&playsinline=1&rel=0&modestbranding=1"
+              id="yt-diff"
+              src="https://www.youtube.com/embed/Qoh-hpNHPXA?autoplay=1&mute=1&loop=1&playlist=Qoh-hpNHPXA&controls=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
               title="Masters Window Tinting"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
               style="position:absolute;inset:0;width:100%;height:100%;border:0">
             </iframe>
+            <!-- Custom sound control -->
+            <button class="yt-sound-btn yt-sound-btn-abs" id="yt-diff-btn" onclick="toggleYTSound('yt-diff','yt-diff-btn')" title="Toggle sound">
+              <span class="yt-sound-icon">🔇</span>
+            </button>
           </div>
           <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:12px">Masters Window Tinting · Long Island, NY</div>
         </div>
@@ -1865,6 +1896,71 @@ document.getElementById('quoteForm').addEventListener('submit',function(e){
       document.getElementById('formSuccess').classList.add('show');
     });
 });
+
+// ── YouTube Sound Toggle ─────────────────────────────────────────────────────
+var ytPlayers = {};
+var YT_READY  = false;
+
+// Load YouTube IFrame API
+(function(){
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+})();
+
+function onYouTubeIframeAPIReady() {
+  YT_READY = true;
+  ['yt-ppf', 'yt-diff'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    ytPlayers[id] = new YT.Player(id, {
+      events: {
+        onReady: function(e) {
+          e.target.mute();
+          e.target.playVideo();
+        }
+      }
+    });
+  });
+}
+
+function toggleYTSound(videoId, btnId) {
+  var player = ytPlayers[videoId];
+  var btn    = document.getElementById(btnId);
+  if (!player || !btn) return;
+
+  // Mute all other videos first
+  Object.keys(ytPlayers).forEach(function(id) {
+    if (id !== videoId && ytPlayers[id]) {
+      ytPlayers[id].mute();
+      var otherBtn = document.getElementById(id + '-btn');
+      if (otherBtn) {
+        otherBtn.classList.remove('unmuted');
+        otherBtn.querySelector('.yt-sound-icon').textContent = '🔇';
+        var lbl = otherBtn.querySelector('.yt-sound-label');
+        if (lbl) lbl.textContent = 'Tap for Sound';
+      }
+    }
+  });
+
+  // Toggle this video
+  if (player.isMuted()) {
+    player.unMute();
+    player.setVolume(80);
+    btn.classList.add('unmuted');
+    btn.querySelector('.yt-sound-icon').textContent = '🔊';
+    var lbl = btn.querySelector('.yt-sound-label');
+    if (lbl) lbl.textContent = 'Sound On';
+  } else {
+    player.mute();
+    btn.classList.remove('unmuted');
+    btn.querySelector('.yt-sound-icon').textContent = '🔇';
+    var lbl = btn.querySelector('.yt-sound-label');
+    if (lbl) lbl.textContent = 'Tap for Sound';
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 </script>
 </body>
 </html>
