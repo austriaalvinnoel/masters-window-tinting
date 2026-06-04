@@ -515,6 +515,12 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px
   footer{padding-bottom:80px}
   .foot-bottom{flex-direction:column}
 }
+
+/* Difference section two-col */
+@media(max-width:1024px){
+  .diff-two-col{grid-template-columns:1fr!important}
+  .diff-video-col{display:none}
+}
 /* PPF section bottom CTA */
 .levels-cta{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin-top:2rem}
 
@@ -935,12 +941,15 @@ section[id]{scroll-margin-top:170px}
 <!-- DIFFERENCE -->
 <section class="sec" style="background:var(--bg)">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Why Masters</span>
-      <h2>The Difference</h2>
-      <p>Trusted on Long Island for 25+ years. Same core team, more training, more certifications, and a full-time staff that never outsources. Ever.</p>
-    </div>
-    <div class="diff-grid">
+    <!-- Two column: text+cards left, video right -->
+    <div style="display:grid;grid-template-columns:1fr auto;gap:48px;align-items:start;margin-bottom:0">
+      <div>
+        <div class="sec-head reveal" style="margin-bottom:40px">
+          <span class="eyebrow">Why Masters</span>
+          <h2>The Difference</h2>
+          <p>Trusted on Long Island for 25+ years. Same core team, more training, more certifications, and a full-time staff that never outsources. Ever.</p>
+        </div>
+        <div class="diff-grid">
       <div class="diff reveal"><span class="ic">🏆</span><h4>Expertise &amp; Experience</h4><p>25+ years of hands-on installation. Certified by Ceramic Pro and NanoPro with verified training, process control, and zero shortcuts.</p></div>
       <div class="diff reveal" data-d="1"><span class="ic">🛡️</span><h4>Long-Term Benefits</h4><p>Every service is designed for lasting results. Lifetime warranty on film and workmanship — full replacement, not just a patch.</p></div>
       <div class="diff reveal" data-d="2"><span class="ic">💎</span><h4>Value For Money</h4><p>No surprise pricing. No outsourcing markups. Every quote is customized to your vehicle, project scope, and protection goals.</p></div>
@@ -950,7 +959,26 @@ section[id]{scroll-margin-top:170px}
       <div class="cert reveal"><div class="seal">✓</div><div><b>Certified Ceramic Pro Installer</b><span>Authorized installation with verified training</span></div></div>
       <div class="cert reveal" data-d="1"><div class="seal">✓</div><div><b>Certified NanoPro Liquid PPF</b><span>Seamless application · full replacement warranty</span></div></div>
       <div class="cert reveal" data-d="2"><div class="seal">✓</div><div><b>Full-Time Installers Only</b><span>Every job done by our own trained team</span></div></div>
-    </div>
+    </div><!-- /diff inner -->
+      </div><!-- /left col -->
+
+      <!-- Right col: YouTube Short -->
+      <div class="reveal" data-d="1" style="width:280px;flex-shrink:0">
+        <div style="position:sticky;top:140px">
+          <div style="border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);aspect-ratio:9/16;background:#000;position:relative">
+            <iframe
+              src="https://www.youtube.com/embed/Qoh-hpNHPXA?autoplay=1&mute=1&loop=1&playlist=Qoh-hpNHPXA&controls=0&playsinline=1&rel=0&modestbranding=1"
+              title="Masters Window Tinting"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style="position:absolute;inset:0;width:100%;height:100%;border:0">
+            </iframe>
+          </div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:12px">Masters Window Tinting · Long Island, NY</div>
+        </div>
+      </div>
+    </div><!-- /two-col grid -->
   </div>
 </section>
 
