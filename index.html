@@ -976,7 +976,7 @@ section[id]{scroll-margin-top:170px}
     </div>
 
     <!-- Cards + Video side by side -->
-    <div style="display:grid;grid-template-columns:1fr 200px;gap:24px;align-items:stretch">
+    <div style="display:grid;grid-template-columns:1fr 200px;gap:24px;align-items:stretch;min-height:0">
 
       <!-- Left: cards + certs -->
       <div>
@@ -994,8 +994,8 @@ section[id]{scroll-margin-top:170px}
       </div>
 
       <!-- Right: YouTube Short — aligned to cards -->
-      <div class="reveal" data-d="1" style="display:flex;flex-direction:column">
-        <div style="border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);background:#000;position:relative;height:100%;min-height:200px">
+      <div class="reveal" data-d="1" style="align-self:stretch;display:flex;flex-direction:column;gap:10px">
+        <div style="flex:1;border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);background:#000;position:relative;min-height:0">
           <iframe
             id="yt-diff"
             src="https://www.youtube.com/embed/Qoh-hpNHPXA?autoplay=1&mute=1&loop=1&playlist=Qoh-hpNHPXA&controls=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
@@ -1003,14 +1003,13 @@ section[id]{scroll-margin-top:170px}
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
-            style="position:absolute;inset:0;width:100%;height:100%;border:0">
+            style="position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover">
           </iframe>
-          <!-- Sound button -->
           <button class="yt-sound-btn yt-sound-btn-abs" id="yt-diff-btn" onclick="toggleYTSound('yt-diff','yt-diff-btn')" title="Toggle sound">
             <span class="yt-sound-icon">🔇</span>
           </button>
         </div>
-        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:10px">Masters Window Tinting · Long Island, NY</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;flex-shrink:0">Masters Window Tinting · Long Island, NY</div>
       </div>
 
     </div><!-- /cards + video grid -->
