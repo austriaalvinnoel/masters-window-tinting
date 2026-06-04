@@ -564,7 +564,7 @@ section[id]{scroll-margin-top:170px}
 .page-stat .num{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);letter-spacing:.04em;color:var(--ink)}
 .page-stat .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
 /* Film cards */
-.film-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.film-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 .film-card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 28px;transition:.35s;position:relative;overflow:hidden}
 .film-card::before{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
 .film-card:hover{transform:translateY(-6px);border-color:var(--line-2)}.film-card:hover::before{transform:scaleX(1)}
@@ -702,17 +702,7 @@ section[id]{scroll-margin-top:170px}
       <p>We offer three tinting technologies to match every need and budget — all installed by our certified team.</p>
     </div>
     <div class="film-grid">
-      <div class="film-card reveal">
-        <span class="film-tag">Entry Level</span>
-        <h3>Dyed Film</h3>
-        <p>Affordable privacy and glare reduction. Good starter option for daily drivers on a budget.</p>
-        <ul>
-          <li>UV protection up to 99%</li>
-          <li>Privacy and glare reduction</li>
-          <li>Available in all legal shades</li>
-          <li>Good for leased vehicles</li>
-        </ul>
-      </div>
+      
       <div class="film-card reveal" data-d="1">
         <span class="film-tag" style="color:var(--gold-bright)">Most Popular</span>
         <h3>Carbon Film</h3>
