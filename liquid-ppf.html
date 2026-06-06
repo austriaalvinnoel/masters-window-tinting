@@ -689,45 +689,188 @@ section[id]{scroll-margin-top:170px}
   </div>
 </section>
 
-<!-- PROTECTION LEVELS -->
+<!-- PROTECTION LEVELS — interactive -->
 <section class="sec" id="ppf-levels" style="background:var(--bg)">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Coverage Options</span>
+      <span class="eyebrow">— NanoPro Liquid PPF</span>
       <h2>Protection Levels</h2>
-      <p>Choose your coverage — from daily-driver chip defense to full exotic shielding. Every level applied seamlessly with no visible edges.</p>
+      <p>Hover or tap a level to see which areas are protected — from daily-driver chip defense to full exotic shielding.</p>
     </div>
-    <div class="core">
-      <article class="svc reveal">
-        <span class="idx">01</span><span class="badge">Entry</span>
-        <h3>Partial Front</h3>
-        <p>Essential coverage for the highest-impact zones. Perfect for daily drivers and leased vehicles.</p>
-        <ul><li>Front bumper</li><li>Headlights</li><li>Side mirrors</li><li>Partial hood (18–24 in.)</li><li>Partial fenders</li></ul>
-        <a href="contact.html" class="more">Get a Quote →</a>
-      </article>
-      <article class="svc reveal" data-d="1">
-        <span class="idx">02</span><span class="badge">Popular</span>
-        <h3>Full Front</h3>
-        <p>Balanced protection with a seamless look — most popular for sports and luxury vehicles on Long Island.</p>
-        <ul><li>Full front bumper</li><li>Full hood</li><li>Headlights</li><li>Side mirrors</li><li>Full fenders</li></ul>
-        <a href="contact.html" class="more">Get a Quote →</a>
-      </article>
-      <article class="svc reveal" data-d="2">
-        <span class="idx">03</span><span class="badge">Ultimate</span>
-        <h3>Full Body</h3>
-        <p>Complete protection for every painted surface. The choice for exotic cars and long-term ownership.</p>
-        <ul><li>Every painted surface</li><li>Doors, roof, quarters</li><li>A-pillars &amp; rockers</li><li>All hardware-accessible areas</li><li>Self-healing full coverage</li></ul>
-        <a href="contact.html" class="more">Get a Quote →</a>
-      </article>
+
+    <div class="lvl-interactive reveal" id="lvlViewer" data-active="0">
+
+      <!-- LEFT: Car Viz -->
+      <div class="lvl-viz">
+        <div class="lvl-car">
+          <img src="protectionherolambo.png" alt="NanoPro Liquid PPF Coverage" loading="lazy">
+
+          <!-- overlay masks per level -->
+          <div class="vmask vmask-1"></div>
+          <div class="vmask vmask-2"></div>
+          <div class="vmask vmask-3"></div>
+
+          <!-- hotspot labels — Partial Front (01) -->
+          <span class="cl lbl-headlights" style="--x:14%;--y:55%">Headlights</span>
+          <span class="cl lbl-bumper"     style="--x:13%;--y:72%">Bumper</span>
+          <span class="cl lbl-mirrors"    style="--x:38%;--y:36%">Mirrors</span>
+
+          <!-- Full Front adds (02) -->
+          <span class="cl lbl-hood"       style="--x:42%;--y:22%">Hood</span>
+          <span class="cl lbl-fenders"    style="--x:26%;--y:44%">Fenders</span>
+
+          <!-- Track Pack adds (03) -->
+          <span class="cl lbl-apillars"   style="--x:56%;--y:28%">A-Pillars</span>
+          <span class="cl lbl-rockers"    style="--x:60%;--y:70%">Rockers</span>
+
+          <!-- Full Body — all panels (04) -->
+          <span class="cl lbl-doors"      style="--x:72%;--y:45%">Doors</span>
+          <span class="cl lbl-roof"       style="--x:60%;--y:18%">Roof</span>
+          <span class="cl lbl-quarters"   style="--x:84%;--y:38%">Quarters</span>
+        </div>
+        <p class="lvl-viz-hint">Hover or tap a level to see coverage →</p>
+      </div>
+
+      <!-- RIGHT: Accordion Cards -->
+      <div class="lvl-cards">
+
+        <div class="lvl-c" data-lvl="1"
+             onmouseenter="setLvl(1)" onmouseleave="setLvl(0)"
+             ontouchstart="toggleLvl(1)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">01</span>
+            <h3>Partial Front Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Daily drivers, leased vehicles, and budget-conscious owners who want impact-zone defense.</p>
+            <p class="lvl-c-cov-label">Coverage Areas</p>
+            <ul class="lvl-c-cov">
+              <li>Front bumper</li>
+              <li>Headlights</li>
+              <li>Side mirrors</li>
+              <li>Partial hood (18–24 in.)</li>
+              <li>Partial fenders</li>
+            </ul>
+            <a href="contact.html" class="btn btn-ghost" style="margin-top:1.2rem;font-size:12px;padding:10px 18px">Get a Quote →</a>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-lvl="2"
+             onmouseenter="setLvl(2)" onmouseleave="setLvl(0)"
+             ontouchstart="toggleLvl(2)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">02</span>
+            <h3>Full Front Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Sports and luxury vehicles on Long Island highways. The most popular choice.</p>
+            <p class="lvl-c-cov-label">Coverage Areas</p>
+            <ul class="lvl-c-cov">
+              <li>Full front bumper</li>
+              <li>Full hood</li>
+              <li>Headlights</li>
+              <li>Side mirrors</li>
+              <li>Full fenders</li>
+            </ul>
+            <a href="contact.html" class="btn btn-ghost" style="margin-top:1.2rem;font-size:12px;padding:10px 18px">Get a Quote →</a>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-lvl="3"
+             onmouseenter="setLvl(3)" onmouseleave="setLvl(0)"
+             ontouchstart="toggleLvl(3)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">03</span>
+            <h3>Track Pack Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Performance drivers, track-day cars, and high-exposure areas beyond the front end.</p>
+            <p class="lvl-c-cov-label">Coverage Areas</p>
+            <ul class="lvl-c-cov">
+              <li>Everything in Full Front</li>
+              <li>A-pillars</li>
+              <li>Rocker panels</li>
+              <li>Door cup protectors</li>
+              <li>Rear wheel arches</li>
+            </ul>
+            <a href="contact.html" class="btn btn-ghost" style="margin-top:1.2rem;font-size:12px;padding:10px 18px">Get a Quote →</a>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-lvl="4"
+             onmouseenter="setLvl(4)" onmouseleave="setLvl(0)"
+             ontouchstart="toggleLvl(4)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">04</span>
+            <h3>Full Body Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Exotic cars, long-term ownership, and anyone who wants zero compromises on protection.</p>
+            <p class="lvl-c-cov-label">Coverage Areas</p>
+            <ul class="lvl-c-cov">
+              <li>Every painted surface</li>
+              <li>Doors &amp; roof</li>
+              <li>Quarter panels</li>
+              <li>A-pillars &amp; rockers</li>
+              <li>Self-healing full coverage</li>
+            </ul>
+            <a href="contact.html" class="btn btn-ghost" style="margin-top:1.2rem;font-size:12px;padding:10px 18px">Get a Quote →</a>
+          </div>
+        </div>
+
+      </div><!-- /lvl-cards -->
+    </div><!-- /lvl-interactive -->
+
+    <!-- Bottom CTAs -->
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:3rem" class="reveal">
+      <a href="liquid-ppf.html" class="btn btn-ghost">SEE FULL LIQUID PPF PAGE →</a>
+      <a href="contact.html" class="btn btn-gold">GET A CUSTOM QUOTE</a>
     </div>
-    <div class="more-svc">
-      <a class="msvc reveal" href="index.html#ppf-levels"><span class="k">Visual</span><h4>See Coverage Map</h4><p>Tap each level to see exactly what areas are protected on your car.</p><div class="ar">View Map →</div></a>
-      <a class="msvc reveal" data-d="1" href="ceramic-coating.html"><span class="k">Combine</span><h4>PPF + Ceramic</h4><p>Stack Liquid PPF with Ceramic Pro for complete protection.</p><div class="ar">Learn More →</div></a>
-      <a class="msvc reveal" data-d="2" href="contact.html"><span class="k">Custom</span><h4>Track Pack</h4><p>A-pillars, rocker panels, door cups — for performance drivers.</p><div class="ar">Get Quote →</div></a>
-      <a class="msvc reveal" data-d="3" href="contact.html"><span class="k">Premium</span><h4>Borograph 2.0</h4><p>Elite NanoPro with boron silicate &amp; graphene-oxide technology.</p><div class="ar">Learn More →</div></a>
-    </div>
+
   </div>
 </section>
+
+<style>
+/* ── Active card highlight ── */
+.lvl-c.is-active{
+  background:var(--surface-2,#161616);
+  border-color:rgba(255,255,255,.28);
+  padding-bottom:1.5rem;
+}
+.lvl-c.is-active::before{transform:scaleY(1)}
+.lvl-c.is-active::after{transform:rotate(45deg);color:#fff}
+.lvl-c.is-active .lvl-c-body{max-height:420px;opacity:1;margin-top:1rem}
+
+/* ── Level 4 full-body glow ── */
+.lvl-interactive[data-active="4"] .lvl-car img{
+  filter:brightness(1.08) drop-shadow(0 0 18px rgba(255,255,255,.12));
+}
+
+/* ── Mobile stack ── */
+@media(max-width:860px){
+  .lvl-interactive{grid-template-columns:1fr!important}
+  .lvl-viz{position:static}
+}
+</style>
+
+<script>
+(function(){
+  var viewer = document.getElementById('lvlViewer');
+  var activeTouch = 0;
+
+  window.setLvl = function(n){
+    viewer.dataset.active = n;
+    document.querySelectorAll('.lvl-c').forEach(function(c){
+      c.classList.toggle('is-active', +c.dataset.lvl === n);
+    });
+  };
+
+  window.toggleLvl = function(n){
+    if(activeTouch === n){ activeTouch = 0; setLvl(0); }
+    else { activeTouch = n; setLvl(n); }
+  };
+})();
+</script>
 
 <!-- WHY LIQUID PPF -->
 <section class="sec" style="background:var(--bg-2);border-top:1px solid var(--line)">
