@@ -597,10 +597,7 @@
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508411/camerotint_ugem2t.jpg",
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508398/Blatt-Belizan_Residence_-_COI_Request_-_Masters_Window_Tinting_xp64re.pdf"
     ],
-    "Liquid PPF": [
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768014/vinylwrap1_y4xiqx.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508457/Ceramicprovinyl_let8yb.pdf"
-    ],
+    "Liquid PPF": [],
     "Residential Tinting": [
       "residential-hero.jpg"
     ],
@@ -710,5 +707,5 @@
   },
   "beforeafter": [],
   "beforeafter_folders": {},
-  "publishedAt": "2026-06-06T19:10:24.620Z"
+  "publishedAt": "2026-06-06T19:10:28.123Z"
 }
