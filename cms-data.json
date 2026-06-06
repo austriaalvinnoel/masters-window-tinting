@@ -1,9 +1,6 @@
 {
   "gallery": {
-    "Window Tinting": [
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768011/Mercedestint_k8mcki.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768011/mercededtint2_ko6uhl.jpg"
-    ],
+    "Window Tinting": [],
     "Liquid PPF": [],
     "Ceramic Coating": [],
     "Residential Tinting": [],
@@ -80,5 +77,7 @@
     "fb": "https://www.facebook.com/profile.php?id=100063773733742",
     "ig": "https://www.instagram.com/Ceramic_pro_long_island"
   },
-  "publishedAt": "2026-06-06T19:21:11.489Z"
+  "beforeafter": [],
+  "beforeafter_folders": {},
+  "publishedAt": "2026-06-06T19:21:24.906Z"
 }
