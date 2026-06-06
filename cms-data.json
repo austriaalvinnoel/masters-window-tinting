@@ -4,32 +4,30 @@
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768011/Mercedestint_k8mcki.jpg",
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768011/mercededtint2_ko6uhl.jpg"
     ],
-    "Liquid PPF": [],
-    "Ceramic Coating": [],
+    "Liquid PPF": [
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768014/vinylwrap1_y4xiqx.jpg"
+    ],
+    "Ceramic Coating": [
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768012/nissancp_kix7w3.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768008/honda_xk2u1f.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768006/cpunkn_izl0te.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768005/CPTRuck_ccvgim.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768005/cpsuvblack_dkkkqa.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768004/CPRedhonda2_hj7uzf.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768001/cpmercedesblue_obnmuw.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768000/cpjeep_uqqrsp.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767995/CPBENZEPATEL_engh5s.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767992/ceramicpro1024_rn0zfb.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767991/ceramicpro10_knbjhx.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767991/Ceramicpro9_dfomdn.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767990/20130201-150853_hmhdgk.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780451131/sample.jpg"
+    ],
     "Residential Tinting": [],
     "Commercial Tinting": [],
     "Wall Graphics": [],
     "Detailing & Paint Correction": [],
-    "Exotic & Classic Cars": [
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768013/vette9_rb7z3m.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768010/keriscar_oi2akh.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768009/hot1_etgjop.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768007/fer4_lhh9sh.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768007/Exotic_mn8u5b.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768003/cprangerover_pzqb3x.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768002/CPPorschechinese2_i2q2hq.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768001/CPMassarati_zeh5mr.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767999/cpexotic_u6a9gs.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767998/CPdinali_gwoa25.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767998/cpcaddygold_iencxb.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767997/cp-BMWWhite_ynlmw0.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767996/CPBMW_io4ubf.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767994/Corvette1_ckjmqh.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767994/ceramicprogenesis6_peclno.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767993/ceramicprobmwx5_zvzr2b.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767991/AMG_gmd9m3.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767991/bently1_agbhfy.jpg"
-    ]
+    "Exotic & Classic Cars": []
   },
   "carousel": [
     {
@@ -101,5 +99,5 @@
   },
   "beforeafter": [],
   "beforeafter_folders": {},
-  "publishedAt": "2026-06-06T19:20:03.060Z"
+  "publishedAt": "2026-06-06T19:20:18.156Z"
 }
