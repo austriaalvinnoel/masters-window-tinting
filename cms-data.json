@@ -1,6 +1,32 @@
 {
-  "gallery": {},
+  "gallery": {
+    "Window Tinting": [],
+    "Liquid PPF": [],
+    "Ceramic Coating": [],
+    "Residential Tinting": [
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774812/residential3-2_chuh0k.png",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774811/photo-37_fribso.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774811/photo-32_uwttxz.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774810/photo-36_u9twra.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774809/photo-30_naaodm.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774808/photo-25_smmsez.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774807/photo-16_ednugz.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774807/photo-8_l7csij.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774806/P1050695-2_glzhut.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774805/lalahouse_rjubqh.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774804/Housetint26_xwfvhi.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774803/Housetint25_q0hxfk.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774802/Housetint24_n5fvm8.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774801/amaghanset_aoxekj.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774801/20130401-141957_skepdu.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780774800/2573558_blnvwo.jpg"
+    ],
+    "Commercial Tinting": [],
+    "Wall Graphics": [],
+    "Detailing & Paint Correction": [],
+    "Exotic & Classic Cars": []
+  },
   "carousel": [],
   "siteinfo": {},
-  "publishedAt": "2026-06-06T20:02:19.025Z"
+  "publishedAt": "2026-06-06T20:05:16.750Z"
 }
