@@ -45,6 +45,8 @@ body{background:#0a0a0a;color:#fff;font-family:"Inter",system-ui,sans-serif;font
 .cat-count{font-size:.7rem;background:#222;padding:2px 8px;border-radius:99px;color:#aaa}
 .cat-assign{background:#1a3a1a;border:1px solid #2d5a2d;color:#5dfc5d;padding:5px 12px;border-radius:4px;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap}
 .cat-assign:hover{background:#1f4a1f}
+.cat-clear{background:#3a1a1a;border:1px solid #7a2d2d;color:#fc5d5d;padding:5px 12px;border-radius:4px;font-size:.72rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.cat-clear:hover{background:#4a1f1f}
 .cat-imgs{padding:0 12px 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;display:none}
 .cat-bucket.open .cat-imgs{display:grid}
 .cat-thumb{aspect-ratio:4/3;border-radius:3px;overflow:hidden;position:relative;background:#1a1a1a}
@@ -169,6 +171,7 @@ function renderCats() {
           <button class="cat-assign" onclick="event.stopPropagation();addSelected('${cat}')" title="Add selected images to ${cat}">
             + Add Selected
           </button>
+          ${urls.length > 0 ? `<button class="cat-clear" onclick="event.stopPropagation();clearCat('${cat}')" title="Remove all from ${cat}">🗑 Clear All</button>` : ''}
         </div>
       </div>
       <div class="cat-imgs">${thumbs}</div>
@@ -224,6 +227,14 @@ function addSelected(cat) {
   const el = document.getElementById('bucket-' + cat.replace(/[^a-z]/gi,'_'));
   if (el) el.classList.add('open');
   setStatus('✅ Added ' + added + ' images to ' + cat + ' · Click 🚀 Publish when ready');
+}
+
+function clearCat(cat) {
+  if (!confirm('Remove ALL ' + (gallery[cat]||[]).length + ' images from "' + cat + '"?')) return;
+  gallery[cat] = [];
+  renderCats();
+  renderImgs();
+  setStatus('Cleared all images from ' + cat + ' · Click 🚀 Publish when ready');
 }
 
 function removeFromCat(cat, url) {
