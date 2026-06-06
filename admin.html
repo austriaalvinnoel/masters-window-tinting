@@ -1633,6 +1633,66 @@ function addSelectedToGallery() {
 }
 // ── End Cloudinary Browser ───────────────────────────────────────────────────
 
+
+async function removeBroken() {
+  const cats = Object.keys(state.gallery);
+  if (!cats.length) { toast('No gallery data to check'); return; }
+
+  // Show progress
+  const ss = document.getElementById('save-status');
+  if (ss) { ss.textContent = '🔍 Checking images...'; ss.style.display='flex'; }
+
+  let totalRemoved = 0;
+  let totalChecked = 0;
+
+  for (const cat of cats) {
+    const urls = state.gallery[cat] || [];
+    const alive = [];
+
+    for (const url of urls) {
+      totalChecked++;
+      if (ss) ss.textContent = `🔍 Checking ${totalChecked} images...`;
+      try {
+        const res = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+        // no-cors always "succeeds" — use Image load test instead
+        alive.push(url);
+      } catch(e) {
+        // failed
+      }
+    }
+
+    // Use Image() object for true dead-link detection
+    const verified = await Promise.all(urls.map(url =>
+      new Promise(resolve => {
+        const img = new Image();
+        img.onload  = () => resolve({ url, alive: true });
+        img.onerror = () => resolve({ url, alive: false });
+        img.src = url + '?_check=' + Date.now();
+        setTimeout(() => resolve({ url, alive: false }), 8000); // 8s timeout
+      })
+    ));
+
+    const liveUrls = verified.filter(x => x.alive).map(x => x.url);
+    const removed  = urls.length - liveUrls.length;
+    totalRemoved  += removed;
+    state.gallery[cat] = liveUrls;
+    if (removed > 0) console.log(`${cat}: removed ${removed} broken images`);
+  }
+
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  renderGallery();
+  updateStats();
+
+  if (ss) ss.style.display = 'none';
+
+  if (totalRemoved > 0) {
+    toast(`✅ Removed ${totalRemoved} broken image${totalRemoved !== 1 ? 's' : ''}. Click Publish to save.`);
+    const ok = await autoPublish(`CMS: Remove ${totalRemoved} broken images`);
+    if (ok) toast('✅ Published! Broken images removed from live site.');
+  } else {
+    toast('✅ All images are working — nothing to remove.');
+  }
+}
 </script>
 </body>
 </html>
