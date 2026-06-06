@@ -20,8 +20,7 @@
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767992/ceramicpro1024_rn0zfb.jpg",
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767991/ceramicpro10_knbjhx.jpg",
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767991/Ceramicpro9_dfomdn.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767990/20130201-150853_hmhdgk.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780451131/sample.jpg"
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780767990/20130201-150853_hmhdgk.jpg"
     ],
     "Residential Tinting": [],
     "Commercial Tinting": [],
@@ -116,5 +115,7 @@
     "fb": "https://www.facebook.com/profile.php?id=100063773733742",
     "ig": "https://www.instagram.com/Ceramic_pro_long_island"
   },
-  "publishedAt": "2026-06-06T19:16:16.483Z"
+  "beforeafter": [],
+  "beforeafter_folders": {},
+  "publishedAt": "2026-06-06T19:16:24.314Z"
 }
