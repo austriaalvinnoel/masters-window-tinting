@@ -768,7 +768,8 @@ section[id]{scroll-margin-top:170px}
       <button class="filt" data-f="res">Residential</button>
       <button class="filt" data-f="com">Commercial</button>
       <button class="filt" data-f="graphics">Wall Graphics</button>
-      <button class="filt" data-f="detail">Exotic &amp; Classic Cars</button>
+      <button class="filt" data-f="detail">Detailing</button>
+      <button class="filt" data-f="exotic">Exotic &amp; Classic Cars</button>
     </div>
 
     <div class="gal-carousel reveal" id="galCarousel">
@@ -923,7 +924,7 @@ document.querySelectorAll('img').forEach(img=>{
   const CAT_MAP = {
     'Window Tinting': 'tint','Ceramic Coating': 'ceramic','Liquid PPF': 'ppf',
     'Residential Tinting': 'res','Commercial Tinting': 'com',
-    'Wall Graphics': 'graphics','Detailing & Paint Correction': 'detail','Detailing': 'detail'
+    'Wall Graphics': 'graphics','Detailing & Paint Correction': 'detail','Detailing': 'detail','Exotic & Classic Cars': 'exotic'
   };
   const PER_CAT = 4;
   let allCards = [], visibleCards = [], perView = 3, pageIndex = 0, autoTimer = null, paused = false;
