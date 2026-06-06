@@ -536,21 +536,15 @@
         <div style="display:flex;gap:8px;margin-bottom:1rem">
           <input id="cb-search" type="text" placeholder="Search by name..." style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;color:#fff;font-family:inherit;font-size:.82rem" oninput="filterCloudImages()">
           <select id="cb-folder-filter" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;color:#fff;font-family:inherit;font-size:.82rem" onchange="loadCloudinaryImages()">
-            <option value="">All Gallery</option>
-            <option value="gallery/window-tinting">Window Tinting</option>
-            <option value="gallery/liquid-ppf">Liquid PPF</option>
-            <option value="gallery/ceramic-coating">Ceramic Coating</option>
-            <option value="gallery/residential-tinting">Residential Tinting</option>
-            <option value="gallery/commercial-tinting">Commercial Tinting</option>
-            <option value="gallery/wall-graphics">Wall Graphics</option>
-            <option value="gallery/detailing">Detailing &amp; Paint Correction</option>
-            <option value="gallery/exotic-classic-cars">Exotic &amp; Classic Cars</option>
+            <option value="">All Images (Root)</option>
+            <option value="gallery">gallery/ folder</option>
+            <option value="masters-gallery">masters-gallery/</option>
           </select>
         </div>
 
         <!-- Selection info -->
         <div id="cb-selection-info" style="font-size:.75rem;color:var(--muted);margin-bottom:.8rem">
-          Select images below, then click <strong style="color:#fff">Add Selected</strong> to add them to the chosen gallery category.
+          ✅ Click images to select them, then click <strong style="color:#fff">Add Selected</strong> to add to the chosen gallery category. Images from Cloudinary are shown below.
         </div>
 
         <!-- Image grid -->
@@ -1502,13 +1496,9 @@ async function loadCloudinaryImages() {
   cbSelected   = new Set();
   cbNextCursor = null;
 
-  // Auto-select the folder for the chosen category
-  const cat    = document.getElementById('cb-target-cat')?.value || '';
-  const folder = GALLERY_FOLDER_MAP[cat] || '';
-  
-  // Update folder filter dropdown to match
+  // Load all images from Cloudinary (root + all folders)
   const folderFilter = document.getElementById('cb-folder-filter');
-  if(folderFilter && folder) folderFilter.value = folder;
+  const folder = folderFilter ? folderFilter.value : '';
 
   try {
     await fetchCBPage(folder);
@@ -1546,6 +1536,7 @@ async function loadMoreCloudImages() {
   const folder = document.getElementById('cb-folder-filter')?.value || '';
   await fetchCBPage(folder);
   filterCloudImages();
+  toast('More images loaded');
 }
 
 function filterCloudImages() {
