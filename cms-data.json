@@ -33,25 +33,7 @@
     ],
     "Commercial Tinting": [],
     "Detailing": [],
-    "Detailing & Paint Correction": [
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768005/CPTRuck_ccvgim.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780515224/Truckdetail1_txi1by.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780515224/truckdetail_j17zuy.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508898/yankeest_co64qy.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508892/whoami_e5hrjq.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508872/truckstripes2_xo1z0b.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508872/Truckstripes_ghvx52.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508871/Truckdetail1_eaxyqn.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508871/truckdetail_u0hp8p.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508740/Monstertruck_a2pfza.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508549/cptruckdoor2_x22fmc.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508548/cptruck2_vw3ggv.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508547/CPTRuck_hjay68.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508547/cpTruck1_nkm0jc.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508417/Ceramic_Pro_Detailing_Work_Order_Form_b2ge2y.ai",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508400/bmwdetail_-_Copy_dso63q.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508392/arnoldtruck_assqlw.jpg"
-    ]
+    "Detailing & Paint Correction": []
   },
   "carousel": [
     {
@@ -123,5 +105,5 @@
   },
   "beforeafter": [],
   "beforeafter_folders": {},
-  "publishedAt": "2026-06-06T19:10:54.368Z"
+  "publishedAt": "2026-06-06T19:11:00.514Z"
 }
