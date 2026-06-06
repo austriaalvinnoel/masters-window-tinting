@@ -515,7 +515,7 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;align-items:end">
           <div>
             <label style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem">Add to Gallery Category</label>
-            <select id="cb-target-cat" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.65rem 1rem;color:#fff;font-family:inherit;font-size:.85rem">
+            <select id="cb-target-cat" onchange="loadCloudinaryImages()" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.65rem 1rem;color:#fff;font-family:inherit;font-size:.85rem">
               <option value="Window Tinting">Window Tinting</option>
               <option value="Ceramic Coating">Ceramic Coating</option>
               <option value="Liquid PPF">Liquid PPF</option>
@@ -535,11 +535,16 @@
         <!-- Search/filter -->
         <div style="display:flex;gap:8px;margin-bottom:1rem">
           <input id="cb-search" type="text" placeholder="Search by name..." style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;color:#fff;font-family:inherit;font-size:.82rem" oninput="filterCloudImages()">
-          <select id="cb-folder-filter" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;color:#fff;font-family:inherit;font-size:.82rem" onchange="filterCloudImages()">
-            <option value="">All Folders</option>
-            <option value="Liquid PPF">Liquid PPF</option>
-            <option value="masters-gallery">masters-gallery</option>
-            <option value="before-after">before-after</option>
+          <select id="cb-folder-filter" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;color:#fff;font-family:inherit;font-size:.82rem" onchange="loadCloudinaryImages()">
+            <option value="">All Gallery</option>
+            <option value="gallery/window-tinting">Window Tinting</option>
+            <option value="gallery/liquid-ppf">Liquid PPF</option>
+            <option value="gallery/ceramic-coating">Ceramic Coating</option>
+            <option value="gallery/residential-tinting">Residential Tinting</option>
+            <option value="gallery/commercial-tinting">Commercial Tinting</option>
+            <option value="gallery/wall-graphics">Wall Graphics</option>
+            <option value="gallery/detailing">Detailing &amp; Paint Correction</option>
+            <option value="gallery/exotic-classic-cars">Exotic &amp; Classic Cars</option>
           </select>
         </div>
 
@@ -650,6 +655,17 @@
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────────────────
+const GALLERY_FOLDER_MAP = {
+    'Window Tinting':               'gallery/window-tinting',
+    'Liquid PPF':                   'gallery/liquid-ppf',
+    'Ceramic Coating':              'gallery/ceramic-coating',
+    'Residential Tinting':          'gallery/residential-tinting',
+    'Commercial Tinting':           'gallery/commercial-tinting',
+    'Wall Graphics':                'gallery/wall-graphics',
+    'Detailing & Paint Correction': 'gallery/detailing',
+    'Exotic & Classic Cars':        'gallery/exotic-classic-cars'
+  };
+
 const CATS = ['Window Tinting','Liquid PPF','Ceramic Coating','Residential Tinting','Commercial Tinting','Wall Graphics','Detailing & Paint Correction','Exotic & Classic Cars'];
 const SLIDE_DEFAULTS = [
   {name:'About Masters',badge:'Trusted on Long Island',headline:'MASTERS\nWINDOW\nTINTING.',sub:'25+ years of professional experience.',cta1:'Call 631-226-4300',cta2:'Get a Free Quote'},
@@ -1481,23 +1497,28 @@ let cbNextCursor  = null;
 
 async function loadCloudinaryImages() {
   const btn = document.getElementById('cb-load-btn');
-  btn.textContent = '⏳ Loading...';
-  btn.disabled = true;
+  if(btn){ btn.textContent = '⏳ Loading...'; btn.disabled = true; }
   cbAllImages  = [];
   cbSelected   = new Set();
   cbNextCursor = null;
 
-  const folder = document.getElementById('cb-folder-filter')?.value || '';
+  // Auto-select the folder for the chosen category
+  const cat    = document.getElementById('cb-target-cat')?.value || '';
+  const folder = GALLERY_FOLDER_MAP[cat] || '';
+  
+  // Update folder filter dropdown to match
+  const folderFilter = document.getElementById('cb-folder-filter');
+  if(folderFilter && folder) folderFilter.value = folder;
 
   try {
     await fetchCBPage(folder);
     filterCloudImages();
-    btn.textContent = '🔄 Refresh';
-    btn.disabled = false;
+    const count = cbAllImages.length;
+    if(btn){ btn.textContent = count > 0 ? `🔄 Refresh (${count})` : '🔄 Refresh'; btn.disabled = false; }
+    if(count === 0) toast(`No images found in "${cat}" folder yet. Upload some first!`);
   } catch(e) {
-    btn.textContent = '☁️ Load Images';
-    btn.disabled = false;
-    toast('❌ Could not load Cloudinary images: ' + e.message);
+    if(btn){ btn.textContent = '☁️ Load Images'; btn.disabled = false; }
+    toast('❌ Could not load images: ' + e.message);
   }
 }
 
