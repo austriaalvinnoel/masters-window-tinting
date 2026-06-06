@@ -1,9 +1,10 @@
 {
   "gallery": {
-    "Window Tinting": [],
-    "Liquid PPF": [
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768014/vinylwrap1_y4xiqx.jpg"
+    "Window Tinting": [
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768011/Mercedestint_k8mcki.jpg",
+      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768011/mercededtint2_ko6uhl.jpg"
     ],
+    "Liquid PPF": [],
     "Ceramic Coating": [
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768012/nissancp_kix7w3.jpg",
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768008/honda_xk2u1f.jpg",
@@ -115,5 +116,5 @@
   },
   "beforeafter": [],
   "beforeafter_folders": {},
-  "publishedAt": "2026-06-06T19:19:34.575Z"
+  "publishedAt": "2026-06-06T19:19:50.364Z"
 }
