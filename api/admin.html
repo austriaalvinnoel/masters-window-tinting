@@ -831,9 +831,9 @@ async function syncFromGitHub() {
     if (data.carousel) state.carousel = data.carousel;
     if (data.siteinfo) state.siteinfo = data.siteinfo;
 
-    saveKey('gallery', state.gallery);
-    saveKey('carousel', state.carousel);
-    saveKey('siteinfo', state.siteinfo);
+    localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+    localStorage.setItem('cms_carousel', JSON.stringify(state.carousel));
+    localStorage.setItem('cms_siteinfo', JSON.stringify(state.siteinfo));
 
     renderGallery();
     buildSlideEditors();
@@ -1123,7 +1123,7 @@ async function importDriveFolder() {
 
 async function saveGallery() {
   const imgs = state.gallery[currentCat] || [];
-  const ok = saveKey('gallery', state.gallery);
+  const ok = localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
   const ss = document.getElementById('save-status');
 
   if (!ok) {
@@ -1189,7 +1189,7 @@ function buildSlideEditors() {
       cta1: document.getElementById(`s${i}-cta1`).value,
       cta2: document.getElementById(`s${i}-cta2`).value,
     }));
-    saveKey('carousel',state.carousel);
+    localStorage.setItem('cms_carousel', JSON.stringify(state.carousel));
     logChange('carousel','Carousel slides updated');
     toast('Carousel saved! Publishing...','success');
     autoPublish('Update carousel slides').then(ok => {
@@ -1223,7 +1223,7 @@ function bindFormEvents() {
       fb:document.getElementById('i-fb').value,
       ig:document.getElementById('i-ig').value,
     };
-    saveKey('siteinfo',state.siteinfo);
+    localStorage.setItem('cms_siteinfo', JSON.stringify(state.siteinfo));
     logChange('info','Site info updated');
     toast('Site info saved! Publishing...','success');
     autoPublish('Update site info').then(ok => {
@@ -1310,7 +1310,7 @@ document.getElementById('pub-confirm').addEventListener('click', async()=>{
     if(r.ok){
       st.style.color='#a5d6a7';
       st.textContent='✅ Published! Vercel will deploy in ~1–2 minutes.';
-      state.log=[]; saveKey('log',state.log); renderLog(); updateStats();
+      state.log=[]; localStorage.setItem('cms_log', JSON.stringify(state.log)); renderLog(); updateStats();
       toast('Published to GitHub!','success');
     } else {
       const e=await r.json().catch(()=>({error:'Unknown error'}));
@@ -1328,7 +1328,7 @@ document.getElementById('pub-confirm').addEventListener('click', async()=>{
 function logChange(type,text) {
   state.log.unshift({type,text,time:new Date().toLocaleTimeString()});
   if(state.log.length>20) state.log.pop();
-  saveKey('log',state.log);
+  localStorage.setItem('cms_log', JSON.stringify(state.log));
   renderLog(); updateStats();
 }
 
