@@ -542,6 +542,105 @@ section[id]{scroll-margin-top:170px}
   .tb-strip{font-size:0.68rem;line-height:1.4}
 }
 
+/* ===== PPF LEVELS — interactive viewer ===== */
+.lvl-interactive{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem;align-items:start;margin-bottom:2rem}
+.lvl-viz{position:sticky;top:90px}
+.lvl-car{position:relative;border-radius:6px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.lvl-car img{width:100%;height:auto;display:block}
+.lvl-viz-hint{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.9rem;text-align:center}
+.vmask{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .45s ease}
+.vmask-1{background:radial-gradient(ellipse 38% 55% at 20% 72%, transparent 0%, transparent 35%, rgba(0,0,0,.78) 100%)}
+.vmask-2{background:radial-gradient(ellipse 58% 80% at 35% 58%, transparent 0%, transparent 50%, rgba(0,0,0,.78) 100%)}
+.vmask-3{background:radial-gradient(ellipse 70% 110% at 42% 60%, transparent 0%, transparent 65%, rgba(0,0,0,.70) 100%)}
+.lvl-interactive[data-active="1"] .vmask-1{opacity:1}
+.lvl-interactive[data-active="2"] .vmask-2{opacity:1}
+.lvl-interactive[data-active="3"] .vmask-3{opacity:1}
+.lvl-car .cl{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.85);border:1px solid rgba(255,255,255,.4);padding:4px 9px;border-radius:99px;backdrop-filter:blur(4px);white-space:nowrap;pointer-events:none;z-index:5;opacity:0;transition:opacity .35s ease;font-weight:700}
+.lvl-car .cl::before{content:"";position:absolute;left:-10px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.7)}
+.lvl-interactive[data-active="1"] .lbl-headlights,
+.lvl-interactive[data-active="1"] .lbl-bumper,
+.lvl-interactive[data-active="1"] .lbl-mirrors{opacity:1}
+.lvl-interactive[data-active="2"] .lbl-headlights,
+.lvl-interactive[data-active="2"] .lbl-bumper,
+.lvl-interactive[data-active="2"] .lbl-mirrors,
+.lvl-interactive[data-active="2"] .lbl-hood,
+.lvl-interactive[data-active="2"] .lbl-fenders{opacity:1}
+.lvl-interactive[data-active="3"] .lbl-headlights,
+.lvl-interactive[data-active="3"] .lbl-bumper,
+.lvl-interactive[data-active="3"] .lbl-mirrors,
+.lvl-interactive[data-active="3"] .lbl-hood,
+.lvl-interactive[data-active="3"] .lbl-fenders,
+.lvl-interactive[data-active="3"] .lbl-apillars,
+.lvl-interactive[data-active="3"] .lbl-rockers{opacity:1}
+.lvl-interactive[data-active="4"] .cl{opacity:1}
+.lvl-cards{display:flex;flex-direction:column;gap:.7rem}
+.lvl-c{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.1rem 1.5rem;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}
+.lvl-c::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#fff;transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+.lvl-c::after{content:"+";position:absolute;right:1.2rem;top:1.1rem;font-size:1.2rem;font-weight:300;color:var(--muted);transition:transform .3s ease,color .3s ease}
+.lvl-c:hover{background:var(--surface2);border-color:rgba(255,255,255,.25);padding-bottom:1.5rem}
+.lvl-c:hover::before{transform:scaleY(1)}
+.lvl-c:hover::after{transform:rotate(45deg);color:#fff}
+.lvl-c-head{display:flex;align-items:baseline;gap:.8rem}
+.lvl-c-num{font-family:var(--mono);font-size:.75rem;font-weight:700;letter-spacing:.2em;color:var(--muted)}
+.lvl-c h3{font-family:var(--display);font-size:1.05rem;font-weight:800;text-transform:uppercase;color:#fff;line-height:1.2;letter-spacing:.01em;margin:0}
+.lvl-c-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .45s ease,opacity .3s ease,margin-top .3s ease;margin-top:0}
+.lvl-c:hover .lvl-c-body{max-height:420px;opacity:1;margin-top:1rem}
+.lvl-c-best{font-size:.82rem;color:var(--muted);line-height:1.55;margin-bottom:.9rem}
+.lvl-c-best b{color:#fff;font-weight:600}
+.lvl-c-cov-label{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff;padding-top:.8rem;border-top:1px solid var(--line);margin-bottom:.5rem}
+.lvl-c-cov{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.35rem 1rem;padding:0;margin:0}
+.lvl-c-cov li{font-size:.78rem;color:#fff;display:flex;align-items:flex-start;gap:.4rem;line-height:1.45}
+.lvl-c-cov li::before{content:"✓";color:#fff;font-weight:800;font-size:.72rem;flex-shrink:0}
+@media(max-width:880px){
+  .lvl-interactive{grid-template-columns:1fr;gap:1.5rem}
+  .lvl-viz{position:static}
+  .lvl-car .cl{font-size:9px;padding:3px 7px}
+  .lvl-car .cl::before{width:5px;height:5px;left:-8px}
+  .lvl-viz-hint{display:block}
+  .lvl-c-cov{grid-template-columns:1fr}
+  /* On mobile show labels for active level via tap */
+  .lvl-interactive[data-active="1"] .lbl-headlights,
+  .lvl-interactive[data-active="1"] .lbl-bumper,
+  .lvl-interactive[data-active="1"] .lbl-mirrors{opacity:1}
+  .lvl-interactive[data-active="2"] .lbl-headlights,
+  .lvl-interactive[data-active="2"] .lbl-bumper,
+  .lvl-interactive[data-active="2"] .lbl-mirrors,
+  .lvl-interactive[data-active="2"] .lbl-hood,
+  .lvl-interactive[data-active="2"] .lbl-fenders{opacity:1}
+  .lvl-interactive[data-active="3"] .lbl-headlights,
+  .lvl-interactive[data-active="3"] .lbl-bumper,
+  .lvl-interactive[data-active="3"] .lbl-mirrors,
+  .lvl-interactive[data-active="3"] .lbl-hood,
+  .lvl-interactive[data-active="3"] .lbl-fenders,
+  .lvl-interactive[data-active="3"] .lbl-apillars,
+  .lvl-interactive[data-active="3"] .lbl-rockers{opacity:1}
+  .lvl-interactive[data-active="4"] .cl{opacity:1}
+}
+@media(max-width:880px){
+  .lvl-interactive{grid-template-columns:1fr;gap:1.5rem}
+  .lvl-viz{position:static}
+  .lvl-car .cl{font-size:9px;padding:3px 7px}
+  .lvl-car .cl::before{width:5px;height:5px;left:-8px}
+  .lvl-viz-hint{display:block}
+  .lvl-c-cov{grid-template-columns:1fr}
+  .lvl-interactive[data-active="1"] .lbl-headlights,
+  .lvl-interactive[data-active="1"] .lbl-bumper,
+  .lvl-interactive[data-active="1"] .lbl-mirrors{opacity:1}
+  .lvl-interactive[data-active="2"] .lbl-headlights,
+  .lvl-interactive[data-active="2"] .lbl-bumper,
+  .lvl-interactive[data-active="2"] .lbl-mirrors,
+  .lvl-interactive[data-active="2"] .lbl-hood,
+  .lvl-interactive[data-active="2"] .lbl-fenders{opacity:1}
+  .lvl-interactive[data-active="3"] .lbl-headlights,
+  .lvl-interactive[data-active="3"] .lbl-bumper,
+  .lvl-interactive[data-active="3"] .lbl-mirrors,
+  .lvl-interactive[data-active="3"] .lbl-hood,
+  .lvl-interactive[data-active="3"] .lbl-fenders,
+  .lvl-interactive[data-active="3"] .lbl-apillars,
+  .lvl-interactive[data-active="3"] .lbl-rockers{opacity:1}
+  .lvl-interactive[data-active="4"] .cl{opacity:1}
+}
+.levels-cta{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin-top:2rem}
 </style>
 <style>
 /* ── Window Tinting Page Specific ── */
@@ -872,6 +971,124 @@ section[id]{scroll-margin-top:170px}
 })();
 </script>
 
+<!-- PPF LEVELS -->
+<section class="sec" id="ppf-levels">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">NanoPro Liquid PPF</span>
+      <h2>Protection Levels</h2>
+      <p>Hover or tap a level to see which areas are protected — from daily-driver chip defense to full exotic shielding.</p>
+    </div>
+
+    <div class="lvl-interactive reveal" data-active="4" id="lvl-interactive">
+
+      <!-- LEFT: car visualizer -->
+      <div class="lvl-viz">
+        <div class="lvl-car">
+          <img src="protection-hero-lambo.png" alt="NanoPro Liquid PPF protection on a Lamborghini" loading="lazy">
+
+          <div class="vmask vmask-1"></div>
+          <div class="vmask vmask-2"></div>
+          <div class="vmask vmask-3"></div>
+
+          <span class="cl lbl-headlights" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+          <span class="cl lbl-bumper" style="--x:14%;--y:80%;"><b>Bumper</b></span>
+          <span class="cl lbl-mirrors" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+          <span class="cl lbl-hood" style="--x:38%;--y:36%;"><b>Hood</b></span>
+          <span class="cl lbl-fenders" style="--x:72%;--y:60%;"><b>Fenders</b></span>
+          <span class="cl lbl-apillars" style="--x:48%;--y:28%;"><b>A-Pillars</b></span>
+          <span class="cl lbl-rockers" style="--x:80%;--y:88%;"><b>Rockers</b></span>
+          <span class="cl lbl-doors" style="--x:88%;--y:50%;"><b>Doors</b></span>
+        </div>
+        <div class="lvl-viz-hint" id="lvl-hint">Hover or tap a level to see coverage →</div>
+      </div>
+
+      <!-- RIGHT: 4 level cards -->
+      <div class="lvl-cards">
+
+        <div class="lvl-c" data-level="1" onmouseenter="setLvl(1)" onclick="setLvl(1)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">01</span>
+            <h3>Partial Front Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Front bumper</li>
+              <li>Headlights</li>
+              <li>Side mirrors</li>
+              <li>Partial fenders</li>
+              <li>Partial hood (18–24 in.)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-level="2" onmouseenter="setLvl(2)" onclick="setLvl(2)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">02</span>
+            <h3>Full Front Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> A seamless look with balanced protection — popular for sports and luxury cars.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Full front bumper</li>
+              <li>Full hood</li>
+              <li>Headlights</li>
+              <li>Side mirrors</li>
+              <li>Full fenders</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-level="3" onmouseenter="setLvl(3)" onclick="setLvl(3)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">03</span>
+            <h3>Track Pack Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Full front coverage</li>
+              <li>A-pillars</li>
+              <li>Rocker panels</li>
+              <li>Door cups</li>
+              <li>Rear impact zones</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-level="4" onmouseenter="setLvl(4)" onclick="setLvl(4)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">04</span>
+            <h3>Full Body Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Every painted exterior surface</li>
+              <li>Full body wrap</li>
+              <li>Doors, roof, quarter panels</li>
+              <li>All hardware-accessible surfaces</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="levels-cta reveal">
+      <a href="contact.html" class="btn btn-gold">Get a Custom Quote →</a>
+      <a href="contact.html" class="btn btn-outline">Get a Custom Quote</a>
+    </div>
+
+  </div>
+</section>
+
 <!-- WHY LIQUID PPF -->
 <section class="sec" style="background:var(--bg-2);border-top:1px solid var(--line)">
   <div class="wrap">
@@ -1030,6 +1247,21 @@ document.querySelectorAll('img').forEach(img=>{
     if(p) p.style.background='linear-gradient(135deg,#1a1d24,#0d0f12)';
   });
 });
+
+function setLvl(n){
+    var c = document.querySelector('.lvl-interactive');
+    if(c) c.setAttribute('data-active', String(n));
+    // Highlight active card
+    document.querySelectorAll('.lvl-c').forEach(function(el){
+      el.style.borderColor = el.dataset.level == n ? 'rgba(255,255,255,.4)' : '';
+      el.style.background  = el.dataset.level == n ? 'var(--surface-2)' : '';
+    });
+  }
+  // Set hint text based on touch device
+  if(typeof window !== 'undefined' && 'ontouchstart' in window){
+    var h = document.getElementById('lvl-hint');
+    if(h) h.textContent = 'Tap a level to see coverage →';
+  }
 </script>
 </body>
 </html>
