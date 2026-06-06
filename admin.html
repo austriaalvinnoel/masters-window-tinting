@@ -677,56 +677,37 @@ function loadState() {
 
 // Always sync gallery from GitHub on load — ensures all browsers see same data
 async function syncFromGitHub() {
+  const ss = document.getElementById('save-status');
+  if(ss){ ss.textContent='🔄 Syncing from GitHub...'; ss.style.display='flex'; }
   try {
     const url = 'https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now();
-    const res = await fetch(url);
-    if (!res.ok) return;
-    const data = await res.json();
-    if (!data || !data.gallery) return;
+    const r = await fetch(url);
+    if(!r.ok) throw new Error('fetch failed');
+    const data = await r.json();
 
-    // Merge GitHub data — GitHub is always the source of truth
-    const ghTotal = Object.values(data.gallery).reduce((a,v)=>a+(v||[]).length, 0);
-    const localTotal = Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length, 0);
+    // ── ALWAYS use GitHub as source of truth — overwrite localStorage ──
+    if(data.gallery)    { state.gallery    = data.gallery;    localStorage.setItem('cms_gallery',    JSON.stringify(data.gallery)); }
+    if(data.carousel)   { state.carousel   = data.carousel;   localStorage.setItem('cms_carousel',   JSON.stringify(data.carousel)); }
+    if(data.siteinfo)   { state.siteinfo   = data.siteinfo;   localStorage.setItem('cms_siteinfo',   JSON.stringify(data.siteinfo)); }
+    if(data.beforeafter){ state.beforeafter= data.beforeafter; localStorage.setItem('cms_beforeafter',JSON.stringify(data.beforeafter)); }
+    if(data.beforeafter_folders){ state.beforeafter_folders = data.beforeafter_folders; localStorage.setItem('cms_beforeafter_folders', JSON.stringify(data.beforeafter_folders)); }
 
-    // Always use GitHub data if it has more or equal images
-    if (ghTotal >= localTotal) {
-      state.gallery = data.gallery;
-      // Save to localStorage so it's cached for offline
-      localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
-      renderGallery();
-      updateStats();
-      updateStorage();
-      const diff = ghTotal - localTotal;
-      if (diff > 0) {
-        toast('✅ Synced ' + diff + ' new photo' + (diff>1?'s':'') + ' from GitHub');
-      }
-    }
+    // Re-render everything with fresh data
+    buildCatTabs();
+    renderGallery();
+    buildSlideEditors();
+    loadSiteInfo();
+    updateStats();
+    updateStorage();
+
+    const ts = data.publishedAt ? new Date(data.publishedAt).toLocaleTimeString() : 'unknown';
+    if(ss){ ss.textContent='✅ Synced from GitHub at ' + ts; setTimeout(()=>ss.style.display='none', 3000); }
   } catch(e) {
-    console.warn('GitHub sync skipped:', e);
+    if(ss){ ss.textContent='⚠️ Sync failed: ' + e.message; setTimeout(()=>ss.style.display='none', 4000); }
   }
 }
 
-function saveKey(key, val) {
-  try {
-    const serialized = JSON.stringify(val);
-    localStorage.setItem('cms_'+key, serialized);
-    const verify = localStorage.getItem('cms_'+key);
-    if (!verify) { toast('Save verification failed!', 'error'); return false; }
-    return true;
-  }
-  catch(e) {
-    if (e.name === 'QuotaExceededError') {
-      toast('Storage full — remove some file uploads or use URL method', 'error');
-    } else {
-      toast('Save failed: ' + e.message, 'error');
-    }
-    return false;
-  }
-}
 
-// ── AUTO PUBLISH (via secure serverless function) ────────────────────────────
-// The GitHub token NEVER touches the browser. We POST to our own /api/publish
-// endpoint, which holds the token in a Vercel environment variable server-side.
 async function autoPublish(commitMsg) {
   const publishKey = localStorage.getItem('cms_publish_key');
   if (!publishKey) return false; // not configured — silent fail
@@ -795,7 +776,7 @@ if (sessionStorage.getItem('cms_ok') === '1') {
 async function startApp() {
   const app = document.getElementById('app');
   app.style.display = 'flex';
-  loadState();
+  // Always sync from GitHub on load — localStorage is only a temp cache
   bindNav();
   buildCatTabs();
   buildSlideEditors();
@@ -808,7 +789,7 @@ async function startApp() {
   bindGalleryEvents();
   bindFormEvents();
   // Sync from GitHub in background — keeps all browsers in sync
-  setTimeout(syncFromGitHub, 800);
+  syncFromGitHub(); // Always sync on load — GitHub is source of truth
 
   const baCount = (state.beforeafter||[]).length;
   const totalLocal = Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length,0);
