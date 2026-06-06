@@ -1622,7 +1622,7 @@ function addSelectedToGallery() {
   renderCBGrid();
   renderGallery();
   updateStats();
-  toast(`✅ Added ${added} image${added!==1?'s':''} to ${cat}! Click Publish Changes to go live.`);
+  toast(`✅ ${added} image${added!==1?'s':''} added to ${cat}! Total: ${state.gallery[cat].length}`); cbSelected = new Set(); renderCBGrid();
 }
 // ── End Cloudinary Browser ───────────────────────────────────────────────────
 
@@ -1686,6 +1686,24 @@ async function removeBroken() {
     toast('✅ All images are working — nothing to remove.');
   }
 }
+
+// ── Select All / Deselect All ────────────────────────────────────────────────
+function selectAllCB() {
+  cbAllImages.forEach(function(img) {
+    if (!img.public_id.startsWith('samples/') && !img.public_id.startsWith('cld-sample')) {
+      cbSelected.add(img.public_id);
+    }
+  });
+  renderCBGrid();
+  toast(cbSelected.size + ' images selected');
+}
+
+function deselectAllCB() {
+  cbSelected = new Set();
+  renderCBGrid();
+  toast('All deselected');
+}
+// ─────────────────────────────────────────────────────────────────────────────
 </script>
 </body>
 </html>
