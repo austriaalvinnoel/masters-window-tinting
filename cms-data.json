@@ -86,21 +86,7 @@
     "Residential Tinting": [
       "residential-hero.jpg"
     ],
-    "Commercial Tinting": [
-      "commercial-hero.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508854/STOREFRONT-signed_byauvz.pdf",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508853/STOREFRONT_czcyok.pdf",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508766/OfficeFrost3_wkivsp.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508764/Officefrost1_uaghfw.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508765/Officefrost2_jdk0kp.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508763/office222_rdyb40.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508762/office5_hjbrm6.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508761/office4_ro4o7l.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508761/office3_q0cf82.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508760/office2_u0fbms.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508759/office1_qvk22g.jpg",
-      "https://res.cloudinary.com/dym8x61sp/image/upload/v1780508709/manhassetstore_jrnkat.jpg"
-    ],
+    "Commercial Tinting": [],
     "Detailing": [],
     "Detailing & Paint Correction": [
       "https://res.cloudinary.com/dym8x61sp/image/upload/v1780768005/CPTRuck_ccvgim.jpg",
@@ -192,5 +178,5 @@
   },
   "beforeafter": [],
   "beforeafter_folders": {},
-  "publishedAt": "2026-06-06T19:10:38.672Z"
+  "publishedAt": "2026-06-06T19:10:47.094Z"
 }
