@@ -1947,4 +1947,2099 @@ function toggleYTSound(videoId, btnId) {
 
 </script>
 </body>
+</html><script>
+// gallery carousel + filter with CMS auto-load
+(function(){
+  const track   = document.getElementById('galGrid');
+  const carousel= document.getElementById('galCarousel');
+  if(!track || !carousel) return;
+  const prevBtn = carousel.querySelector('.gal-prev');
+  const nextBtn = carousel.querySelector('.gal-next');
+  const dotsEl  = document.getElementById('galDots');
+  const filters = document.querySelectorAll('.filt');
+
+  // CMS category → filter short-code
+  const CAT_MAP = {
+    'Window Tinting':'tint',
+    'Ceramic Coating':'ceramic',
+    'Liquid PPF':'ppf',
+    'Residential Tinting':'res',
+    'Commercial Tinting':'com',
+    'Wall Graphics':'graphics',
+    'Detailing & Paint Correction':'detail',
+    'Detailing':'detail',
+    'Exotic & Classic Cars':'exotic'
+  };
+
+  // gallery data keyed by shortcode
+  var galleryData = {};
+  var currentFilter = 'tint';
+  var perView = 3, pageIndex = 0, autoTimer = null, paused = false;
+
+  function computePerView(){ var w=window.innerWidth; if(w<=680) return 1; if(w<=1024) return 2; return 3; }
+  function totalPages(){ var cards = galleryData[currentFilter]||[]; return Math.max(1,Math.ceil(cards.length/perView)); }
+
+  function render(){
+    var cards = galleryData[currentFilter] || [];
+    // Build visible cards
+    track.innerHTML = '';
+    if(cards.length === 0){
+      track.innerHTML = '<div style="color:var(--muted);padding:40px;font-size:14px;text-align:center;width:100%">No images in this category yet.</div>';
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      dotsEl.innerHTML = '';
+      return;
+    }
+    cards.forEach(function(url, i){
+      var card = document.createElement('div');
+      card.className = 'gcard';
+      card.style.flex = '0 0 calc((100% - ' + ((perView-1)*16) + 'px) / ' + perView + ')';
+      card.innerHTML = '<img src="' + url + '" alt="' + currentFilter + '" loading="lazy"><div class="meta"><div class="c">' + getCatName(currentFilter) + '</div></div>';
+      track.appendChild(card);
+    });
+    // Slide transform
+    track.style.transform = 'translateX(' + (-(pageIndex * 100)) + '%)';
+    prevBtn.disabled = (pageIndex === 0);
+    nextBtn.disabled = (pageIndex >= totalPages()-1);
+    buildDots();
+  }
+
+  function getCatName(shortcode){
+    var map = {'tint':'Window Tinting','ceramic':'Ceramic Coating','ppf':'Liquid PPF','res':'Residential','com':'Commercial','graphics':'Wall Graphics','detail':'Detailing','exotic':'Exotic & Classic Cars'};
+    return map[shortcode] || shortcode;
+  }
+
+  function buildDots(){
+    dotsEl.innerHTML = '';
+    var n = totalPages();
+    if(n<=1){ dotsEl.style.display='none'; return; }
+    dotsEl.style.display='';
+    for(var i=0;i<n;i++){
+      var b=document.createElement('button');
+      b.setAttribute('aria-label','Page '+(i+1));
+      if(i===pageIndex) b.classList.add('active');
+      b.addEventListener('click',(function(idx){ return function(){ pageIndex=idx; render(); restartAuto(); }; })(i));
+      dotsEl.appendChild(b);
+    }
+  }
+
+  function nextPage(){ if(pageIndex < totalPages()-1){ pageIndex++; render(); } else { pageIndex=0; render(); } }
+  function prevPage(){ if(pageIndex > 0){ pageIndex--; render(); } else { pageIndex=totalPages()-1; render(); } }
+  function startAuto(){ stopAuto(); autoTimer=setInterval(function(){ if(!paused) nextPage(); },5000); }
+  function stopAuto(){ if(autoTimer){ clearInterval(autoTimer); autoTimer=null; } }
+  function restartAuto(){ stopAuto(); startAuto(); }
+
+  prevBtn.addEventListener('click',function(){ prevPage(); restartAuto(); });
+  nextBtn.addEventListener('click',function(){ nextPage(); restartAuto(); });
+  carousel.addEventListener('mouseenter',function(){ paused=true; });
+  carousel.addEventListener('mouseleave',function(){ paused=false; });
+
+  // Filter buttons
+  filters.forEach(function(f){
+    f.addEventListener('click',function(){
+      filters.forEach(function(x){ x.classList.remove('active'); });
+      f.classList.add('active');
+      currentFilter = f.dataset.f;
+      pageIndex = 0;
+      render();
+      restartAuto();
+    });
+  });
+
+  window.addEventListener('resize',function(){
+    var nv=computePerView();
+    if(nv!==perView){ perView=nv; pageIndex=0; render(); }
+  });
+
+  // Load CMS data
+  function loadCmsAndInit(){
+    fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now())
+      .then(function(r){ return r.ok?r.json():Promise.reject('failed'); })
+      .then(function(data){
+        if(!data||!data.gallery){ init(); return; }
+        // Map each CMS category to its shortcode
+        Object.entries(data.gallery).forEach(function(entry){
+          var catName = entry[0];
+          var urls    = entry[1];
+          var sc = CAT_MAP[catName];
+          if(!sc || !Array.isArray(urls) || urls.length===0) return;
+          if(!galleryData[sc]) galleryData[sc] = [];
+          urls.forEach(function(url){
+            if(url && !galleryData[sc].includes(url)) galleryData[sc].push(url);
+          });
+        });
+        init();
+      })
+      .catch(function(){ init(); });
+  }
+
+  function init(){
+    perView = computePerView();
+    // Set active filter to first one that has images
+    var firstWithImages = null;
+    filters.forEach(function(f){
+      if(!firstWithImages && (galleryData[f.dataset.f]||[]).length > 0){
+        firstWithImages = f.dataset.f;
+      }
+    });
+    if(firstWithImages){
+      currentFilter = firstWithImages;
+      filters.forEach(function(f){ f.classList.toggle('active', f.dataset.f===firstWithImages); });
+    }
+    pageIndex = 0;
+    render();
+    startAuto();
+  }
+
+  loadCmsAndInit();
+})();
+</script>e html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masters Window Tinting | Ceramic Pro & PPF Long Island NY</title>
+<link rel="canonical" href="https://masters-window-tinting.vercel.app/">
+<!-- Open Graph / Social -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://masters-window-tinting.vercel.app/">
+<meta property="og:title" content="Masters Window Tinting | Ceramic Pro & PPF Long Island NY">
+<meta property="og:description" content="Masters Window Tinting in West Babylon, NY. Certified Ceramic Pro, NanoPro Liquid PPF, window tint, and detailing on Long Island. Call 631-226-4300.">
+<meta property="og:image" content="https://masters-window-tinting.vercel.app/og-cover.jpg">
+<meta property="og:site_name" content="Masters Window Tinting">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Masters Window Tinting | Ceramic Pro & PPF Long Island NY">
+<meta name="twitter:description" content="Masters Window Tinting in West Babylon, NY. Certified Ceramic Pro, NanoPro Liquid PPF, window tint, and detailing on Long Island. Call 631-226-4300.">
+<meta name="twitter:image" content="https://masters-window-tinting.vercel.app/og-cover.jpg">
+<meta name="description" content="Masters Window Tinting in West Babylon, NY. Certified Ceramic Pro, NanoPro Liquid PPF, window tint, and detailing on Long Island. Call 631-226-4300.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000000;
+  --bg-2:#070707;
+  --surface:#0e0e0e;
+  --surface-2:#161616;
+  --line:rgba(255,255,255,.10);
+  --line-2:rgba(255,255,255,.18);
+  --ink:#ffffff;
+  --muted:#a9a9a9;
+  --muted-2:#6e6e6e;
+  --gold:#ffffff;
+  --gold-bright:#ffffff;
+  --glass:#cfcfcf;
+  --maxw:1240px;
+  --display:"Bebas Neue",sans-serif;
+  --body:"Inter",sans-serif;
+  --mono:"DM Mono",monospace;
+  --muted:#b8b8b8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:15px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold);color:#0a0a0a}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* grain overlay */
+body::after{
+  content:"";position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);display:inline-flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:.95;letter-spacing:.04em}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;font-family:"Inter",sans-serif;font-weight:600;font-size:13px;
+  letter-spacing:.06em;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer;border:1px solid transparent;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,border-color .25s,box-shadow .25s;
+  white-space:nowrap;
+}
+.btn-gold{background:var(--gold);color:#0a0a0a;box-shadow:0 0 0 0 rgba(255,255,255,.4)}
+.btn-gold:hover{background:var(--gold-bright);transform:translateY(-2px);box-shadow:0 14px 40px -12px rgba(255,255,255,.5)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
+
+/* ===== NAV ===== */
+header.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  transition:background .4s,backdrop-filter .4s,border-color .4s,padding .4s;
+  border-bottom:1px solid transparent;padding:18px 0;
+}
+header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);border-color:var(--line);padding:12px 0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-inner .nav-links{margin-left:auto;margin-right:auto}
+.brand{display:flex;align-items:center;gap:13px}
+.brand .mark{
+  width:42px;height:42px;border-radius:3px;display:grid;place-items:center;flex-shrink:0;
+  background:linear-gradient(145deg,#1a1c22,#0c0d10);border:1px solid var(--line-2);position:relative;overflow:hidden;
+}
+.brand .mark span{font-family:var(--display);font-weight:800;font-size:22px;color:var(--gold-bright);line-height:1}
+.brand .mark::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);transform:translateX(-120%);transition:transform .6s}
+.brand:hover .mark::after{transform:translateX(120%)}
+.brand b{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:-.01em;line-height:1}
+.brand small{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--muted-2);text-transform:uppercase;margin-top:3px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;font-weight:600;color:var(--muted);position:relative;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--gold);transition:width .3s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.nav-links .has-dd{position:relative;display:inline-block}
+.nav-links .has-dd .dd-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:.3rem}
+.nav-links .has-dd .dd-toggle::after{content:"\25BE";font-size:.7em;opacity:.7}
+.nav-links .has-dd .dd-toggle::before{display:none}
+.nav-links .dd{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);min-width:230px;background:#0e0e0e;border:1px solid var(--line-2);padding:8px 0;display:flex;flex-direction:column;gap:0;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:200}
+.nav-links .has-dd:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-links .dd::after{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.nav-links .dd a{padding:10px 20px;font-size:13px;white-space:nowrap}
+.nav-links .dd a::after{display:none}
+.nav-links .dd a:hover{background:rgba(255,255,255,.06);color:var(--ink)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.nav-phone{font-family:var(--mono);font-weight:700;font-size:14px;color:var(--ink);letter-spacing:.02em}
+.nav-phone:hover{color:var(--gold-bright)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:24px;height:2px;background:var(--ink);transition:.3s}
+.mobile-menu{display:none}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:75vh;display:flex;align-items:flex-end;padding:80px 0 48px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;opacity:.34;filter:grayscale(1) contrast(1.08)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(120% 90% at 78% 20%,rgba(255,255,255,.05),transparent 55%),
+  radial-gradient(80% 70% at 12% 90%,rgba(255,255,255,.12),transparent 60%),
+  linear-gradient(180deg,rgba(8,9,11,.72) 0%,rgba(8,9,11,.55) 45%,var(--bg) 100%)}
+.hero-grid{position:absolute;inset:0;z-index:1;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(80% 80% at 50% 30%,#000,transparent 80%)}
+.hero-inner{position:relative;z-index:2;width:100%}
+.hero-tag{margin-bottom:20px}
+.hero h1{
+  font-size:clamp(2.8rem,6vw,5.5rem);text-transform:uppercase;
+  text-shadow:0 30px 80px rgba(0,0,0,.6);line-height:1.0;letter-spacing:.06em;
+  font-style:normal;font-weight:400;
+}
+.hero h1 .l{display:block;overflow:visible}
+.hero h1 .l i{display:block;font-style:normal;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .l:nth-child(2) i{animation-delay:.08s}
+.hero h1 .l:nth-child(3) i{animation-delay:.16s}
+.hero h1 .l:nth-child(4) i{animation-delay:.24s}
+/* uniform stack: all lines same color */
+.hero h1 .dot{color:var(--glass)}
+@keyframes rise{to{transform:translateY(0)}}
+.hero p.lead{max-width:520px;margin:20px 0 28px;color:var(--muted);font-size:14px;line-height:1.75;opacity:0;animation:fade .8s .55s forwards}
+@keyframes fade{to{opacity:1}}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fade .8s .65s forwards}
+.hero-trust{
+  margin-top:36px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:center;
+  padding-top:22px;border-top:1px solid var(--line);opacity:0;animation:fade .8s .8s forwards;
+}
+.hero-trust .ti{display:flex;align-items:center;gap:11px;font-size:13.5px;color:var(--muted)}
+.hero-trust .ti b{color:var(--ink);font-family:var(--mono);font-weight:700}
+.hero-trust .star{color:var(--gold)}
+.scroll-hint{position:absolute;bottom:30px;right:28px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.25em;color:var(--muted-2);writing-mode:vertical-rl;display:flex;align-items:center;gap:14px;text-transform:uppercase}
+.scroll-hint::after{content:"";width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ===== LIQUID PPF BAND ===== */
+.ppf-band{position:relative;background:#000;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.marquee{display:flex;overflow:hidden;user-select:none;border-bottom:1px solid var(--line);background:#050505}
+.marquee.bottom{border-bottom:0;border-top:1px solid var(--line)}
+.marquee-inner{display:flex;width:max-content;animation:scroll-l 28s linear infinite}
+.marquee.bottom .marquee-inner{animation-name:scroll-r}
+.marquee .track{display:flex;align-items:center;gap:46px;padding:16px 0;white-space:nowrap}
+.marquee span{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#fff;display:inline-flex;align-items:center;gap:46px}
+.marquee span::after{content:"◆";color:var(--gold);font-size:9px}
+@keyframes scroll-l{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scroll-r{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.ppf-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:0;align-items:stretch;min-height:520px}
+.ppf-copy{padding:72px 56px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.ppf-copy .eyebrow{margin-bottom:26px}
+.ppf-copy h2{font-size:clamp(1.9rem,3vw,3rem);line-height:1.1;letter-spacing:-.01em;font-weight:700;text-transform:none}
+.ppf-copy h2 b{color:var(--gold)}
+.ppf-copy p{color:var(--muted);font-size:15px;max-width:430px;margin:26px 0 34px}
+.ppf-actions{display:flex;gap:13px;flex-wrap:wrap}
+.ppf-video{position:relative;background:#0a0a0a;border-left:1px solid var(--line);display:grid;place-items:center;padding:30px}
+.ppf-video .frame{position:relative;width:100%;max-width:300px;aspect-ratio:9/16;border-radius:6px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);display:block;background:#000}
+.ppf-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ppf-video .vcaption{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:4;text-align:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:.02em;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:8px 14px;border-radius:99px;border:1px solid var(--line-2);transition:background .25s}
+.ppf-video .vcaption:hover{background:rgba(0,0,0,.85)}
+.ppf-video .vlabel{position:absolute;top:14px;left:14px;z-index:4;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);padding:7px 11px;border-radius:99px;border:1px solid var(--line-2);pointer-events:none}
+.ppf-image{position:relative;border-left:1px solid var(--line);overflow:hidden;min-height:300px}
+.ppf-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.08) brightness(.92)}
+.ppf-image::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(0,0,0,.5),transparent 45%),radial-gradient(70% 80% at 70% 40%,rgba(255,255,255,.05),transparent 60%)}
+@media(max-width:1024px){
+  .ppf-inner{grid-template-columns:1fr;min-height:0}
+  .ppf-copy{padding:60px 32px 40px}
+  .ppf-video{border-left:0;border-top:1px solid var(--line);padding:40px 32px 50px}
+}
+@media(max-width:680px){
+  .ppf-copy{padding:48px 20px 36px}
+  .ppf-video{border-top:1px solid var(--line);padding:30px 20px}
+  .marquee span{font-size:13px}
+}
+
+
+/* ── YouTube Sound Button ── */
+.yt-sound-btn{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.25);border-radius:99px;
+  padding:8px 16px;cursor:pointer;
+  font-family:"Inter",sans-serif;font-size:12px;font-weight:600;
+  color:#fff;letter-spacing:.04em;transition:all .25s;
+  white-space:nowrap;
+}
+.yt-sound-btn:hover{background:rgba(0,0,0,.85);border-color:rgba(255,255,255,.5);transform:translateX(-50%) translateY(-2px)}
+.yt-sound-btn.unmuted{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.yt-sound-btn-abs{
+  bottom:14px;right:14px;left:auto;transform:none;padding:8px 12px;
+}
+.yt-sound-btn-abs:hover{transform:translateY(-2px)}
+.yt-sound-btn-abs.unmuted{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.6)}
+.yt-sound-icon{font-size:14px;line-height:1}
+
+/* ===== STATS ===== */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:46px 28px;border-right:1px solid var(--line);text-align:center;position:relative;transition:background .3s}
+.stat:last-child{border-right:0}
+.stat:hover{background:var(--surface)}
+.stat .num{font-family:var(--display);font-weight:400;font-size:clamp(3rem,5.5vw,4.4rem);line-height:1;color:var(--gold-bright);letter-spacing:.04em}
+.stat .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+
+/* ===== SECTION SHELL ===== */
+section{position:relative}
+.sec{padding:120px 0}
+.sec-head{max-width:760px;margin-bottom:64px}
+.sec-head h2{font-size:clamp(2.6rem,5vw,4.2rem);text-transform:uppercase;margin:16px 0 18px;letter-spacing:.05em}
+.sec-head p{color:var(--muted);font-size:18px;max-width:600px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head.center .eyebrow{justify-content:center}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.08s}.reveal[data-d="2"]{transition-delay:.16s}
+.reveal[data-d="3"]{transition-delay:.24s}.reveal[data-d="4"]{transition-delay:.32s}
+
+/* ===== CORE SERVICES ===== */
+#services{background:linear-gradient(180deg,var(--bg),var(--bg-2))}
+.core{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc{
+  position:relative;background:var(--surface);border:1px solid var(--line);border-radius:4px;
+  padding:38px 32px 32px;overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .4s;
+}
+.svc::before{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.svc:hover{transform:translateY(-8px);border-color:var(--line-2)}
+.svc:hover::before{transform:scaleX(1)}
+.svc .idx{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.1em}
+.svc .badge{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);float:right;border:1px solid var(--line);padding:5px 10px;border-radius:99px}
+.svc h3{font-size:2.2rem;margin:22px 0 12px;text-transform:uppercase;letter-spacing:.04em}
+.svc p{color:var(--muted);font-size:15.5px;margin-bottom:22px}
+.svc ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:26px}
+.svc li{font-size:14px;color:var(--ink);display:flex;align-items:flex-start;gap:11px}
+.svc li::before{content:"";flex-shrink:0;width:6px;height:6px;margin-top:7px;background:var(--gold);transform:rotate(45deg)}
+.svc .more{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--gold-bright);text-transform:uppercase;display:inline-flex;align-items:center;gap:7px;transition:gap .25s}
+.svc .more::after{content:"";position:absolute;inset:0;z-index:1}
+.svc{cursor:pointer}
+.svc ul,.svc h3,.svc p,.svc .idx,.svc .badge{position:relative;z-index:2}
+.svc:hover .more{gap:12px}
+.svc .more:hover{gap:13px}
+
+.more-svc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
+.msvc{background:var(--bg-2);border:1px solid var(--line);border-radius:4px;padding:26px 24px;transition:.35s;position:relative}
+.msvc:hover{background:var(--surface);transform:translateY(-5px);border-color:var(--line-2)}
+.msvc .k{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.msvc h4{font-family:var(--display);font-weight:700;font-size:1.2rem;margin:14px 0 9px;line-height:1.1}
+.msvc p{font-size:13.5px;color:var(--muted)}
+.msvc .ar{margin-top:16px;color:var(--gold-bright);font-size:13px;font-weight:700}
+
+/* ===== FEATURED PRODUCT ===== */
+.feature{position:relative;background:var(--bg);overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.feature::before{content:"";position:absolute;inset:0;background:radial-gradient(70% 120% at 85% 50%,rgba(255,255,255,.05),transparent 60%),radial-gradient(60% 100% at 8% 30%,rgba(255,255,255,.12),transparent 65%)}
+.feature-inner{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding:110px 0}
+.feature h2{font-size:clamp(4rem,9vw,7.5rem);text-transform:uppercase;margin:16px 0 8px;background:linear-gradient(180deg,#fff,#b9bcc4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.06em}
+.feature .sub{font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;font-size:13px;color:var(--gold);margin-bottom:26px}
+.feature p.body{color:var(--muted);font-size:15px;max-width:430px;margin-bottom:14px}
+.feature .reserved{font-size:13.5px;color:var(--muted-2);font-style:italic;margin-bottom:30px}
+.feature-actions{display:flex;gap:13px;flex-wrap:wrap}
+.product-visual{position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;border:1px solid var(--line-2)}
+.product-visual img{width:100%;height:100%;object-fit:cover;transition:transform 1s}
+.product-visual:hover img{transform:scale(1.05)}
+.product-visual .tag{position:absolute;left:18px;bottom:18px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;background:rgba(8,9,11,.7);backdrop-filter:blur(8px);border:1px solid var(--line-2);padding:9px 14px;border-radius:99px;color:var(--gold-bright)}
+.product-visual .ring{position:absolute;top:18px;right:18px;width:74px;height:74px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-align:center;text-transform:uppercase;color:var(--gold-bright);background:rgba(8,9,11,.55);backdrop-filter:blur(6px)}
+
+/* ===== PPF LEVELS — interactive viewer ===== */
+.lvl-interactive{display:grid;grid-template-columns:1.3fr 1fr;gap:2.5rem;align-items:start;margin-bottom:2rem}
+.lvl-viz{position:sticky;top:90px}
+.lvl-car{position:relative;border-radius:6px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.lvl-car img{width:100%;height:auto;display:block}
+.lvl-viz-hint{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.9rem;text-align:center}
+.vmask{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .45s ease}
+.vmask-1{background:radial-gradient(ellipse 38% 55% at 20% 72%, transparent 0%, transparent 35%, rgba(0,0,0,.78) 100%)}
+.vmask-2{background:radial-gradient(ellipse 58% 80% at 35% 58%, transparent 0%, transparent 50%, rgba(0,0,0,.78) 100%)}
+.vmask-3{background:radial-gradient(ellipse 70% 110% at 42% 60%, transparent 0%, transparent 65%, rgba(0,0,0,.70) 100%)}
+.lvl-interactive[data-active="1"] .vmask-1{opacity:1}
+.lvl-interactive[data-active="2"] .vmask-2{opacity:1}
+.lvl-interactive[data-active="3"] .vmask-3{opacity:1}
+.lvl-car .cl{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.85);border:1px solid rgba(255,255,255,.4);padding:4px 9px;border-radius:99px;backdrop-filter:blur(4px);white-space:nowrap;pointer-events:none;z-index:5;opacity:0;transition:opacity .35s ease;font-weight:700}
+.lvl-car .cl::before{content:"";position:absolute;left:-10px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.7)}
+.lvl-interactive[data-active="1"] .lbl-headlights,
+.lvl-interactive[data-active="1"] .lbl-bumper,
+.lvl-interactive[data-active="1"] .lbl-mirrors{opacity:1}
+.lvl-interactive[data-active="2"] .lbl-headlights,
+.lvl-interactive[data-active="2"] .lbl-bumper,
+.lvl-interactive[data-active="2"] .lbl-mirrors,
+.lvl-interactive[data-active="2"] .lbl-hood,
+.lvl-interactive[data-active="2"] .lbl-fenders{opacity:1}
+.lvl-interactive[data-active="3"] .lbl-headlights,
+.lvl-interactive[data-active="3"] .lbl-bumper,
+.lvl-interactive[data-active="3"] .lbl-mirrors,
+.lvl-interactive[data-active="3"] .lbl-hood,
+.lvl-interactive[data-active="3"] .lbl-fenders,
+.lvl-interactive[data-active="3"] .lbl-apillars,
+.lvl-interactive[data-active="3"] .lbl-rockers{opacity:1}
+.lvl-interactive[data-active="4"] .cl{opacity:1}
+.lvl-cards{display:flex;flex-direction:column;gap:.7rem}
+.lvl-c{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.1rem 1.5rem;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}
+.lvl-c::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#fff;transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+.lvl-c::after{content:"+";position:absolute;right:1.2rem;top:1.1rem;font-size:1.2rem;font-weight:300;color:var(--muted);transition:transform .3s ease,color .3s ease}
+.lvl-c:hover{background:var(--surface2);border-color:rgba(255,255,255,.25);padding-bottom:1.5rem}
+.lvl-c:hover::before{transform:scaleY(1)}
+.lvl-c:hover::after{transform:rotate(45deg);color:#fff}
+.lvl-c-head{display:flex;align-items:baseline;gap:.8rem}
+.lvl-c-num{font-family:var(--mono);font-size:.75rem;font-weight:700;letter-spacing:.2em;color:var(--muted)}
+.lvl-c h3{font-family:var(--display);font-size:1.05rem;font-weight:800;text-transform:uppercase;color:#fff;line-height:1.2;letter-spacing:.01em;margin:0}
+.lvl-c-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .45s ease,opacity .3s ease,margin-top .3s ease;margin-top:0}
+.lvl-c:hover .lvl-c-body{max-height:420px;opacity:1;margin-top:1rem}
+.lvl-c-best{font-size:.82rem;color:var(--muted);line-height:1.55;margin-bottom:.9rem}
+.lvl-c-best b{color:#fff;font-weight:600}
+.lvl-c-cov-label{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff;padding-top:.8rem;border-top:1px solid var(--line);margin-bottom:.5rem}
+.lvl-c-cov{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.35rem 1rem;padding:0;margin:0}
+.lvl-c-cov li{font-size:.78rem;color:#fff;display:flex;align-items:flex-start;gap:.4rem;line-height:1.45}
+.lvl-c-cov li::before{content:"✓";color:#fff;font-weight:800;font-size:.72rem;flex-shrink:0}
+@media(max-width:880px){
+  .lvl-interactive{grid-template-columns:1fr;gap:1.5rem}
+  .lvl-viz{position:static}
+  .lvl-car .cl{font-size:9px;padding:3px 7px}
+  .lvl-car .cl::before{width:5px;height:5px;left:-8px}
+  .lvl-viz-hint{display:block}
+  .lvl-c-cov{grid-template-columns:1fr}
+  /* On mobile show labels for active level via tap */
+  .lvl-interactive[data-active="1"] .lbl-headlights,
+  .lvl-interactive[data-active="1"] .lbl-bumper,
+  .lvl-interactive[data-active="1"] .lbl-mirrors{opacity:1}
+  .lvl-interactive[data-active="2"] .lbl-headlights,
+  .lvl-interactive[data-active="2"] .lbl-bumper,
+  .lvl-interactive[data-active="2"] .lbl-mirrors,
+  .lvl-interactive[data-active="2"] .lbl-hood,
+  .lvl-interactive[data-active="2"] .lbl-fenders{opacity:1}
+  .lvl-interactive[data-active="3"] .lbl-headlights,
+  .lvl-interactive[data-active="3"] .lbl-bumper,
+  .lvl-interactive[data-active="3"] .lbl-mirrors,
+  .lvl-interactive[data-active="3"] .lbl-hood,
+  .lvl-interactive[data-active="3"] .lbl-fenders,
+  .lvl-interactive[data-active="3"] .lbl-apillars,
+  .lvl-interactive[data-active="3"] .lbl-rockers{opacity:1}
+  .lvl-interactive[data-active="4"] .cl{opacity:1}
+}
+
+/* ===== DIFFERENCE ===== */
+.diff-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.diff{padding:34px 28px;border:1px solid var(--line);border-radius:4px;background:var(--surface);transition:.35s}
+.diff:hover{border-color:var(--line-2);background:var(--surface-2);transform:translateY(-5px)}
+.diff .ic{font-size:28px;margin-bottom:20px;display:block;filter:saturate(.4)}
+.diff h4{font-family:var(--display);font-weight:700;font-size:1.18rem;margin-bottom:11px;line-height:1.15}
+.diff p{font-size:14px;color:var(--muted)}
+.certs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.cert{display:flex;gap:16px;align-items:center;padding:24px 26px;border:1px solid var(--line);border-radius:4px;background:linear-gradient(135deg,var(--surface),var(--bg-2))}
+.cert .seal{width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;flex-shrink:0;color:var(--gold-bright);font-size:20px}
+.cert b{display:block;font-family:var(--display);font-weight:700;font-size:15px;line-height:1.2}
+.cert span{font-size:12.5px;color:var(--muted)}
+
+/* ===== GALLERY ===== */
+#gallery{background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+.gal-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+.filt{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:10px 18px;border:1px solid var(--line);border-radius:99px;background:transparent;color:var(--muted);cursor:pointer;transition:.25s}
+.filt:hover{color:var(--ink);border-color:var(--line-2)}
+.filt.active{background:var(--gold);color:#0a0a0a;border-color:var(--gold)}
+/* Gallery carousel */
+.gal-carousel{position:relative;margin-bottom:36px}
+.gal-viewport{overflow:hidden;border-radius:4px}
+.gal-track{display:flex;gap:16px;transition:transform .55s cubic-bezier(.4,.0,.2,1);will-change:transform}
+.gal-track .gcard{flex:0 0 calc((100% - 32px) / 3);aspect-ratio:4/3;border-radius:4px;overflow:hidden;border:1px solid var(--line);cursor:pointer;position:relative}
+.gal-track .gcard.hide{display:none}
+.gal-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.75);border:1px solid var(--line-2);color:var(--ink);font-size:22px;font-weight:300;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(8px);line-height:1;padding-bottom:3px}
+.gal-arrow:hover{background:#fff;color:#000;border-color:#fff}
+.gal-arrow:disabled{opacity:.3;cursor:not-allowed}
+.gal-arrow:disabled:hover{background:rgba(0,0,0,.75);color:var(--ink)}
+.gal-prev{left:-16px}
+.gal-next{right:-16px}
+.gal-dots{display:flex;justify-content:center;gap:8px;margin-top:20px}
+.gal-dots button{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);border:0;cursor:pointer;padding:0;transition:all .25s}
+.gal-dots button.active{background:#fff;width:24px;border-radius:4px}
+.gal-dots button:hover{background:rgba(255,255,255,.5)}
+@media(max-width:1024px){
+  .gal-track .gcard{flex:0 0 calc((100% - 16px) / 2)}
+  .gal-prev{left:-8px} .gal-next{right:-8px}
+}
+@media(max-width:680px){
+  .gal-track .gcard{flex:0 0 100%}
+  .gal-arrow{width:38px;height:38px;font-size:18px}
+}
+.gcard{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);cursor:pointer}
+.gcard img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.gcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(8,9,11,.85));opacity:.85;transition:opacity .4s}
+.gcard:hover img{transform:scale(1.07)}
+.gcard:hover::after{opacity:.65}
+.gcard .meta{position:absolute;left:20px;bottom:18px;z-index:2;transition:transform .4s}
+.gcard:hover .meta{transform:translateY(-3px)}
+.gcard .meta .c{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-bright)}
+.gcard .meta .t{font-family:var(--display);font-weight:700;font-size:1.15rem;margin-top:4px}
+.gcard.hide{display:none}
+.gal-cta{margin-top:44px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ===== REVIEWS ===== */
+.rev-top{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-bottom:50px;padding:30px 36px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+.rev-score{font-family:var(--display);font-weight:800;font-size:4rem;color:var(--gold-bright);line-height:1}
+.rev-top .stars{color:var(--gold);font-size:20px;letter-spacing:2px}
+.rev-top .meta{font-size:14px;color:var(--muted);margin-top:4px}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.review{padding:32px 30px;border:1px solid var(--line);border-radius:4px;background:var(--surface);display:flex;flex-direction:column;transition:.35s}
+.review:hover{border-color:var(--line-2);transform:translateY(-5px)}
+.review .stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:18px}
+.review p{font-size:14px;color:var(--ink);line-height:1.7;flex:1}
+.review .who{display:flex;align-items:center;gap:13px;margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.review .av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#222530,#14161b);border:1px solid var(--line-2);font-family:var(--mono);font-weight:700;font-size:13px;color:var(--gold-bright);flex-shrink:0}
+.review .who b{font-size:14.5px;display:block}
+.review .who span{font-size:12px;color:var(--muted);font-family:var(--mono);letter-spacing:.04em}
+.rev-cta{text-align:center;margin-top:44px}
+
+/* ===== CONTACT / QUOTE ===== */
+#contact{background:var(--bg-2);border-top:1px solid var(--line)}
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px}
+.ci-list{display:flex;flex-direction:column;gap:8px;margin-top:34px}
+.ci{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}
+.ci .ic{width:44px;height:44px;border-radius:3px;flex-shrink:0;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line-2);font-size:18px}
+.ci .k{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2)}
+.ci .v{font-size:16px;font-weight:600;margin-top:3px}
+.ci .v a:hover{color:var(--gold-bright)}
+.ci .v.small{font-size:14px;font-weight:500;color:var(--muted);line-height:1.5}
+.facts{margin-top:30px;padding:24px 26px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+.facts .k{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.facts ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.facts li{font-size:13.5px;color:var(--muted);display:flex;gap:10px}
+.facts li::before{content:"—";color:var(--gold)}
+
+.form-card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:40px}
+.form-note{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.field input,.field textarea{
+  background:var(--bg);border:1px solid var(--line-2);border-radius:3px;padding:13px 15px;color:var(--ink);
+  font-family:var(--body);font-size:15px;transition:border-color .25s,box-shadow .25s;width:100%;
+}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+.field textarea{resize:vertical;min-height:96px}
+.checks{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 20px}
+.chk{position:relative}
+.chk input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chk span{display:inline-block;font-size:12.5px;font-family:var(--mono);letter-spacing:.04em;padding:9px 15px;border:1px solid var(--line-2);border-radius:99px;color:var(--muted);transition:.25s;cursor:pointer;text-transform:uppercase}
+.chk input:checked+span{background:var(--gold);color:#0a0a0a;border-color:var(--gold)}
+.form-card .btn{width:100%;justify-content:center;margin-top:8px}
+.disclaimer{font-size:12px;color:var(--muted-2);text-align:center;margin-top:18px;line-height:1.5}
+.form-success{display:none;text-align:center;padding:30px 10px}
+.form-success.show{display:block;animation:fade .5s forwards}
+.form-success .check{width:66px;height:66px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;margin:0 auto 22px;font-size:30px;color:var(--gold-bright)}
+.form-success h3{font-size:1.8rem;text-transform:uppercase;margin-bottom:12px}
+.form-success p{color:var(--muted);font-size:15px}
+.form-success a{color:var(--gold-bright);font-weight:700}
+
+/* ===== FOOTER ===== */
+footer{background:var(--bg);border-top:1px solid var(--line);padding:80px 0 30px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:44px}
+.foot-brand b{font-family:var(--display);font-weight:800;font-size:1.4rem}
+.foot-brand .tl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:6px 0 18px}
+.foot-brand p{font-size:14px;color:var(--muted);max-width:330px}
+.foot-soc{display:flex;gap:10px;margin-top:22px}
+.foot-soc a{width:38px;height:38px;border:1px solid var(--line-2);border-radius:3px;display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);transition:.25s}
+.foot-soc a:hover{border-color:var(--gold);color:var(--gold-bright)}
+.foot-col h5{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-bottom:18px}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.foot-col a{font-size:14px;color:var(--muted);transition:color .2s}
+.foot-col a:hover{color:var(--gold-bright)}
+.foot-bottom{margin-top:60px;padding-top:26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted-2)}
+.foot-bottom a:hover{color:var(--gold)}
+
+/* sticky mobile call */
+.mobile-call{position:fixed;left:0;right:0;bottom:0;z-index:999;display:none;
+  background:var(--gold);color:#0a0a0a;text-align:center;padding:15px;font-weight:800;font-size:14.5px;letter-spacing:.02em}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .core,.diff-grid,.levels,.more-svc{grid-template-columns:repeat(2,1fr)}
+  .rev-grid,
+  .feature-inner,.contact-grid{grid-template-columns:1fr;gap:44px}
+  .product-visual{max-width:440px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .certs{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  body{font-size:16px}
+  .wrap{padding:0 20px}
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  .burger{display:flex}
+  header.nav .nav-phone{display:none}
+  .mobile-menu{display:block;position:fixed;inset:0;z-index:1100;background:rgba(8,9,11,.97);backdrop-filter:blur(20px);
+    transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);padding:90px 28px}
+  .mobile-menu.open{transform:none}
+  .mobile-menu a{display:block;font-family:var(--display);font-weight:700;font-size:2rem;text-transform:uppercase;padding:14px 0;border-bottom:1px solid var(--line)}
+  .mobile-menu .mm-call{margin-top:30px;font-family:var(--mono);font-size:1rem;color:var(--gold-bright)}
+  .mm-close{position:absolute;top:26px;right:24px;background:none;border:0;color:var(--ink);font-size:34px;cursor:pointer;line-height:1}
+  .sec{padding:84px 0}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat{border-bottom:1px solid var(--line)}
+  .stat:nth-child(odd){border-right:1px solid var(--line)}
+  .stat:nth-child(even){border-right:0}
+  .core,.diff-grid,.levels,.more-svc,.rev-grid,.gal-grid,.foot-grid{grid-template-columns:1fr}
+  .hero{padding:130px 0 110px;min-height:auto}
+  .hero-trust{gap:12px 24px}
+  .scroll-hint{display:none}
+  .feature-inner{padding:70px 0}
+  .form-card{padding:28px 22px}
+  .frow{grid-template-columns:1fr}
+  .mobile-call{display:block}
+  footer{padding-bottom:80px}
+  .foot-bottom{flex-direction:column}
+}
+
+/* Difference section two-col */
+@media(max-width:1024px){
+  .diff-two-col{grid-template-columns:1fr!important}
+  .diff-video-col{display:none}
+}
+/* PPF section bottom CTA */
+.levels-cta{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin-top:2rem}
+
+/* TOP BANNER (old-site style, restyled for dark theme) */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:1001;background:#000;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-main{display:flex;align-items:center;gap:1.6rem;padding:14px 2.5rem 12px;max-width:1400px;margin:0 auto}
+.tb-logo-link{flex-shrink:0;line-height:0}
+.tb-logo{height:64px;width:auto;display:block}
+.tb-title{flex:1;font-family:'Poppins',sans-serif;font-style:italic;font-weight:700;font-size:1.15rem;color:#fff;line-height:1.25;margin:0;letter-spacing:-0.005em}
+.tb-strip{background:#c8201a;color:#fff;text-align:center;padding:8px 1rem;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.82rem;letter-spacing:0.02em}
+.tb-strip a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+.tb-strip a:hover{border-color:#fff}
+
+/* Push the nav DOWN below the banner */
+header.nav{top:108px !important}
+/* Push the body content DOWN below banner+nav */
+body{padding-top:108px}
+/* Adjust scroll-margin for in-page anchors */
+section[id]{scroll-margin-top:170px}
+
+@media(max-width:880px){
+  .tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}
+  .tb-logo{height:54px}
+  .tb-title{font-size:0.95rem}
+  .tb-strip{font-size:0.72rem;padding:7px .8rem}
+  header.nav{top:158px !important}
+  body{padding-top:158px}
+  section[id]{scroll-margin-top:220px}
+}
+@media(max-width:480px){
+  .tb-title{font-size:0.85rem}
+  .tb-strip{font-size:0.68rem;line-height:1.4}
+}
+
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","AutomotiveBusiness"],"name":"Masters Window Tinting & Detail","alternateName":["Ceramic Pro Long Island","NanoPro Liquid PPF Long Island"],"image":"https://masters-window-tinting.vercel.app/og-cover.jpg","url":"https://masters-window-tinting.vercel.app/","telephone":"+1-631-226-4300","address":{"@type":"PostalAddress","streetAddress":"863 Rte 109, Suite A","addressLocality":"West Babylon","addressRegion":"NY","postalCode":"11704","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":40.7195,"longitude":-73.3543},"areaServed":[{"@type":"AdministrativeArea","name":"Nassau County, NY"},{"@type":"AdministrativeArea","name":"Suffolk County, NY"},{"@type":"Place","name":"Long Island, NY"}],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"opens":"09:00","closes":"17:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Sunday","opens":"10:00","closes":"16:00"}],"priceRange":"$$-$$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Automotive Protection Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Automotive Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Ceramic Pro Coating"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"NanoPro Liquid PPF (Paint Protection Film)"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Auto Detailing & Paint Correction"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Residential Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Commercial Window Tinting"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Wall Graphics & Vinyl Signs"}}]},"sameAs":["https://www.facebook.com/profile.php?id=100063773733742","https://www.instagram.com/Ceramic_pro_long_island/","https://www.masterswindowtinting.com/"]}</script>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+  <div class="tb-main">
+    <a href="index.html" class="tb-logo-link">
+      <img src="mwt_logo.png" alt="Masters Window Tinting" class="tb-logo">
+    </a>
+    <p class="tb-title">Masters Window Tinting, Paint Protection Film &mdash; PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
+  </div>
+  <div class="tb-strip">
+    Long Island, New York &mdash;&mdash; 863 Rte 109, West Babylon, NY &mdash;&mdash; <a href="tel:6312264300">631-226-4300</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <span class="has-dd"><a class="dd-toggle">Services</a>
+        <span class="dd">
+          <a href="window-tinting.html">Window Tinting</a>
+          <a href="liquid-ppf.html">Liquid PPF</a>
+          <a href="ceramic-coating.html">Ceramic Coating</a>
+          <a href="residential.html">Residential Tinting</a>
+          <a href="commercial.html">Commercial Tinting</a>
+          <a href="wall-graphics.html">Wall Graphics</a>
+          <a href="detailing.html">Detailing &amp; Paint Correction</a>
+        </span>
+      </span>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="tel:6312264300" class="nav-phone">631-226-4300</a>
+      <a href="contact.html" class="btn btn-gold">Free Quote</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mm-close" id="mmClose" aria-label="Close">&times;</button>
+  <a href="index.html">Home</a>
+  <a href="window-tinting.html">Window Tinting</a>
+  <a href="liquid-ppf.html">Liquid PPF</a>
+  <a href="ceramic-coating.html">Ceramic Coating</a>
+  <a href="residential.html">Residential Tinting</a>
+  <a href="commercial.html">Commercial Tinting</a>
+  <a href="wall-graphics.html">Wall Graphics</a>
+  <a href="detailing.html">Detailing</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="tel:6312264300" class="mm-call">📞 631-226-4300</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="">
+  </div>
+  <div class="hero-grid"></div>
+  <div class="wrap hero-inner">
+    <span class="eyebrow hero-tag">Trusted on Long Island · Since '99</span>
+    <h1>
+      <span class="l"><i>Masters Window Tinting</i></span>
+      <span class="l"><i>Ceramic Pro Long Island</i></span>
+      <span class="l"><i>NanoPro Liquid PPF</i></span>
+      <span class="l"><i>Detailing &amp; Paint Correction</i></span>
+    </h1>
+    <p class="lead">25+ years of certified work in automotive, residential &amp; commercial film, ceramic coating, and seamless Liquid PPF. Top-grade materials. No outsourcing — ever.</p>
+    <div class="hero-actions">
+      <a href="contact.html" class="btn btn-gold">Get a Free Quote →</a>
+      <a href="tel:6312264300" class="btn btn-ghost">📞 631-226-4300</a>
+    </div>
+    <div class="hero-trust">
+      <div class="ti"><span class="star">★★★★★</span> <b>4.9</b> Google Rating</div>
+      <div class="ti">🛡️ <b>Lifetime</b> Warranty</div>
+      <div class="ti">💎 Certified <b>Ceramic&nbsp;Pro</b> &amp; <b>NanoPro</b></div>
+      <div class="ti">📍 West Babylon, NY</div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- LIQUID PPF BAND -->
+<section class="ppf-band" id="liquid-ppf">
+  <div class="marquee">
+    <div class="marquee-inner">
+      <div class="track">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
+      <div class="track" aria-hidden="true">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ppf-inner">
+    <div class="ppf-copy">
+      <span class="eyebrow">Liquid PPF · Long Island, NY</span>
+      <h2>Advanced vehicle protection that shields your paint from scratches, <b>UV damage, and wear</b> — without traditional film.</h2>
+      <p>NanoPro Liquid PPF goes on seamless — no panel edges, no lifting, no visible seams. Self-healing protection for every curve of your vehicle.</p>
+      <div class="ppf-actions">
+        <a href="#ppf-levels" class="btn btn-gold">View Protection Levels →</a>
+      </div>
+    </div>
+
+    <div class="ppf-video">
+      <div class="frame">
+        <div class="vlabel">Masters · Liquid PPF Specialists</div>
+        <iframe
+          id="yt-ppf"
+          src="https://www.youtube.com/embed/Zta6OycRLfQ?autoplay=1&mute=1&loop=1&playlist=Zta6OycRLfQ&controls=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
+          title="New Liquid Paint Protection Film"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+        <!-- Custom sound control -->
+        <button class="yt-sound-btn" id="yt-ppf-btn" onclick="toggleYTSound('yt-ppf','yt-ppf-btn')" title="Toggle sound">
+          <span class="yt-sound-icon">🔇</span>
+          <span class="yt-sound-label">Tap for Sound</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee bottom">
+    <div class="marquee-inner">
+      <div class="track">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
+      <div class="track" aria-hidden="true">
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+        <span>Liquid Paint Protection Film</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap stats-grid">
+    <div class="stat"><div class="num">25+</div><div class="lbl">Years on Long Island</div></div>
+    <div class="stat"><div class="num">4.9★</div><div class="lbl">Google Rating</div></div>
+    <div class="stat"><div class="num">∞</div><div class="lbl">Lifetime Warranty</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">Days a Week</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">What We Do</span>
+      <h2>Our Services</h2>
+      <p>Every job done by our own certified installers. No outsourcing — ever. Serving vehicles, homes, and businesses across Long Island.</p>
+    </div>
+
+    <div class="core">
+      <article class="svc reveal" onclick="location.href='window-tinting.html'">
+        <span class="idx">01</span><span class="badge">Volume Leader</span>
+        <h3>Window Tinting</h3>
+        <p>Automotive, residential, commercial, and marine tinting with carbon and ceramic film options. Blocks heat, rejects UV, and adds privacy that lasts.</p>
+        <ul>
+          <li>Automotive window tinting</li>
+          <li>Boat &amp; marine tinting</li>
+          <li>Residential &amp; commercial</li>
+          <li>Headlight &amp; taillight tinting</li>
+          <li>Lifetime warranty on film &amp; labor</li>
+        </ul>
+        <a href="window-tinting.html" class="more">Learn more →</a>
+      </article>
+
+      <article class="svc reveal" data-d="1" onclick="location.href='liquid-ppf.html'">
+        <span class="idx">02</span><span class="badge">NanoPro Certified</span>
+        <h3>Liquid PPF</h3>
+        <p>NanoPro Liquid PPF — seamless, spray-on protection with no hard edges or visible seams. Invisible defense for every curve and corner of your paint.</p>
+        <ul>
+          <li>No seams or panel edges</li>
+          <li>Scratch &amp; rock chip resistance</li>
+          <li>UV &amp; chemical protection</li>
+          <li>Self-healing formula</li>
+          <li>Full body or partial coverage</li>
+        </ul>
+        <a href="liquid-ppf.html" class="more">Learn more →</a>
+      </article>
+
+      <article class="svc reveal" data-d="2" onclick="location.href='ceramic-coating.html'">
+        <span class="idx">03</span><span class="badge">Ceramic Pro Certified</span>
+        <h3>Ceramic Coating</h3>
+        <p>Authorized Ceramic Pro installation for long-term gloss and durable paint protection. Multi-year packages with a hydrophobic, chemical-resistant, showroom finish.</p>
+        <ul>
+          <li>Certified Ceramic Pro installer</li>
+          <li>Hydrophobic surface</li>
+          <li>Deep gloss enhancement</li>
+          <li>Chemical &amp; oxidation resistance</li>
+          <li>Multi-year protection packages</li>
+        </ul>
+        <a href="ceramic-coating.html" class="more">Learn more →</a>
+      </article>
+    </div>
+
+    <div class="more-svc">
+      <a class="msvc reveal" href="residential.html"><span class="k">Residential</span><h4>Home Window Tinting</h4><p>UV blocking, heat reduction, and privacy film for your home.</p><div class="ar">Learn more →</div></a>
+      <a class="msvc reveal" data-d="1" href="commercial.html"><span class="k">Commercial</span><h4>Commercial Tinting</h4><p>Office buildings, storefronts, and commercial spaces across LI.</p><div class="ar">Learn more →</div></a>
+      <a class="msvc reveal" data-d="2" href="wall-graphics.html"><span class="k">Graphics</span><h4>Wall Graphics</h4><p>Custom wall wraps and graphics for homes, offices, businesses.</p><div class="ar">Learn more →</div></a>
+      <a class="msvc reveal" data-d="3" href="detailing.html"><span class="k">Detailing</span><h4>Detail &amp; Paint Correction</h4><p>Paint correction, swirl removal, and full detail packages.</p><div class="ar">Learn more →</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCT -->
+<section class="feature">
+  <div class="wrap feature-inner">
+    <div class="reveal">
+      <span class="eyebrow">Featured Product · NanoPro Certified</span>
+      <h2>Ceramic<br>Coating</h2>
+      <div class="sub">Borograph 2.0 · NanoPro Elite</div>
+      <p class="body">Elite NanoPro protection with boron silicate and graphene-oxide infused technology — engineered for the deepest gloss and the hardest, most durable surface we install.</p>
+      <p class="reserved">Reserved for Elite NanoPro installers.</p>
+      <div class="feature-actions">
+        <a href="contact.html" class="btn btn-gold">Get a Free Quote</a>
+      </div>
+    </div>
+    <div class="product-visual reveal" data-d="1" style="aspect-ratio:16/9;">
+      <video src="https://masters-window-tinting.vercel.app/commercial-video.mp4.mp4"
+             poster="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp"
+             autoplay loop muted playsinline preload="metadata"
+             style="width:100%;height:100%;object-fit:contain;display:block;background:#000;"></video>
+      <div class="ring">Elite<br>NanoPro</div>
+      <div class="tag">Graphene-Oxide Infused</div>
+    </div>
+  </div>
+</section>
+
+<!-- PPF LEVELS -->
+<section class="sec" id="ppf-levels">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">NanoPro Liquid PPF</span>
+      <h2>Protection Levels</h2>
+      <p>Hover or tap a level to see which areas are protected — from daily-driver chip defense to full exotic shielding.</p>
+    </div>
+
+    <div class="lvl-interactive reveal" data-active="4" id="lvl-interactive">
+
+      <!-- LEFT: car visualizer -->
+      <div class="lvl-viz">
+        <div class="lvl-car">
+          <img src="protection-hero-lambo.png" alt="NanoPro Liquid PPF protection on a Lamborghini" loading="lazy">
+
+          <div class="vmask vmask-1"></div>
+          <div class="vmask vmask-2"></div>
+          <div class="vmask vmask-3"></div>
+
+          <span class="cl lbl-headlights" style="--x:18%;--y:64%;"><b>Headlights</b></span>
+          <span class="cl lbl-bumper" style="--x:14%;--y:80%;"><b>Bumper</b></span>
+          <span class="cl lbl-mirrors" style="--x:62%;--y:38%;"><b>Mirrors</b></span>
+          <span class="cl lbl-hood" style="--x:38%;--y:36%;"><b>Hood</b></span>
+          <span class="cl lbl-fenders" style="--x:72%;--y:60%;"><b>Fenders</b></span>
+          <span class="cl lbl-apillars" style="--x:48%;--y:28%;"><b>A-Pillars</b></span>
+          <span class="cl lbl-rockers" style="--x:80%;--y:88%;"><b>Rockers</b></span>
+          <span class="cl lbl-doors" style="--x:88%;--y:50%;"><b>Doors</b></span>
+        </div>
+        <div class="lvl-viz-hint" id="lvl-hint">Hover or tap a level to see coverage →</div>
+      </div>
+
+      <!-- RIGHT: 4 level cards -->
+      <div class="lvl-cards">
+
+        <div class="lvl-c" data-level="1" onmouseenter="setLvl(1)" onclick="setLvl(1)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">01</span>
+            <h3>Partial Front Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Daily drivers, leased vehicles, and entry-level protection against stone chips.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Front bumper</li>
+              <li>Headlights</li>
+              <li>Side mirrors</li>
+              <li>Partial fenders</li>
+              <li>Partial hood (18–24 in.)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-level="2" onmouseenter="setLvl(2)" onclick="setLvl(2)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">02</span>
+            <h3>Full Front Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> A seamless look with balanced protection — popular for sports and luxury cars.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Full front bumper</li>
+              <li>Full hood</li>
+              <li>Headlights</li>
+              <li>Side mirrors</li>
+              <li>Full fenders</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-level="3" onmouseenter="setLvl(3)" onclick="setLvl(3)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">03</span>
+            <h3>Track Pack Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Performance drivers who push hard and want enhanced coverage across high-impact zones.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Full front coverage</li>
+              <li>A-pillars</li>
+              <li>Rocker panels</li>
+              <li>Door cups</li>
+              <li>Rear impact zones</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="lvl-c" data-level="4" onmouseenter="setLvl(4)" onclick="setLvl(4)">
+          <div class="lvl-c-head">
+            <span class="lvl-c-num">04</span>
+            <h3>Full Body Protection</h3>
+          </div>
+          <div class="lvl-c-body">
+            <p class="lvl-c-best"><b>Best for:</b> Ultimate protection — exotic cars, or owners wanting long-term peace of mind.</p>
+            <div class="lvl-c-cov-label">Coverage</div>
+            <ul class="lvl-c-cov">
+              <li>Every painted exterior surface</li>
+              <li>Full body wrap</li>
+              <li>Doors, roof, quarter panels</li>
+              <li>All hardware-accessible surfaces</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="levels-cta reveal">
+      <a href="liquid-ppf.html" class="btn btn-gold">See Full Liquid PPF Page →</a>
+      <a href="contact.html" class="btn btn-outline">Get a Custom Quote</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- DIFFERENCE -->
+<section class="sec" style="background:var(--bg)">
+  <div class="wrap">
+
+    <!-- Heading — full width -->
+    <div class="sec-head reveal">
+      <span class="eyebrow">Why Masters</span>
+      <h2>The Difference</h2>
+      <p>Trusted on Long Island for 25+ years. Same core team, more training, more certifications, and a full-time staff that never outsources. Ever.</p>
+    </div>
+
+    <!-- Cards + Video side by side -->
+    <div style="display:grid;grid-template-columns:1fr 200px;gap:24px;align-items:stretch;min-height:0">
+
+      <!-- Left: cards + certs -->
+      <div>
+        <div class="diff-grid reveal">
+          <div class="diff"><span class="ic">🏆</span><h4>Expertise &amp; Experience</h4><p>25+ years of hands-on installation. Certified by Ceramic Pro and NanoPro with verified training, process control, and zero shortcuts.</p></div>
+          <div class="diff"><span class="ic">🛡️</span><h4>Long-Term Benefits</h4><p>Every service is designed for lasting results. Lifetime warranty on film and workmanship — full replacement, not just a patch.</p></div>
+          <div class="diff"><span class="ic">💎</span><h4>Value For Money</h4><p>No surprise pricing. No outsourcing markups. Every quote is customized to your vehicle, project scope, and protection goals.</p></div>
+          <div class="diff"><span class="ic">🎯</span><h4>Customized Service</h4><p>We tailor every job to your vehicle, budget, and goals — from a daily-driver lease return to a six-figure exotic.</p></div>
+        </div>
+        <div class="certs" style="margin-top:24px">
+          <div class="cert reveal"><div class="seal">✓</div><div><b>Certified Ceramic Pro Installer</b><span>Authorized installation with verified training</span></div></div>
+          <div class="cert reveal" data-d="1"><div class="seal">✓</div><div><b>Certified NanoPro Liquid PPF</b><span>Seamless application · full replacement warranty</span></div></div>
+          <div class="cert reveal" data-d="2"><div class="seal">✓</div><div><b>Full-Time Installers Only</b><span>Every job done by our own trained team</span></div></div>
+        </div>
+      </div>
+
+      <!-- Right: YouTube Short — aligned to cards -->
+      <div class="reveal" data-d="1" style="align-self:stretch;display:flex;flex-direction:column;gap:10px">
+        <div style="flex:1;border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:0 30px 80px -20px rgba(0,0,0,.8);background:#000;position:relative;min-height:0">
+          <iframe
+            id="yt-diff"
+            src="https://www.youtube.com/embed/Qoh-hpNHPXA?autoplay=1&mute=1&loop=1&playlist=Qoh-hpNHPXA&controls=0&playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
+            title="Masters Window Tinting"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover">
+          </iframe>
+          <button class="yt-sound-btn yt-sound-btn-abs" id="yt-diff-btn" onclick="toggleYTSound('yt-diff','yt-diff-btn')" title="Toggle sound">
+            <span class="yt-sound-icon">🔇</span>
+          </button>
+        </div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;flex-shrink:0">Masters Window Tinting · Long Island, NY</div>
+      </div>
+
+    </div><!-- /cards + video grid -->
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec" id="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Our Work</span>
+      <h2>Results From Our Shop</h2>
+      <p>Real work. Real vehicles. Real homes and businesses — done by our certified team right here in West Babylon, Long Island.</p>
+    </div>
+
+    <div class="gal-filters reveal">
+      <button class="filt active" data-f="tint">Window Tinting</button>
+      <button class="filt" data-f="ceramic">Ceramic Coating</button>
+      <button class="filt" data-f="ppf">Liquid PPF</button>
+      <button class="filt" data-f="res">Residential</button>
+      <button class="filt" data-f="com">Commercial</button>
+      <button class="filt" data-f="graphics">Wall Graphics</button>
+      <button class="filt" data-f="detail">Detailing</button>
+      <button class="filt" data-f="exotic">Exotic &amp; Classic Cars</button>
+    </div>
+
+    <div class="gal-carousel reveal" id="galCarousel">
+      <button class="gal-arrow gal-prev" aria-label="Previous photos" type="button">‹</button>
+      <div class="gal-viewport">
+        <div class="gal-track" id="galGrid"></div>
+      </div>
+      <button class="gal-arrow gal-next" aria-label="Next photos" type="button">›</button>
+      <div class="gal-dots" id="galDots"></div>
+    </div>
+
+    <div class="gal-cta reveal">
+      <a href="gallery.html" class="btn btn-ghost">View Full Gallery →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- BEFORE / AFTER -->
+<section class="sec" id="before-after" style="background:var(--bg);overflow:hidden">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">See The Difference</span>
+      <h2>Before &amp; After</h2>
+      <p>Drag the slider to reveal the transformation. Real results from our West Babylon shop.</p>
+    </div>
+
+    <!-- Slider tabs -->
+    <div class="ba-tabs reveal" style="display:flex;justify-content:center;gap:10px;margin-bottom:36px;flex-wrap:wrap">
+      <button class="ba-tab active" data-slide="0">Ceramic Coating</button>
+      <button class="ba-tab" data-slide="1">Window Tinting</button>
+      <button class="ba-tab" data-slide="2">Paint Correction</button>
+    </div>
+
+    <!-- Slider container -->
+    <div class="ba-wrap reveal">
+      <div class="ba-slider" id="baSlider">
+
+        <!-- Slide 0: Ceramic Coating -->
+        <div class="ba-slide active" data-index="0">
+          <div class="ba-container" id="baContainer0">
+            <div class="ba-after">
+              <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="After ceramic coating">
+              <span class="ba-label ba-label-after">AFTER</span>
+            </div>
+            <div class="ba-before">
+              <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="Before ceramic coating">
+              <span class="ba-label ba-label-before">BEFORE</span>
+            </div>
+            <div class="ba-handle" id="baHandle0">
+              <div class="ba-line"></div>
+              <div class="ba-circle">
+                <span class="ba-arrows">&#8592;&#8594;</span>
+              </div>
+            </div>
+          </div>
+          <div class="ba-info">
+            <span class="ba-service">Ceramic Pro Coating</span>
+            <span class="ba-desc">Deep gloss restoration &amp; hydrophobic protection</span>
+          </div>
+        </div>
+
+        <!-- Slide 1: Window Tinting -->
+        <div class="ba-slide" data-index="1">
+          <div class="ba-container" id="baContainer1">
+            <div class="ba-after">
+              <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp" alt="After window tinting">
+              <span class="ba-label ba-label-after">AFTER</span>
+            </div>
+            <div class="ba-before">
+              <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Before window tinting">
+              <span class="ba-label ba-label-before">BEFORE</span>
+            </div>
+            <div class="ba-handle" id="baHandle1">
+              <div class="ba-line"></div>
+              <div class="ba-circle">
+                <span class="ba-arrows">&#8592;&#8594;</span>
+              </div>
+            </div>
+          </div>
+          <div class="ba-info">
+            <span class="ba-service">Carbon &amp; Ceramic Window Film</span>
+            <span class="ba-desc">Heat rejection, UV blocking &amp; privacy film</span>
+          </div>
+        </div>
+
+        <!-- Slide 2: Paint Correction -->
+        <div class="ba-slide" data-index="2">
+          <div class="ba-container" id="baContainer2">
+            <div class="ba-after">
+              <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="After paint correction">
+              <span class="ba-label ba-label-after">AFTER</span>
+            </div>
+            <div class="ba-before">
+              <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="Before paint correction">
+              <span class="ba-label ba-label-before">BEFORE</span>
+            </div>
+            <div class="ba-handle" id="baHandle2">
+              <div class="ba-line"></div>
+              <div class="ba-circle">
+                <span class="ba-arrows">&#8592;&#8594;</span>
+              </div>
+            </div>
+          </div>
+          <div class="ba-info">
+            <span class="ba-service">Paint Correction &amp; Detail</span>
+            <span class="ba-desc">Swirl removal, polish &amp; surface restoration</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="reveal" style="text-align:center;margin-top:44px">
+      <a href="contact.html" class="btn btn-gold">Get Your Transformation →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Before/After Slider ────────────────────────────────────────────────── */
+.ba-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.ba-tab{font-family:"DM Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  padding:10px 20px;border:1px solid var(--line-2);border-radius:99px;background:transparent;
+  color:var(--muted);cursor:pointer;transition:all .25s}
+.ba-tab:hover{color:var(--ink);border-color:rgba(255,255,255,.4)}
+.ba-tab.active{background:#fff;color:#000;border-color:#fff}
+
+.ba-wrap{max-width:900px;margin:0 auto}
+.ba-slider{position:relative}
+.ba-slide{display:none}
+.ba-slide.active{display:block}
+
+.ba-container{
+  position:relative;width:100%;aspect-ratio:16/9;border-radius:6px;
+  overflow:hidden;border:1px solid var(--line-2);cursor:col-resize;
+  user-select:none;-webkit-user-select:none;
+  box-shadow:0 40px 80px -20px rgba(0,0,0,.7);
+}
+.ba-before,.ba-after{position:absolute;inset:0;overflow:hidden}
+.ba-after{z-index:1}
+.ba-before{z-index:2;width:50%}
+.ba-before img,.ba-after img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  pointer-events:none;display:block;
+}
+.ba-before img{width:calc(100% / var(--split, 0.5));max-width:none}
+
+.ba-label{
+  position:absolute;bottom:16px;font-family:"DM Mono",monospace;font-size:10px;
+  font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  padding:6px 12px;border-radius:99px;backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.2);z-index:10;pointer-events:none;
+}
+.ba-label-before{left:16px;background:rgba(0,0,0,.65);color:#fff}
+.ba-label-after{right:16px;background:rgba(255,255,255,.15);color:#fff}
+
+.ba-handle{
+  position:absolute;top:0;bottom:0;left:50%;z-index:5;
+  transform:translateX(-50%);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none;
+}
+.ba-line{position:absolute;top:0;bottom:0;width:2px;background:#fff;opacity:.9;box-shadow:0 0 12px rgba(255,255,255,.5)}
+.ba-circle{
+  width:44px;height:44px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:1;
+}
+.ba-arrows{font-size:16px;color:#000;font-weight:700;line-height:1}
+
+.ba-info{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:20px;padding:16px 20px;background:var(--surface);
+  border:1px solid var(--line);border-radius:4px;flex-wrap:wrap;gap:8px;
+}
+.ba-service{font-family:"Bebas Neue",sans-serif;font-size:1.1rem;letter-spacing:.06em;color:#fff}
+.ba-desc{font-size:13px;color:var(--muted);font-family:"Inter",sans-serif}
+
+@media(max-width:680px){
+  .ba-container{aspect-ratio:4/3}
+  .ba-circle{width:38px;height:38px}
+  .ba-arrows{font-size:14px}
+  .ba-info{flex-direction:column;gap:4px}
+}
+</style>
+
+<script>
+(function(){
+  // Load CMS before/after pairs from GitHub
+  fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      if (!data || !data.beforeafter || !data.beforeafter.length) return;
+      var slider = document.getElementById('baSlider');
+      var tabsEl = document.querySelector('.ba-tabs');
+      if (!slider || !tabsEl) return;
+      // Remove existing slides and tabs
+      slider.innerHTML = '';
+      tabsEl.innerHTML = '';
+      data.beforeafter.forEach(function(pair, i){
+        // Tab
+        var tab = document.createElement('button');
+        tab.className = 'ba-tab' + (i===0 ? ' active' : '');
+        tab.dataset.slide = i;
+        tab.textContent = pair.label || ('Slide '+(i+1));
+        tabsEl.appendChild(tab);
+        // Slide
+        var slide = document.createElement('div');
+        slide.className = 'ba-slide' + (i===0 ? ' active' : '');
+        slide.dataset.index = i;
+        slide.innerHTML =
+          '<div class="ba-container" id="baContainer'+i+'">' +
+            '<div class="ba-after"><img src="'+pair.after+'" alt="After '+pair.label+'"><span class="ba-label ba-label-after">AFTER</span></div>' +
+            '<div class="ba-before"><img src="'+pair.before+'" alt="Before '+pair.label+'"><span class="ba-label ba-label-before">BEFORE</span></div>' +
+            '<div class="ba-handle" id="baHandle'+i+'"><div class="ba-line"></div><div class="ba-circle"><span class="ba-arrows">&#8592;&#8594;</span></div></div>' +
+          '</div>' +
+          '<div class="ba-info"><span class="ba-service">'+pair.label+'</span></div>';
+        slider.appendChild(slide);
+      });
+      // Re-init tabs and sliders
+      initBATabs();
+      initBASliders();
+    })
+    .catch(function(){ initBATabs(); initBASliders(); });
+
+  function initBATabs(){
+  // Tab switching
+  document.querySelectorAll('.ba-tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var idx = this.dataset.slide;
+      document.querySelectorAll('.ba-tab').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.ba-slide').forEach(function(s){ s.classList.remove('active'); });
+      this.classList.add('active');
+      document.querySelector('.ba-slide[data-index="'+idx+'"]').classList.add('active');
+    });
+  });
+
+  // Init each slider
+  [0,1,2].forEach(function(i){
+    var container = document.getElementById('baContainer'+i);
+    var before    = container.querySelector('.ba-before');
+    var handle    = container.querySelector('.ba-handle');
+    if(!container) return;
+    var dragging = false;
+
+    function setPos(pct){
+      pct = Math.max(2, Math.min(98, pct));
+      before.style.width = pct + '%';
+      before.querySelector('img').style.width = (100 / (pct/100)) + '%';
+      handle.style.left = pct + '%';
+    }
+    setPos(50);
+
+    function getPos(e){
+      var rect = container.getBoundingClientRect();
+      var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      return (x / rect.width) * 100;
+    }
+
+    container.addEventListener('mousedown', function(e){ dragging=true; setPos(getPos(e)); e.preventDefault(); });
+    container.addEventListener('touchstart', function(e){ dragging=true; setPos(getPos(e)); }, {passive:true});
+    window.addEventListener('mousemove', function(e){ if(dragging) setPos(getPos(e)); });
+    window.addEventListener('touchmove', function(e){ if(dragging) setPos(getPos(e)); }, {passive:true});
+    window.addEventListener('mouseup', function(){ dragging=false; });
+    window.addEventListener('touchend', function(){ dragging=false; });
+  });
+  }
+
+  function initBASliders(){
+    var containers = document.querySelectorAll('.ba-container');
+    containers.forEach(function(container){
+      var before = container.querySelector('.ba-before');
+      var handle = container.querySelector('.ba-handle');
+      if(!container||!before||!handle) return;
+      var dragging = false;
+      function setPos(pct){ pct=Math.max(2,Math.min(98,pct)); before.style.width=pct+'%'; before.querySelector('img').style.width=(100/(pct/100))+'%'; handle.style.left=pct+'%'; }
+      setPos(50);
+      function getPos(e){ var rect=container.getBoundingClientRect(); var x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left; return(x/rect.width)*100; }
+      container.addEventListener('mousedown',function(e){dragging=true;setPos(getPos(e));e.preventDefault();});
+      container.addEventListener('touchstart',function(e){dragging=true;setPos(getPos(e));},{passive:true});
+      window.addEventListener('mousemove',function(e){if(dragging)setPos(getPos(e));});
+      window.addEventListener('touchmove',function(e){if(dragging)setPos(getPos(e));},{passive:true});
+      window.addEventListener('mouseup',function(){dragging=false;});
+      window.addEventListener('touchend',function(){dragging=false;});
+    });
+  }
+  initBATabs();
+  initBASliders();
+})();
+</script>
+
+<!-- REVIEWS -->
+<section class="sec" id="reviews" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Customer Reviews</span>
+      <h2>What They Say</h2>
+    </div>
+
+    <!-- LIVE GOOGLE REVIEWS WIDGET -->
+    <div id="grev-widget" class="reveal" style="margin-bottom:48px">
+      <!-- Score bar -->
+      <div class="rev-top" id="grev-top" style="margin-bottom:32px">
+        <div class="rev-score" id="grev-score">4.9</div>
+        <div>
+          <div class="stars" id="grev-stars">★★★★★</div>
+          <div class="meta" id="grev-meta">Google Rating · Verified Reviews</div>
+        </div>
+        <div style="margin-left:auto">
+          <a href="https://www.google.com/maps/place/?q=place_id:ChIJZ4a23E4r6IkRkLddGi_QknQ" target="_blank" rel="noopener" class="btn btn-ghost" style="font-size:13px">View on Google →</a>
+        </div>
+      </div>
+
+      <!-- Live review cards carousel -->
+      <div style="position:relative">
+        <div id="grev-track-wrap" style="overflow:hidden;border-radius:4px">
+          <div id="grev-track" style="display:flex;gap:18px;transition:transform .55s cubic-bezier(.4,0,.2,1)">
+            <!-- Skeleton loaders -->
+            <div class="grev-skeleton" style="flex:0 0 calc((100% - 36px)/3);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 30px;min-height:220px;animation:grev-pulse 1.5s ease-in-out infinite">
+              <div style="height:14px;width:60%;background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:16px"></div>
+              <div style="height:13px;width:90%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:75%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:80%;background:rgba(255,255,255,.04);border-radius:3px"></div>
+            </div>
+            <div class="grev-skeleton" style="flex:0 0 calc((100% - 36px)/3);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 30px;min-height:220px;animation:grev-pulse 1.5s ease-in-out .2s infinite">
+              <div style="height:14px;width:55%;background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:16px"></div>
+              <div style="height:13px;width:85%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:70%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:90%;background:rgba(255,255,255,.04);border-radius:3px"></div>
+            </div>
+            <div class="grev-skeleton" style="flex:0 0 calc((100% - 36px)/3);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:32px 30px;min-height:220px;animation:grev-pulse 1.5s ease-in-out .4s infinite">
+              <div style="height:14px;width:65%;background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:16px"></div>
+              <div style="height:13px;width:80%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:95%;background:rgba(255,255,255,.04);border-radius:3px;margin-bottom:10px"></div>
+              <div style="height:13px;width:65%;background:rgba(255,255,255,.04);border-radius:3px"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Arrows -->
+        <button id="grev-prev" class="gal-arrow gal-prev" style="display:none" aria-label="Previous reviews">‹</button>
+        <button id="grev-next" class="gal-arrow gal-next" style="display:none" aria-label="Next reviews">›</button>
+        <!-- Dots -->
+        <div id="grev-dots" class="gal-dots" style="margin-top:20px"></div>
+      </div>
+    </div>
+
+    <!-- HARDCODED FALLBACK (hidden by default if live loads) -->
+    <div id="grev-fallback" style="display:none">
+      <div class="rev-top reveal">
+        <div class="rev-score">4.9</div>
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="meta">Google Rating · Hundreds of Verified Reviews</div>
+        </div>
+      </div>
+      <div class="rev-grid">
+        <div class="review reveal"><div class="stars">★★★★★</div><p>"Great job on my Ceramic Pro coating! Love it! Love it! Love it! The finish is absolutely stunning and the team was incredibly professional throughout."</p><div class="who"><div class="av">NM</div><div><b>Nadia Mierau</b><span>Ceramic Pro Coating</span></div></div></div>
+        <div class="review reveal" data-d="1"><div class="stars">★★★★★</div><p>"Got my tail lights tinted on my new Range Rover — looks awesome! They also did LED strips. Quick, clean, and professional throughout."</p><div class="who"><div class="av">KA</div><div><b>Kayla Anderson</b><span>Window Tinting</span></div></div></div>
+        <div class="review reveal" data-d="2"><div class="stars">★★★★★</div><p>"Long overdue review — my tints are beautiful. Staff was accommodating, friendly, and knowledgeable. Highly recommend Masters Window Tinting!"</p><div class="who"><div class="av">SS</div><div><b>Sheila Sanders</b><span>Window Tinting</span></div></div></div>
+        <div class="review reveal"><div class="stars">★★★★★</div><p>"My car looks brand new after adding the ceramic coating and paint protection on the front. Excellent job — the attention to detail is second to none."</p><div class="who"><div class="av">GC</div><div><b>George C.</b><span>Ceramic Coating + PPF</span></div></div></div>
+        <div class="review reveal" data-d="1"><div class="stars">★★★★★</div><p>"The attention to detail is incredible. My car has never looked better. Thank you for the amazing service — I'll definitely be coming back."</p><div class="who"><div class="av">SL</div><div><b>Sean L.</b><span>Ceramic Coating</span></div></div></div>
+        <div class="review reveal" data-d="2"><div class="stars">★★★★★</div><p>"Got my windows tinted and the car ceramic coated. Could not have worked with a nicer bunch of guys. True professionals — highly recommend."</p><div class="who"><div class="av">RJ</div><div><b>Robert J.</b><span>Window Tint + Ceramic</span></div></div></div>
+      </div>
+    </div>
+
+    <div class="rev-cta reveal"><a href="https://www.google.com/maps/place/?q=place_id:ChIJZ4a23E4r6IkRkLddGi_QknQ" target="_blank" rel="noopener" class="btn btn-ghost">Read All Google Reviews →</a></div>
+  </div>
+</section>
+<style>
+@keyframes grev-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+@media(max-width:1024px){#grev-track .grev-card{flex:0 0 calc((100% - 18px)/2)!important}}
+@media(max-width:680px){#grev-track .grev-card{flex:0 0 100%!important}}
+</style>
+<script>
+(function(){
+  const PLACE_ID = "ChIJZ4a23E4r6IkRkLddGi_QknQ";
+  const FALLBACK_REVIEWS = [
+    {author:"Nadia Mierau",rating:5,text:"Great job on my Ceramic Pro coating! Love it! Love it! Love it! The finish is absolutely stunning and the team was incredibly professional throughout.",service:"Ceramic Pro Coating"},
+    {author:"Kayla Anderson",rating:5,text:"Got my tail lights tinted on my new Range Rover — looks awesome! They also did LED strips. Quick, clean, and professional throughout.",service:"Window Tinting"},
+    {author:"Sheila Sanders",rating:5,text:"Long overdue review — my tints are beautiful. Staff was accommodating, friendly, and knowledgeable. Highly recommend Masters Window Tinting!",service:"Window Tinting"},
+    {author:"George C.",rating:5,text:"My car looks brand new after adding the ceramic coating and paint protection on the front. Excellent job — the attention to detail is second to none.",service:"Ceramic Coating + PPF"},
+    {author:"Sean L.",rating:5,text:"The attention to detail is incredible. My car has never looked better. Thank you for the amazing service — I will definitely be coming back.",service:"Ceramic Coating"},
+    {author:"Robert J.",rating:5,text:"Got my windows tinted and the car ceramic coated. Could not have worked with a nicer bunch of guys. True professionals — highly recommend.",service:"Window Tint + Ceramic"},
+  ];
+
+  function stars(n){return "★".repeat(n)+"☆".repeat(5-n);}
+  function initials(name){return name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2);}
+  function truncate(t,n){return t.length>n?t.slice(0,n).trimEnd()+"…":t;}
+
+  function buildCards(reviews, rating, totalStr){
+    const track = document.getElementById("grev-track");
+    const prevBtn = document.getElementById("grev-prev");
+    const nextBtn = document.getElementById("grev-next");
+    const dotsEl  = document.getElementById("grev-dots");
+
+    // Update score bar
+    document.getElementById("grev-score").textContent = rating || "4.9";
+    document.getElementById("grev-stars").textContent = "★★★★★";
+    document.getElementById("grev-meta").textContent = "Google Rating · " + (totalStr || "Verified Reviews");
+
+    // Build cards
+    track.innerHTML = "";
+    reviews.forEach(r => {
+      const initls = initials(r.author || r.author_name || "G");
+      const txt = truncate(r.text || r.relative_time_description || "", 200);
+      const svc = r.service || "";
+      const card = document.createElement("div");
+      card.className = "review grev-card";
+      card.style.cssText = "flex:0 0 calc((100% - 36px)/3);flex-shrink:0";
+      card.innerHTML =
+        '<div class="stars">' + stars(r.rating||5) + '</div>' +
+        '<p style="font-size:15px;color:var(--ink);line-height:1.6;flex:1">' + txt + '</p>' +
+        '<div class="who" style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line)">' +
+          '<div class="av">' + initls + '</div>' +
+          '<div><b style="font-size:14px">' + (r.author||r.author_name||"Google Reviewer") + '</b>' +
+          (svc ? '<span style="font-size:12px;color:var(--muted)">' + svc + '</span>' :
+                 r.relative_time_description ? '<span style="font-size:12px;color:var(--muted)">' + r.relative_time_description + '</span>' : "") +
+          '</div></div>';
+      track.appendChild(card);
+    });
+
+    // Carousel logic
+    let page = 0;
+    function perView(){return window.innerWidth<=680?1:window.innerWidth<=1024?2:3;}
+    function pages(){return Math.max(1,Math.ceil(reviews.length/perView()));}
+    function render(){
+      track.style.transform="translateX(-"+(page*100)+"%)";
+      Array.from(dotsEl.children).forEach((d,i)=>d.classList.toggle("active",i===page));
+      prevBtn.disabled=(page===0);
+      nextBtn.disabled=(page>=pages()-1);
+    }
+    function buildDots(){
+      dotsEl.innerHTML="";
+      const n=pages();
+      if(n<=1){dotsEl.style.display="none";prevBtn.style.display="none";nextBtn.style.display="none";return;}
+      dotsEl.style.display="";
+      prevBtn.style.display="flex";nextBtn.style.display="flex";
+      for(let i=0;i<n;i++){
+        const b=document.createElement("button");
+        if(i===page)b.classList.add("active");
+        b.onclick=()=>{page=i;render();};
+        dotsEl.appendChild(b);
+      }
+    }
+    prevBtn.onclick=()=>{if(page>0){page--;render();buildDots();}};
+    nextBtn.onclick=()=>{if(page<pages()-1){page++;render();buildDots();}};
+    window.addEventListener("resize",()=>{page=0;buildDots();render();},{passive:true});
+    buildDots();render();
+
+    // Auto-rotate
+    setInterval(()=>{
+      page=page>=pages()-1?0:page+1;
+      render();
+      Array.from(dotsEl.children).forEach((d,i)=>d.classList.toggle("active",i===page));
+    },6000);
+  }
+
+  function loadFallback(){
+    buildCards(FALLBACK_REVIEWS,"4.9","Hundreds of Verified Reviews");
+  }
+
+  // Try fetching via allorigins proxy → Google Places API
+  const apiUrl = "https://maps.googleapis.com/maps/api/place/details/json?place_id="+PLACE_ID+"&fields=rating,user_ratings_total,reviews&language=en";
+  const proxyUrl = "https://api.allorigins.win/get?url="+encodeURIComponent(apiUrl);
+
+  fetch(proxyUrl, {signal: AbortSignal.timeout(5000)})
+    .then(r=>r.ok?r.json():Promise.reject("fetch failed"))
+    .then(data=>{
+      const parsed = typeof data.contents==="string" ? JSON.parse(data.contents) : null;
+      if(parsed && parsed.result && parsed.result.reviews && parsed.result.reviews.length){
+        const res = parsed.result;
+        const totalStr = res.user_ratings_total ? res.user_ratings_total.toLocaleString()+" Google Reviews" : "Verified Reviews";
+        buildCards(res.reviews, res.rating ? res.rating.toFixed(1) : "4.9", totalStr);
+      } else {
+        loadFallback();
+      }
+    })
+    .catch(()=>loadFallback());
+})();
+</script>
+
+<!-- CONTACT / QUOTE -->
+<section class="sec" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="reveal">
+        <span class="eyebrow">Get in Touch</span>
+        <h2 style="font-size:clamp(2.4rem,6vw,4rem);text-transform:uppercase;margin:20px 0 14px">Book Your Visit</h2>
+        <p style="color:var(--muted);max-width:420px">Call us for the fastest response — or fill out the form to request an appointment and we'll confirm within 1 hour.</p>
+        <div class="ci-list">
+          <div class="ci"><div class="ic">📞</div><div><div class="k">Phone — Fastest Response</div><div class="v"><a href="tel:6312264300">631-226-4300</a></div></div></div>
+          <div class="ci"><div class="ic">✉️</div><div><div class="k">Email</div><div class="v"><a href="mailto:info@masterswindowtinting.com">info@masterswindowtinting.com</a></div></div></div>
+          <div class="ci"><div class="ic">📍</div><div><div class="k">Location</div><div class="v small"><a href="https://maps.google.com/?q=863+Rte+109+West+Babylon+NY" target="_blank" rel="noopener">863 Rte 109, Suite A<br>West Babylon, NY 11704</a></div></div></div>
+          <div class="ci"><div class="ic">🕐</div><div><div class="k">Hours</div><div class="v small">Mon–Sat: 9:00 AM – 5:00 PM<br>Sunday: 10:00 AM – 4:00 PM</div></div></div>
+        </div>
+        <div class="facts">
+          <div class="k">Booking Info</div>
+          <ul>
+            <li>We confirm all appointments within 1 hour.</li>
+            <li>Same-day service available on many jobs.</li>
+            <li>Appointments required. Walk-ins accepted if time permits.</li>
+            <li>Lifetime warranty covers bubbling, peeling &amp; fading.</li>
+            <li>Discounts for military, police &amp; first responders.</li>
+            <li>No pricing online — every quote is customized.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="reveal" data-d="1">
+        <div class="form-card">
+          <form id="quoteForm" action="https://formspree.io/f/mbdbnzqe" method="POST">
+            <div class="form-note">Request Appointment or Quote · We confirm within 1 hour</div>
+            <input type="hidden" name="_subject" value="New Quote Request — Masters Window Tinting">
+            <input type="hidden" name="_next" value="">
+            <div class="frow">
+              <div class="field"><label>First Name *</label><input type="text" name="first_name" required></div>
+              <div class="field"><label>Last Name *</label><input type="text" name="last_name" required></div>
+            </div>
+            <div class="frow">
+              <div class="field"><label>Phone *</label><input type="tel" name="phone" required></div>
+              <div class="field"><label>Email</label><input type="email" name="email"></div>
+            </div>
+            <div class="frow" style="margin-bottom:16px">
+              <div class="field"><label>Vehicle (Year, Make, Model) *</label><input type="text" name="vehicle" required placeholder="e.g. 2024 Range Rover Sport"></div>
+              <div class="field"><label>Preferred Date</label><input type="date" name="preferred_date"></div>
+            </div>
+            <div class="field full"><label>Services Needed</label></div>
+            <div class="checks">
+              <label class="chk"><input type="checkbox"><span>Window Tinting</span></label>
+              <label class="chk"><input type="checkbox"><span>Liquid PPF</span></label>
+              <label class="chk"><input type="checkbox"><span>Ceramic Coating</span></label>
+              <label class="chk"><input type="checkbox"><span>Headlight / Taillight</span></label>
+              <label class="chk"><input type="checkbox"><span>Residential</span></label>
+              <label class="chk"><input type="checkbox"><span>Commercial</span></label>
+            </div>
+            <div class="field full" style="margin-bottom:8px"><label>Additional Details</label><textarea name="details" placeholder="Tell us about your project..."></textarea></div>
+            <button type="submit" class="btn btn-gold">Request Appointment →</button>
+            <p class="disclaimer">We confirm all appointments within 1 hour during business hours. No pricing online — all quotes are customized.</p>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="check">✓</div>
+            <h3>Request Received!</h3>
+            <p>We'll confirm your appointment within 1 hour.<br>Need it faster? Call <a href="tel:6312264300">631-226-4300</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <b>Masters Window Tinting &amp; Detail</b>
+        <div class="tl">Ceramic Pro Long Island · NanoPro Liquid PPF</div>
+        <p>Certified Ceramic Pro and NanoPro Liquid PPF specialists serving Nassau &amp; Suffolk County for 25+ years. Full-time staff, no outside contractors, every job guaranteed.</p>
+        <div class="foot-soc">
+          <a href="https://www.facebook.com/profile.php?id=100063773733742" target="_blank" rel="noopener">FB</a>
+          <a href="https://www.instagram.com/Ceramic_pro_long_island" target="_blank" rel="noopener">IG</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Window Tinting</a></li>
+          <li><a href="#services">Liquid PPF</a></li>
+          <li><a href="#services">Ceramic Coating</a></li>
+          <li><a href="#services">Headlight Tinting</a></li>
+          <li><a href="#services">Boat &amp; Marine</a></li>
+          <li><a href="#services">Residential &amp; Commercial</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="tel:6312264300">Call Now</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Service Area</h5>
+        <ul>
+          <li><a href="#">Nassau County</a></li>
+          <li><a href="#">Suffolk County</a></li>
+          <li><a href="#">North &amp; South Shore</a></li>
+          <li><a href="#">Huntington</a></li>
+          <li><a href="#">West Babylon</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Masters Window Tinting &amp; Detail · 863 Rte 109 Suite A, West Babylon, NY 11704</span>
+      <span><a href="tel:6312264300">631-226-4300</a> · <a href="privacy-policy.html">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<a href="tel:6312264300" class="mobile-call">📞 TAP TO CALL · 631-226-4300</a>
+
+<script>
+  function setLvl(n){
+    var c = document.querySelector('.lvl-interactive');
+    if(c) c.setAttribute('data-active', String(n));
+    // Highlight active card
+    document.querySelectorAll('.lvl-c').forEach(function(el){
+      el.style.borderColor = el.dataset.level == n ? 'rgba(255,255,255,.4)' : '';
+      el.style.background  = el.dataset.level == n ? 'var(--surface-2)' : '';
+    });
+  }
+  // Set hint text based on touch device
+  if('ontouchstart' in window){
+    var h = document.getElementById('lvl-hint');
+    if(h) h.textContent = 'Tap a level to see coverage →';
+  }
+// nav scroll state
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+// mobile menu
+const mm=document.getElementById('mobileMenu');
+document.getElementById('burger').onclick=()=>mm.classList.add('open');
+document.getElementById('mmClose').onclick=()=>mm.classList.remove('open');
+mm.querySelectorAll('a').forEach(a=>a.onclick=()=>mm.classList.remove('open'));
+
+// scroll reveal
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// gallery carousel + filter with CMS auto-load
+(function(){
+  const track = document.getElementById('galGrid');
+  const carousel = document.getElementById('galCarousel');
+  const prevBtn = carousel.querySelector('.gal-prev');
+  const nextBtn = carousel.querySelector('.gal-next');
+  const dotsEl = document.getElementById('galDots');
+  const filters = document.querySelectorAll('.filt');
+
+  // CMS category → homepage filter short-code mapping
+  const CAT_MAP = {
+    'Window Tinting': 'tint',
+    'Ceramic Coating': 'ceramic',
+    'Liquid PPF': 'ppf',
+    'Residential Tinting': 'res',
+    'Commercial Tinting': 'com',
+    'Wall Graphics': 'graphics',
+    'Detailing & Paint Correction': 'detail',
+    'Detailing': 'detail'
+  };
+  const PER_CAT = 4;
+
+  let allCards = [];
+  let visibleCards = [];
+  let perView = 3;
+  let pageIndex = 0;
+  let autoTimer = null;
+  let paused = false;
+
+  function computePerView(){
+    const w = window.innerWidth;
+    if (w <= 680) return 1;
+    if (w <= 1024) return 2;
+    return 3;
+  }
+  function totalPages(){ return Math.max(1, Math.ceil(visibleCards.length / perView)); }
+  function buildDots(){
+    dotsEl.innerHTML = '';
+    const n = totalPages();
+    if (n <= 1){ dotsEl.style.display = 'none'; return; }
+    dotsEl.style.display = '';
+    for (let i = 0; i < n; i++){
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', 'Go to page ' + (i+1));
+      if (i === pageIndex) b.classList.add('active');
+      b.addEventListener('click', () => { pageIndex = i; render(); restartAuto(); });
+      dotsEl.appendChild(b);
+    }
+  }
+  function render(){
+    allCards.forEach(c => c.style.display = 'none');
+    visibleCards.forEach(c => c.style.display = '');
+    const offsetPct = -(pageIndex * 100);
+    track.style.transform = 'translateX(' + offsetPct + '%)';
+    Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === pageIndex));
+    prevBtn.disabled = (totalPages() <= 1) || (pageIndex === 0);
+    nextBtn.disabled = (totalPages() <= 1) || (pageIndex >= totalPages() - 1);
+  }
+  function nextPage(){
+    if (totalPages() <= 1) return;
+    pageIndex = (pageIndex >= totalPages() - 1) ? 0 : pageIndex + 1;
+    render();
+  }
+  function prevPage(){
+    if (totalPages() <= 1) return;
+    pageIndex = (pageIndex <= 0) ? totalPages() - 1 : pageIndex - 1;
+    render();
+  }
+  function applyFilter(cat){
+    visibleCards = cat === 'all' ? allCards.slice() : allCards.filter(c => c.dataset.cat === cat);
+    // Reorder DOM so visible cards come first (CSS flex order)
+    visibleCards.forEach(c => track.appendChild(c));
+    allCards.filter(c => !visibleCards.includes(c)).forEach(c => track.appendChild(c));
+    pageIndex = 0;
+    buildDots();
+    render();
+  }
+  function startAuto(){
+    stopAuto();
+    autoTimer = setInterval(() => { if (!paused && totalPages() > 1) nextPage(); }, 5000);
+  }
+  function stopAuto(){ if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+  function restartAuto(){ stopAuto(); startAuto(); }
+
+  // Wire up controls
+  prevBtn.addEventListener('click', () => { prevPage(); restartAuto(); });
+  nextBtn.addEventListener('click', () => { nextPage(); restartAuto(); });
+  filters.forEach(f => f.addEventListener('click', () => {
+    filters.forEach(x => x.classList.remove('active'));
+    f.classList.add('active');
+    applyFilter(f.dataset.f);
+    restartAuto();
+  }));
+  carousel.addEventListener('mouseenter', () => { paused = true; });
+  carousel.addEventListener('mouseleave', () => { paused = false; });
+
+  // Responsive
+  let rzTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(rzTimer);
+    rzTimer = setTimeout(() => {
+      const newPerView = computePerView();
+      if (newPerView !== perView){
+        perView = newPerView;
+        pageIndex = 0;
+        buildDots();
+        render();
+      }
+    }, 150);
+  });
+
+  // Initialize carousel from whatever cards exist NOW
+  function initCarousel(){
+    allCards = Array.from(track.querySelectorAll('.gcard'));
+    visibleCards = allCards.slice();
+    perView = computePerView();
+    pageIndex = 0;
+    buildDots();
+    render();
+    startAuto();
+  }
+
+  // Fetch CMS data and inject cards BEFORE initializing carousel
+  function loadCmsAndInit() {
+    fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now())
+      .then(r => r.ok ? r.json() : Promise.reject('fetch failed'))
+      .then(data => {
+        // Clear any existing cards
+        track.innerHTML = '';
+
+        if (!data || !data.gallery) { initCarousel(); return; }
+
+        // Build cards from CMS — only images that exist in the gallery
+        let totalAdded = 0;
+        Object.entries(data.gallery).forEach(([catName, items]) => {
+          if (!Array.isArray(items) || items.length === 0) return;
+          const shortCat = CAT_MAP[catName];
+          if (!shortCat) return;
+          items.forEach(url => {
+            if (typeof url !== 'string' || !url) return;
+            const card = document.createElement('div');
+            card.className = 'gcard';
+            card.dataset.cat = shortCat;
+            card.innerHTML =
+              '<img src="' + url + '" alt="' + catName + '" loading="lazy">' +
+              '<div class="meta"><div class="c">' + catName + '</div></div>';
+            track.appendChild(card);
+            totalAdded++;
+          });
+        });
+
+        // Find first category that has images and activate it
+        if (totalAdded > 0) {
+          const firstCatWithImages = Object.entries(data.gallery)
+            .find(([cat, items]) => Array.isArray(items) && items.length > 0);
+          
+          if (firstCatWithImages) {
+            const shortCat = CAT_MAP[firstCatWithImages[0]];
+            if (shortCat) {
+              // Update filter buttons
+              filters.forEach(f => f.classList.remove('active'));
+              const matchBtn = Array.from(filters).find(f => f.dataset.f === shortCat);
+              if (matchBtn) matchBtn.classList.add('active');
+              currentFilter = shortCat;
+            }
+          }
+        }
+
+        initCarousel();
+      })
+      .catch(err => {
+        console.warn('CMS gallery load skipped:', err);
+        track.innerHTML = '';
+        initCarousel();
+      });
+  }
+
+  loadCmsAndInit();
+})();
+
+
+// graceful image fallback
+document.querySelectorAll('img').forEach(img=>{
+  img.addEventListener('error',()=>{
+    img.style.display='none';
+    const p=img.parentElement;
+    p.style.background='linear-gradient(135deg,#1a1d24,#0d0f12)';
+  });
+});
+
+// form submit
+document.getElementById('quoteForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var form = this;
+  var data = new FormData(form);
+  // Collect checkbox values into data
+  var services = [];
+  form.querySelectorAll('.chk input:checked').forEach(function(cb){
+    services.push(cb.nextElementSibling.textContent.trim());
+  });
+  if(services.length) data.set('services', services.join(', '));
+  fetch(form.action, {method:'POST', body:data, headers:{Accept:'application/json'}})
+    .then(function(r){
+      form.style.display='none';
+      document.getElementById('formSuccess').classList.add('show');
+    })
+    .catch(function(){
+      form.style.display='none';
+      document.getElementById('formSuccess').classList.add('show');
+    });
+});
+
+// ── YouTube Sound Toggle ─────────────────────────────────────────────────────
+var ytPlayers = {};
+var YT_READY  = false;
+
+// Load YouTube IFrame API
+(function(){
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+})();
+
+function onYouTubeIframeAPIReady() {
+  YT_READY = true;
+  ['yt-ppf', 'yt-diff'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    ytPlayers[id] = new YT.Player(id, {
+      events: {
+        onReady: function(e) {
+          e.target.mute();
+          e.target.playVideo();
+        }
+      }
+    });
+  });
+}
+
+function toggleYTSound(videoId, btnId) {
+  var player = ytPlayers[videoId];
+  var btn    = document.getElementById(btnId);
+  if (!player || !btn) return;
+
+  // Mute all other videos first
+  Object.keys(ytPlayers).forEach(function(id) {
+    if (id !== videoId && ytPlayers[id]) {
+      ytPlayers[id].mute();
+      var otherBtn = document.getElementById(id + '-btn');
+      if (otherBtn) {
+        otherBtn.classList.remove('unmuted');
+        otherBtn.querySelector('.yt-sound-icon').textContent = '🔇';
+        var lbl = otherBtn.querySelector('.yt-sound-label');
+        if (lbl) lbl.textContent = 'Tap for Sound';
+      }
+    }
+  });
+
+  // Toggle this video
+  if (player.isMuted()) {
+    player.unMute();
+    player.setVolume(80);
+    btn.classList.add('unmuted');
+    btn.querySelector('.yt-sound-icon').textContent = '🔊';
+    var lbl = btn.querySelector('.yt-sound-label');
+    if (lbl) lbl.textContent = 'Sound On';
+  } else {
+    player.mute();
+    btn.classList.remove('unmuted');
+    btn.querySelector('.yt-sound-icon').textContent = '🔇';
+    var lbl = btn.querySelector('.yt-sound-label');
+    if (lbl) lbl.textContent = 'Tap for Sound';
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+</script>
+</body>
 </html>
