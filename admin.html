@@ -1824,8 +1824,8 @@ function gaRenderCats() {
         <span class="ga-bucket-name">${cat}</span>
         <div class="ga-bucket-actions">
           <span class="ga-bucket-count">${urls.length}</span>
-          <button class="ga-add-btn" onclick="event.stopPropagation();gaAddSelected('${cat}')">+ Add</button>
-          ${urls.length > 0 ? `<button class="ga-clr-btn" onclick="event.stopPropagation();gaClearCat('${cat}')">🗑</button>` : ''}
+          <button class="ga-add-btn" data-cat="${cat}" onclick="event.stopPropagation();gaAddSelected(this.dataset.cat)">+ Add</button>
+          ${urls.length > 0 ? `<button class="ga-clr-btn" data-cat="${cat}" onclick="event.stopPropagation();gaClearCat(this.dataset.cat)">🗑</button>` : ''}
         </div>
       </div>
       ${urls.length > 0 ? `<div class="ga-thumbs">${thumbs}</div>` : ''}
@@ -1904,6 +1904,12 @@ function gaAddSelected(cat) {
   gaRenderCats();
   updateStats();
   toast(`✅ ${added} image${added!==1?'s':''} added to ${cat}`);
+}
+
+function gaRemoveBtn(btn) {
+  const cat = btn.dataset.cat;
+  const url = decodeURIComponent(btn.dataset.url);
+  gaRemove(cat, url);
 }
 
 function gaRemove(cat, url) {
