@@ -235,28 +235,25 @@
   .form-row{grid-template-columns:1fr;}
 }
 
-/* ── Gallery Assign Panel ── */
+/* ── Gallery Assign ── */
 .ga-img{position:relative;aspect-ratio:4/3;border-radius:5px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:.15s;background:var(--surface2)}
 .ga-img img{width:100%;height:100%;object-fit:cover;display:block}
 .ga-img .ga-name{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.75);font-size:.5rem;padding:2px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
 .ga-img.selected{border-color:#fff}
-.ga-img.selected::after{content:"✓";position:absolute;top:3px;right:3px;background:#fff;color:#000;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;z-index:2}
-.ga-img.done{opacity:.4;border-color:var(--accent)}
-.ga-img.done::before{content:"✓";position:absolute;top:3px;left:3px;background:var(--accent);color:#000;font-size:.55rem;padding:1px 5px;border-radius:3px;z-index:2;font-weight:800}
+.ga-img.selected::after{content:"";position:absolute;top:3px;right:3px;background:#fff;color:#000;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800}
+.ga-img.done{opacity:.4}
 .ga-bucket{border-bottom:1px solid var(--border)}
-.ga-bucket-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;cursor:pointer;transition:.15s}
-.ga-bucket-head:hover{background:var(--surface2)}
+.ga-bucket-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px}
 .ga-bucket-name{font-weight:600;font-size:.8rem}
 .ga-bucket-count{font-size:.65rem;background:var(--surface2);padding:2px 7px;border-radius:99px;color:var(--muted)}
-.ga-bucket-actions{display:flex;gap:5px}
-.ga-add-btn{background:rgba(45,122,45,.3);border:1px solid rgba(45,122,45,.6);color:#5dfc5d;padding:4px 10px;border-radius:4px;font-size:.65rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.ga-bucket-actions{display:flex;gap:5px;align-items:center}
+.ga-add-btn{background:rgba(45,122,45,.3);border:1px solid rgba(45,122,45,.6);color:#5dfc5d;padding:4px 10px;border-radius:4px;font-size:.65rem;font-weight:700;cursor:pointer}
 .ga-add-btn:hover{background:rgba(45,122,45,.5)}
-.ga-clr-btn{background:rgba(122,45,45,.3);border:1px solid rgba(122,45,45,.6);color:#fc5d5d;padding:4px 8px;border-radius:4px;font-size:.65rem;font-weight:700;cursor:pointer}
-.ga-clr-btn:hover{background:rgba(122,45,45,.5)}
+.ga-clr-btn{background:rgba(122,45,45,.3);border:1px solid rgba(122,45,45,.6);color:#fc5d5d;padding:4px 8px;border-radius:4px;font-size:.65rem;cursor:pointer}
 .ga-thumbs{padding:0 10px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .ga-thumb{position:relative;aspect-ratio:4/3;border-radius:3px;overflow:hidden;background:var(--surface2)}
 .ga-thumb img{width:100%;height:100%;object-fit:cover}
-.ga-thumb-rm{position:absolute;top:2px;right:2px;background:rgba(255,80,80,.9);border:none;color:#fff;width:14px;height:14px;border-radius:50%;cursor:pointer;font-size:.55rem;display:flex;align-items:center;justify-content:center;z-index:2}
+.ga-thumb-rm{position:absolute;top:2px;right:2px;background:rgba(255,80,80,.9);border:none;color:#fff;width:14px;height:14px;border-radius:50%;cursor:pointer;font-size:.55rem;z-index:2}
 
 </style>
 </head>
@@ -588,38 +585,27 @@
       <!-- GALLERY ASSIGN PANEL -->
       <div id="panel-galleryassign" class="panel">
         <div class="panel-title">ASSIGN GALLERY</div>
-        <div class="panel-desc">Select images from Cloudinary and assign them to the right gallery category. Then click Publish.</div>
-
-        <div style="display:grid;grid-template-columns:1fr 300px;gap:0;height:calc(100vh - 180px);border:1px solid var(--border);border-radius:6px;overflow:hidden">
-
-          <!-- LEFT: Image pool -->
+        <div class="panel-desc">Load your Cloudinary images, select them, then click + Add next to the right category.</div>
+        <div style="display:grid;grid-template-columns:1fr 280px;gap:0;height:calc(100vh - 200px);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:1rem">
+          <!-- LEFT: pool -->
           <div style="display:flex;flex-direction:column;border-right:1px solid var(--border)">
-            <!-- Controls -->
-            <div style="padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--surface2)">
-              <input id="ga-search" type="text" placeholder="🔍 Search images..." 
-                style="flex:1;min-width:140px;background:var(--bg);border:1px solid var(--border);color:#fff;padding:7px 12px;border-radius:4px;font-size:13px"
-                oninput="gaFilter(this.value)">
-              <button class="btn-primary" onclick="gaLoadImages()" id="ga-load-btn">☁️ Load Images</button>
+            <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--surface2)">
+              <input id="ga-search" type="text" placeholder="Search..." style="flex:1;min-width:120px;background:var(--bg);border:1px solid var(--border);color:#fff;padding:6px 10px;border-radius:4px;font-size:12px" oninput="gaFilter(this.value)">
+              <button class="btn-primary" id="ga-load-btn" onclick="gaLoadImages()">☁️ Load Images</button>
               <button class="btn-secondary" onclick="gaSelectAll()">☑ All</button>
               <button class="btn-secondary" onclick="gaDeselectAll()">☐ None</button>
-              <span id="ga-sel-count" style="font-size:.75rem;color:var(--muted);white-space:nowrap">0 selected</span>
+              <span id="ga-sel-count" style="font-size:.72rem;color:var(--muted)">0 selected</span>
             </div>
-            <!-- Grid -->
-            <div id="ga-grid" style="flex:1;overflow-y:auto;padding:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;align-content:start">
-              <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem">
-                Click <strong style="color:#fff">☁️ Load Images</strong> to browse your Cloudinary library
-              </div>
+            <div id="ga-grid" style="flex:1;overflow-y:auto;padding:10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px;align-content:start">
+              <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.82rem">Click <b style="color:#fff">☁️ Load Images</b> to start</div>
             </div>
           </div>
-
-          <!-- RIGHT: Category buckets -->
+          <!-- RIGHT: categories -->
           <div style="display:flex;flex-direction:column;background:var(--bg)">
-            <div style="padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">
-              Gallery Categories
-            </div>
+            <div style="padding:10px 14px;border-bottom:1px solid var(--border);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:var(--surface2)">Gallery Categories</div>
             <div id="ga-cats" style="flex:1;overflow-y:auto"></div>
-            <div style="padding:12px;border-top:1px solid var(--border)">
-              <button class="btn-primary" style="width:100%;justify-content:center" onclick="gaPublish()">🚀 Publish to Site</button>
+            <div style="padding:10px;border-top:1px solid var(--border)">
+              <button class="btn-primary" style="width:100%;justify-content:center;font-size:.78rem" onclick="gaPublish()">🚀 Publish to Site</button>
             </div>
           </div>
         </div>
@@ -934,7 +920,6 @@ function showPanel(id) {
   if (navEl) navEl.classList.add('active');
   document.getElementById('topbar-title').textContent = TITLES[id] || id.toUpperCase();
   if (id === 'beforeafter') { setTimeout(renderBAPhotos, 50); }
-  if (id === 'galleryassign') { gaRenderCats(); if(gaAllImgs.length===0) gaLoadImages(); }
   if (id === 'cloudbrowser') { /* ready on demand */ }
 }
 
@@ -1773,40 +1758,40 @@ function deselectAllCB() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Gallery Assign Panel ─────────────────────────────────────────────────────
-let gaAllImgs  = [];
-let gaFiltered = [];
-let gaSelected = new Set();
-let gaCursor   = null;
+var gaAllImgs  = [];
+var gaFiltered = [];
+var gaSelected = new Set();
+var gaCursor   = null;
 
-const GA_CATS = [
+var GA_CATS = [
   'Window Tinting','Liquid PPF','Ceramic Coating','Residential Tinting',
   'Commercial Tinting','Wall Graphics','Detailing & Paint Correction','Exotic & Classic Cars'
 ];
 
 function gaIsAssigned(url) {
-  return GA_CATS.some(cat => (state.gallery[cat]||[]).includes(url));
+  return GA_CATS.some(function(cat){ return (state.gallery[cat]||[]).includes(url); });
 }
 
 function gaRenderGrid() {
   var grid = document.getElementById('ga-grid');
   if (!grid) return;
   if (gaFiltered.length === 0) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No images found</div>';
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No images found. Click Load Images.</div>';
     return;
   }
   var html = '';
   gaFiltered.forEach(function(img) {
     var sel  = gaSelected.has(img.id);
     var done = gaIsAssigned(img.url);
-    html += '<div class="ga-img' + (sel ? ' selected' : '') + (done ? ' done' : '') + '" ' +
-      'data-id="' + img.id + '" onclick="gaToggle(this.dataset.id)" title="' + img.name + '">' +
+    var cls  = 'ga-img' + (sel?' selected':'') + (done?' done':'');
+    html += '<div class="' + cls + '" data-id="' + img.id + '" onclick="gaToggle(this)" title="' + img.name + '">' +
       '<img src="' + img.thumb + '" loading="lazy">' +
       '<div class="ga-name">' + img.name + '</div>' +
       '</div>';
   });
   grid.innerHTML = html;
-  var selCount = document.getElementById('ga-sel-count');
-  if (selCount) selCount.textContent = gaSelected.size + ' selected';
+  var sc = document.getElementById('ga-sel-count');
+  if (sc) sc.textContent = gaSelected.size + ' selected';
 }
 
 function gaRenderCats() {
@@ -1814,22 +1799,27 @@ function gaRenderCats() {
   if (!el) return;
   var html = '';
   GA_CATS.forEach(function(cat) {
-    var urls  = state.gallery[cat] || [];
+    var urls = state.gallery[cat] || [];
+    var safecat = cat.replace(/"/g,'&quot;');
     var thumbsHtml = '';
-    urls.slice(-4).forEach(function(url, idx) {
-      var t = url.replace('/upload/', '/upload/w_100,h_75,c_fill/');
+    var startIdx = Math.max(0, urls.length - 4);
+    for (var i = startIdx; i < urls.length; i++) {
+      var t = urls[i].replace('/upload/','/upload/w_100,h_75,c_fill/');
       thumbsHtml += '<div class="ga-thumb">' +
         '<img src="' + t + '" loading="lazy">' +
-        '<button class="ga-thumb-rm" data-cat="' + cat + '" data-idx="' + (urls.length - Math.min(4, urls.length) + idx) + '" onclick="gaRemoveByIdx(this)">x</button>' +
+        '<button class="ga-thumb-rm" data-cat="' + safecat + '" data-idx="' + i + '" onclick="gaRemoveByIdx(this)">x</button>' +
         '</div>';
-    });
+    }
+    var clrBtn = urls.length > 0
+      ? '<button class="ga-clr-btn" data-cat="' + safecat + '" onclick="gaClearCat(this.dataset.cat)">🗑</button>'
+      : '';
     html += '<div class="ga-bucket">' +
       '<div class="ga-bucket-head">' +
         '<span class="ga-bucket-name">' + cat + '</span>' +
         '<div class="ga-bucket-actions">' +
           '<span class="ga-bucket-count">' + urls.length + '</span>' +
-          '<button class="ga-add-btn" data-cat="' + cat + '" onclick="gaAddSelected(this.dataset.cat)">+ Add</button>' +
-          (urls.length > 0 ? '<button class="ga-clr-btn" data-cat="' + cat + '" onclick="gaClearCat(this.dataset.cat)">🗑</button>' : '') +
+          '<button class="ga-add-btn" data-cat="' + safecat + '" onclick="gaAddSelected(this.dataset.cat)">+ Add</button>' +
+          clrBtn +
         '</div>' +
       '</div>' +
       (urls.length > 0 ? '<div class="ga-thumbs">' + thumbsHtml + '</div>' : '') +
@@ -1838,49 +1828,16 @@ function gaRenderCats() {
   el.innerHTML = html;
 }
 
-async function gaLoadImages() {
-  const btn = document.getElementById('ga-load-btn');
-  if (btn) { btn.textContent = '⏳ Loading...'; btn.disabled = true; }
-  gaAllImgs = []; gaFiltered = []; gaSelected = new Set(); gaCursor = null;
-  try {
-    let url = '/api/cloudinary?action=resources&max_results=100';
-    const res  = await fetch(url);
-    const data = await res.json();
-    (data.resources || []).forEach(img => {
-      if (!img.public_id.startsWith('samples/') && !img.public_id.startsWith('cld-sample') && img.public_id !== 'main-sample') {
-        gaAllImgs.push({
-          id:    img.public_id,
-          url:   img.secure_url,
-          thumb: img.secure_url.replace('/upload/','/upload/w_200,h_150,c_fill/'),
-          name:  img.public_id.split('/').pop().replace(/_[a-z0-9]{4,8}$/i,'')
-        });
-      }
-    });
-    gaCursor  = data.next_cursor || null;
-    gaFiltered = [...gaAllImgs];
-    gaRenderGrid();
-    if (btn) { btn.textContent = `🔄 Refresh (${gaAllImgs.length})`; btn.disabled = false; }
-    if (gaCursor) toast('Showing first 100 images. Scroll for more.');
-  } catch(e) {
-    if (btn) { btn.textContent = '☁️ Load Images'; btn.disabled = false; }
-    toast('❌ Could not load images: ' + e.message);
-  }
-}
-
-function gaFilter(q) {
-  q = q.toLowerCase();
-  gaFiltered = q ? gaAllImgs.filter(i => i.name.toLowerCase().includes(q)) : [...gaAllImgs];
-  gaRenderGrid();
-}
-
-function gaToggle(id) {
-  if (gaSelected.has(id)) gaSelected.delete(id);
-  else gaSelected.add(id);
-  gaRenderGrid();
+function gaToggle(el) {
+  var id = el.dataset.id;
+  if (gaSelected.has(id)) { gaSelected.delete(id); el.classList.remove('selected'); }
+  else { gaSelected.add(id); el.classList.add('selected'); }
+  var sc = document.getElementById('ga-sel-count');
+  if (sc) sc.textContent = gaSelected.size + ' selected';
 }
 
 function gaSelectAll() {
-  gaFiltered.forEach(img => gaSelected.add(img.id));
+  gaFiltered.forEach(function(img){ gaSelected.add(img.id); });
   gaRenderGrid();
 }
 
@@ -1889,13 +1846,44 @@ function gaDeselectAll() {
   gaRenderGrid();
 }
 
+function gaFilter(q) {
+  q = q.toLowerCase();
+  gaFiltered = q ? gaAllImgs.filter(function(i){ return i.name.toLowerCase().includes(q); }) : gaAllImgs.slice();
+  gaRenderGrid();
+}
+
+async function gaLoadImages() {
+  var btn = document.getElementById('ga-load-btn');
+  if (btn) { btn.textContent = '⏳ Loading...'; btn.disabled = true; }
+  gaAllImgs = []; gaFiltered = []; gaSelected = new Set(); gaCursor = null;
+  try {
+    var res  = await fetch('/api/cloudinary?action=resources&max_results=100');
+    var data = await res.json();
+    (data.resources || []).forEach(function(img) {
+      if (img.public_id.startsWith('samples/') || img.public_id.startsWith('cld-sample')) return;
+      gaAllImgs.push({
+        id:    img.public_id,
+        url:   img.secure_url,
+        thumb: img.secure_url.replace('/upload/','/upload/w_200,h_150,c_fill/'),
+        name:  img.public_id.split('/').pop().replace(/_[a-z0-9]{4,8}$/i,'')
+      });
+    });
+    gaFiltered = gaAllImgs.slice();
+    gaRenderGrid();
+    if (btn) { btn.textContent = '🔄 Refresh (' + gaAllImgs.length + ')'; btn.disabled = false; }
+  } catch(e) {
+    if (btn) { btn.textContent = '☁️ Load Images'; btn.disabled = false; }
+    toast('Could not load images: ' + e.message);
+  }
+}
+
 function gaAddSelected(cat) {
   if (gaSelected.size === 0) { toast('Select images first!'); return; }
   if (!state.gallery[cat]) state.gallery[cat] = [];
-  const existing = new Set(state.gallery[cat]);
-  let added = 0;
-  gaSelected.forEach(id => {
-    const img = gaAllImgs.find(i => i.id === id);
+  var existing = new Set(state.gallery[cat]);
+  var added = 0;
+  gaSelected.forEach(function(id) {
+    var img = gaAllImgs.find(function(i){ return i.id === id; });
     if (img && !existing.has(img.url)) {
       state.gallery[cat].push(img.url);
       existing.add(img.url);
@@ -1907,7 +1895,7 @@ function gaAddSelected(cat) {
   gaRenderGrid();
   gaRenderCats();
   updateStats();
-  toast(`✅ ${added} image${added!==1?'s':''} added to ${cat}`);
+  toast('Added ' + added + ' image' + (added!==1?'s':'') + ' to ' + cat);
 }
 
 function gaRemoveByIdx(btn) {
@@ -1915,20 +1903,6 @@ function gaRemoveByIdx(btn) {
   var idx = parseInt(btn.dataset.idx);
   if (!state.gallery[cat]) return;
   state.gallery[cat].splice(idx, 1);
-  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
-  gaRenderGrid();
-  gaRenderCats();
-  updateStats();
-}
-
-function gaRemoveBtn(btn) {
-  const cat = btn.dataset.cat;
-  const url = decodeURIComponent(btn.dataset.url);
-  gaRemove(cat, url);
-}
-
-function gaRemove(cat, url) {
-  state.gallery[cat] = (state.gallery[cat]||[]).filter(u => u !== url);
   localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
   gaRenderGrid();
   gaRenderCats();
@@ -1947,8 +1921,8 @@ function gaClearCat(cat) {
 
 async function gaPublish() {
   localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
-  const ok = await autoPublish('CMS: Gallery assignment updated');
-  toast(ok ? '✅ Gallery published to live site!' : '⚠️ Saved locally — configure Publish Key to go live.');
+  var ok = await autoPublish('CMS: Gallery assignment updated');
+  toast(ok ? 'Gallery published to live site!' : 'Saved locally — check Publish Key in Settings.');
 }
 // ── End Gallery Assign ───────────────────────────────────────────────────────
 
