@@ -774,32 +774,7 @@ section[id]{scroll-margin-top:170px}
     <div class="gal-carousel reveal" id="galCarousel">
       <button class="gal-arrow gal-prev" aria-label="Previous photos" type="button">&#8249;</button>
       <div class="gal-viewport">
-        <div class="gal-track" id="galGrid">
-          <div class="gcard reveal" data-cat="tint">
-            <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241261-X5FG76NAGW6RV06NR5Q7/6116e367863aded7aa6bd952fc756aef85e4d0f7-6992f3369f4e8.webp" alt="Window tinting work" loading="lazy">
-            <div class="meta"><div class="c">Window Tinting</div><div class="t">Carbon &amp; Ceramic Film</div></div>
-          </div>
-          <div class="gcard reveal" data-cat="ceramic" data-d="1">
-            <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="Ceramic coating finish" loading="lazy">
-            <div class="meta"><div class="c">Ceramic Coating</div><div class="t">Showroom Gloss</div></div>
-          </div>
-          <div class="gcard reveal" data-cat="ppf" data-d="2">
-            <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242661-TYS5M4RFTEVOX127Y374/1f0aca2e4ca0494c03017d836c38a1e418b3c16b-6992f33437b11.webp" alt="Liquid PPF application" loading="lazy">
-            <div class="meta"><div class="c">Liquid PPF</div><div class="t">Seamless Coverage</div></div>
-          </div>
-          <div class="gcard reveal" data-cat="ceramic">
-            <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp" alt="Ceramic coating detail" loading="lazy">
-            <div class="meta"><div class="c">Ceramic Coating</div><div class="t">Hydrophobic Finish</div></div>
-          </div>
-          <div class="gcard reveal" data-cat="res" data-d="1">
-            <img src="https://masters-window-tinting.vercel.app/residential-hero.jpg" alt="Residential window tinting" loading="lazy">
-            <div class="meta"><div class="c">Residential</div><div class="t">Home Solar Film</div></div>
-          </div>
-          <div class="gcard reveal" data-cat="com" data-d="2">
-            <img src="https://masters-window-tinting.vercel.app/commercial-hero.jpg" alt="Commercial window tinting" loading="lazy">
-            <div class="meta"><div class="c">Commercial</div><div class="t">Storefront &amp; Office</div></div>
-          </div>
-        </div>
+        <div class="gal-track" id="galGrid"></div>
       </div>
       <button class="gal-arrow gal-next" aria-label="Next photos" type="button">&#8250;</button>
       <div class="gal-dots" id="galDots"></div>
@@ -926,7 +901,7 @@ document.querySelectorAll('img').forEach(img=>{
     'Wall Graphics': 'graphics','Detailing & Paint Correction': 'detail','Detailing': 'detail','Exotic & Classic Cars': 'exotic'
   };
   const PER_CAT = 4;
-  let allCards = [], visibleCards = [], perView = 3, pageIndex = 0, autoTimer = null, paused = false;
+  let allCards = [], visibleCards = [], perView = 3, pageIndex = 0, autoTimer = null, paused = false, currentFilter = 'tint';
 
   function computePerView(){ const w = window.innerWidth; if(w<=680) return 1; if(w<=1024) return 2; return 3; }
   function totalPages(){ return Math.max(1, Math.ceil(visibleCards.length / perView)); }
@@ -984,29 +959,58 @@ document.querySelectorAll('img').forEach(img=>{
     pageIndex=0; buildDots(); render(); startAuto();
   }
 
-  function loadCmsAndInit(){
-    const existingSrcs=new Set(Array.from(track.querySelectorAll('img')).map(i=>i.src));
-    fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now())
-      .then(r=>r.ok?r.json():Promise.reject('fetch failed'))
-      .then(data=>{
-        if(!data||!data.gallery) return;
-        let added=0;
-        Object.entries(data.gallery).forEach(([catName,items])=>{
-          if(!Array.isArray(items)||items.length===0) return;
-          const shortCat=CAT_MAP[catName];
-          if(!shortCat) return;
-          items.slice(-PER_CAT).forEach(item=>{
-            if(typeof item!=='string'||!item) return;
-            if(existingSrcs.has(item)) return;
-            const card=document.createElement('div');
-            card.className='gcard'; card.dataset.cat=shortCat;
-            card.innerHTML='<img src="'+item.replace(/"/g,'&quot;')+'" alt="'+catName+' work" loading="lazy"><div class="meta"><div class="c">'+catName+'</div></div>';
-            track.appendChild(card); existingSrcs.add(item); added++;
+  function loadCmsAndInit() {
+    fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now())
+      .then(r => r.ok ? r.json() : Promise.reject('fetch failed'))
+      .then(data => {
+        // Clear any existing cards
+        track.innerHTML = '';
+
+        if (!data || !data.gallery) { initCarousel(); return; }
+
+        // Build cards from CMS — only images that exist in the gallery
+        let totalAdded = 0;
+        Object.entries(data.gallery).forEach(([catName, items]) => {
+          if (!Array.isArray(items) || items.length === 0) return;
+          const shortCat = CAT_MAP[catName];
+          if (!shortCat) return;
+          items.forEach(url => {
+            if (typeof url !== 'string' || !url) return;
+            const card = document.createElement('div');
+            card.className = 'gcard';
+            card.dataset.cat = shortCat;
+            card.innerHTML =
+              '<img src="' + url + '" alt="' + catName + '" loading="lazy">' +
+              '<div class="meta"><div class="c">' + catName + '</div></div>';
+            track.appendChild(card);
+            totalAdded++;
           });
         });
+
+        // Find first category that has images and activate it
+        if (totalAdded > 0) {
+          const firstCatWithImages = Object.entries(data.gallery)
+            .find(([cat, items]) => Array.isArray(items) && items.length > 0);
+          
+          if (firstCatWithImages) {
+            const shortCat = CAT_MAP[firstCatWithImages[0]];
+            if (shortCat) {
+              // Update filter buttons
+              filters.forEach(f => f.classList.remove('active'));
+              const matchBtn = Array.from(filters).find(f => f.dataset.f === shortCat);
+              if (matchBtn) matchBtn.classList.add('active');
+              currentFilter = shortCat;
+            }
+          }
+        }
+
+        initCarousel();
       })
-      .catch(err=>console.warn('CMS gallery load skipped:',err))
-      .finally(()=>initCarousel());
+      .catch(err => {
+        console.warn('CMS gallery load skipped:', err);
+        track.innerHTML = '';
+        initCarousel();
+      });
   }
 
   loadCmsAndInit();
