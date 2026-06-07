@@ -1671,178 +1671,127 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 // gallery carousel + filter with CMS auto-load
 (function(){
-  const track = document.getElementById('galGrid');
-  const carousel = document.getElementById('galCarousel');
-  const prevBtn = carousel.querySelector('.gal-prev');
-  const nextBtn = carousel.querySelector('.gal-next');
-  const dotsEl = document.getElementById('galDots');
-  const filters = document.querySelectorAll('.filt');
+  var track    = document.getElementById('galGrid');
+  var carousel = document.getElementById('galCarousel');
+  if(!track || !carousel) return;
+  var prevBtn  = carousel.querySelector('.gal-prev');
+  var nextBtn  = carousel.querySelector('.gal-next');
+  var dotsEl   = document.getElementById('galDots');
+  var filters  = document.querySelectorAll('.filt');
 
-  // CMS category → homepage filter short-code mapping
-  const CAT_MAP = {
-    'Window Tinting': 'tint',
-    'Ceramic Coating': 'ceramic',
-    'Liquid PPF': 'ppf',
-    'Residential Tinting': 'res',
-    'Commercial Tinting': 'com',
-    'Wall Graphics': 'graphics',
-    'Detailing & Paint Correction': 'detail',
-    'Detailing': 'detail'
+  var CAT_MAP = {
+    'Window Tinting':'tint','Ceramic Coating':'ceramic','Liquid PPF':'ppf',
+    'Residential Tinting':'res','Commercial Tinting':'com','Wall Graphics':'graphics',
+    'Detailing & Paint Correction':'detail','Detailing':'detail','Exotic & Classic Cars':'exotic'
   };
-  const PER_CAT = 4;
+  var CAT_LABEL = {
+    'tint':'Window Tinting','ceramic':'Ceramic Coating','ppf':'Liquid PPF',
+    'res':'Residential Tinting','com':'Commercial Tinting','graphics':'Wall Graphics',
+    'detail':'Detailing','exotic':'Exotic & Classic Cars'
+  };
 
-  let allCards = [];
-  let visibleCards = [];
-  let perView = 3;
-  let pageIndex = 0;
-  let autoTimer = null;
-  let paused = false;
+  var galleryData = {};
+  var currentFilter = 'tint';
+  var perView = 3, pageIndex = 0, autoTimer = null, paused = false;
 
-  function computePerView(){
-    const w = window.innerWidth;
-    if (w <= 680) return 1;
-    if (w <= 1024) return 2;
-    return 3;
+  function computePerView(){ var w=window.innerWidth; return w<=680?1:w<=1024?2:3; }
+  function totalPages(){ return Math.max(1, Math.ceil(((galleryData[currentFilter]||[]).length)/perView)); }
+
+  function render(){
+    var cards = galleryData[currentFilter] || [];
+    track.innerHTML = '';
+    if(cards.length === 0){
+      track.innerHTML = '<div style="color:var(--muted);padding:60px 20px;font-size:14px;text-align:center;width:100%">No images added yet for this category.</div>';
+      prevBtn.disabled = true; nextBtn.disabled = true;
+      if(dotsEl) dotsEl.innerHTML = '';
+      return;
+    }
+    var cardW = 'calc((100% - ' + ((perView-1)*16) + 'px) / ' + perView + ')';
+    cards.forEach(function(url){
+      var d = document.createElement('div');
+      d.className = 'gcard';
+      d.style.cssText = 'flex:0 0 ' + cardW + ';aspect-ratio:4/3;border-radius:4px;overflow:hidden;border:1px solid var(--line);position:relative';
+      d.innerHTML = '<img src="' + url + '" loading="lazy" style="width:100%;height:100%;object-fit:cover"><div class="meta" style="position:absolute;left:20px;bottom:18px;z-index:2"><div class="c" style="font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-bright)">' + (CAT_LABEL[currentFilter]||currentFilter) + '</div></div>';
+      track.appendChild(d);
+    });
+    track.style.transform = 'translateX(' + (-(pageIndex * 100)) + '%)';
+    prevBtn.disabled = (pageIndex === 0);
+    nextBtn.disabled = (pageIndex >= totalPages()-1);
+    buildDots();
   }
-  function totalPages(){ return Math.max(1, Math.ceil(visibleCards.length / perView)); }
+
   function buildDots(){
+    if(!dotsEl) return;
+    var n = totalPages();
+    if(n<=1){ dotsEl.style.display='none'; dotsEl.innerHTML=''; return; }
+    dotsEl.style.display='flex';
     dotsEl.innerHTML = '';
-    const n = totalPages();
-    if (n <= 1){ dotsEl.style.display = 'none'; return; }
-    dotsEl.style.display = '';
-    for (let i = 0; i < n; i++){
-      const b = document.createElement('button');
-      b.setAttribute('aria-label', 'Go to page ' + (i+1));
-      if (i === pageIndex) b.classList.add('active');
-      b.addEventListener('click', () => { pageIndex = i; render(); restartAuto(); });
+    for(var i=0;i<n;i++){
+      var b = document.createElement('button');
+      if(i===pageIndex) b.classList.add('active');
+      (function(idx){ b.addEventListener('click',function(){ pageIndex=idx; render(); restartAuto(); }); })(i);
       dotsEl.appendChild(b);
     }
   }
-  function render(){
-    allCards.forEach(c => c.style.display = 'none');
-    visibleCards.forEach(c => c.style.display = '');
-    const offsetPct = -(pageIndex * 100);
-    track.style.transform = 'translateX(' + offsetPct + '%)';
-    Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === pageIndex));
-    prevBtn.disabled = (totalPages() <= 1) || (pageIndex === 0);
-    nextBtn.disabled = (totalPages() <= 1) || (pageIndex >= totalPages() - 1);
-  }
-  function nextPage(){
-    if (totalPages() <= 1) return;
-    pageIndex = (pageIndex >= totalPages() - 1) ? 0 : pageIndex + 1;
-    render();
-  }
-  function prevPage(){
-    if (totalPages() <= 1) return;
-    pageIndex = (pageIndex <= 0) ? totalPages() - 1 : pageIndex - 1;
-    render();
-  }
-  function applyFilter(cat){
-    visibleCards = cat === 'all' ? allCards.slice() : allCards.filter(c => c.dataset.cat === cat);
-    // Reorder DOM so visible cards come first (CSS flex order)
-    visibleCards.forEach(c => track.appendChild(c));
-    allCards.filter(c => !visibleCards.includes(c)).forEach(c => track.appendChild(c));
-    pageIndex = 0;
-    buildDots();
-    render();
-  }
-  function startAuto(){
-    stopAuto();
-    autoTimer = setInterval(() => { if (!paused && totalPages() > 1) nextPage(); }, 5000);
-  }
-  function stopAuto(){ if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+
+  function nextPage(){ pageIndex = (pageIndex>=totalPages()-1)?0:pageIndex+1; render(); }
+  function prevPage(){ pageIndex = (pageIndex<=0)?totalPages()-1:pageIndex-1; render(); }
+  function startAuto(){ stopAuto(); autoTimer=setInterval(function(){ if(!paused) nextPage(); },5000); }
+  function stopAuto(){ if(autoTimer){ clearInterval(autoTimer); autoTimer=null; } }
   function restartAuto(){ stopAuto(); startAuto(); }
 
-  // Wire up controls
-  prevBtn.addEventListener('click', () => { prevPage(); restartAuto(); });
-  nextBtn.addEventListener('click', () => { nextPage(); restartAuto(); });
-  filters.forEach(f => f.addEventListener('click', () => {
-    filters.forEach(x => x.classList.remove('active'));
-    f.classList.add('active');
-    applyFilter(f.dataset.f);
-    restartAuto();
-  }));
-  carousel.addEventListener('mouseenter', () => { paused = true; });
-  carousel.addEventListener('mouseleave', () => { paused = false; });
+  prevBtn.addEventListener('click',function(){ prevPage(); restartAuto(); });
+  nextBtn.addEventListener('click',function(){ nextPage(); restartAuto(); });
+  carousel.addEventListener('mouseenter',function(){ paused=true; });
+  carousel.addEventListener('mouseleave',function(){ paused=false; });
 
-  // Responsive
-  let rzTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(rzTimer);
-    rzTimer = setTimeout(() => {
-      const newPerView = computePerView();
-      if (newPerView !== perView){
-        perView = newPerView;
-        pageIndex = 0;
-        buildDots();
-        render();
-      }
-    }, 150);
+  filters.forEach(function(f){
+    f.addEventListener('click',function(){
+      filters.forEach(function(x){ x.classList.remove('active'); });
+      f.classList.add('active');
+      currentFilter = f.dataset.f;
+      pageIndex = 0;
+      render();
+      restartAuto();
+    });
   });
 
-  // Initialize carousel from whatever cards exist NOW
-  function initCarousel(){
-    allCards = Array.from(track.querySelectorAll('.gcard'));
-    visibleCards = allCards.slice();
-    perView = computePerView();
-    pageIndex = 0;
-    buildDots();
-    render();
-    startAuto();
-  }
+  window.addEventListener('resize',function(){
+    var nv=computePerView();
+    if(nv!==perView){ perView=nv; pageIndex=0; render(); }
+  });
 
-  // Fetch CMS data and inject cards BEFORE initializing carousel
-  function loadCmsAndInit() {
-    fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now())
-      .then(r => r.ok ? r.json() : Promise.reject('fetch failed'))
-      .then(data => {
-        // Clear any existing cards
-        track.innerHTML = '';
-
-        if (!data || !data.gallery) { initCarousel(); return; }
-
-        // Build cards from CMS — only images that exist in the gallery
-        let totalAdded = 0;
-        Object.entries(data.gallery).forEach(([catName, items]) => {
-          if (!Array.isArray(items) || items.length === 0) return;
-          const shortCat = CAT_MAP[catName];
-          if (!shortCat) return;
-          items.forEach(url => {
-            if (typeof url !== 'string' || !url) return;
-            const card = document.createElement('div');
-            card.className = 'gcard';
-            card.dataset.cat = shortCat;
-            card.innerHTML =
-              '<img src="' + url + '" alt="' + catName + '" loading="lazy">' +
-              '<div class="meta"><div class="c">' + catName + '</div></div>';
-            track.appendChild(card);
-            totalAdded++;
+  function loadCmsAndInit(){
+    fetch('https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t='+Date.now())
+      .then(function(r){ return r.ok?r.json():Promise.reject(); })
+      .then(function(data){
+        galleryData = {};
+        if(data && data.gallery){
+          Object.entries(data.gallery).forEach(function(entry){
+            var sc = CAT_MAP[entry[0]];
+            if(!sc || !Array.isArray(entry[1]) || entry[1].length===0) return;
+            if(!galleryData[sc]) galleryData[sc] = [];
+            entry[1].forEach(function(url){
+              if(url && !galleryData[sc].includes(url)) galleryData[sc].push(url);
+            });
           });
-        });
-
-        // Find first category that has images and activate it
-        if (totalAdded > 0) {
-          const firstCatWithImages = Object.entries(data.gallery)
-            .find(([cat, items]) => Array.isArray(items) && items.length > 0);
-          
-          if (firstCatWithImages) {
-            const shortCat = CAT_MAP[firstCatWithImages[0]];
-            if (shortCat) {
-              // Update filter buttons
-              filters.forEach(f => f.classList.remove('active'));
-              const matchBtn = Array.from(filters).find(f => f.dataset.f === shortCat);
-              if (matchBtn) matchBtn.classList.add('active');
-              currentFilter = shortCat;
-            }
-          }
         }
-
-        initCarousel();
+        // Activate first filter that has images
+        var first = null;
+        filters.forEach(function(f){ if(!first && (galleryData[f.dataset.f]||[]).length>0) first=f.dataset.f; });
+        if(first){
+          currentFilter = first;
+          filters.forEach(function(f){ f.classList.toggle('active', f.dataset.f===first); });
+        }
+        perView = computePerView();
+        pageIndex = 0;
+        render();
+        startAuto();
       })
-      .catch(err => {
-        console.warn('CMS gallery load skipped:', err);
-        track.innerHTML = '';
-        initCarousel();
+      .catch(function(){
+        perView = computePerView();
+        render();
+        startAuto();
       });
   }
 
