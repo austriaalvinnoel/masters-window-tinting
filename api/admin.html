@@ -1788,48 +1788,52 @@ function gaIsAssigned(url) {
 }
 
 function gaRenderGrid() {
-  const grid = document.getElementById('ga-grid');
+  var grid = document.getElementById('ga-grid');
   if (!grid) return;
   if (gaFiltered.length === 0) {
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No images found</div>';
     return;
   }
-  grid.innerHTML = gaFiltered.map(img => {
-    const sel  = gaSelected.has(img.id);
-    const done = gaIsAssigned(img.url);
-    return `<div class="ga-img${sel?' selected':''}${done?' done':''}" onclick="gaToggle('${img.id}')" title="${img.name}">
-      <img src="${img.thumb}" loading="lazy">
-      <div class="ga-name">${img.name}</div>
-    </div>`;
-  }).join('');
-  const selCount = document.getElementById('ga-sel-count');
+  var html = '';
+  gaFiltered.forEach(function(img) {
+    var sel  = gaSelected.has(img.id);
+    var done = gaIsAssigned(img.url);
+    html += '<div class="ga-img' + (sel ? ' selected' : '') + (done ? ' done' : '') + '" ' +
+      'data-id="' + img.id + '" onclick="gaToggle(this.dataset.id)" title="' + img.name + '">' +
+      '<img src="' + img.thumb + '" loading="lazy">' +
+      '<div class="ga-name">' + img.name + '</div>' +
+      '</div>';
+  });
+  grid.innerHTML = html;
+  var selCount = document.getElementById('ga-sel-count');
   if (selCount) selCount.textContent = gaSelected.size + ' selected';
 }
 
 function gaRenderCats() {
-  const el = document.getElementById('ga-cats');
+  var el = document.getElementById('ga-cats');
   if (!el) return;
-  let html = '';
-  GA_CATS.forEach(cat => {
-    const urls  = state.gallery[cat] || [];
-    const thumbs = urls.slice(-4).map(url => {
-      const t = url.replace('/upload/','/upload/w_100,h_75,c_fill/');
-      return `<div class="ga-thumb">
-        <img src="${t}" loading="lazy">
-        <button class="ga-thumb-rm" onclick="gaRemove('${cat}','${url.replace(/'/g,'\\'')}')">×</button>
-      </div>`;
-    }).join('');
-    html += `<div class="ga-bucket">
-      <div class="ga-bucket-head">
-        <span class="ga-bucket-name">${cat}</span>
-        <div class="ga-bucket-actions">
-          <span class="ga-bucket-count">${urls.length}</span>
-          <button class="ga-add-btn" data-cat="${cat}" onclick="event.stopPropagation();gaAddSelected(this.dataset.cat)">+ Add</button>
-          ${urls.length > 0 ? `<button class="ga-clr-btn" data-cat="${cat}" onclick="event.stopPropagation();gaClearCat(this.dataset.cat)">🗑</button>` : ''}
-        </div>
-      </div>
-      ${urls.length > 0 ? `<div class="ga-thumbs">${thumbs}</div>` : ''}
-    </div>`;
+  var html = '';
+  GA_CATS.forEach(function(cat) {
+    var urls  = state.gallery[cat] || [];
+    var thumbsHtml = '';
+    urls.slice(-4).forEach(function(url, idx) {
+      var t = url.replace('/upload/', '/upload/w_100,h_75,c_fill/');
+      thumbsHtml += '<div class="ga-thumb">' +
+        '<img src="' + t + '" loading="lazy">' +
+        '<button class="ga-thumb-rm" data-cat="' + cat + '" data-idx="' + (urls.length - Math.min(4, urls.length) + idx) + '" onclick="gaRemoveByIdx(this)">x</button>' +
+        '</div>';
+    });
+    html += '<div class="ga-bucket">' +
+      '<div class="ga-bucket-head">' +
+        '<span class="ga-bucket-name">' + cat + '</span>' +
+        '<div class="ga-bucket-actions">' +
+          '<span class="ga-bucket-count">' + urls.length + '</span>' +
+          '<button class="ga-add-btn" data-cat="' + cat + '" onclick="gaAddSelected(this.dataset.cat)">+ Add</button>' +
+          (urls.length > 0 ? '<button class="ga-clr-btn" data-cat="' + cat + '" onclick="gaClearCat(this.dataset.cat)">🗑</button>' : '') +
+        '</div>' +
+      '</div>' +
+      (urls.length > 0 ? '<div class="ga-thumbs">' + thumbsHtml + '</div>' : '') +
+    '</div>';
   });
   el.innerHTML = html;
 }
@@ -1904,6 +1908,17 @@ function gaAddSelected(cat) {
   gaRenderCats();
   updateStats();
   toast(`✅ ${added} image${added!==1?'s':''} added to ${cat}`);
+}
+
+function gaRemoveByIdx(btn) {
+  var cat = btn.dataset.cat;
+  var idx = parseInt(btn.dataset.idx);
+  if (!state.gallery[cat]) return;
+  state.gallery[cat].splice(idx, 1);
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  gaRenderGrid();
+  gaRenderCats();
+  updateStats();
 }
 
 function gaRemoveBtn(btn) {
