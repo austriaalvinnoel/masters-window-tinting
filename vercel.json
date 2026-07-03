@@ -1,0 +1,26 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "masterswindowtinting.com"
+        }
+      ],
+      "destination": "/about.html",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.masterswindowtinting.com"
+        }
+      ],
+      "destination": "/about.html",
+      "permanent": false
+    }
+  ]
+}
