@@ -643,7 +643,7 @@
       <!-- SETTINGS -->
       <div id="panel-settings" class="panel">
         <div class="panel-title">SETTINGS</div>
-        <div class="panel-desc">Change password and configure GitHub publishing.</div>
+        <div class="panel-desc">Password is managed via Vercel Environment Variables (CMS_ADMIN_USER / CMS_ADMIN_PASS). Configure GitHub publishing below.</div>
         <div class="settings-section">
           <div class="settings-heading">Change Password</div>
           <div class="card">
@@ -796,31 +796,39 @@ async function autoPublish(commitMsg) {
 }
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
-function getCreds() {
-  return {
-    user: localStorage.getItem('cms_user') || 'masters',
-    pass: localStorage.getItem('cms_pass') || 'Detail2026!'
-  };
-}
+// getCreds() removed — auth now validated server-side via /api/login
 
 document.getElementById('login-btn').addEventListener('click', doLogin);
 document.getElementById('lp').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 document.getElementById('lu').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('lp').focus(); });
 
-function doLogin() {
+async function doLogin() {
   const u = document.getElementById('lu').value.trim();
   const p = document.getElementById('lp').value;
-  const c = getCreds();
   const err = document.getElementById('login-error');
-  if (u === c.user && p === c.pass) {
-    err.style.display = 'none';
-    sessionStorage.setItem('cms_ok','1');
-    document.getElementById('login-screen').style.display = 'none';
-    startApp();
-  } else {
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  try {
+    const r = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: u, pass: p })
+    });
+    if (r.ok) {
+      err.style.display = 'none';
+      sessionStorage.setItem('cms_ok','1');
+      document.getElementById('login-screen').style.display = 'none';
+      startApp();
+    } else {
+      err.style.display = 'block';
+      document.getElementById('lp').value = '';
+      document.getElementById('lp').focus();
+    }
+  } catch(e) {
+    err.textContent = 'Connection failed — try again.';
     err.style.display = 'block';
-    document.getElementById('lp').value = '';
-    document.getElementById('lp').focus();
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign In \u2192';
   }
 }
 
@@ -1278,17 +1286,7 @@ function bindFormEvents() {
   });
 
   document.getElementById('change-pass-btn').addEventListener('click',()=>{
-    const cur=document.getElementById('cp-cur').value;
-    const nw=document.getElementById('cp-new').value;
-    const cf=document.getElementById('cp-conf').value;
-    if(cur!==getCreds().pass){ toast('Current password incorrect','error'); return; }
-    if(nw.length<8){ toast('New password must be 8+ characters','error'); return; }
-    if(nw!==cf){ toast('Passwords do not match','error'); return; }
-    localStorage.setItem('cms_pass',nw);
-    document.getElementById('cp-cur').value='';
-    document.getElementById('cp-new').value='';
-    document.getElementById('cp-conf').value='';
-    toast('Password updated!','success');
+    toast('Password is now managed in Vercel \u2192 Settings \u2192 Environment Variables (CMS_ADMIN_PASS). This form is disabled for security.','error');
   });
 
   document.getElementById('save-gh-btn').addEventListener('click',()=>{
