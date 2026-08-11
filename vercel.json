@@ -7,7 +7,7 @@
         {
           "type": "query",
           "key": "idpage",
-          "value": "(?i).*Ceramic.*"
+          "value": "Ceramic_Pro_Long_Island_Car_and_Boat_Detailing"
         }
       ],
       "destination": "/ceramic-coating",
@@ -19,7 +19,7 @@
         {
           "type": "query",
           "key": "idpage",
-          "value": "(?i).*(Residential|Specialty_Window_Films|House_Window).*"
+          "value": "Specialty_Window_Films"
         }
       ],
       "destination": "/residential",
@@ -31,22 +31,10 @@
         {
           "type": "query",
           "key": "idpage",
-          "value": "(?i).*(WINDOW_TINTING|Window_Tinting).*"
+          "value": "WINDOW_TINTING_AND_CERAMIC_PRO_SERVICES"
         }
       ],
       "destination": "/window-tinting",
-      "permanent": true
-    },
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "(?i).*(Detailing|Car_Detailing).*"
-        }
-      ],
-      "destination": "/detailing",
       "permanent": true
     }
   ],
