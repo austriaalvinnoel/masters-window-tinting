@@ -50,6 +50,19 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "part",
+          "value": "fineart"
+        }
+      ],
+      "destination": "/api/gone"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
