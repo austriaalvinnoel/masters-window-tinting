@@ -50,6 +50,19 @@
       "permanent": true
     }
   ],
+  "routes": [
+    {
+      "src": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "part",
+          "value": "fineart"
+        }
+      ],
+      "status": 410
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
