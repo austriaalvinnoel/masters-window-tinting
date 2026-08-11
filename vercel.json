@@ -1,5 +1,55 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "(?i).*Ceramic.*"
+        }
+      ],
+      "destination": "/ceramic-coating",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "(?i).*(Residential|Specialty_Window_Films|House_Window).*"
+        }
+      ],
+      "destination": "/residential",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "(?i).*(WINDOW_TINTING|Window_Tinting).*"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "(?i).*(Detailing|Car_Detailing).*"
+        }
+      ],
+      "destination": "/detailing",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
