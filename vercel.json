@@ -1,5 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "redirects": [
     {
@@ -12,8 +11,7 @@
         }
       ],
       "destination": "/ceramic-coating",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     },
     {
       "source": "/",
@@ -25,8 +23,7 @@
         }
       ],
       "destination": "/residential",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     },
     {
       "source": "/",
@@ -38,8 +35,7 @@
         }
       ],
       "destination": "/residential",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     },
     {
       "source": "/",
@@ -51,8 +47,7 @@
         }
       ],
       "destination": "/window-tinting",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     }
   ],
   "headers": [
