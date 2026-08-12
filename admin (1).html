@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- v20260603104220 -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masters CMS · Admin Panel</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#000000; --surface:#0e0e0e; --surface2:#161616; --surface3:#222222;
+  --gold:#ffffff; --gold-light:#ffffff; --gold-dim:rgba(255,255,255,0.08);
+  --white:#ffffff; --muted:#a9a9a9; --border:rgba(255,255,255,0.12);
+  --red:#e53935; --green:#43a047;
+  --font:"Poppins",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+/* LOGIN */
+#login-screen {
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:var(--black);z-index:1000;overflow-y:auto;font-family:var(--font);
+  background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.login-card {
+  background:var(--surface);border:1px solid var(--border);padding:3rem 2.5rem;
+  width:100%;max-width:400px;margin:2rem;border-radius:6px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.8);
+}
+.login-logo{font-family:var(--font);font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;color:var(--white);margin-bottom:0.3rem;}
+.login-tagline{font-size:0.58rem;font-weight:700;letter-spacing:0.22em;color:var(--muted);text-transform:uppercase;margin-bottom:2rem;}
+.login-heading{font-family:var(--font);font-weight:800;font-size:2.2rem;color:var(--white);letter-spacing:-0.02em;margin-bottom:0.4rem;}
+.login-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.8rem;font-weight:400;}
+.field{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.field label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.field input{
+  background:var(--black);border:1px solid var(--border);color:var(--white);
+  padding:0.9rem 1rem;font-size:0.9rem;font-family:var(--font);border-radius:3px;
+  outline:none;transition:border-color 0.2s;width:100%;
+}
+.field input:focus{border-color:var(--white);}
+.field input::placeholder{color:rgba(169,169,169,0.4);}
+#login-error{
+  background:rgba(229,57,53,0.1);border:1px solid rgba(229,57,53,0.3);
+  color:#ef9a9a;padding:0.7rem 1rem;font-size:0.82rem;border-radius:3px;
+  margin-bottom:1rem;display:none;font-family:var(--font);
+}
+.btn-login{
+  width:100%;background:var(--white);color:#000;border:none;padding:1rem;border-radius:3px;
+  font-size:0.88rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  cursor:pointer;font-family:var(--font);margin-top:0.5rem;transition:all 0.2s;
+}
+.btn-login:hover{background:#d6d6d6;}
+
+/* APP SHELL */
+#app{display:none;height:100vh;width:100%;flex-direction:row;font-family:var(--font);background:var(--black);color:var(--white);}
+
+.sidebar{
+  width:240px;flex-shrink:0;background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;height:100vh;
+}
+.sidebar-brand{padding:1.4rem 1.2rem;border-bottom:1px solid var(--border);}
+.sidebar-name{font-family:var(--font);font-weight:800;font-size:0.98rem;letter-spacing:-0.01em;color:var(--white);line-height:1.3;}
+.sidebar-sub{font-size:0.52rem;font-weight:700;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:0.25rem;}
+
+.nav-section{padding:0.8rem 0;}
+.nav-label{font-size:0.56rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);padding:0 1.2rem;margin-bottom:0.4rem;}
+.nav-item{
+  display:flex;align-items:center;gap:0.7rem;padding:0.65rem 1.2rem;
+  cursor:pointer;font-size:0.82rem;font-weight:500;color:var(--muted);
+  transition:all 0.18s;border-left:2px solid transparent;
+}
+.nav-item:hover{color:var(--white);background:var(--surface2);}
+.nav-item.active{color:var(--white);background:var(--gold-dim);border-left-color:var(--white);}
+.nav-icon{font-size:1rem;width:20px;text-align:center;}
+
+.sidebar-footer{margin-top:auto;padding:1.2rem;border-top:1px solid var(--border);}
+.user-row{display:flex;align-items:center;gap:0.7rem;margin-bottom:0.8rem;}
+.user-av{width:32px;height:32px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font);font-weight:800;font-size:0.85rem;color:#000;flex-shrink:0;}
+.user-name{font-size:0.8rem;font-weight:600;color:var(--white);}
+.user-role{font-size:0.65rem;color:var(--muted);}
+.btn-signout{width:100%;background:transparent;border:1px solid var(--border);color:var(--muted);padding:0.55rem;font-size:0.72rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;font-family:var(--font);border-radius:3px;transition:all 0.2s;}
+.btn-signout:hover{border-color:var(--red);color:var(--red);}
+
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100vh;}
+.topbar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 2rem;height:60px;display:flex;align-items:center;
+  justify-content:space-between;flex-shrink:0;
+}
+.topbar-title{font-family:var(--font);font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;color:var(--white);}
+.topbar-right{display:flex;align-items:center;gap:0.8rem;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.status-txt{font-size:0.72rem;color:var(--muted);}
+.btn-publish{
+  background:var(--white);color:#000;border:none;padding:0.55rem 1.4rem;border-radius:3px;
+  font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  cursor:pointer;font-family:var(--font);transition:all 0.2s;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.btn-publish:hover{background:#d6d6d6;}
+
+.content{flex:1;overflow-y:auto;padding:2rem;}
+.panel{display:none;}
+.panel.active{display:block;}
+.panel-title{font-family:var(--font);font-weight:800;font-size:2rem;letter-spacing:-0.02em;color:var(--white);margin-bottom:0.3rem;}
+.panel-desc{font-size:0.88rem;color:var(--muted);font-weight:400;margin-bottom:2rem;}
+
+/* CARDS & FORMS */
+.card{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:1.2rem;border-radius:6px;}
+.card-label{font-size:0.6rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+.field2{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1rem;}
+.field2 label{font-size:0.62rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.field2 input,.field2 textarea,.field2 select{
+  background:var(--black);border:1px solid var(--border);color:var(--white);
+  padding:0.75rem 0.9rem;font-size:0.88rem;font-family:var(--font);border-radius:3px;
+  outline:none;transition:border-color 0.2s;width:100%;
+}
+.field2 input:focus,.field2 textarea:focus,.field2 select:focus{border-color:var(--white);}
+.field2 input::placeholder,.field2 textarea::placeholder{color:rgba(169,169,169,0.4);}
+.field2 textarea{resize:vertical;min-height:80px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+
+/* BUTTONS */
+.btn{border:none;padding:0.65rem 1.4rem;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;font-family:var(--font);border-radius:3px;transition:all 0.2s;}
+.btn-gold{background:var(--white);color:#000;}
+.btn-gold:hover{background:#d6d6d6;}
+.btn-outline-gold{background:transparent;border:1px solid var(--white);color:var(--white);}
+.btn-outline-gold:hover{background:var(--gold-dim);}
+.btn-grey{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-grey:hover{border-color:var(--white);color:var(--white);}
+.btn-danger{background:transparent;border:1px solid rgba(229,57,53,0.3);color:#ef9a9a;}
+.btn-danger:hover{background:rgba(229,57,53,0.1);}
+.btn-sm{padding:0.4rem 0.9rem;font-size:0.68rem;}
+
+/* GALLERY */
+.cat-tabs{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:1.2rem;}
+.cat-tab{padding:0.45rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;background:var(--surface2);color:var(--muted);border:1px solid var(--border);transition:all 0.2s;font-family:var(--font);border-radius:3px;}
+.cat-tab.active{background:var(--white);color:#000;border-color:var(--white);}
+
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:1.2rem;min-height:60px;}
+.img-slot{position:relative;aspect-ratio:4/3;background:var(--surface2);border:1px solid var(--border);overflow:hidden;border-radius:4px;}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.img-remove{position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.85);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.7rem;display:none;align-items:center;justify-content:center;line-height:1;}
+.img-slot:hover .img-remove{display:flex;}
+.img-type-badge{position:absolute;top:4px;left:4px;font-size:0.52rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:rgba(0,0,0,0.75);padding:0.15rem 0.4rem;border-radius:2px;}
+.img-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#3a3a3a;font-size:1.5rem;gap:0.3rem;}
+.img-empty span{font-size:0.62rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#444;}
+
+.upload-tabs{display:flex;gap:2px;margin-bottom:1rem;flex-wrap:wrap;}
+.utab{padding:0.5rem 1rem;font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-family:var(--font);border:1px solid var(--border);background:var(--surface2);color:var(--muted);transition:all 0.2s;border-radius:3px;}
+.utab.active{background:var(--white);color:#000;border-color:var(--white);}
+.utab-panel{display:none;}
+.utab-panel.active{display:block;}
+
+.upload-drop{
+  border:2px dashed var(--border);padding:2rem;text-align:center;border-radius:6px;
+  cursor:pointer;transition:all 0.2s;background:transparent;
+}
+.upload-drop:hover,.upload-drop.drag-over{border-color:var(--white);background:var(--gold-dim);}
+.upload-drop-icon{font-size:2rem;margin-bottom:0.5rem;}
+.upload-drop-text{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+.upload-drop-text strong{color:var(--white);}
+
+.storage-wrap{background:var(--surface);border:1px solid var(--border);padding:1rem 1.4rem;margin-bottom:1.2rem;border-radius:6px;}
+.storage-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;}
+.storage-label{font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);}
+.storage-val{font-size:0.72rem;color:var(--muted);}
+.storage-track{height:4px;background:var(--surface3);border-radius:2px;}
+.storage-fill{height:100%;border-radius:2px;background:var(--white);transition:width 0.4s;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-bottom:2rem;border-radius:6px;overflow:hidden;}
+.stat-box{background:var(--surface);padding:1.5rem;text-align:center;}
+.stat-val{font-family:var(--font);font-weight:800;font-size:2rem;color:var(--white);line-height:1;letter-spacing:-0.02em;}
+.stat-lbl{font-size:0.62rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;}
+
+/* PROGRESS BAR */
+.prog-wrap{display:none;margin-bottom:1rem;}
+.prog-text{font-size:0.75rem;color:var(--white);margin-bottom:0.4rem;}
+.prog-track{height:4px;background:var(--surface3);border-radius:2px;}
+.prog-fill{height:100%;background:var(--white);border-radius:2px;width:0%;transition:width 0.2s;}
+
+/* CHANGE LOG */
+.change-item{display:flex;align-items:center;gap:0.8rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.change-badge{font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.5rem;flex-shrink:0;border-radius:2px;}
+.badge-gallery{background:rgba(255,255,255,0.12);color:var(--white);}
+.badge-carousel{background:rgba(255,255,255,0.12);color:var(--white);}
+.badge-info{background:rgba(255,255,255,0.12);color:var(--white);}
+.change-text{font-size:0.82rem;color:var(--muted);flex:1;}
+.change-time{font-size:0.68rem;color:rgba(169,169,169,0.5);flex-shrink:0;}
+
+/* MODAL */
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:500;display:none;align-items:center;justify-content:center;}
+.modal-back.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);padding:2rem;width:100%;max-width:480px;margin:1rem;border-radius:6px;}
+.modal-title{font-family:var(--font);font-weight:800;font-size:1.6rem;color:var(--white);letter-spacing:-0.02em;margin-bottom:0.4rem;}
+.modal-sub{font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;font-weight:400;}
+.modal-actions{display:flex;gap:0.7rem;justify-content:flex-end;margin-top:1.5rem;}
+.pub-status{font-size:0.83rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);margin-top:0.8rem;display:none;line-height:1.6;border-radius:3px;}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:2rem;right:2rem;border-radius:4px;
+  background:var(--surface);border:1px solid var(--border);
+  padding:0.9rem 1.4rem;font-size:0.85rem;font-family:var(--font);
+  transform:translateY(120px);opacity:0;transition:all 0.35s;z-index:9999;
+  max-width:340px;
+}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.success{border-color:rgba(67,160,71,0.5);color:#a5d6a7;}
+#toast.error{border-color:rgba(229,57,53,0.5);color:#ef9a9a;}
+
+/* SLIDE EDITOR */
+.slide-card{border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem;background:var(--surface);position:relative;border-radius:6px;}
+.slide-num{position:absolute;top:1rem;right:1.2rem;font-family:var(--font);font-weight:800;font-size:2.6rem;color:rgba(255,255,255,0.06);line-height:1;user-select:none;}
+.slide-name-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--white);margin-bottom:1rem;}
+
+/* SETTINGS */
+.settings-section{margin-bottom:2rem;}
+.settings-heading{font-family:var(--font);font-weight:800;font-size:1.25rem;color:var(--white);letter-spacing:-0.01em;padding-bottom:0.8rem;border-bottom:1px solid var(--border);margin-bottom:1rem;}
+
+@media(max-width:768px){
+  .sidebar{width:200px;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+
+/* ── Gallery Assign ── */
+.ga-img{position:relative;aspect-ratio:4/3;border-radius:5px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:.15s;background:var(--surface2)}
+.ga-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ga-img .ga-name{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.75);font-size:.5rem;padding:2px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ccc}
+.ga-img.selected{border-color:#fff}
+.ga-img.selected::after{content:"";position:absolute;top:3px;right:3px;background:#fff;color:#000;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800}
+.ga-img.done{opacity:.4}
+.ga-bucket{border-bottom:1px solid var(--border)}
+.ga-bucket-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px}
+.ga-bucket-name{font-weight:600;font-size:.8rem}
+.ga-bucket-count{font-size:.65rem;background:var(--surface2);padding:2px 7px;border-radius:99px;color:var(--muted)}
+.ga-bucket-actions{display:flex;gap:5px;align-items:center}
+.ga-add-btn{background:rgba(45,122,45,.3);border:1px solid rgba(45,122,45,.6);color:#5dfc5d;padding:4px 10px;border-radius:4px;font-size:.65rem;font-weight:700;cursor:pointer}
+.ga-add-btn:hover{background:rgba(45,122,45,.5)}
+.ga-clr-btn{background:rgba(122,45,45,.3);border:1px solid rgba(122,45,45,.6);color:#fc5d5d;padding:4px 8px;border-radius:4px;font-size:.65rem;cursor:pointer}
+.ga-thumbs{padding:0 10px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.ga-thumb{position:relative;aspect-ratio:4/3;border-radius:3px;overflow:hidden;background:var(--surface2)}
+.ga-thumb img{width:100%;height:100%;object-fit:cover}
+.ga-thumb-rm{position:absolute;top:2px;right:2px;background:rgba(255,80,80,.9);border:none;color:#fff;width:14px;height:14px;border-radius:50%;cursor:pointer;font-size:.55rem;z-index:2}
+
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">Masters Window Tinting</div>
+    <div class="login-tagline">Admin CMS · Secure Access</div>
+    <div class="login-heading">SIGN IN</div>
+    <div class="login-sub">Enter your credentials to manage your website.</div>
+    <div id="login-error">Incorrect username or password.</div>
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="lu" placeholder="masters" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn-login" id="login-btn">Sign In →</button>
+  </div>
+</div>
+
+<!-- ── APP ── -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-name">Masters Window Tinting</div>
+      <div class="sidebar-sub">Admin · CMS Panel</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active" data-panel="dashboard"><span class="nav-icon">📊</span> Dashboard</div>
+      <div class="nav-item" data-panel="gallery"><span class="nav-icon">🖼️</span> Gallery Manager</div>
+      <div class="nav-item" data-panel="carousel"><span class="nav-icon">🎠</span> Carousel Editor</div>
+      <div class="nav-item" data-panel="beforeafter"><span class="nav-icon">↔️</span> Before &amp; After</div>
+      <div class="nav-item" data-panel="cloudbrowser"><span class="nav-icon">☁️</span> Cloudinary Browser</div>
+      <div class="nav-item" data-panel="galleryassign"><span class="nav-icon">🗂️</span> Assign Gallery</div>
+      <div class="nav-item" data-panel="siteinfo"><span class="nav-icon">📋</span> Site Info</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Config</div>
+      <div class="nav-item" data-panel="settings"><span class="nav-icon">⚙️</span> Settings</div>
+      <div class="nav-item" id="view-site-link"><span class="nav-icon">🌐</span> View Live Site</div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-row">
+        <div class="user-av">M</div>
+        <div>
+          <div class="user-name">Masters Admin</div>
+          <div class="user-role">Website Owner</div>
+        </div>
+      </div>
+      <button class="btn-signout" id="signout-btn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">DASHBOARD</div>
+      <div class="topbar-right">
+        <div class="status-dot"></div>
+        <div class="status-txt">masters-window-tinting.vercel.app</div>
+        <button class="btn-publish" id="pub-btn">🚀 Publish Changes</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div id="panel-dashboard" class="panel active">
+        <div class="panel-title">DASHBOARD</div>
+        <div class="panel-desc">Your website overview.</div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="stat-val" id="s-imgs">0</div><div class="stat-lbl">Gallery Images</div></div>
+          <div class="stat-box"><div class="stat-val">7</div><div class="stat-lbl">Carousel Slides</div></div>
+          <div class="stat-box"><div class="stat-val">7</div><div class="stat-lbl">Service Pages</div></div>
+          <div class="stat-box"><div class="stat-val" id="s-changes">0</div><div class="stat-lbl">Pending Changes</div></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Quick Actions</div>
+          <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
+            <button class="btn btn-gold" data-goto="gallery">🖼️ Gallery Manager</button>
+            <button class="btn btn-outline-gold" data-goto="carousel">🎠 Edit Carousel</button>
+            <button class="btn btn-outline-gold" data-goto="siteinfo">📋 Site Info</button>
+            <button class="btn btn-grey" id="dash-viewsite">🌐 View Site</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Recent Changes</div>
+          <div id="changelog-list"><div style="font-size:0.85rem;color:var(--muted);font-weight:400;">No changes yet.</div></div>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div id="panel-gallery" class="panel">
+        <div class="panel-title">GALLERY MANAGER</div>
+        <div class="panel-desc">Upload photos for each service. Images are auto-compressed before saving.</div>
+        <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);border-radius:6px;">
+          <strong style="color:var(--white);">How it works:</strong><br>
+          1. Upload photos below → click <strong>💾 Save Gallery</strong><br>
+          2. Click <strong>🚀 Publish Changes</strong> (top right) → photos go live for ALL visitors<br>
+          <span style="color:var(--muted);font-size:0.75rem;">On your browser: photos show immediately after Save. Other visitors need Publish.</span>
+        </div>
+
+        <div class="storage-wrap">
+          <div class="storage-header">
+            <span class="storage-label">Local Storage</span>
+            <span class="storage-val" id="storage-val">0 KB / 5 MB</span>
+          </div>
+          <div class="storage-track"><div class="storage-fill" id="storage-fill" style="width:0%"></div></div>
+        </div>
+
+        <div class="cat-tabs" id="cat-tabs"></div>
+
+        <div class="card">
+          <div class="card-label" id="gal-cat-label">WINDOW TINTING</div>
+          <div class="img-grid" id="img-grid"></div>
+
+          <!-- Upload progress -->
+          <div class="prog-wrap" id="up-prog">
+            <div class="prog-text" id="up-prog-text">Processing...</div>
+            <div class="prog-track"><div class="prog-fill" id="up-prog-fill"></div></div>
+          </div>
+
+          <!-- Upload method tabs -->
+          <div class="upload-tabs">
+            <button class="utab active" data-utab="file">📁 Upload Files</button>
+            <button class="utab" data-utab="url">📎 Single URL</button>
+            <button class="utab" data-utab="bulk">📋 Bulk URLs</button>
+            <button class="utab" data-utab="drive">☁️ Google Drive</button>
+          </div>
+
+          <!-- FILE -->
+          <div class="utab-panel active" id="utab-file">
+            <div class="upload-drop" id="drop-zone">
+              <input type="file" id="file-input" accept="image/*" multiple style="display:none;">
+              <div class="upload-drop-icon">📁</div>
+              <div class="upload-drop-text"><strong>Click or drag & drop</strong> photos here<br>JPG, PNG, WEBP · Auto-compressed · Multiple files OK</div>
+            </div>
+          </div>
+
+          <!-- SINGLE URL -->
+          <div class="utab-panel" id="utab-url">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;border-radius:6px;">
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:400;line-height:1.6;">
+                Use a <strong style="color:var(--white);">direct image URL</strong> — from i.ibb.co, i.imgur.com, or any link ending in .jpg/.png/.webp
+              </p>
+              <div class="field2">
+                <label>Image URL</label>
+                <input type="url" id="url-input" placeholder="https://i.ibb.co/ABC123/photo.jpg">
+              </div>
+              <button class="btn btn-gold" style="width:100%;" id="add-url-btn">Add Image</button>
+              <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted);line-height:1.8;">
+                <strong style="color:var(--white);display:block;margin-bottom:0.3rem;">Free image hosts:</strong>
+                <a href="https://imgbb.com" target="_blank" style="color:var(--white);">→ imgbb.com</a> — upload, click image, copy "Direct link"<br>
+                <a href="https://imgur.com/upload" target="_blank" style="color:var(--white);">→ imgur.com</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- BULK URLs -->
+          <div class="utab-panel" id="utab-bulk">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;border-radius:6px;">
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;font-weight:400;">Paste multiple image URLs, one per line:</p>
+              <textarea id="bulk-input" rows="8" placeholder="https://i.ibb.co/photo1.jpg&#10;https://i.ibb.co/photo2.jpg&#10;https://i.ibb.co/photo3.jpg" style="background:var(--black);border:1px solid var(--border);color:var(--white);padding:0.8rem;font-size:0.78rem;font-family:monospace;width:100%;resize:vertical;outline:none;margin-bottom:0.8rem;border-radius:3px;"></textarea>
+              <button class="btn btn-gold" style="width:100%;" id="bulk-add-btn">📋 Import All URLs</button>
+              <div id="bulk-result" style="display:none;font-size:0.78rem;color:var(--white);margin-top:0.6rem;"></div>
+            </div>
+          </div>
+
+          <!-- GOOGLE DRIVE -->
+          <div class="utab-panel" id="utab-drive">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1.2rem;border-radius:6px;">
+              <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1rem;font-weight:400;line-height:1.7;">
+                Import all photos from a Google Drive folder at once.<br>
+                <strong style="color:#ffcc80;">⚠️ The folder must be set to "Anyone with the link can view"</strong>
+              </p>
+              <div style="background:var(--black);border:1px solid var(--border);padding:1rem;margin-bottom:1rem;font-size:0.78rem;color:var(--muted);line-height:1.9;border-radius:3px;">
+                <strong style="color:var(--white);">How to make public:</strong><br>
+                1. Right-click the folder in Google Drive<br>
+                2. Click <strong style="color:var(--white);">Share</strong><br>
+                3. Change from "Restricted" to <strong style="color:var(--white);">"Anyone with the link"</strong><br>
+                4. Click Done, then copy the folder link
+              </div>
+              <div class="field2">
+                <label>Google Drive Folder Link</label>
+                <input type="url" id="drive-url" placeholder="https://drive.google.com/drive/folders/...">
+              </div>
+              <button class="btn btn-gold" style="width:100%;" id="drive-import-btn">☁️ Import All Photos from Drive</button>
+              <div id="drive-result" style="display:none;font-size:0.82rem;color:var(--white);margin-top:0.8rem;padding:0.8rem;background:var(--black);border:1px solid var(--border);line-height:1.7;border-radius:3px;"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;gap:0.7rem;flex-wrap:wrap;align-items:center;margin-top:0.5rem;">
+          <button class="btn btn-gold" id="save-gallery-btn">💾 Save Gallery</button>
+          <button class="btn btn-outline-gold btn-sm" id="sync-github-btn">🔄 Sync from GitHub</button>
+          <button class="btn btn-grey" id="clean-gallery-btn">🧹 Remove Broken</button>
+          <button class="btn btn-danger btn-sm" id="clear-cat-btn">🗑️ Clear Category</button>
+          <span id="save-status" style="font-size:0.78rem;color:var(--muted);"></span>
+        </div>
+      </div>
+
+      <!-- CAROUSEL -->
+      <div id="panel-carousel" class="panel">
+        <div class="panel-title">CAROUSEL EDITOR</div>
+        <div class="panel-desc">Edit text content for each homepage carousel slide.</div>
+        <div id="slide-editors"></div>
+        <button class="btn btn-gold" id="save-carousel-btn">💾 Save All Slides</button>
+      </div>
+
+      <!-- SITE INFO -->
+
+      <!-- BEFORE & AFTER PANEL -->
+      <div id="panel-beforeafter" class="panel">
+        <div class="panel-title">BEFORE &amp; AFTER</div>
+        <div class="panel-desc">Upload before &amp; after photos into each service folder. They appear automatically in the Before &amp; After slider on the homepage.</div>
+
+        <!-- Service folder tabs -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem" id="ba-cat-tabs">
+          <button class="tab-btn active" data-ba-cat="Window Tinting" onclick="switchBAcat('Window Tinting',this)">Window Tinting</button>
+          <button class="tab-btn" data-ba-cat="Ceramic Coating" onclick="switchBAcat('Ceramic Coating',this)">Ceramic Coating</button>
+          <button class="tab-btn" data-ba-cat="Liquid PPF" onclick="switchBAcat('Liquid PPF',this)">Liquid PPF</button>
+          <button class="tab-btn" data-ba-cat="Paint Correction" onclick="switchBAcat('Paint Correction',this)">Paint Correction</button>
+          <button class="tab-btn" data-ba-cat="Detailing" onclick="switchBAcat('Detailing',this)">Detailing</button>
+        </div>
+
+        <!-- Current category label -->
+        <div style="font-family:var(--font-mono);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem" id="ba-current-cat-label">WINDOW TINTING</div>
+
+        <!-- Photos grid -->
+        <div id="ba-photos-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:1.5rem">
+          <div style="aspect-ratio:4/3;border:2px dashed var(--border);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:.5rem;color:var(--muted);font-size:.75rem;transition:.2s" onclick="triggerBAUpload()" onmouseover="this.style.borderColor='#fff'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.8rem">📁</span>
+            <span>Upload Photos</span>
+          </div>
+        </div>
+
+        <input id="ba-file-input" type="file" accept="image/*" multiple style="display:none" onchange="handleBAUpload(this)">
+
+        <!-- Progress -->
+        <div id="ba-progress-wrap" style="display:none;margin-bottom:1rem">
+          <div style="font-size:.75rem;color:var(--muted);margin-bottom:.4rem" id="ba-progress-text">Uploading...</div>
+          <div style="background:var(--surface2);border-radius:99px;height:6px;overflow:hidden">
+            <div id="ba-progress-fill" style="height:100%;background:#fff;border-radius:99px;width:0%;transition:width .3s"></div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-primary" onclick="triggerBAUpload()">📁 Upload Photos</button>
+          <button class="btn-secondary" onclick="saveBAChanges()">💾 Save &amp; Publish</button>
+          <button class="btn-danger" onclick="clearBACategory()" style="background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);color:#ff6b6b;padding:.5rem 1rem;border-radius:4px;font-size:.75rem;cursor:pointer">🗑 Clear Category</button>
+        </div>
+
+        <div style="margin-top:1.5rem;padding:1rem;background:var(--surface2);border-radius:6px;border:1px solid var(--border)">
+          <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem">How it works</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:.4rem">
+            <li style="font-size:.78rem;color:var(--muted)">• Select a service folder tab above</li>
+            <li style="font-size:.78rem;color:var(--muted)">• Upload your before &amp; after photos (upload BEFORE first, then AFTER)</li>
+            <li style="font-size:.78rem;color:var(--muted)">• Photos are automatically paired — 1st upload = BEFORE, 2nd = AFTER</li>
+            <li style="font-size:.78rem;color:var(--muted)">• Click <strong style="color:#fff">Save &amp; Publish</strong> to go live on the homepage slider</li>
+          </ul>
+        </div>
+      </div>
+
+
+
+      <!-- CLOUDINARY BROWSER PANEL -->
+      <div id="panel-cloudbrowser" class="panel">
+        <div class="panel-title">CLOUDINARY BROWSER</div>
+        <div class="panel-desc">Browse your Cloudinary images and add them directly to any gallery category — no re-uploading needed.</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;align-items:end">
+          <div>
+            <label style="font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem">Add to Gallery Category</label>
+            <select id="cb-target-cat" onchange="loadCloudinaryImages()" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.65rem 1rem;color:#fff;font-family:inherit;font-size:.85rem">
+              <option value="Window Tinting">Window Tinting</option>
+              <option value="Ceramic Coating">Ceramic Coating</option>
+              <option value="Liquid PPF">Liquid PPF</option>
+              <option value="Residential Tinting">Residential Tinting</option>
+              <option value="Commercial Tinting">Commercial Tinting</option>
+              <option value="Wall Graphics">Wall Graphics</option>
+              <option value="Detailing &amp; Paint Correction">Detailing &amp; Paint Correction</option>
+              <option value="Exotic &amp; Classic Cars">Exotic &amp; Classic Cars</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-primary" onclick="loadCloudinaryImages()" id="cb-load-btn">☁️ Load Images</button>
+            <button class="btn-primary" onclick="addSelectedToGallery()" style="background:var(--accent)">✅ Add Selected</button>
+          </div>
+        </div>
+
+        <!-- Search/filter -->
+        <div style="display:flex;gap:8px;margin-bottom:1rem">
+          <input id="cb-search" type="text" placeholder="Search by name..." style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;color:#fff;font-family:inherit;font-size:.82rem" oninput="filterCloudImages()">
+          <select id="cb-folder-filter" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;color:#fff;font-family:inherit;font-size:.82rem" onchange="loadCloudinaryImages()">
+            <option value="">All Images (Root)</option>
+            <option value="gallery">gallery/ folder</option>
+            <option value="masters-gallery">masters-gallery/</option>
+          </select>
+        </div>
+
+        <!-- Selection info -->
+        <div id="cb-selection-info" style="font-size:.75rem;color:var(--muted);margin-bottom:.8rem">
+          ✅ Click images to select them, then click <strong style="color:#fff">Add Selected</strong> to add to the chosen gallery category. Images from Cloudinary are shown below.
+        </div>
+
+        <!-- Image grid -->
+        <div id="cb-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;max-height:480px;overflow-y:auto;padding:4px">
+          <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.85rem">
+            Click <strong style="color:#fff">Load Images</strong> to browse your Cloudinary library
+          </div>
+        </div>
+
+        <div id="cb-load-more-wrap" style="display:none;text-align:center;margin-top:1rem">
+          <button class="btn-secondary" onclick="loadMoreCloudImages()">Load More Images</button>
+        </div>
+      </div>
+
+
+      <!-- GALLERY ASSIGN PANEL -->
+      <div id="panel-galleryassign" class="panel">
+        <div class="panel-title">ASSIGN GALLERY</div>
+        <div class="panel-desc">Load your Cloudinary images, select them, then click + Add next to the right category.</div>
+        <div style="display:grid;grid-template-columns:1fr 280px;gap:0;height:calc(100vh - 200px);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-top:1rem">
+          <!-- LEFT: pool -->
+          <div style="display:flex;flex-direction:column;border-right:1px solid var(--border)">
+            <div style="padding:12px;border-bottom:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--surface2)">
+              <input id="ga-search" type="text" placeholder="Search..." style="flex:1;min-width:120px;background:var(--bg);border:1px solid var(--border);color:#fff;padding:6px 10px;border-radius:4px;font-size:12px" oninput="gaFilter(this.value)">
+              <button class="btn-primary" id="ga-load-btn" onclick="gaLoadImages()">☁️ Load Images</button>
+              <button class="btn-secondary" onclick="gaSelectAll()">☑ All</button>
+              <button class="btn-secondary" onclick="gaDeselectAll()">☐ None</button>
+              <span id="ga-sel-count" style="font-size:.72rem;color:var(--muted)">0 selected</span>
+            </div>
+            <div id="ga-grid" style="flex:1;overflow-y:auto;padding:10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px;align-content:start">
+              <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:.82rem">Click <b style="color:#fff">☁️ Load Images</b> to start</div>
+            </div>
+          </div>
+          <!-- RIGHT: categories -->
+          <div style="display:flex;flex-direction:column;background:var(--bg)">
+            <div style="padding:10px 14px;border-bottom:1px solid var(--border);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:var(--surface2)">Gallery Categories</div>
+            <div id="ga-cats" style="flex:1;overflow-y:auto"></div>
+            <div style="padding:10px;border-top:1px solid var(--border)">
+              <button class="btn-primary" style="width:100%;justify-content:center;font-size:.78rem" onclick="gaPublish()">🚀 Publish to Site</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-siteinfo" class="panel">
+        <div class="panel-title">SITE INFO</div>
+        <div class="panel-desc">Update contact info, hours, and social links.</div>
+        <div class="card">
+          <div class="card-label">Contact</div>
+          <div class="form-row">
+            <div class="field2"><label>Phone</label><input type="tel" id="i-phone" placeholder="631-226-4300"></div>
+            <div class="field2"><label>Email</label><input type="email" id="i-email" placeholder="info@masterswindowtinting.com"></div>
+          </div>
+          <div class="field2"><label>Address</label><input type="text" id="i-addr" placeholder="863 Rte 109, Suite A, West Babylon, NY 11704"></div>
+          <div class="field2"><label>Google Maps URL</label><input type="url" id="i-maps"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Business Hours</div>
+          <div class="form-row">
+            <div class="field2"><label>Mon–Sat</label><input type="text" id="i-hw" placeholder="9:00 AM – 5:00 PM"></div>
+            <div class="field2"><label>Sunday</label><input type="text" id="i-hs" placeholder="10:00 AM – 4:00 PM"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Social Media</div>
+          <div class="form-row">
+            <div class="field2"><label>Facebook URL</label><input type="url" id="i-fb"></div>
+            <div class="field2"><label>Instagram URL</label><input type="url" id="i-ig"></div>
+          </div>
+        </div>
+        <button class="btn btn-gold" id="save-siteinfo-btn">💾 Save Site Info</button>
+      </div>
+
+      <!-- SETTINGS -->
+      <div id="panel-settings" class="panel">
+        <div class="panel-title">SETTINGS</div>
+        <div class="panel-desc">Password is managed via Vercel Environment Variables (CMS_ADMIN_USER / CMS_ADMIN_PASS). Configure GitHub publishing below.</div>
+        <div class="settings-section">
+          <div class="settings-heading">Change Password</div>
+          <div class="card">
+            <div class="field2"><label>Current Password</label><input type="password" id="cp-cur" placeholder="••••••••"></div>
+            <div class="form-row">
+              <div class="field2"><label>New Password</label><input type="password" id="cp-new" placeholder="••••••••"></div>
+              <div class="field2"><label>Confirm New</label><input type="password" id="cp-conf" placeholder="••••••••"></div>
+            </div>
+            <button class="btn btn-gold" id="change-pass-btn">Update Password</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-heading">GitHub Publishing</div>
+          <div class="card">
+            <div style="background:var(--surface2);border:1px solid var(--border);padding:1rem;margin-bottom:1.2rem;font-size:0.82rem;line-height:1.7;color:var(--white);border-radius:6px;">
+              <strong style="color:var(--white);">🔒 Secure publishing</strong><br>
+              Your GitHub token is stored safely on the server (Vercel environment variable) — never in this page. Enter your <strong>Publish Key</strong> below (the <code>CMS_PUBLISH_KEY</code> value you set in Vercel). Then Save Gallery / Carousel / Site Info will go live automatically.
+            </div>
+            <div class="field2"><label>Publish Key</label><input type="password" id="cms-key" placeholder="the CMS_PUBLISH_KEY you set in Vercel"></div>
+            <div style="display:flex;gap:0.7rem;flex-wrap:wrap;">
+              <button class="btn btn-gold" id="save-gh-btn">💾 Save Key</button>
+              <button class="btn btn-outline-gold" id="test-gh-btn">🔗 Test Publish</button>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-heading">Danger Zone</div>
+          <div class="card">
+            <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;font-weight:400;">Clear all locally saved CMS data. Does not affect the live site.</p>
+            <button class="btn btn-danger" id="clear-all-btn">🗑️ Clear All Local Data</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PUBLISH MODAL -->
+<div class="modal-back" id="pub-modal">
+  <div class="modal">
+    <div class="modal-title">PUBLISH CHANGES</div>
+    <div class="modal-sub">Commits your changes to GitHub and triggers a Vercel live deploy.</div>
+    <div class="field2"><label>Commit Message</label><input type="text" id="commit-msg" placeholder="Update gallery and site content"></div>
+    <div class="pub-status" id="pub-status"></div>
+    <div class="modal-actions">
+      <button class="btn btn-grey" id="pub-cancel">Cancel</button>
+      <button class="btn btn-gold" id="pub-confirm">🚀 Publish to GitHub</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const GALLERY_FOLDER_MAP = {
+    'Window Tinting':               'gallery/window-tinting',
+    'Liquid PPF':                   'gallery/liquid-ppf',
+    'Ceramic Coating':              'gallery/ceramic-coating',
+    'Residential Tinting':          'gallery/residential-tinting',
+    'Commercial Tinting':           'gallery/commercial-tinting',
+    'Wall Graphics':                'gallery/wall-graphics',
+    'Detailing & Paint Correction': 'gallery/detailing',
+    'Exotic & Classic Cars':        'gallery/exotic-classic-cars'
+  };
+
+const CATS = ['Window Tinting','Liquid PPF','Ceramic Coating','Residential Tinting','Commercial Tinting','Wall Graphics','Detailing & Paint Correction','Exotic & Classic Cars'];
+const SLIDE_DEFAULTS = [
+  {name:'About Masters',badge:'Trusted on Long Island',headline:'MASTERS\nWINDOW\nTINTING.',sub:'25+ years of professional experience.',cta1:'Call 631-226-4300',cta2:'Get a Free Quote'},
+  {name:'Window Tinting',badge:'Core Service',headline:'WINDOW\nTINTING.',sub:'Cleaner look, better privacy, less heat.',cta1:'Call Now',cta2:'Get a Quote'},
+  {name:'Liquid PPF',badge:'Core Service',headline:'LIQUID\nPAINT\nPROTECTION.',sub:'Seamless protection against scratches and chips.',cta1:'Call Now',cta2:'Get a Quote'},
+  {name:'Ceramic Coating',badge:'Core Service',headline:'CERAMIC\nCOATING\nFOR CARS.',sub:'Long-lasting gloss and durable surface protection.',cta1:'Call Now',cta2:'Get a Quote'},
+  {name:'Residential',badge:'Residential Service',headline:'RESIDENTIAL\nWINDOW\nTINTING.',sub:'Improve home privacy and reduce glare.',cta1:'Request Quote',cta2:'Call 631-226-4300'},
+  {name:'Commercial',badge:'Commercial Service',headline:'COMMERCIAL\nWINDOW\nTINTING.',sub:'Improve privacy and lower cooling costs.',cta1:'Request Quote',cta2:'Call 631-226-4300'},
+  {name:'Specialty',badge:'Specialty Services',headline:'GRAPHICS,\nDETAILING &\nCORRECTION.',sub:'Wall graphics and paint correction services.',cta1:'View Services',cta2:'Call 631-226-4300'},
+];
+const SITEINFO_DEFAULTS = {phone:'631-226-4300',email:'info@masterswindowtinting.com',address:'863 Rte 109, Suite A, West Babylon, NY 11704',maps:'https://maps.google.com/?q=863+Rte+109+West+Babylon+NY',hw:'9:00 AM – 5:00 PM',hs:'10:00 AM – 4:00 PM',fb:'https://www.facebook.com/profile.php?id=100063773733742',ig:'https://www.instagram.com/Ceramic_pro_long_island'};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {gallery:{}, carousel:[], siteinfo:{}, beforeafter:[], beforeafter_folders:{}, log:[]};
+let currentCat = CATS[0];
+
+function loadState() {
+  try { state.gallery  = JSON.parse(localStorage.getItem('cms_gallery')  || '{}'); } catch(e){ state.gallery={}; }
+  try { state.carousel = JSON.parse(localStorage.getItem('cms_carousel') || 'null') || SLIDE_DEFAULTS.map(s=>({...s})); } catch(e){ state.carousel=SLIDE_DEFAULTS.map(s=>({...s})); }
+  try { state.siteinfo = JSON.parse(localStorage.getItem('cms_siteinfo') || 'null') || {...SITEINFO_DEFAULTS}; } catch(e){ state.siteinfo={...SITEINFO_DEFAULTS}; }
+  try { state.log      = JSON.parse(localStorage.getItem('cms_log')      || '[]'); } catch(e){ state.log=[]; }
+  try { state.beforeafter = JSON.parse(localStorage.getItem('cms_beforeafter') || '[]'); } catch(e){ state.beforeafter=[]; }
+  try { state.beforeafter_folders = JSON.parse(localStorage.getItem('cms_beforeafter_folders') || '{}'); } catch(e){ state.beforeafter_folders={}; }
+}
+
+// Always sync gallery from GitHub on load — ensures all browsers see same data
+async function syncFromGitHub() {
+  const ss = document.getElementById('save-status');
+  if(ss){ ss.textContent='🔄 Syncing from GitHub...'; ss.style.display='flex'; }
+  try {
+    const url = 'https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now();
+    const r = await fetch(url);
+    if(!r.ok) throw new Error('fetch failed');
+    const data = await r.json();
+
+    // ── ALWAYS use GitHub as source of truth — overwrite localStorage ──
+    if(data.gallery)    { state.gallery    = data.gallery;    localStorage.setItem('cms_gallery',    JSON.stringify(data.gallery)); }
+    if(data.carousel)   { state.carousel   = data.carousel;   localStorage.setItem('cms_carousel',   JSON.stringify(data.carousel)); }
+    if(data.siteinfo)   { state.siteinfo   = data.siteinfo;   localStorage.setItem('cms_siteinfo',   JSON.stringify(data.siteinfo)); }
+    if(data.beforeafter){ state.beforeafter= data.beforeafter; localStorage.setItem('cms_beforeafter',JSON.stringify(data.beforeafter)); }
+    if(data.beforeafter_folders){ state.beforeafter_folders = data.beforeafter_folders; localStorage.setItem('cms_beforeafter_folders', JSON.stringify(data.beforeafter_folders)); }
+
+    // Re-render everything with fresh data
+    buildCatTabs();
+    renderGallery();
+    buildSlideEditors();
+    loadSiteInfo();
+    updateStats();
+    updateStorage();
+
+    const ts = data.publishedAt ? new Date(data.publishedAt).toLocaleTimeString() : 'unknown';
+    if(ss){ ss.textContent='✅ Synced from GitHub at ' + ts; setTimeout(()=>ss.style.display='none', 3000); }
+  } catch(e) {
+    if(ss){ ss.textContent='⚠️ Sync failed: ' + e.message; setTimeout(()=>ss.style.display='none', 4000); }
+  }
+}
+
+
+async function autoPublish(commitMsg) {
+  const publishKey = localStorage.getItem('cms_publish_key');
+  if (!publishKey) return false; // not configured — silent fail
+
+  const payload = {
+    gallery:   state.gallery,
+    carousel:  state.carousel,
+    siteinfo:  state.siteinfo,
+    beforeafter: state.beforeafter,
+    beforeafter_folders: state.beforeafter_folders,
+    publishedAt: new Date().toISOString()
+  };
+
+  try {
+    const r = await fetch('/api/publish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-cms-key': publishKey },
+      body: JSON.stringify({ payload, message: commitMsg || 'CMS update' })
+    });
+    return r.ok;
+  } catch(e) {
+    return false;
+  }
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+// getCreds() removed — auth now validated server-side via /api/login
+
+document.getElementById('login-btn').addEventListener('click', doLogin);
+document.getElementById('lp').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('lu').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('lp').focus(); });
+
+async function doLogin() {
+  const u = document.getElementById('lu').value.trim();
+  const p = document.getElementById('lp').value;
+  const err = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  try {
+    const r = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: u, pass: p })
+    });
+    if (r.ok) {
+      err.style.display = 'none';
+      sessionStorage.setItem('cms_ok','1');
+      document.getElementById('login-screen').style.display = 'none';
+      startApp();
+    } else {
+      err.style.display = 'block';
+      document.getElementById('lp').value = '';
+      document.getElementById('lp').focus();
+    }
+  } catch(e) {
+    err.textContent = 'Connection failed — try again.';
+    err.style.display = 'block';
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign In \u2192';
+  }
+}
+
+document.getElementById('signout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('cms_ok');
+  location.reload();
+});
+
+if (sessionStorage.getItem('cms_ok') === '1') {
+  document.getElementById('login-screen').style.display = 'none';
+  startApp();
+}
+
+// ── APP START ─────────────────────────────────────────────────────────────────
+async function startApp() {
+  const app = document.getElementById('app');
+  app.style.display = 'flex';
+  // Always sync from GitHub on load — localStorage is only a temp cache
+  bindNav();
+  buildCatTabs();
+  buildSlideEditors();
+  loadSiteInfo();
+  loadGhSettings();
+  renderGallery();
+  renderLog();
+  updateStats();
+  updateStorage();
+  bindGalleryEvents();
+  bindFormEvents();
+  // Sync from GitHub in background — keeps all browsers in sync
+  syncFromGitHub(); // Always sync on load — GitHub is source of truth
+
+  const baCount = (state.beforeafter||[]).length;
+  const totalLocal = Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length,0);
+  if (totalLocal === 0) {
+    syncFromGitHub();
+  }
+}
+
+async function syncFromGitHub() {
+  const ss = document.getElementById('save-status');
+  try {
+    const r = await fetch(
+      'https://raw.githubusercontent.com/austriaalvinnoel/masters-window-tinting/main/cms-data.json?t=' + Date.now()
+    );
+    if (!r.ok) return;
+    const data = await r.json();
+    if (!data || !data.gallery) return;
+
+    const total = Object.values(data.gallery).reduce((a,v)=>a+(v||[]).length,0);
+    if (total === 0) return;
+
+    state.gallery = data.gallery;
+    if (data.carousel) state.carousel = data.carousel;
+    if (data.siteinfo) state.siteinfo = data.siteinfo;
+
+    localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+    localStorage.setItem('cms_carousel', JSON.stringify(state.carousel));
+    localStorage.setItem('cms_siteinfo', JSON.stringify(state.siteinfo));
+
+    renderGallery();
+    buildSlideEditors();
+    loadSiteInfo();
+    updateStats();
+    updateStorage();
+
+    toast(`✅ Synced ${total} photos from live site!`, 'success');
+    if (ss) {
+      ss.textContent = `✅ Synced ${total} photos from GitHub at ${new Date().toLocaleTimeString()}`;
+      ss.style.color = '#a5d6a7';
+    }
+  } catch(e) {
+    console.log('GitHub sync failed:', e.message);
+  }
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+const TITLES = {dashboard:'DASHBOARD',gallery:'GALLERY MANAGER',carousel:'CAROUSEL EDITOR',beforeafter:'BEFORE & AFTER',cloudbrowser:'CLOUDINARY BROWSER',galleryassign:'ASSIGN GALLERY',siteinfo:'SITE INFO',settings:'SETTINGS'};
+
+function bindNav() {
+  document.querySelectorAll('.nav-item[data-panel]').forEach(el => {
+    el.addEventListener('click', () => showPanel(el.dataset.panel));
+  });
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', () => showPanel(el.dataset.goto));
+  });
+  document.getElementById('view-site-link').addEventListener('click', () => window.open('/', '_blank'));
+  document.getElementById('dash-viewsite').addEventListener('click', () => window.open('/', '_blank'));
+  document.getElementById('pub-btn').addEventListener('click', openPubModal);
+}
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item[data-panel]').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  const navEl = document.querySelector(`.nav-item[data-panel="${id}"]`);
+  if (navEl) navEl.classList.add('active');
+  document.getElementById('topbar-title').textContent = TITLES[id] || id.toUpperCase();
+  if (id === 'beforeafter') { setTimeout(renderBAPhotos, 50); }
+  if (id === 'cloudbrowser') { /* ready on demand */ }
+}
+
+// ── GALLERY ───────────────────────────────────────────────────────────────────
+function buildCatTabs() {
+  document.getElementById('cat-tabs').innerHTML = CATS.map(c =>
+    `<div class="cat-tab${c===currentCat?' active':''}" data-cat="${c}">${c}</div>`
+  ).join('');
+  document.querySelectorAll('.cat-tab').forEach(el => {
+    el.addEventListener('click', () => { currentCat=el.dataset.cat; buildCatTabs(); renderGallery(); });
+  });
+}
+
+function renderGallery() {
+  const imgs = state.gallery[currentCat] || [];
+  document.getElementById('gal-cat-label').textContent = currentCat.toUpperCase();
+  const grid = document.getElementById('img-grid');
+  grid.innerHTML = imgs.map((src,i) => {
+    const isUrl = src.startsWith('http');
+    return `<div class="img-slot">
+      <img src="${src}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="img-empty" style="display:none;position:absolute;inset:0;background:var(--surface3);">⚠️<span>Failed</span></div>
+      <div class="img-type-badge" style="color:#fff">${isUrl?'URL':'FILE'}</div>
+      <button class="img-remove" data-idx="${i}">✕</button>
+    </div>`;
+  }).join('') + `<div class="img-slot"><div class="img-empty"><span style="font-size:1.8rem">+</span><span>${imgs.length} photos</span></div></div>`;
+
+  document.querySelectorAll('.img-remove').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      state.gallery[currentCat].splice(parseInt(btn.dataset.idx),1);
+      renderGallery(); updateStats();
+    });
+  });
+  updateStorage();
+}
+
+function bindGalleryEvents() {
+  document.querySelectorAll('.utab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.utab;
+      document.querySelectorAll('.utab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.utab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('utab-'+t).classList.add('active');
+    });
+  });
+
+  const dz = document.getElementById('drop-zone');
+  const fi = document.getElementById('file-input');
+  dz.addEventListener('click', () => fi.click());
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+  fi.addEventListener('change', e => handleFiles(e.target.files));
+
+  document.getElementById('add-url-btn').addEventListener('click', addSingleUrl);
+  document.getElementById('url-input').addEventListener('keydown', e => { if(e.key==='Enter') addSingleUrl(); });
+  document.getElementById('bulk-add-btn').addEventListener('click', bulkAddUrls);
+  document.getElementById('drive-import-btn').addEventListener('click', importDriveFolder);
+
+  document.getElementById('save-gallery-btn').addEventListener('click', saveGallery);
+  document.getElementById('sync-github-btn').addEventListener('click', () => {
+    toast('Syncing from GitHub...', 'success');
+    syncFromGitHub();
+  });
+  document.getElementById('clean-gallery-btn').addEventListener('click', cleanGallery);
+  document.getElementById('clear-cat-btn').addEventListener('click', () => {
+    if(!confirm(`Clear all images for "${currentCat}"?`)) return;
+    state.gallery[currentCat]=[];
+    renderGallery(); updateStats(); updateStorage();
+  });
+}
+
+function compressImage(file, maxKB=120, q=0.72) {
+  return new Promise(resolve => {
+    const r = new FileReader();
+    r.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        let w=img.width, h=img.height, max=1200;
+        if(w>max||h>max){ if(w>h){h=Math.round(h*max/w);w=max;}else{w=Math.round(w*max/h);h=max;} }
+        const c=document.createElement('canvas'); c.width=w; c.height=h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        let result=c.toDataURL('image/jpeg',q);
+        while(result.length>maxKB*1024*1.37 && q>0.3){ q-=0.08; result=c.toDataURL('image/jpeg',q); }
+        resolve(result);
+      };
+      img.src=ev.target.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+
+// ── Cloudinary Upload ─────────────────────────────────────────────────────
+const CLOUDINARY_CLOUD = "dym8x61sp";
+const CLOUDINARY_PRESET = "masters_unsigned";
+
+async function uploadToCloudinary(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', CLOUDINARY_PRESET);
+  formData.append('folder', 'masters-gallery');
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,
+    { method: 'POST', body: formData }
+  );
+  if (!res.ok) throw new Error('Cloudinary upload failed');
+  const data = await res.json();
+  return data.secure_url;
+}
+// ─────────────────────────────────────────────────────────────────────────
+
+async function handleFiles(files) {
+  if(!files||!files.length) return;
+  if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
+  const prog=document.getElementById('up-prog');
+  const pt=document.getElementById('up-prog-text');
+  const pf=document.getElementById('up-prog-fill');
+  prog.style.display='block';
+  for(let i=0;i<files.length;i++){
+    pt.textContent=`Uploading ${i+1} of ${files.length}: ${files[i].name}`;
+    pf.style.width=((i/files.length)*100)+'%';
+    try{
+      // Try Cloudinary first — fast, cross-browser, permanent URL
+      const url = await uploadToCloudinary(files[i]);
+      state.gallery[currentCat].push(url);
+      pt.textContent=`✅ Uploaded ${i+1} of ${files.length}`;
+    } catch(cloudErr) {
+      // Fallback to compressed base64 if Cloudinary fails
+      try{
+        const d=await compressImage(files[i]);
+        state.gallery[currentCat].push(d);
+        pt.textContent=`⚠️ Saved locally ${i+1} of ${files.length}`;
+      } catch(e){ pt.textContent=`Skipped ${files[i].name}`; }
+    }
+  }
+  pf.style.width='100%';
+  pt.textContent=`✅ Done! Click Save Gallery.`;
+  setTimeout(()=>{ prog.style.display='none'; pf.style.width='0%'; },3000);
+  document.getElementById('file-input').value='';
+  renderGallery(); updateStats();
+  toast(`${files.length} photo${files.length!==1?'s':''} added — click Save!`,'success');
+}
+
+function convertUrl(url) {
+  const im = url.match(/^https?:\/\/(www\.)?imgur\.com\/([a-zA-Z0-9]+)$/);
+  if(im) return `https://i.imgur.com/${im[2]}.jpg`;
+  const gd = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if(gd) return `https://drive.google.com/uc?export=view&id=${gd[1]}`;
+  return url;
+}
+
+function addSingleUrl() {
+  const raw = document.getElementById('url-input').value.trim();
+  if(!raw){ toast('Enter an image URL','error'); return; }
+  if(!raw.startsWith('http')){ toast('URL must start with https://','error'); return; }
+  const url = convertUrl(raw);
+  if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
+  state.gallery[currentCat].push(url);
+  document.getElementById('url-input').value='';
+  renderGallery(); updateStats();
+  toast('Image added — click Save!','success');
+}
+
+function bulkAddUrls() {
+  const raw = document.getElementById('bulk-input').value.trim();
+  if(!raw){ toast('Paste some URLs first','error'); return; }
+  const urls = raw.split('\n').map(u=>u.trim()).filter(u=>u.startsWith('http'));
+  if(!urls.length){ toast('No valid URLs found','error'); return; }
+  if(!state.gallery[currentCat]) state.gallery[currentCat]=[];
+  urls.forEach(u => state.gallery[currentCat].push(convertUrl(u)));
+  document.getElementById('bulk-input').value='';
+  const res = document.getElementById('bulk-result');
+  res.style.display='block';
+  res.textContent=`✅ Added ${urls.length} image${urls.length!==1?'s':''}! Click Save Gallery.`;
+  setTimeout(()=>res.style.display='none',4000);
+  renderGallery(); updateStats();
+  toast(`${urls.length} images added — click Save!`,'success');
+}
+
+async function importDriveFolder() {
+  const input = document.getElementById('drive-url').value.trim();
+  const res   = document.getElementById('drive-result');
+  res.style.display='block';
+  res.innerHTML='🔄 Connecting to Google Drive...';
+
+  const m = input.match(/folders\/([a-zA-Z0-9_-]+)/);
+  if(!m){ res.innerHTML='❌ Invalid folder URL — paste the full Google Drive folder link.'; return; }
+  const fid = m[1];
+
+  const proxies = [
+    `https://corsproxy.io/?${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://drive.google.com/drive/folders/${fid}`)}`,
+  ];
+
+  let html = '';
+  for (const proxy of proxies) {
+    try {
+      res.innerHTML = `🔄 Trying to read folder...`;
+      const r = await fetch(proxy, { signal: AbortSignal.timeout(8000) });
+      if (r.ok) {
+        html = await r.text();
+        if (html.length > 500) break;
+      }
+    } catch(e) { /* try next proxy */ }
+  }
+
+  if (!html || html.length < 500) {
+    res.innerHTML = `
+      <div style="color:#ffcc80;margin-bottom:0.8rem;">
+        ⚠️ Auto-import blocked by browser security. Use <strong>Bulk URLs</strong> tab instead:
+      </div>
+      <div style="font-size:0.75rem;color:var(--muted);line-height:1.9;">
+        <strong style="color:var(--white);">Here's how to get all image URLs from Drive:</strong><br>
+        1. Open your Drive folder<br>
+        2. Select all photos (Ctrl+A)<br>
+        3. Right-click → <strong style="color:var(--white);">Share</strong> → each image has a link like:<br>
+        <code style="color:var(--white);font-size:0.72rem;">https://drive.google.com/file/d/FILE_ID/view</code><br>
+        4. Or use <a href="https://imgbb.com" target="_blank" style="color:var(--white);">imgbb.com</a> — upload all at once, get direct links<br><br>
+        <strong style="color:var(--white);">Fastest fix:</strong> Upload your photos to 
+        <a href="https://imgbb.com" target="_blank" style="color:var(--white);">imgbb.com</a> in bulk,
+        then use the <strong style="color:var(--white);">Embed codes → Direct links</strong> option to get all URLs,
+        paste them in the <strong style="color:var(--white);">Bulk URLs</strong> tab.
+      </div>`;
+    return;
+  }
+
+  const matches = [...html.matchAll(/\/file\/d\/([a-zA-Z0-9_-]{25,})/g)];
+  const ids = [...new Set(matches.map(m => m[1]))];
+
+  if (!ids.length) {
+    res.innerHTML = '❌ No image files found in the folder. Make sure the folder contains images (not sub-folders).';
+    return;
+  }
+
+  if (!state.gallery[currentCat]) state.gallery[currentCat] = [];
+  ids.forEach(id => state.gallery[currentCat].push(`https://drive.google.com/uc?export=view&id=${id}`));
+
+  res.innerHTML = `🎉 Imported ${ids.length} photos! Click <strong>Save Gallery</strong>.`;
+  document.getElementById('drive-url').value = '';
+  renderGallery(); updateStats();
+  toast(`${ids.length} Drive photos imported — click Save!`, 'success');
+}
+
+async function saveGallery() {
+  const imgs = state.gallery[currentCat] || [];
+  const ok = localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  const ss = document.getElementById('save-status');
+
+  if (!ok) {
+    ss.textContent = '⚠️ Save failed — storage full. Use URL method.';
+    ss.style.color = '#ffcc80';
+    return;
+  }
+
+  ss.textContent = `✅ ${imgs.length} photos saved locally — publishing to live site...`;
+  ss.style.color = '#ffcc80';
+  logChange('gallery', `Gallery updated — ${currentCat} (${imgs.length} photos)`);
+  updateStorage();
+
+  const published = await autoPublish(`Update gallery — ${currentCat}`);
+  if (published) {
+    ss.textContent = `🌐 Live! ${imgs.length} photos published to site at ${new Date().toLocaleTimeString()}`;
+    ss.style.color = '#a5d6a7';
+    toast(`${imgs.length} photos live on site!`, 'success');
+  } else {
+    ss.textContent = `✅ Saved locally (${imgs.length} photos). Set GitHub token in Settings to auto-publish.`;
+    ss.style.color = '#a5d6a7';
+    toast(`Saved! Add GitHub token in Settings to go live automatically.`, 'success');
+  }
+}
+
+async function cleanGallery() {
+  const imgs = state.gallery[currentCat]||[];
+  if(!imgs.length){ toast('No images to check','error'); return; }
+  toast('Checking images...','success');
+  const keep=[];
+  await Promise.all(imgs.map(src=>new Promise(resolve=>{
+    if(!src.startsWith('http')){ keep.push(src); resolve(); return; }
+    const t=new Image(); t.onload=()=>{keep.push(src);resolve()}; t.onerror=resolve; t.src=src+'?t='+Date.now();
+  })));
+  const removed=imgs.length-keep.length;
+  state.gallery[currentCat]=keep;
+  renderGallery(); updateStats();
+  toast(removed>0?`Removed ${removed} broken image${removed!==1?'s':''}. Click Save!`:'All images OK ✅','success');
+}
+
+// ── CAROUSEL ──────────────────────────────────────────────────────────────────
+function buildSlideEditors() {
+  document.getElementById('slide-editors').innerHTML = state.carousel.map((s,i)=>`
+    <div class="slide-card">
+      <div class="slide-num">0${i+1}</div>
+      <div class="slide-name-lbl">SLIDE ${i+1} — ${s.name}</div>
+      <div class="form-row">
+        <div class="field2"><label>Badge</label><input type="text" id="s${i}-badge" value="${s.badge||''}"></div>
+        <div class="field2"><label>CTA 1</label><input type="text" id="s${i}-cta1" value="${s.cta1||''}"></div>
+      </div>
+      <div class="field2"><label>Headline (use \\n for line breaks)</label><input type="text" id="s${i}-hl" value="${(s.headline||'').replace(/\n/g,'\\n')}"></div>
+      <div class="field2"><label>Body Text</label><textarea id="s${i}-sub">${s.sub||''}</textarea></div>
+      <div class="field2"><label>CTA 2</label><input type="text" id="s${i}-cta2" value="${s.cta2||''}"></div>
+    </div>
+  `).join('');
+
+  document.getElementById('save-carousel-btn').addEventListener('click', ()=>{
+    state.carousel = state.carousel.map((s,i)=>({
+      ...s,
+      badge: document.getElementById(`s${i}-badge`).value,
+      headline: document.getElementById(`s${i}-hl`).value.replace(/\\n/g,'\n'),
+      sub: document.getElementById(`s${i}-sub`).value,
+      cta1: document.getElementById(`s${i}-cta1`).value,
+      cta2: document.getElementById(`s${i}-cta2`).value,
+    }));
+    localStorage.setItem('cms_carousel', JSON.stringify(state.carousel));
+    logChange('carousel','Carousel slides updated');
+    toast('Carousel saved! Publishing...','success');
+    autoPublish('Update carousel slides').then(ok => {
+      if(ok) toast('Carousel live on website!','success');
+    });
+  });
+}
+
+// ── SITE INFO ─────────────────────────────────────────────────────────────────
+function loadSiteInfo() {
+  const s=state.siteinfo;
+  document.getElementById('i-phone').value=s.phone||'';
+  document.getElementById('i-email').value=s.email||'';
+  document.getElementById('i-addr').value=s.address||'';
+  document.getElementById('i-maps').value=s.maps||'';
+  document.getElementById('i-hw').value=s.hw||'';
+  document.getElementById('i-hs').value=s.hs||'';
+  document.getElementById('i-fb').value=s.fb||'';
+  document.getElementById('i-ig').value=s.ig||'';
+}
+
+function bindFormEvents() {
+  document.getElementById('save-siteinfo-btn').addEventListener('click',()=>{
+    state.siteinfo={
+      phone:document.getElementById('i-phone').value,
+      email:document.getElementById('i-email').value,
+      address:document.getElementById('i-addr').value,
+      maps:document.getElementById('i-maps').value,
+      hw:document.getElementById('i-hw').value,
+      hs:document.getElementById('i-hs').value,
+      fb:document.getElementById('i-fb').value,
+      ig:document.getElementById('i-ig').value,
+    };
+    localStorage.setItem('cms_siteinfo', JSON.stringify(state.siteinfo));
+    logChange('info','Site info updated');
+    toast('Site info saved! Publishing...','success');
+    autoPublish('Update site info').then(ok => {
+      if(ok) toast('Site info live on website!','success');
+    });
+  });
+
+  document.getElementById('change-pass-btn').addEventListener('click',()=>{
+    toast('Password is now managed in Vercel \u2192 Settings \u2192 Environment Variables (CMS_ADMIN_PASS). This form is disabled for security.','error');
+  });
+
+  document.getElementById('save-gh-btn').addEventListener('click',()=>{
+    localStorage.setItem('cms_publish_key',document.getElementById('cms-key').value.trim());
+    toast('Publish key saved!','success');
+  });
+
+  document.getElementById('test-gh-btn').addEventListener('click', async()=>{
+    const key=document.getElementById('cms-key').value||localStorage.getItem('cms_publish_key');
+    if(!key){ toast('Enter your publish key first','error'); return; }
+    try{
+      const payload={gallery:state.gallery,carousel:state.carousel,siteinfo:state.siteinfo,publishedAt:new Date().toISOString()};
+      const r=await fetch('/api/publish',{method:'POST',headers:{'Content-Type':'application/json','x-cms-key':key},body:JSON.stringify({payload,message:'CMS test publish'})});
+      if(r.ok){ toast('✅ Connected — publishing works!','success'); }
+      else { const e=await r.json().catch(()=>({error:'error'})); toast(`❌ ${e.error}`,'error'); }
+    }catch(e){ toast('Connection failed — is /api/publish deployed?','error'); }
+  });
+
+  document.getElementById('clear-all-btn').addEventListener('click',()=>{
+    if(!confirm('Clear all local CMS data?')) return;
+    ['cms_gallery','cms_carousel','cms_siteinfo','cms_log'].forEach(k=>localStorage.removeItem(k));
+    loadState(); buildCatTabs(); buildSlideEditors(); loadSiteInfo();
+    renderGallery(); renderLog(); updateStats(); updateStorage();
+    toast('Local data cleared','success');
+  });
+}
+
+// ── PUBLISH SETTINGS LOAD ─────────────────────────────────────────────────────
+function loadGhSettings() {
+  // No GitHub token in this file or the browser — it lives server-side in Vercel.
+  // Only the publish key (which authorizes calls to /api/publish) is stored locally.
+  const key = localStorage.getItem('cms_publish_key');
+  if (key) document.getElementById('cms-key').value = key;
+}
+
+// ── PUBLISH ───────────────────────────────────────────────────────────────────
+function openPubModal() {
+  document.getElementById('commit-msg').value='Update website content via CMS';
+  document.getElementById('pub-status').style.display='none';
+  document.getElementById('pub-modal').classList.add('open');
+}
+
+document.getElementById('pub-cancel').addEventListener('click',()=>document.getElementById('pub-modal').classList.remove('open'));
+
+document.getElementById('pub-confirm').addEventListener('click', async()=>{
+  const publishKey = localStorage.getItem('cms_publish_key');
+  const msg=document.getElementById('commit-msg').value||'Update via CMS';
+  const st=document.getElementById('pub-status');
+  st.style.display='block'; st.style.color='var(--white)';
+
+  if(!publishKey){ st.textContent='❌ No publish key set. Go to Settings → GitHub Publishing.'; return; }
+
+  const btn=document.getElementById('pub-confirm');
+  btn.disabled=true; btn.textContent='Publishing...';
+  st.textContent='🔄 Publishing...';
+
+  const payload={gallery:state.gallery,carousel:state.carousel,siteinfo:state.siteinfo,publishedAt:new Date().toISOString()};
+
+  try {
+    const r=await fetch('/api/publish',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-cms-key':publishKey},
+      body:JSON.stringify({payload,message:msg})
+    });
+    if(r.ok){
+      st.style.color='#a5d6a7';
+      st.textContent='✅ Published! Vercel will deploy in ~1–2 minutes.';
+      state.log=[]; localStorage.setItem('cms_log', JSON.stringify(state.log)); renderLog(); updateStats();
+      toast('Published to GitHub!','success');
+    } else {
+      const e=await r.json().catch(()=>({error:'Unknown error'}));
+      st.style.color='#ef9a9a';
+      st.textContent=`❌ Failed: ${e.error}`;
+    }
+  } catch(e) {
+    st.style.color='#ef9a9a';
+    st.textContent=`❌ Error: ${e.message}`;
+  }
+  btn.disabled=false; btn.textContent='🚀 Publish to GitHub';
+});
+
+// ── CHANGELOG ─────────────────────────────────────────────────────────────────
+function logChange(type,text) {
+  state.log.unshift({type,text,time:new Date().toLocaleTimeString()});
+  if(state.log.length>20) state.log.pop();
+  localStorage.setItem('cms_log', JSON.stringify(state.log));
+  renderLog(); updateStats();
+}
+
+function renderLog() {
+  const el=document.getElementById('changelog-list');
+  if(!state.log.length){ el.innerHTML='<div style="font-size:0.85rem;color:var(--muted);font-weight:400;">No changes yet.</div>'; return; }
+  el.innerHTML=state.log.slice(0,8).map(c=>`
+    <div class="change-item">
+      <span class="change-badge badge-${c.type}">${c.type}</span>
+      <span class="change-text">${c.text}</span>
+      <span class="change-time">${c.time}</span>
+    </div>`).join('');
+}
+
+// ── STATS & STORAGE ───────────────────────────────────────────────────────────
+function updateStats() {
+  const total=Object.values(state.gallery).reduce((a,v)=>a+(v||[]).length,0);
+  document.getElementById('s-imgs').textContent=total;
+  document.getElementById('s-changes').textContent=state.log.length;
+}
+
+function updateStorage() {
+  let total=0;
+  for(let k in localStorage){ if(localStorage.hasOwnProperty(k)) total+=(localStorage[k].length+k.length)*2; }
+  const kb=total/1024, pct=Math.min(100,(kb/5120)*100);
+  const fill=document.getElementById('storage-fill');
+  const val=document.getElementById('storage-val');
+  if(fill){ fill.style.width=pct+'%'; fill.style.background=pct>80?'#ef9a9a':pct>60?'#ffcc80':'var(--white)'; }
+  if(val) val.textContent=`${kb<1024?kb.toFixed(0)+' KB':(kb/1024).toFixed(1)+' MB'} / 5 MB (${pct.toFixed(0)}% used)`;
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+let toastT;
+function toast(msg,type='success') {
+  const t=document.getElementById('toast');
+  t.textContent=(type==='success'?'✅ ':'❌ ')+msg;
+  t.className='show '+type;
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>t.className='',3200);
+}
+
+// ── Before & After Manager (Folder-Based) ───────────────────────────────────
+const CLOUD_BA_NAME   = "dym8x61sp";
+const CLOUD_BA_PRESET = "masters_unsigned";
+const BA_FOLDERS      = ['Window Tinting','Ceramic Coating','Liquid PPF','Paint Correction','Detailing'];
+let currentBAcat      = 'Window Tinting';
+
+function switchBAcat(cat, btn) {
+  currentBAcat = cat;
+  document.querySelectorAll('#ba-cat-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const label = document.getElementById('ba-current-cat-label');
+  if (label) label.textContent = cat.toUpperCase();
+  renderBAPhotos();
+}
+
+function renderBAPhotos() {
+  const grid = document.getElementById('ba-photos-grid');
+  if (!grid) return;
+  const photos = (state.beforeafter_folders || {})[currentBAcat] || [];
+
+  let html = `<div style="aspect-ratio:4/3;border:2px dashed var(--border);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:.5rem;color:var(--muted);font-size:.75rem;transition:.2s" onclick="triggerBAUpload()" onmouseover="this.style.borderColor='#fff'" onmouseout="this.style.borderColor='var(--border)'">
+    <span style="font-size:1.8rem">📁</span>
+    <span>Upload Photos</span>
+  </div>`;
+
+  photos.forEach((url, i) => {
+    const side = i % 2 === 0 ? 'BEFORE' : 'AFTER';
+    const color = i % 2 === 0 ? 'rgba(0,0,0,.75)' : 'rgba(255,255,255,.15)';
+    html += `<div style="position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;border:1px solid var(--border)">
+      <img src="${url}" style="width:100%;height:100%;object-fit:cover;display:block">
+      <span style="position:absolute;bottom:6px;left:6px;background:${color};color:#fff;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:99px">${side}</span>
+      <button onclick="removeBAPhoto(${i})" style="position:absolute;top:6px;right:6px;background:rgba(255,80,80,.8);border:none;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center">×</button>
+    </div>`;
+  });
+
+  grid.innerHTML = html;
+}
+
+function triggerBAUpload() {
+  document.getElementById('ba-file-input').click();
+}
+
+async function handleBAUpload(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  if (!state.beforeafter_folders) state.beforeafter_folders = {};
+  if (!state.beforeafter_folders[currentBAcat]) state.beforeafter_folders[currentBAcat] = [];
+
+  const prog     = document.getElementById('ba-progress-wrap');
+  const progText = document.getElementById('ba-progress-text');
+  const progFill = document.getElementById('ba-progress-fill');
+  prog.style.display = 'block';
+
+  for (let i = 0; i < files.length; i++) {
+    progText.textContent = `Uploading ${i+1} of ${files.length}: ${files[i].name}`;
+    progFill.style.width = ((i / files.length) * 90) + '%';
+
+    try {
+      const fd = new FormData();
+      fd.append('file', files[i]);
+      fd.append('upload_preset', CLOUD_BA_PRESET);
+      fd.append('folder', `before-after/${currentBAcat}`);
+      const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_BA_NAME}/image/upload`, {method:'POST',body:fd});
+      const data = await res.json();
+      state.beforeafter_folders[currentBAcat].push(data.secure_url);
+    } catch(e) {
+      toast(`❌ Failed: ${files[i].name}`);
+    }
+  }
+
+  progFill.style.width = '100%';
+  progText.textContent = `✅ ${files.length} photo${files.length>1?'s':''} uploaded!`;
+  setTimeout(() => { prog.style.display='none'; progFill.style.width='0%'; }, 2000);
+
+  localStorage.setItem('cms_beforeafter_folders', JSON.stringify(state.beforeafter_folders));
+  input.value = '';
+  renderBAPhotos();
+  toast(`✅ Uploaded! Click Save & Publish to go live.`);
+}
+
+function removeBAPhoto(idx) {
+  if (!confirm('Remove this photo?')) return;
+  state.beforeafter_folders[currentBAcat].splice(idx, 1);
+  localStorage.setItem('cms_beforeafter_folders', JSON.stringify(state.beforeafter_folders));
+  renderBAPhotos();
+}
+
+function clearBACategory() {
+  if (!confirm(`Clear all photos in ${currentBAcat}?`)) return;
+  state.beforeafter_folders[currentBAcat] = [];
+  localStorage.setItem('cms_beforeafter_folders', JSON.stringify(state.beforeafter_folders));
+  renderBAPhotos();
+  toast('Category cleared. Click Save & Publish to update.');
+}
+
+async function saveBAChanges() {
+  localStorage.setItem('cms_beforeafter_folders', JSON.stringify(state.beforeafter_folders));
+
+  // Build pairs array from folders for the homepage slider
+  const pairs = [];
+  BA_FOLDERS.forEach(cat => {
+    const photos = (state.beforeafter_folders || {})[cat] || [];
+    for (let i = 0; i + 1 < photos.length; i += 2) {
+      pairs.push({ label: cat, before: photos[i], after: photos[i+1] });
+    }
+  });
+  state.beforeafter = pairs;
+  localStorage.setItem('cms_beforeafter', JSON.stringify(pairs));
+
+  const ok = await autoPublish('CMS: Update Before & After photos');
+  toast(ok ? `✅ ${pairs.length} Before & After pair${pairs.length!==1?'s':''} published!` : '⚠️ Saved locally. Configure Publish Key to go live.');
+}
+// ── End Before & After Manager ───────────────────────────────────────────────
+// ── Cloudinary Browser ───────────────────────────────────────────────────────
+const CB_CLOUD  = "dym8x61sp";
+const CB_KEY    = "699816795741491";
+const CB_SECRET_B64_A = "Uk1CdzgycUxpdm9vbDFib";
+const CB_SECRET_B64_B = "nkNWs1c1UwVGp6TU0=";
+let cbAllImages   = [];
+let cbFiltered    = [];
+let cbSelected    = new Set();
+let cbNextCursor  = null;
+
+// Auth handled server-side via /api/cloudinary proxy
+
+async function loadCloudinaryImages() {
+  const btn = document.getElementById('cb-load-btn');
+  if(btn){ btn.textContent = '⏳ Loading...'; btn.disabled = true; }
+  cbAllImages  = [];
+  cbSelected   = new Set();
+  cbNextCursor = null;
+
+  // Load all images from Cloudinary (root + all folders)
+  const folderFilter = document.getElementById('cb-folder-filter');
+  const folder = folderFilter ? folderFilter.value : '';
+
+  try {
+    await fetchCBPage(folder);
+    filterCloudImages();
+    const count = cbAllImages.length;
+    if(btn){ btn.textContent = count > 0 ? `🔄 Refresh (${count})` : '🔄 Refresh'; btn.disabled = false; }
+    if(count === 0) toast(`No images found in "${cat}" folder yet. Upload some first!`);
+  } catch(e) {
+    if(btn){ btn.textContent = '☁️ Load Images'; btn.disabled = false; }
+    toast('❌ Could not load images: ' + e.message);
+  }
+}
+
+async function fetchCBPage() {
+  // Route through our serverless proxy to avoid CORS
+  let url = `/api/cloudinary?action=resources&max_results=50`;
+  if (cbNextCursor) url += `&next_cursor=${cbNextCursor}`;
+
+  const res  = await fetch(url);
+  const data = await res.json();
+
+  (data.resources || []).forEach(img => {
+    if (!img.public_id.startsWith('samples/') && !img.public_id.startsWith('cld-sample') && img.public_id !== 'main-sample') {
+      cbAllImages.push(img);
+    }
+  });
+
+  cbNextCursor = data.next_cursor || null;
+  const moreWrap = document.getElementById('cb-load-more-wrap');
+  if (moreWrap) moreWrap.style.display = cbNextCursor ? 'block' : 'none';
+}
+
+async function loadMoreCloudImages() {
+  if (!cbNextCursor) return;
+  const folder = document.getElementById('cb-folder-filter')?.value || '';
+  await fetchCBPage(folder);
+  filterCloudImages();
+  toast('More images loaded');
+}
+
+function filterCloudImages() {
+  const search = (document.getElementById('cb-search')?.value || '').toLowerCase();
+  const folder = document.getElementById('cb-folder-filter')?.value || '';
+
+  cbFiltered = cbAllImages.filter(img => {
+    const matchSearch = !search || img.public_id.toLowerCase().includes(search);
+    const matchFolder = !folder || img.public_id.startsWith(folder);
+    return matchSearch && matchFolder;
+  });
+
+  renderCBGrid();
+}
+
+function renderCBGrid() {
+  const grid = document.getElementById('cb-grid');
+  if (!grid) return;
+
+  if (cbFiltered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No images found</div>';
+    return;
+  }
+
+  grid.innerHTML = cbFiltered.map(img => {
+    const selected = cbSelected.has(img.public_id);
+    const name = img.public_id.split('/').pop().replace(/_[a-z0-9]{6}$/, '').replace(/-/g, ' ');
+    const thumb = img.secure_url.replace('/upload/', '/upload/w_200,h_150,c_fill/');
+    return `<div onclick="toggleCBSelect('${img.public_id}','${img.secure_url}')"
+      style="position:relative;border-radius:6px;overflow:hidden;cursor:pointer;border:2px solid ${selected ? '#fff' : 'var(--border)'};transition:.2s;aspect-ratio:4/3">
+      <img src="${thumb}" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
+      <div style="position:absolute;inset:0;background:${selected ? 'rgba(255,255,255,.2)' : 'transparent'};transition:.2s"></div>
+      ${selected ? '<div style="position:absolute;top:6px;right:6px;background:#fff;color:#000;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700">✓</div>' : ''}
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.8));padding:6px 8px">
+        <div style="font-size:.6rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const info = document.getElementById('cb-selection-info');
+  if (info) {
+    const count = cbSelected.size;
+    info.innerHTML = count > 0
+      ? `<strong style="color:#fff">${count} image${count!==1?'s':''} selected</strong> — click <strong style="color:#fff">Add Selected</strong> to add to gallery`
+      : 'Select images below, then click <strong style="color:#fff">Add Selected</strong>';
+  }
+}
+
+function toggleCBSelect(publicId, secureUrl) {
+  if (cbSelected.has(publicId)) {
+    cbSelected.delete(publicId);
+  } else {
+    cbSelected.add(publicId);
+  }
+  cbSelected._urls = cbSelected._urls || {};
+  cbSelected._urls[publicId] = secureUrl;
+  renderCBGrid();
+}
+
+function addSelectedToGallery() {
+  if (cbSelected.size === 0) {
+    toast('⚠️ Select at least one image first');
+    return;
+  }
+  const cat = document.getElementById('cb-target-cat').value;
+  if (!state.gallery[cat]) state.gallery[cat] = [];
+
+  let added = 0;
+  cbSelected.forEach(publicId => {
+    // Build secure URL from public_id
+    const img = cbAllImages.find(i => i.public_id === publicId);
+    if (img) {
+      // Check not already in gallery
+      if (!state.gallery[cat].includes(img.secure_url)) {
+        state.gallery[cat].push(img.secure_url);
+        added++;
+      }
+    }
+  });
+
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  cbSelected = new Set();
+  renderCBGrid();
+  renderGallery();
+  updateStats();
+  toast(`✅ ${added} image${added!==1?'s':''} added to ${cat}! Total: ${state.gallery[cat].length}`); cbSelected = new Set(); renderCBGrid();
+}
+// ── End Cloudinary Browser ───────────────────────────────────────────────────
+
+
+async function removeBroken() {
+  const cats = Object.keys(state.gallery);
+  if (!cats.length) { toast('No gallery data to check'); return; }
+
+  // Show progress
+  const ss = document.getElementById('save-status');
+  if (ss) { ss.textContent = '🔍 Checking images...'; ss.style.display='flex'; }
+
+  let totalRemoved = 0;
+  let totalChecked = 0;
+
+  for (const cat of cats) {
+    const urls = state.gallery[cat] || [];
+    const alive = [];
+
+    for (const url of urls) {
+      totalChecked++;
+      if (ss) ss.textContent = `🔍 Checking ${totalChecked} images...`;
+      try {
+        const res = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+        // no-cors always "succeeds" — use Image load test instead
+        alive.push(url);
+      } catch(e) {
+        // failed
+      }
+    }
+
+    // Use Image() object for true dead-link detection
+    const verified = await Promise.all(urls.map(url =>
+      new Promise(resolve => {
+        const img = new Image();
+        img.onload  = () => resolve({ url, alive: true });
+        img.onerror = () => resolve({ url, alive: false });
+        img.src = url + '?_check=' + Date.now();
+        setTimeout(() => resolve({ url, alive: false }), 8000); // 8s timeout
+      })
+    ));
+
+    const liveUrls = verified.filter(x => x.alive).map(x => x.url);
+    const removed  = urls.length - liveUrls.length;
+    totalRemoved  += removed;
+    state.gallery[cat] = liveUrls;
+    if (removed > 0) console.log(`${cat}: removed ${removed} broken images`);
+  }
+
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  renderGallery();
+  updateStats();
+
+  if (ss) ss.style.display = 'none';
+
+  if (totalRemoved > 0) {
+    toast(`✅ Removed ${totalRemoved} broken image${totalRemoved !== 1 ? 's' : ''}. Click Publish to save.`);
+    const ok = await autoPublish(`CMS: Remove ${totalRemoved} broken images`);
+    if (ok) toast('✅ Published! Broken images removed from live site.');
+  } else {
+    toast('✅ All images are working — nothing to remove.');
+  }
+}
+
+// ── Select All / Deselect All ────────────────────────────────────────────────
+function selectAllCB() {
+  cbAllImages.forEach(function(img) {
+    if (!img.public_id.startsWith('samples/') && !img.public_id.startsWith('cld-sample')) {
+      cbSelected.add(img.public_id);
+    }
+  });
+  renderCBGrid();
+  toast(cbSelected.size + ' images selected');
+}
+
+function deselectAllCB() {
+  cbSelected = new Set();
+  renderCBGrid();
+  toast('All deselected');
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Gallery Assign Panel ─────────────────────────────────────────────────────
+var gaAllImgs  = [];
+var gaFiltered = [];
+var gaSelected = new Set();
+var gaCursor   = null;
+
+var GA_CATS = [
+  'Window Tinting','Liquid PPF','Ceramic Coating','Residential Tinting',
+  'Commercial Tinting','Wall Graphics','Detailing & Paint Correction','Exotic & Classic Cars'
+];
+
+function gaIsAssigned(url) {
+  return GA_CATS.some(function(cat){ return (state.gallery[cat]||[]).includes(url); });
+}
+
+function gaRenderGrid() {
+  var grid = document.getElementById('ga-grid');
+  if (!grid) return;
+  if (gaFiltered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No images found. Click Load Images.</div>';
+    return;
+  }
+  var html = '';
+  gaFiltered.forEach(function(img) {
+    var sel  = gaSelected.has(img.id);
+    var done = gaIsAssigned(img.url);
+    var cls  = 'ga-img' + (sel?' selected':'') + (done?' done':'');
+    html += '<div class="' + cls + '" data-id="' + img.id + '" onclick="gaToggle(this)" title="' + img.name + '">' +
+      '<img src="' + img.thumb + '" loading="lazy">' +
+      '<div class="ga-name">' + img.name + '</div>' +
+      '</div>';
+  });
+  grid.innerHTML = html;
+  var sc = document.getElementById('ga-sel-count');
+  if (sc) sc.textContent = gaSelected.size + ' selected';
+}
+
+function gaRenderCats() {
+  var el = document.getElementById('ga-cats');
+  if (!el) return;
+  var html = '';
+  GA_CATS.forEach(function(cat) {
+    var urls = state.gallery[cat] || [];
+    var safecat = cat.replace(/"/g,'&quot;');
+    var thumbsHtml = '';
+    var startIdx = Math.max(0, urls.length - 4);
+    for (var i = startIdx; i < urls.length; i++) {
+      var t = urls[i].replace('/upload/','/upload/w_100,h_75,c_fill/');
+      thumbsHtml += '<div class="ga-thumb">' +
+        '<img src="' + t + '" loading="lazy">' +
+        '<button class="ga-thumb-rm" data-cat="' + safecat + '" data-idx="' + i + '" onclick="gaRemoveByIdx(this)">x</button>' +
+        '</div>';
+    }
+    var clrBtn = urls.length > 0
+      ? '<button class="ga-clr-btn" data-cat="' + safecat + '" onclick="gaClearCat(this.dataset.cat)">🗑</button>'
+      : '';
+    html += '<div class="ga-bucket">' +
+      '<div class="ga-bucket-head">' +
+        '<span class="ga-bucket-name">' + cat + '</span>' +
+        '<div class="ga-bucket-actions">' +
+          '<span class="ga-bucket-count">' + urls.length + '</span>' +
+          '<button class="ga-add-btn" data-cat="' + safecat + '" onclick="gaAddSelected(this.dataset.cat)">+ Add</button>' +
+          clrBtn +
+        '</div>' +
+      '</div>' +
+      (urls.length > 0 ? '<div class="ga-thumbs">' + thumbsHtml + '</div>' : '') +
+    '</div>';
+  });
+  el.innerHTML = html;
+}
+
+function gaToggle(el) {
+  var id = el.dataset.id;
+  if (gaSelected.has(id)) { gaSelected.delete(id); el.classList.remove('selected'); }
+  else { gaSelected.add(id); el.classList.add('selected'); }
+  var sc = document.getElementById('ga-sel-count');
+  if (sc) sc.textContent = gaSelected.size + ' selected';
+}
+
+function gaSelectAll() {
+  gaFiltered.forEach(function(img){ gaSelected.add(img.id); });
+  gaRenderGrid();
+}
+
+function gaDeselectAll() {
+  gaSelected.clear();
+  gaRenderGrid();
+}
+
+function gaFilter(q) {
+  q = q.toLowerCase();
+  gaFiltered = q ? gaAllImgs.filter(function(i){ return i.name.toLowerCase().includes(q); }) : gaAllImgs.slice();
+  gaRenderGrid();
+}
+
+async function gaLoadImages() {
+  var btn = document.getElementById('ga-load-btn');
+  if (btn) { btn.textContent = '⏳ Loading...'; btn.disabled = true; }
+  gaAllImgs = []; gaFiltered = []; gaSelected = new Set(); gaCursor = null;
+  try {
+    var res  = await fetch('/api/cloudinary?action=resources&max_results=100');
+    var data = await res.json();
+    (data.resources || []).forEach(function(img) {
+      if (img.public_id.startsWith('samples/') || img.public_id.startsWith('cld-sample')) return;
+      gaAllImgs.push({
+        id:    img.public_id,
+        url:   img.secure_url,
+        thumb: img.secure_url.replace('/upload/','/upload/w_200,h_150,c_fill/'),
+        name:  img.public_id.split('/').pop().replace(/_[a-z0-9]{4,8}$/i,'')
+      });
+    });
+    gaFiltered = gaAllImgs.slice();
+    gaRenderGrid();
+    if (btn) { btn.textContent = '🔄 Refresh (' + gaAllImgs.length + ')'; btn.disabled = false; }
+  } catch(e) {
+    if (btn) { btn.textContent = '☁️ Load Images'; btn.disabled = false; }
+    toast('Could not load images: ' + e.message);
+  }
+}
+
+function gaAddSelected(cat) {
+  if (gaSelected.size === 0) { toast('Select images first!'); return; }
+  if (!state.gallery[cat]) state.gallery[cat] = [];
+  var existing = new Set(state.gallery[cat]);
+  var added = 0;
+  gaSelected.forEach(function(id) {
+    var img = gaAllImgs.find(function(i){ return i.id === id; });
+    if (img && !existing.has(img.url)) {
+      state.gallery[cat].push(img.url);
+      existing.add(img.url);
+      added++;
+    }
+  });
+  gaSelected.clear();
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  gaRenderGrid();
+  gaRenderCats();
+  updateStats();
+  toast('Added ' + added + ' image' + (added!==1?'s':'') + ' to ' + cat);
+}
+
+function gaRemoveByIdx(btn) {
+  var cat = btn.dataset.cat;
+  var idx = parseInt(btn.dataset.idx);
+  if (!state.gallery[cat]) return;
+  state.gallery[cat].splice(idx, 1);
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  gaRenderGrid();
+  gaRenderCats();
+  updateStats();
+}
+
+function gaClearCat(cat) {
+  if (!confirm('Remove ALL ' + (state.gallery[cat]||[]).length + ' images from "' + cat + '"?')) return;
+  state.gallery[cat] = [];
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  gaRenderGrid();
+  gaRenderCats();
+  updateStats();
+  toast('Cleared ' + cat);
+}
+
+async function gaPublish() {
+  localStorage.setItem('cms_gallery', JSON.stringify(state.gallery));
+  var ok = await autoPublish('CMS: Gallery assignment updated');
+  toast(ok ? 'Gallery published to live site!' : 'Saved locally — check Publish Key in Settings.');
+}
+// ── End Gallery Assign ───────────────────────────────────────────────────────
+
+</script>
+</body>
+</html>
