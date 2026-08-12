@@ -70,6 +70,62 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(
   .article-hero,.post-hero,.page-hero,.blog-hero{padding-top:36px!important}
 }
 
+
+/* ===== SYNCHRONIZED MAIN-SITE NAV ===== */
+header.nav{
+  position:fixed;top:108px;left:0;right:0;z-index:1000;
+  background:rgba(8,9,11,.82);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.10);padding:12px 0;
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-inner .nav-links{margin-left:auto;margin-right:auto}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;font-weight:600;color:#b8b8b8;position:relative;transition:color .25s;text-decoration:none}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:#e8b923;transition:width .3s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{width:100%}
+.nav-links .has-dd{position:relative;display:inline-block}
+.nav-links .has-dd .dd-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:.3rem}
+.nav-links .has-dd .dd-toggle::after{content:"\25BE";font-size:.7em;opacity:.7;position:static;width:auto;height:auto;background:none}
+.nav-links .dd{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);
+  min-width:230px;background:#0e0e0e;border:1px solid rgba(255,255,255,.18);
+  padding:8px 0;display:flex;flex-direction:column;gap:0;opacity:0;visibility:hidden;
+  transition:opacity .2s,transform .2s;box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:200
+}
+.nav-links .has-dd:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-links .dd::after{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.nav-links .dd a{padding:10px 20px;font-size:13px;white-space:nowrap}
+.nav-links .dd a::after{display:none}
+.nav-links .dd a:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.nav-phone{font-family:"DM Mono",monospace;font-weight:700;font-size:14px;color:#fff;letter-spacing:.02em}
+.nav-phone:hover{color:#e8b923}
+.btn-gold{background:#e8b923!important;color:#0a0a0a!important}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:24px;height:2px;background:#fff;transition:.3s}
+.mobile-menu{display:none}
+
+@media(max-width:680px){
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  header.nav .nav-phone{display:none}
+  .burger{display:flex}
+  .mobile-menu{
+    display:block;position:fixed;inset:0;z-index:1100;background:rgba(8,9,11,.97);
+    backdrop-filter:blur(20px);transform:translateX(100%);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1);padding:90px 28px
+  }
+  .mobile-menu.open{transform:none}
+  .mobile-menu a{
+    display:block;font-family:"Bebas Neue",sans-serif;font-weight:700;font-size:2rem;
+    text-transform:uppercase;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.10);
+    color:#fff;text-decoration:none
+  }
+  .mobile-menu .mm-call{margin-top:30px;font-family:"DM Mono",monospace;font-size:1rem;color:#e8b923}
+  .mm-close{position:absolute;top:26px;right:24px;background:none;border:0;color:#fff;font-size:34px;cursor:pointer;line-height:1}
+}
+
 </style>
 </head>
 <body>
@@ -80,20 +136,52 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(
   </div>
   <div class="tb-strip">Long Island, New York —— 863 Rte 109, West Babylon, NY —— <a href="tel:6312264300">631-226-4300</a></div>
 </div>
-<header class="nav">
+<header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <nav style="display:flex;align-items:center;gap:32px">
-      <a href="/" style="font-size:14px;font-weight:600;color:var(--muted)">Home</a>
-      <a href="/#services" style="font-size:14px;font-weight:600;color:var(--muted)">Services</a>
-      <a href="/gallery" style="font-size:14px;font-weight:600;color:var(--muted)">Gallery</a>
-      <a href="/blog/" style="font-size:14px;font-weight:600;color:#fff">Blog</a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <span class="has-dd"><a class="dd-toggle">Services</a>
+        <span class="dd">
+          <a href="/window-tinting">Window Tinting</a>
+          <a href="/paint-protection-film">Paint Protection Film (PPF)</a>
+          <a href="/liquid-ppf">Liquid Paint Protection Film</a>
+          <a href="/ceramic-coating">Ceramic Coating</a>
+          <a href="/residential">Residential Tinting</a>
+          <a href="/commercial">Commercial Tinting</a>
+          <a href="/wall-graphics">Wall Graphics</a>
+          <a href="/detailing">Detailing &amp; Paint Correction</a>
+        </span>
+      </span>
+      <a href="/gallery">Gallery</a>
+      <a href="/blog/">Blog</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
     </nav>
-    <div style="display:flex;align-items:center;gap:14px">
-      <a href="tel:6312264300" style="font-family:'DM Mono',monospace;font-weight:700;font-size:14px">631-226-4300</a>
-      <a href="/#contact" class="btn btn-gold">Free Quote</a>
+    <div class="nav-cta">
+      <a href="tel:6312264300" class="nav-phone">631-226-4300</a>
+      <a href="/contact" class="btn btn-gold">Free Quote</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mm-close" id="mmClose" aria-label="Close">&times;</button>
+  <a href="/">Home</a>
+  <a href="/window-tinting">Window Tinting</a>
+  <a href="/paint-protection-film">Paint Protection Film (PPF)</a>
+  <a href="/liquid-ppf">Liquid Paint Protection Film</a>
+  <a href="/ceramic-coating">Ceramic Coating</a>
+  <a href="/residential">Residential Tinting</a>
+  <a href="/commercial">Commercial Tinting</a>
+  <a href="/wall-graphics">Wall Graphics</a>
+  <a href="/detailing">Detailing</a>
+  <a href="/gallery">Gallery</a>
+  <a href="/blog/">Blog</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="tel:6312264300" class="mm-call">📞 631-226-4300</a>
+</div>
 <section class="article-hero">
   <div class="wrap-narrow">
     <div class="breadcrumb"><a href="/">Home</a> › <a href="/blog/">Blog</a> › <span style="color:#fff">Window Tinting</span></div>
@@ -149,4 +237,16 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(
 <footer><div class="wrap"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px">
 <span>© 2026 Masters Window Tinting & Detail · 863 Rte 109 Suite A, West Babylon, NY 11704</span>
 <span><a href="tel:6312264300" style="color:var(--muted)">631-226-4300</a> · <a href="/privacy-policy" style="color:var(--muted)">Privacy Policy</a></span>
-</div></div></footer></body></html>
+</div></div></footer>
+<script>
+(function(){
+  var mm=document.getElementById('mobileMenu');
+  var burger=document.getElementById('burger');
+  var close=document.getElementById('mmClose');
+  if(burger&&mm) burger.onclick=function(){mm.classList.add('open');};
+  if(close&&mm) close.onclick=function(){mm.classList.remove('open');};
+  if(mm) mm.querySelectorAll('a').forEach(function(a){a.onclick=function(){mm.classList.remove('open');};});
+})();
+</script>
+
+</body></html>

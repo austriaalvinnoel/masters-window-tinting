@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog | Masters Window Tinting Long Island NY</title>
-<link rel="canonical" href="https://masters-window-tinting.vercel.app/blog/">
+<link rel="canonical" href="https://masterswindowtinting.com/blog/">
 <meta name="description" content="Expert tips on window tinting, ceramic coating, PPF, and car care from Masters Window Tinting — Long Island's trusted auto protection specialists since 1999.">
 <meta property="og:title" content="Blog | Masters Window Tinting Long Island NY">
 <meta property="og:description" content="Expert tips on window tinting, ceramic coating, PPF and car care from Long Island's trusted auto protection specialists.">
-<meta property="og:image" content="https://masters-window-tinting.vercel.app/og-cover.jpg">
+<meta property="og:image" content="https://masterswindowtinting.com/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,8 +16,7 @@
 :root{--bg:#000;--bg-2:#070707;--surface:#0e0e0e;--line:rgba(255,255,255,.10);--line-2:rgba(255,255,255,.18);--ink:#fff;--muted:#b8b8b8;--gold:#fff;--maxw:1240px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:"Inter",sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:108px}
-a{color:inherit;text-decoration:none}
+body{background:var(--bg);color:var(--ink);font-family:"Inter",sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:168px;text-decoration:none}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 
 /* TOP BANNER */
@@ -36,7 +35,7 @@ header.nav{position:fixed;top:108px;left:0;right:0;z-index:1000;background:rgba(
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 40px -12px rgba(255,255,255,.4)}
 
 /* PAGE */
-.page-hero{padding:72px 0 60px;border-bottom:1px solid var(--line)}
+.page-hero{padding:56px 0 60px;border-bottom:1px solid var(--line)}
 .eyebrow{font-family:"DM Mono",monospace;font-size:11px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
 h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:.04em;text-transform:uppercase;line-height:.95;margin-bottom:18px}
 .page-hero p{color:var(--muted);font-size:16px;max-width:540px}
@@ -68,6 +67,62 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(
 
 @media(max-width:1024px){.blog-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:680px){.blog-grid{grid-template-columns:1fr}.tb-main{flex-direction:column;gap:.8rem;padding:12px 1rem;text-align:center}.tb-logo{height:54px}header.nav{top:158px}body{padding-top:158px}}
+
+/* ===== SYNCHRONIZED MAIN-SITE NAV ===== */
+header.nav{
+  position:fixed;top:108px;left:0;right:0;z-index:1000;
+  background:rgba(8,9,11,.82);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.10);padding:12px 0;
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-inner .nav-links{margin-left:auto;margin-right:auto}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:14px;font-weight:600;color:#b8b8b8;position:relative;transition:color .25s;text-decoration:none}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:#e8b923;transition:width .3s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{width:100%}
+.nav-links .has-dd{position:relative;display:inline-block}
+.nav-links .has-dd .dd-toggle{cursor:pointer;display:inline-flex;align-items:center;gap:.3rem}
+.nav-links .has-dd .dd-toggle::after{content:"\25BE";font-size:.7em;opacity:.7;position:static;width:auto;height:auto;background:none}
+.nav-links .dd{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);
+  min-width:230px;background:#0e0e0e;border:1px solid rgba(255,255,255,.18);
+  padding:8px 0;display:flex;flex-direction:column;gap:0;opacity:0;visibility:hidden;
+  transition:opacity .2s,transform .2s;box-shadow:0 16px 40px rgba(0,0,0,.55);z-index:200
+}
+.nav-links .has-dd:hover .dd{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.nav-links .dd::after{content:"";position:absolute;top:-12px;left:0;right:0;height:12px}
+.nav-links .dd a{padding:10px 20px;font-size:13px;white-space:nowrap}
+.nav-links .dd a::after{display:none}
+.nav-links .dd a:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.nav-phone{font-family:"DM Mono",monospace;font-weight:700;font-size:14px;color:#fff;letter-spacing:.02em}
+.nav-phone:hover{color:#e8b923}
+.btn-gold{background:#e8b923!important;color:#0a0a0a!important}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{width:24px;height:2px;background:#fff;transition:.3s}
+.mobile-menu{display:none}
+
+@media(max-width:680px){
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  header.nav .nav-phone{display:none}
+  .burger{display:flex}
+  .mobile-menu{
+    display:block;position:fixed;inset:0;z-index:1100;background:rgba(8,9,11,.97);
+    backdrop-filter:blur(20px);transform:translateX(100%);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1);padding:90px 28px
+  }
+  .mobile-menu.open{transform:none}
+  .mobile-menu a{
+    display:block;font-family:"Bebas Neue",sans-serif;font-weight:700;font-size:2rem;
+    text-transform:uppercase;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.10);
+    color:#fff;text-decoration:none
+  }
+  .mobile-menu .mm-call{margin-top:30px;font-family:"DM Mono",monospace;font-size:1rem;color:#e8b923}
+  .mm-close{position:absolute;top:26px;right:24px;background:none;border:0;color:#fff;font-size:34px;cursor:pointer;line-height:1}
+}
+
 </style>
 </head>
 <body>
@@ -80,21 +135,52 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(
   <div class="tb-strip">Long Island, New York —— 863 Rte 109, West Babylon, NY —— <a href="tel:6312264300">631-226-4300</a></div>
 </div>
 
-<header class="nav">
+<header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <nav style="display:flex;align-items:center;gap:32px">
-      <a href="/" style="font-size:14px;font-weight:600;color:var(--muted)">Home</a>
-      <a href="/#services" style="font-size:14px;font-weight:600;color:var(--muted)">Services</a>
-      <a href="/gallery.html" style="font-size:14px;font-weight:600;color:var(--muted)">Gallery</a>
-      <a href="/blog/" style="font-size:14px;font-weight:600;color:#fff">Blog</a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <span class="has-dd"><a class="dd-toggle">Services</a>
+        <span class="dd">
+          <a href="/window-tinting">Window Tinting</a>
+          <a href="/paint-protection-film">Paint Protection Film (PPF)</a>
+          <a href="/liquid-ppf">Liquid Paint Protection Film</a>
+          <a href="/ceramic-coating">Ceramic Coating</a>
+          <a href="/residential">Residential Tinting</a>
+          <a href="/commercial">Commercial Tinting</a>
+          <a href="/wall-graphics">Wall Graphics</a>
+          <a href="/detailing">Detailing &amp; Paint Correction</a>
+        </span>
+      </span>
+      <a href="/gallery">Gallery</a>
+      <a href="/blog/">Blog</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
     </nav>
-    <div style="display:flex;align-items:center;gap:14px">
+    <div class="nav-cta">
       <a href="tel:6312264300" class="nav-phone">631-226-4300</a>
-      <a href="/#contact" class="btn btn-gold">Free Quote</a>
+      <a href="/contact" class="btn btn-gold">Free Quote</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mm-close" id="mmClose" aria-label="Close">&times;</button>
+  <a href="/">Home</a>
+  <a href="/window-tinting">Window Tinting</a>
+  <a href="/paint-protection-film">Paint Protection Film (PPF)</a>
+  <a href="/liquid-ppf">Liquid Paint Protection Film</a>
+  <a href="/ceramic-coating">Ceramic Coating</a>
+  <a href="/residential">Residential Tinting</a>
+  <a href="/commercial">Commercial Tinting</a>
+  <a href="/wall-graphics">Wall Graphics</a>
+  <a href="/detailing">Detailing</a>
+  <a href="/gallery">Gallery</a>
+  <a href="/blog/">Blog</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="tel:6312264300" class="mm-call">📞 631-226-4300</a>
+</div>
 <section class="page-hero">
   <div class="wrap">
     <span class="eyebrow">Expert Tips & Guides</span>
@@ -156,7 +242,7 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(
 
     <article class="blog-card">
       <div class="blog-card-img">
-        <img src="https://masters-window-tinting.vercel.app/residential-hero.jpg" alt="Residential window tinting Long Island" loading="lazy">
+        <img src="https://masterswindowtinting.com/residential-hero.jpg" alt="Residential window tinting Long Island" loading="lazy">
       </div>
       <div class="blog-card-body">
         <span class="blog-cat">Residential</span>
@@ -184,10 +270,22 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(
   <div class="wrap">
     <div class="foot-bottom">
       <span>© 2026 Masters Window Tinting & Detail · 863 Rte 109 Suite A, West Babylon, NY 11704</span>
-      <span><a href="tel:6312264300">631-226-4300</a> · <a href="/privacy-policy.html">Privacy Policy</a></span>
+      <span><a href="tel:6312264300">631-226-4300</a> · <a href="/privacy-policy">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
+
+
+<script>
+(function(){
+  var mm=document.getElementById('mobileMenu');
+  var burger=document.getElementById('burger');
+  var close=document.getElementById('mmClose');
+  if(burger&&mm) burger.onclick=function(){mm.classList.add('open');};
+  if(close&&mm) close.onclick=function(){mm.classList.remove('open');};
+  if(mm) mm.querySelectorAll('a').forEach(function(a){a.onclick=function(){mm.classList.remove('open');};});
+})();
+</script>
 
 </body>
 </html>
