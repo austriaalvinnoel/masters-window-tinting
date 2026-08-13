@@ -678,6 +678,164 @@ section[id]{scroll-margin-top:170px}
 .seo-guide-links a:hover{border-color:#f4c21f;transform:translateY(-2px);color:#f4c21f}
 </style>
 
+
+<style id="seo-internal-links-layout-polish">
+/* ===== Internal-linking visual polish only ===== */
+
+/* Service-page Related Guides */
+.seo-guide-links{
+  padding:48px 0;
+  border-top:1px solid rgba(255,255,255,.10);
+  background:#0b0b0b;
+}
+.seo-guide-links .wrap{
+  max-width:1200px;
+  margin:0 auto;
+}
+.seo-guide-links h2{
+  margin:8px 0 18px;
+}
+.seo-guide-links .seo-guide-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+.seo-guide-links .seo-guide-grid > a{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:8px;
+  min-height:92px;
+  padding:18px 20px;
+  border:1px solid rgba(255,255,255,.13);
+  background:#0d0d0d;
+  color:#f5f5f5;
+  text-decoration:none;
+  transition:transform .25s,border-color .25s,background .25s;
+}
+.seo-guide-links .seo-guide-grid > a:hover{
+  transform:translateY(-3px);
+  border-color:#f4c21f;
+  background:#111;
+}
+.seo-guide-links .seo-guide-grid .eyebrow{
+  display:block;
+  margin:0;
+  color:#f4c21f;
+  line-height:1.2;
+}
+.seo-guide-links .seo-guide-grid strong{
+  display:block;
+  width:100%;
+  font-size:clamp(1.05rem,1.5vw,1.35rem);
+  line-height:1.25;
+  color:#fff;
+}
+.seo-guide-links .seo-guide-grid strong::after{
+  content:" →";
+  color:#f4c21f;
+}
+
+/* Blog article Related Services */
+.seo-related-links{
+  padding:48px 0;
+  border-top:1px solid rgba(255,255,255,.10);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  background:#0b0b0b;
+}
+.seo-related-links .wrap{
+  max-width:980px;
+  margin:0 auto;
+}
+.seo-related-links h2{
+  margin:8px 0 14px;
+  font-size:clamp(2rem,4vw,3.4rem);
+  line-height:1;
+}
+.seo-related-links p{
+  margin:0;
+  color:#b7b7b7;
+  line-height:1.8;
+  font-size:14px;
+}
+.seo-related-links a{
+  display:inline-block;
+  margin:5px 4px 5px 0;
+  padding:9px 12px;
+  border:1px solid rgba(244,194,31,.35);
+  color:#f4c21f;
+  text-decoration:none;
+  transition:background .25s,border-color .25s,transform .25s;
+}
+.seo-related-links a:hover{
+  background:rgba(244,194,31,.08);
+  border-color:#f4c21f;
+  transform:translateY(-1px);
+}
+
+/* Fix the overly narrow/right-shifted article layout on wide desktop */
+.article-wrap,
+.article-container,
+.article-shell .wrap,
+.article-hero .wrap,
+.article-main,
+article.article,
+main.article{
+  margin-left:auto;
+  margin-right:auto;
+}
+.article-shell > .wrap,
+.article-hero > .wrap{
+  max-width:1180px;
+}
+.article-main{
+  width:100%;
+  max-width:860px;
+}
+.article-layout{
+  max-width:1180px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.article-content{
+  width:100%;
+  max-width:860px;
+}
+
+/* Fallback for blog article pages that use generic wrap/content classes */
+body.blog-article main > .wrap,
+body.article-page main > .wrap{
+  max-width:1180px;
+}
+
+/* Prevent huge empty left-side imbalance on ultra-wide screens */
+@media(min-width:1400px){
+  .article-layout{
+    grid-template-columns:minmax(0,860px) 280px;
+    justify-content:center;
+  }
+}
+
+@media(max-width:760px){
+  .seo-guide-links{
+    padding:36px 0;
+  }
+  .seo-guide-links .seo-guide-grid{
+    grid-template-columns:1fr;
+  }
+  .seo-related-links{
+    padding:36px 0;
+  }
+  .seo-related-links a{
+    display:block;
+    width:100%;
+    margin:8px 0 0;
+  }
+}
+</style>
+
 </head>
 <body>
 
