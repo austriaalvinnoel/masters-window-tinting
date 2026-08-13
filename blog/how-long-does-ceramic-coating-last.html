@@ -1080,94 +1080,221 @@ body.article-page main > .wrap{
 </style>
 
 
-<style id="blog-article-centered-layout-final">
-/* FINAL article alignment fix — scoped only to Blog article pages */
+<style id="blog-article-main-site-final-fix">
+/* =========================================================
+   FINAL BLOG ARTICLE LAYOUT
+   Match the spacing / typography rhythm of the main website.
+   This specifically fixes the outer .article-content section
+   that was being limited to 860px and anchored to the left.
+   ========================================================= */
+
+/* Hero */
 .article-hero{
   width:100% !important;
+  max-width:none !important;
   margin:0 !important;
+  padding:54px 0 34px !important;
+  border-bottom:1px solid var(--line) !important;
 }
-.article-hero > .wrap{
-  width:min(100% - 48px, 1080px) !important;
-  max-width:1080px !important;
-  margin-left:auto !important;
-  margin-right:auto !important;
-  padding-left:0 !important;
-  padding-right:0 !important;
+.article-hero .wrap-narrow{
+  width:min(calc(100% - 56px), 1100px) !important;
+  max-width:1100px !important;
+  margin:0 auto !important;
+  padding:0 !important;
+}
+.article-hero .breadcrumb{
+  margin-bottom:15px !important;
+  font-family:var(--mono) !important;
+  font-size:10px !important;
+  letter-spacing:.13em !important;
+  text-transform:uppercase !important;
+}
+.article-hero .article-cat{
+  display:block !important;
+  margin-bottom:10px !important;
+  color:var(--gold) !important;
+  font-family:var(--mono) !important;
+  font-size:10px !important;
+  letter-spacing:.18em !important;
+  text-transform:uppercase !important;
+}
+.article-hero h1{
+  max-width:920px !important;
+  margin:0 0 14px !important;
+  font-family:var(--display) !important;
+  font-size:clamp(3rem,5.2vw,5.2rem) !important;
+  font-weight:800 !important;
+  line-height:.95 !important;
+  letter-spacing:.01em !important;
+  text-transform:uppercase !important;
+  color:#fff !important;
+}
+.article-hero .article-meta{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:8px !important;
+  color:var(--muted) !important;
+  font-family:var(--mono) !important;
+  font-size:10px !important;
+  letter-spacing:.09em !important;
+  text-transform:uppercase !important;
 }
 
-article.article-content.wrap,
-.article-content.wrap{
+/* IMPORTANT: reset the old outer 860px rule that caused left alignment */
+section.article-content,
+.article-content{
   display:block !important;
-  width:min(100% - 48px, 1080px) !important;
-  max-width:1080px !important;
-  margin-left:auto !important;
-  margin-right:auto !important;
-  padding-left:0 !important;
-  padding-right:0 !important;
-  float:none !important;
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding:52px 0 76px !important;
   position:relative !important;
   left:auto !important;
   right:auto !important;
+  float:none !important;
   transform:none !important;
 }
 
-article.article-content.wrap > *{
-  max-width:100%;
+/* Center the actual article body */
+.article-content > .wrap-narrow{
+  width:min(calc(100% - 56px), 1100px) !important;
+  max-width:1100px !important;
+  margin:0 auto !important;
+  padding:0 !important;
 }
-article.article-content.wrap > img,
-.article-content.wrap > img{
-  display:block;
+
+/* Main-page-like text rhythm */
+.article-content > .wrap-narrow > p,
+.article-content > .wrap-narrow > ul,
+.article-content > .wrap-narrow > ol,
+.article-content > .wrap-narrow > h2,
+.article-content > .wrap-narrow > h3,
+.article-content > .wrap-narrow > .callout,
+.article-content > .wrap-narrow > .article-cta{
   width:100% !important;
+  max-width:900px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+.article-content p,
+.article-content li{
+  font-family:var(--body) !important;
+  font-size:15px !important;
+  line-height:1.78 !important;
+  color:var(--muted) !important;
+}
+.article-content p{margin-bottom:20px !important}
+.article-content ul,
+.article-content ol{
+  margin-top:4px !important;
+  margin-bottom:28px !important;
+  padding-left:24px !important;
+  gap:7px !important;
+}
+.article-content h2{
+  margin-top:44px !important;
+  margin-bottom:14px !important;
+  font-family:var(--display) !important;
+  font-size:clamp(2rem,3vw,2.65rem) !important;
+  font-weight:800 !important;
+  line-height:1 !important;
+  letter-spacing:.02em !important;
+  text-transform:uppercase !important;
+  color:#fff !important;
+}
+.article-content h3{
+  margin-top:34px !important;
+  margin-bottom:12px !important;
+  font-family:var(--display) !important;
+  font-size:1.75rem !important;
+  line-height:1.05 !important;
+  text-transform:uppercase !important;
+  color:#fff !important;
+}
+
+/* Hero/article image should feel like the image blocks on main service pages */
+.article-content .article-img{
+  display:block !important;
+  width:min(100%, 980px) !important;
+  max-width:980px !important;
   height:auto !important;
-  max-width:100% !important;
-  margin-left:auto !important;
-  margin-right:auto !important;
+  aspect-ratio:auto !important;
+  margin:0 auto 42px !important;
+  border:1px solid var(--line-2) !important;
+  border-radius:4px !important;
+  object-fit:cover !important;
 }
 
-/* Keep readable text measure without shifting the article itself */
-article.article-content.wrap > p,
-article.article-content.wrap > h2,
-article.article-content.wrap > h3,
-article.article-content.wrap > ul,
-article.article-content.wrap > ol,
-article.article-content.wrap > blockquote,
-article.article-content.wrap > .tip-box,
-article.article-content.wrap > .article-cta{
-  max-width:900px;
-  margin-left:auto;
-  margin-right:auto;
+/* Callout / CTA spacing */
+.article-content .callout{
+  margin-top:26px !important;
+  margin-bottom:32px !important;
+  padding:20px 22px !important;
+}
+.article-content .article-cta{
+  margin-top:52px !important;
+  padding:34px 28px !important;
 }
 
-/* Related services aligns with the article instead of floating separately */
+/* Internal-link section aligns to the same centered article grid */
+.seo-related-links{
+  width:100% !important;
+  margin:0 !important;
+  padding:48px 0 !important;
+}
 .seo-related-links > .wrap{
-  width:min(100% - 48px, 1080px) !important;
-  max-width:1080px !important;
-  margin-left:auto !important;
-  margin-right:auto !important;
-  padding-left:0 !important;
-  padding-right:0 !important;
+  width:min(calc(100% - 56px), 1100px) !important;
+  max-width:1100px !important;
+  margin:0 auto !important;
+  padding:0 !important;
+}
+.seo-related-links h2{
+  font-family:var(--display) !important;
+  font-size:clamp(2rem,3.5vw,3rem) !important;
+  line-height:1 !important;
+  margin:8px 0 15px !important;
+}
+.seo-related-links p{
+  max-width:900px !important;
+  font-size:14px !important;
+  line-height:1.7 !important;
 }
 
-/* Neutralize older generic layout rules that caused the wide-screen offset */
+/* Remove old grid/article width side effects */
 .article-main,
 .article-layout,
-.article-shell > .wrap,
-.article-hero > .wrap,
-.article-content{
+.article-shell,
+.article-shell > .wrap{
+  max-width:none !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
   left:auto !important;
   right:auto !important;
 }
-.article-layout{
-  margin-left:auto !important;
-  margin-right:auto !important;
-}
 
+/* Mobile */
 @media(max-width:760px){
-  .article-hero > .wrap,
-  article.article-content.wrap,
-  .article-content.wrap,
+  .article-hero{
+    padding:38px 0 26px !important;
+  }
+  .article-hero .wrap-narrow,
+  .article-content > .wrap-narrow,
   .seo-related-links > .wrap{
-    width:min(100% - 32px, 1080px) !important;
+    width:calc(100% - 36px) !important;
+  }
+  .article-content{
+    padding:36px 0 54px !important;
+  }
+  .article-hero h1{
+    font-size:clamp(2.7rem,12vw,4rem) !important;
+  }
+  .article-content p,
+  .article-content li{
+    font-size:15px !important;
+  }
+  .article-content .article-img{
+    margin-bottom:30px !important;
   }
 }
 </style>
