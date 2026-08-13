@@ -1182,5 +1182,37 @@ body{padding-top:168px}
 })();
 </script>
 
+
+<script id="blog-reveal-fix">
+(function(){
+  const items = document.querySelectorAll('.reveal');
+
+  // Always show content if animation support is unavailable.
+  if(!('IntersectionObserver' in window)){
+    items.forEach(el => el.classList.add('in'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -4% 0px'
+  });
+
+  items.forEach(el => observer.observe(el));
+
+  // Safety fallback: never leave page content invisible.
+  window.setTimeout(() => {
+    items.forEach(el => el.classList.add('in'));
+  }, 900);
+})();
+</script>
+
 </body>
 </html>
