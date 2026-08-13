@@ -124,17 +124,273 @@ header.nav{
 }
 
 </style>
+
+<style id="blog-homepage-header-sync">
+/* Match Blog header/nav to the current homepage without changing Blog content */
+.top-banner{
+  position:relative;
+  background:#000;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.tb-main{
+  display:flex;
+  align-items:center;
+  gap:1.6rem;
+  padding:14px 2.5rem 12px;
+  max-width:1400px;
+  margin:0 auto;
+}
+.tb-logo-link{flex-shrink:0;line-height:0}
+.tb-logo{height:64px;width:auto;display:block}
+.tb-title{
+  flex:1;
+  font-family:'Poppins',sans-serif;
+  font-style:italic;
+  font-weight:700;
+  font-size:1.15rem;
+  color:#fff;
+  line-height:1.25;
+  margin:0;
+}
+.tb-strip{
+  background:#c8201a;
+  color:#fff;
+  text-align:center;
+  padding:8px 1rem;
+  font-family:'Poppins',sans-serif;
+  font-weight:600;
+  font-size:.82rem;
+  letter-spacing:.02em;
+}
+.tb-strip a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45)}
+
+header.nav{
+  position:relative !important;
+  top:auto !important;
+  left:auto;
+  right:auto;
+  z-index:1000;
+  background:#090a0c;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:0;
+}
+header.nav .wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 24px;
+}
+.nav-inner{
+  min-height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+.nav-inner .nav-links{
+  margin-left:auto;
+  margin-right:auto;
+}
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:32px;
+}
+.nav-links a{
+  font-family:'Poppins',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  color:#a9abb2;
+  text-decoration:none;
+  position:relative;
+  transition:color .25s;
+}
+.nav-links a:hover{color:#fff}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0;
+  height:1.5px;
+  background:#f4c21f;
+  transition:width .25s;
+}
+.nav-links a:hover::after{width:100%}
+
+.nav-links .has-dd{position:relative;display:inline-block}
+.nav-links .has-dd .dd-toggle{
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+}
+.nav-links .has-dd .dd-toggle::after{
+  content:"▼";
+  font-size:.65em;
+  opacity:.7;
+  position:static;
+  width:auto;
+  height:auto;
+  background:none;
+}
+.nav-links .dd{
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%) translateY(10px);
+  min-width:230px;
+  background:#0e0e0e;
+  border:1px solid rgba(255,255,255,.14);
+  padding:8px 0;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .2s,transform .2s;
+  box-shadow:0 16px 40px rgba(0,0,0,.55);
+  z-index:2000;
+}
+.nav-links .has-dd:hover .dd{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+.nav-links .dd a{
+  padding:10px 20px;
+  font-size:13px;
+  white-space:nowrap;
+}
+.nav-links .dd a::after{display:none}
+.nav-links .dd a:hover{background:rgba(255,255,255,.06)}
+
+.nav-cta{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex-shrink:0;
+}
+.nav-phone{
+  font-family:'DM Mono',monospace;
+  font-weight:700;
+  font-size:14px;
+  color:#f5f5f5;
+  white-space:nowrap;
+  text-decoration:none;
+}
+.nav-phone:hover{color:#ffd64a}
+header.nav .btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 26px;
+  border-radius:0;
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  text-decoration:none;
+}
+header.nav .btn-gold{
+  background:#f4c21f;
+  color:#0a0a0a;
+  border:0;
+}
+
+.burger{display:none}
+.mobile-menu{display:none}
+
+/* Remove the oversized gap that existed above Blog content */
+.blog-hero,
+.blog-header,
+main{
+  margin-top:0;
+}
+body{padding-top:0 !important}
+
+/* Keep Blog's first content section clearly below the nav */
+.blog-hero,
+.hero{
+  padding-top:44px;
+}
+
+@media(max-width:880px){
+  .tb-main{
+    flex-direction:column;
+    gap:.75rem;
+    text-align:center;
+    padding:12px 1rem;
+  }
+  .tb-logo{height:54px}
+  .tb-title{font-size:.95rem}
+  .tb-strip{font-size:.72rem}
+}
+@media(max-width:680px){
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  header.nav .nav-phone{display:none}
+  .burger{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:0;
+    cursor:pointer;
+    padding:8px;
+  }
+  .burger span{width:24px;height:2px;background:#fff}
+  .mobile-menu{
+    display:block;
+    position:fixed;
+    inset:0;
+    z-index:3000;
+    background:rgba(8,9,11,.98);
+    transform:translateX(100%);
+    transition:transform .35s ease;
+    padding:90px 28px;
+  }
+  .mobile-menu.open{transform:translateX(0)}
+  .mobile-menu a{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:2rem;
+    text-transform:uppercase;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .mm-close{
+    position:absolute;
+    top:24px;
+    right:24px;
+    background:none;
+    border:0;
+    color:#fff;
+    font-size:34px;
+    cursor:pointer;
+  }
+}
+</style>
+
 </head>
 <body>
 
 <div class="top-banner">
   <div class="tb-main">
-    <a href="/"><img src="/mwt_logo.png" alt="Masters Window Tinting" class="tb-logo"></a>
-    <p class="tb-title">Masters Window Tinting, Paint Protection Film — PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
+    <a href="/" class="tb-logo-link">
+      <img src="mwt_logo.png" alt="Masters Window Tinting" class="tb-logo">
+    </a>
+    <p class="tb-title">Masters Window Tinting, Paint Protection Film &mdash; PPF, Ceramic Coating, Nassau, Suffolk, NY</p>
   </div>
-  <div class="tb-strip">Long Island, New York —— 863 Rte 109, West Babylon, NY —— <a href="tel:6312264300">631-226-4300</a></div>
+  <div class="tb-strip">
+    Long Island, New York &mdash;&mdash; 863 Rte 109, West Babylon, NY &mdash;&mdash; <a href="tel:6312264300">631-226-4300</a>
+  </div>
 </div>
 
+<!-- NAV -->
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <nav class="nav-links">
