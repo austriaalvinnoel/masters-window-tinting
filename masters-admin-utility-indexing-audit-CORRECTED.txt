@@ -1,0 +1,12 @@
+ADMIN / UTILITY INDEXING PROTECTION — CORRECTED
+================================================
+
+- admin.html: noindex=True
+- api/admin.html: noindex=True
+- DEPLOY.html: noindex=True
+- gallery-assign.html: noindex=True
+
+Changes made only to DEPLOY.html and gallery-assign.html where needed.
+robots.txt was intentionally left unchanged so crawlers can read the noindex directive.
+admin.html and api/admin.html were already protected and were not changed.
+No service, location, blog, sitemap, or business pages were modified.
