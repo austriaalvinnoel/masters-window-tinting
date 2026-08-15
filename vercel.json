@@ -7,7 +7,127 @@
         {
           "type": "query",
           "key": "idpage",
+          "value": "WINDOW_TINTING_AND_CERAMIC_PRO_SERVICES"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "WINDOW_TINITING_AND_CERAMIC_PRO_SERVICES"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "TINTING_SERVICES"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "car"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Automotive Window Tinting"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "automotive_window_tinting"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Window_film_that_offers_style_and_protection"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Car_Window_Tinting_Film_that_offers_style_and_protection_%7C_Long_Island,_Nassau_and_Saffolk"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Liquid_Paint_Protection_Film,_Liquid_PPF,_Nassau,_Saffolk,_Long_Island,_NY"
+        }
+      ],
+      "destination": "/liquid-ppf",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
           "value": "Ceramic_Pro_Long_Island_Car_and_Boat_Detailing"
+        }
+      ],
+      "destination": "/ceramic-coating",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Ceramic_Pro_Car_and_Boat_Detailing"
         }
       ],
       "destination": "/ceramic-coating",
@@ -43,10 +163,106 @@
         {
           "type": "query",
           "key": "idpage",
-          "value": "WINDOW_TINTING_AND_CERAMIC_PRO_SERVICES"
+          "value": "Commercial_Window_Tinting"
         }
       ],
-      "destination": "/window-tinting",
+      "destination": "/commercial",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Boat_Tinting"
+        }
+      ],
+      "destination": "/#services",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Boat_Tinting_%7C_South_and_North_Shore,_Long_Island,_Suffolk_and_Nassau"
+        }
+      ],
+      "destination": "/#services",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Tail_Light_&_Headlight_Tinting"
+        }
+      ],
+      "destination": "/#services",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "about"
+        }
+      ],
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "ABOUT"
+        }
+      ],
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "about"
+        }
+      ],
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/index.php",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "testimonials"
+        }
+      ],
+      "destination": "/#reviews",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "sid",
+          "value": "123"
+        }
+      ],
+      "destination": "/gallery",
       "permanent": true
     }
   ],
@@ -58,6 +274,55 @@
           "type": "query",
           "key": "part",
           "value": "fineart"
+        }
+      ],
+      "destination": "/api/gone"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Remote_Starters,_Car_Audio_Systems_and_Elctronics"
+        }
+      ],
+      "destination": "/api/gone"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Vinyl Wraps"
+        }
+      ],
+      "destination": "/api/gone"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "sid",
+          "value": "140"
+        }
+      ],
+      "destination": "/api/gone"
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "sid",
+          "value": "130"
+        },
+        {
+          "type": "query",
+          "key": "aid",
+          "value": "6632"
         }
       ],
       "destination": "/api/gone"
