@@ -1,6 +1,20 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "GALLERY"
+        }
+      ],
+      "destination": "/gallery",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
