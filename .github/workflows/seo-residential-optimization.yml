@@ -1,0 +1,97 @@
+name: Residential SEO Optimization
+
+on:
+  push:
+    paths:
+      - '.github/workflows/seo-residential-optimization.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply GSC-led residential SEO refinements
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('residential.html')
+          text = path.read_text(encoding='utf-8')
+
+          replacements = [
+              (
+                  '<title>Residential Window Tinting Long Island NY | Home Window Film</title>',
+                  '<title>Home Window Tinting Long Island NY | Residential Window Film</title>'
+              ),
+              (
+                  '<meta property="og:title" content="Residential Window Tinting Long Island NY | Home Window Film">',
+                  '<meta property="og:title" content="Home Window Tinting Long Island NY | Residential Window Film">'
+              ),
+              (
+                  '<meta property="og:description" content="Residential window tinting and home window film for Long Island, Nassau and Suffolk County. Reduce glare, improve privacy and help control solar heat.">',
+                  '<meta property="og:description" content="Home and residential window tinting on Long Island, serving Nassau and Suffolk County. Reduce glare, solar heat and UV exposure with professional window film.">'
+              ),
+              (
+                  '<meta name="description" content="Residential window tinting and home window film for Long Island, Nassau and Suffolk County. Reduce glare, improve privacy and help control solar heat.">',
+                  '<meta name="description" content="Home and residential window tinting on Long Island, serving Nassau and Suffolk County. Reduce glare, solar heat and UV exposure with professional window film.">'
+              ),
+              (
+                  '"name":"Residential Window Tinting",\n      "serviceType":"Residential Window Tinting and Home Window Film",',
+                  '"name":"Residential & Home Window Tinting",\n      "serviceType":"Residential Window Tinting, Home Window Tinting and Home Window Film",'
+              ),
+              (
+                  '<p class="lead">Professional home window film installation for Long Island homeowners across Nassau and Suffolk County. Reduce glare, improve daytime privacy, help control solar heat, and protect interior furnishings with film selected for your glass and goals.</p>',
+                  '<p class="lead">Professional home and residential window tinting for Long Island homeowners across Nassau and Suffolk County. We install house window film to reduce glare, improve daytime privacy, help control solar heat, and protect interior furnishings with options selected for your glass and goals.</p>'
+              ),
+              (
+                  '<p>Residential window film can improve comfort, glare control, privacy, and solar performance without replacing your existing windows. We help Long Island homeowners choose film based on room exposure, glass type, and the result they want.</p>',
+                  '<p>Residential and home window film can improve comfort, glare control, privacy, and solar performance without replacing your existing windows. We help Long Island homeowners choose the right house window tinting solution based on room exposure, glass type, privacy needs, and the result they want.</p>'
+              )
+          ]
+
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit(f'Expected source text not found: {old[:100]}')
+              text = text.replace(old, new, 1)
+
+          marker = '<!-- PROCESS -->'
+          local_section = '''<!-- LOCAL RESIDENTIAL SEO -->
+<section class="sec" style="background:var(--bg-2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom:28px">
+      <span class="eyebrow">Home Window Tinting · Long Island</span>
+      <h2>Home Window Tinting<br>Across Long Island</h2>
+      <p>If you are looking for home or residential window tinting near you on Long Island, Masters Window Tinting serves homeowners throughout Nassau and Suffolk County from our West Babylon location. Our residential window film options are selected for comfort, glare control, privacy, UV protection, and the specific glass in your home.</p>
+      <p style="margin-top:18px">We serve communities including <a href="/west-babylon" style="color:var(--gold-bright);border-bottom:1px solid rgba(255,255,255,.3)">West Babylon</a>, <a href="/babylon" style="color:var(--gold-bright);border-bottom:1px solid rgba(255,255,255,.3)">Babylon</a>, <a href="/deer-park" style="color:var(--gold-bright);border-bottom:1px solid rgba(255,255,255,.3)">Deer Park</a>, <a href="/lindenhurst" style="color:var(--gold-bright);border-bottom:1px solid rgba(255,255,255,.3)">Lindenhurst</a>, <a href="/farmingdale" style="color:var(--gold-bright);border-bottom:1px solid rgba(255,255,255,.3)">Farmingdale</a>, and <a href="/massapequa" style="color:var(--gold-bright);border-bottom:1px solid rgba(255,255,255,.3)">Massapequa</a>, along with surrounding Long Island areas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->'''
+
+          if marker not in text:
+              raise SystemExit('PROCESS marker not found')
+          text = text.replace(marker, local_section, 1)
+
+          path.write_text(text, encoding='utf-8')
+
+      - name: Commit optimized residential page
+        shell: bash
+        run: |
+          git config user.name "Agency OS AI"
+          git config user.email "actions@users.noreply.github.com"
+          git add residential.html
+          if git diff --cached --quiet; then
+            echo "No residential SEO changes to commit."
+            exit 0
+          fi
+          git commit -m "Optimize residential page for high-impression home tint searches"
+          git push origin HEAD:main
