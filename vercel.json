@@ -12,8 +12,7 @@
         }
       ],
       "destination": "/gallery",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
     },
     {
       "source": "/",
@@ -25,8 +24,43 @@
         }
       ],
       "destination": "/ceramic-coating",
-      "permanent": true,
-      "preserveQueryParams": false
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "WINDOW_TINTING_AND_CERAMIC_PRO_SERVICES"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Specialty_Window_Films"
+        }
+      ],
+      "destination": "/residential",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Residential_Window_Tinting_I_Long_Island_Nassau_and_Suffolk_Syosset_Plainview_and_Beyond"
+        }
+      ],
+      "destination": "/residential",
+      "permanent": true
     }
   ],
   "headers": [
