@@ -1,15 +1,15 @@
 name: Residential SEO Optimization
 
 on:
-  push:
-    paths:
-      - '.github/workflows/seo-residential-optimization.yml'
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   optimize:
+    if: github.event.issue.title == 'RUN RESIDENTIAL SEO OPTIMIZATION'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
