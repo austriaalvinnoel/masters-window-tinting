@@ -44,6 +44,18 @@
         {
           "type": "query",
           "key": "idpage",
+          "value": "WINDOW_TINITING_AND_CERAMIC_PRO_SERVICES"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
           "value": "Specialty_Window_Films"
         }
       ],
@@ -60,6 +72,31 @@
         }
       ],
       "destination": "/residential",
+      "permanent": true
+    },
+    {
+      "source": "/home-window-tinting",
+      "destination": "/residential",
+      "permanent": true
+    },
+    {
+      "source": "/house-window-tinting",
+      "destination": "/residential",
+      "permanent": true
+    },
+    {
+      "source": "/residential-window-tinting",
+      "destination": "/residential",
+      "permanent": true
+    },
+    {
+      "source": "/car-window-tinting",
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/automotive-window-tinting",
+      "destination": "/window-tinting",
       "permanent": true
     }
   ],
