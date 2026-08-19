@@ -32,6 +32,18 @@
         {
           "type": "query",
           "key": "idpage",
+          "value": "Ceramic_Pro_Long_Island,_Car_and_Boat_Detailing"
+        }
+      ],
+      "destination": "/ceramic-coating",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
           "value": "WINDOW_TINTING_AND_CERAMIC_PRO_SERVICES"
         }
       ],
