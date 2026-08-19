@@ -75,6 +75,66 @@
       "permanent": true
     },
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "WINDOW_TINITING,_CERAMIC_SERVICES"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Automotive_Window_Tinting_from_Babylon_to_Huntington_and_Beyond"
+        }
+      ],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "ABOUT"
+        }
+      ],
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "CONTACT"
+        }
+      ],
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "idpage",
+          "value": "Residential_Window_Tinting_|_Long_Island,_Nassau_and_Suffolk,_Syosset,_Plainview_and_Beyond"
+        }
+      ],
+      "destination": "/residential",
+      "permanent": true
+    },
+    {
       "source": "/home-window-tinting",
       "destination": "/residential",
       "permanent": true
