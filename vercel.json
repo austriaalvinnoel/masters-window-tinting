@@ -4,194 +4,125 @@
   "redirects": [
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "GALLERY"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "GALLERY"}],
       "destination": "/gallery",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "Ceramic_Pro_Long_Island_Car_and_Boat_Detailing"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "Ceramic_Pro_Long_Island_Car_and_Boat_Detailing"}],
       "destination": "/ceramic-coating",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "Ceramic_Pro_Long_Island,_Car_and_Boat_Detailing"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "Ceramic_Pro_Long_Island,_Car_and_Boat_Detailing"}],
       "destination": "/ceramic-coating",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "WINDOW_TINTING_AND_CERAMIC_PRO_SERVICES"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "WINDOW_TINTING_AND_CERAMIC_PRO_SERVICES"}],
       "destination": "/window-tinting",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "WINDOW_TINITING_AND_CERAMIC_PRO_SERVICES"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "WINDOW_TINITING_AND_CERAMIC_PRO_SERVICES"}],
       "destination": "/window-tinting",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "Specialty_Window_Films"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "Specialty_Window_Films"}],
       "destination": "/residential",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "Residential_Window_Tinting_I_Long_Island_Nassau_and_Suffolk_Syosset_Plainview_and_Beyond"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "Residential_Window_Tinting_I_Long_Island_Nassau_and_Suffolk_Syosset_Plainview_and_Beyond"}],
       "destination": "/residential",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "WINDOW_TINITING,_CERAMIC_SERVICES"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "Residential_Window_Tinting_|_Long_Island,_Nassau_and_Suffolk,_Syosset,_Plainview_and_Beyond"}],
+      "destination": "/residential",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{"type": "query", "key": "idpage", "value": "WINDOW_TINITING,_CERAMIC_SERVICES"}],
       "destination": "/window-tinting",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "Automotive_Window_Tinting_from_Babylon_to_Huntington_and_Beyond"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "Automotive_Window_Tinting_from_Babylon_to_Huntington_and_Beyond"}],
       "destination": "/window-tinting",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "ABOUT"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "automotive_window_tinting"}],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{"type": "query", "key": "idpage", "value": "Car_Window_Tinting_Film_that_offers_style_and_protection_|_Long_Island,_Nassau_and_Saffolk"}],
+      "destination": "/window-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{"type": "query", "key": "idpage", "value": "Liquid_Paint_Protection_Film"}],
+      "destination": "/liquid-ppf",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{"type": "query", "key": "idpage", "value": "CAR_DETAILING_TESTIMONIALS"}],
+      "destination": "/detailing",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{"type": "query", "key": "idpage", "value": "Tail_Light_&_Headlight_Tinting_|_Long_Island,_Nassau_and_Suffolk,_Babylon,_Huntington_and_Beyond"}],
+      "destination": "/headlight-tail-light-tinting",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [{"type": "query", "key": "idpage", "value": "ABOUT"}],
       "destination": "/about",
       "permanent": true
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "CONTACT"
-        }
-      ],
+      "has": [{"type": "query", "key": "idpage", "value": "CONTACT"}],
       "destination": "/contact",
       "permanent": true
     },
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "idpage",
-          "value": "Residential_Window_Tinting_|_Long_Island,_Nassau_and_Suffolk,_Syosset,_Plainview_and_Beyond"
-        }
-      ],
-      "destination": "/residential",
-      "permanent": true
-    },
-    {
-      "source": "/home-window-tinting",
-      "destination": "/residential",
-      "permanent": true
-    },
-    {
-      "source": "/house-window-tinting",
-      "destination": "/residential",
-      "permanent": true
-    },
-    {
-      "source": "/residential-window-tinting",
-      "destination": "/residential",
-      "permanent": true
-    },
-    {
-      "source": "/car-window-tinting",
-      "destination": "/window-tinting",
-      "permanent": true
-    },
-    {
-      "source": "/automotive-window-tinting",
-      "destination": "/window-tinting",
-      "permanent": true
-    }
+    {"source": "/home-window-tinting", "destination": "/residential", "permanent": true},
+    {"source": "/house-window-tinting", "destination": "/residential", "permanent": true},
+    {"source": "/residential-window-tinting", "destination": "/residential", "permanent": true},
+    {"source": "/car-window-tinting", "destination": "/window-tinting", "permanent": true},
+    {"source": "/automotive-window-tinting", "destination": "/window-tinting", "permanent": true},
+    {"source": "/headlight-tinting", "destination": "/headlight-tail-light-tinting", "permanent": true},
+    {"source": "/taillight-tinting", "destination": "/headlight-tail-light-tinting", "permanent": true},
+    {"source": "/tail-light-tinting", "destination": "/headlight-tail-light-tinting", "permanent": true},
+    {"source": "/boat-window-tinting", "destination": "/marine-window-tinting", "permanent": true},
+    {"source": "/marine-tinting", "destination": "/marine-window-tinting", "permanent": true}
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "geolocation=(), microphone=(), camera=()"
-        }
+        {"key": "X-Frame-Options", "value": "SAMEORIGIN"},
+        {"key": "X-Content-Type-Options", "value": "nosniff"},
+        {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"},
+        {"key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=()"}
       ]
     }
   ]
