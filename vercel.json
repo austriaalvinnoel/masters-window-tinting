@@ -16,6 +16,7 @@
     {"source":"/","has":[{"type":"query","key":"idpage","value":"Car_Window_Tinting_Film_that_offers_style_and_protection_|_Long_Island,_Nassau_and_Saffolk"}],"destination":"/window-tinting","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"Liquid_Paint_Protection_Film"}],"destination":"/liquid-ppf","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"CAR_DETAILING_TESTIMONIALS"}],"destination":"/detailing","permanent":true},
+    {"source":"/","has":[{"type":"query","key":"idpage","value":"Boat_Tinting"}],"destination":"/marine-window-tinting","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"Tail_Light_&_Headlight_Tinting_|_Long_Island,_Nassau_and_Suffolk,_Babylon,_Huntington_and_Beyond"}],"destination":"/headlight-tail-light-tinting","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"ABOUT"}],"destination":"/about","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"CONTACT"}],"destination":"/contact","permanent":true},
