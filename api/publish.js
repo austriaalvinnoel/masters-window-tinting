@@ -1,34 +1,52 @@
-
 // api/publish.js
 // Secure server-side publisher for Masters CMS.
-// The GitHub token lives ONLY in a Vercel Environment Variable (GITHUB_TOKEN),
-// never in the browser or any committed file.
-//
-// Setup (one time):
-//   1. In Vercel → your project → Settings → Environment Variables, add:
-//        GITHUB_TOKEN   = your new ghp_... token   (mark it as "Secret")
-//        GITHUB_REPO    = austriaalvinnoel/masters-window-tinting
-//        GITHUB_BRANCH  = main
-//        CMS_PUBLISH_KEY = some-long-random-string-you-make-up
-//   2. Redeploy. This file must live at: /api/publish.js in your repo.
+import crypto from 'crypto';
+
+function getCookie(req, name) {
+  const raw = req.headers.cookie || '';
+  const pair = raw.split(';').map(v => v.trim()).find(v => v.startsWith(`${name}=`));
+  return pair ? pair.slice(name.length + 1) : null;
+}
+
+function validSession(req) {
+  const secret = process.env.CMS_ADMIN_PASS;
+  const token = getCookie(req, 'cms_session');
+  if (!secret || !token || !token.includes('.')) return false;
+  const dot = token.lastIndexOf('.');
+  const payload = token.slice(0, dot);
+  const supplied = token.slice(dot + 1);
+  const expected = crypto.createHmac('sha256', secret).update(payload).digest('base64url');
+  const a = Buffer.from(supplied);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
+  try {
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    return typeof data.exp === 'number' && data.exp > Date.now();
+  } catch {
+    return false;
+  }
+}
 
 export default async function handler(req, res) {
-  // Only allow POST
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  if (!validSession(req)) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
   if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Simple shared-secret check so randoms can't hit your endpoint.
-  // The admin panel sends this same key. It is NOT the GitHub token —
-  // if it leaks, it only lets someone publish CMS JSON, not touch your account,
-  // and you can rotate it anytime by changing the env var.
   const publishKey = req.headers['x-cms-key'];
   if (!publishKey || publishKey !== process.env.CMS_PUBLISH_KEY) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const token  = process.env.GITHUB_TOKEN;
-  const repo   = process.env.GITHUB_REPO   || 'austriaalvinnoel/masters-window-tinting';
+  const token = process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO || 'austriaalvinnoel/masters-window-tinting';
   const branch = process.env.GITHUB_BRANCH || 'main';
 
   if (!token) {
@@ -37,15 +55,13 @@ export default async function handler(req, res) {
 
   try {
     const { payload, message } = req.body || {};
-    if (!payload) {
-      return res.status(400).json({ error: 'Missing payload' });
-    }
+    if (!payload) return res.status(400).json({ error: 'Missing payload' });
 
-    // Get current SHA of cms-data.json (needed to update an existing file)
     const getR = await fetch(
       `https://api.github.com/repos/${repo}/contents/cms-data.json?ref=${branch}`,
       { headers: { Authorization: `token ${token}`, 'User-Agent': 'masters-cms' } }
     );
+
     let sha = null;
     if (getR.ok) {
       const d = await getR.json();
@@ -74,13 +90,11 @@ export default async function handler(req, res) {
       }
     );
 
-    if (putR.ok) {
-      return res.status(200).json({ ok: true });
-    } else {
-      const e = await putR.json();
-      return res.status(putR.status).json({ error: e.message || 'GitHub error' });
-    }
-  } catch (e) {
-    return res.status(500).json({ error: e.message });
+    if (putR.ok) return res.status(200).json({ ok: true });
+
+    const e = await putR.json();
+    return res.status(putR.status).json({ error: e.message || 'GitHub error' });
+  } catch {
+    return res.status(500).json({ error: 'Publish failed' });
   }
 }
