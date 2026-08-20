@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/marquee-polish-2026-08-20
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -61,7 +64,6 @@ jobs:
 
           path.write_text(text.replace(old, new, 1), encoding="utf-8")
 
-          # Improve mobile readability without changing structure.
           text = path.read_text(encoding="utf-8")
           text = text.replace('.marquee span{font-size:13px}', '.marquee span{font-size:13px;letter-spacing:.13em}.marquee::before,.marquee::after{width:34px}', 1)
           path.write_text(text, encoding="utf-8")
