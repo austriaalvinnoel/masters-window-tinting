@@ -1,8 +1,39 @@
 // Vercel serverless function — proxies Cloudinary Admin API for the CMS.
 // All Cloudinary credentials must live only in Vercel Environment Variables.
+import crypto from 'crypto';
+
+function getCookie(req, name) {
+  const raw = req.headers.cookie || '';
+  const pair = raw.split(';').map(v => v.trim()).find(v => v.startsWith(`${name}=`));
+  return pair ? pair.slice(name.length + 1) : null;
+}
+
+function validSession(req) {
+  const secret = process.env.CMS_ADMIN_PASS;
+  const token = getCookie(req, 'cms_session');
+  if (!secret || !token || !token.includes('.')) return false;
+  const dot = token.lastIndexOf('.');
+  const payload = token.slice(0, dot);
+  const supplied = token.slice(dot + 1);
+  const expected = crypto.createHmac('sha256', secret).update(payload).digest('base64url');
+  const a = Buffer.from(supplied);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
+  try {
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    return typeof data.exp === 'number' && data.exp > Date.now();
+  } catch {
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  if (!validSession(req)) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
 
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
@@ -39,7 +70,7 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     return res.status(response.ok ? 200 : response.status).json(data);
-  } catch (err) {
+  } catch {
     return res.status(500).json({ error: 'Cloudinary request failed' });
   }
 }
