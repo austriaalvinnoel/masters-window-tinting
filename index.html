@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
 <title>Window Tinting, PPF & Ceramic Coating Long Island NY | Masters</title>
 <link rel="canonical" href="https://masterswindowtinting.com/">
 <!-- Open Graph / Social -->
@@ -159,6 +160,26 @@ header.nav.scrolled{background:rgba(8,9,11,.82);backdrop-filter:blur(16px);borde
 .scroll-hint{position:absolute;bottom:30px;right:28px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.25em;color:var(--muted-2);writing-mode:vertical-rl;display:flex;align-items:center;gap:14px;text-transform:uppercase}
 .scroll-hint::after{content:"";width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+/* Accessibility and performance: preserve the visual system while respecting reduced motion. */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  .hero h1 .l i,
+  .hero p.lead,
+  .hero-actions,
+  .hero-trust,
+  .reveal{
+    opacity:1 !important;
+    transform:none !important;
+  }
+  .marquee-inner{animation:none !important;transform:none !important}
+}
+
 
 /* ===== LIQUID PPF BAND ===== */
 .ppf-band{position:relative;background:#000;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -645,7 +666,7 @@ section[id]{scroll-margin-top:170px}
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-bg">
-    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="Masters Window Tinting vehicle protection services on Long Island NY">
+    <img src="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238241405-2SC1S03OEYVW5NAEI604/0ad57185b1898be88762e633937b3feb1c070c80-6992f3354f99d.webp" alt="Masters Window Tinting vehicle protection services on Long Island NY" fetchpriority="high" decoding="async">
   </div>
   <div class="hero-grid"></div>
   <div class="wrap hero-inner">
