@@ -3,5 +3,9 @@ Allow: /
 Disallow: /admin
 Disallow: /admin.html
 Disallow: /api/
+Disallow: /DEPLOY
+Disallow: /DEPLOY.html
+Disallow: /gallery-assign
+Disallow: /gallery-assign.html
 
 Sitemap: https://masterswindowtinting.com/sitemap.xml

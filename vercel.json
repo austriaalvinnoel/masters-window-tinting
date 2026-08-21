@@ -59,6 +59,34 @@
       ]
     },
     {
+      "source": "/DEPLOY",
+      "headers": [
+        {"key":"Cache-Control","value":"no-store, max-age=0"},
+        {"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}
+      ]
+    },
+    {
+      "source": "/DEPLOY.html",
+      "headers": [
+        {"key":"Cache-Control","value":"no-store, max-age=0"},
+        {"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}
+      ]
+    },
+    {
+      "source": "/gallery-assign",
+      "headers": [
+        {"key":"Cache-Control","value":"no-store, max-age=0"},
+        {"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}
+      ]
+    },
+    {
+      "source": "/gallery-assign.html",
+      "headers": [
+        {"key":"Cache-Control","value":"no-store, max-age=0"},
+        {"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}
+      ]
+    },
+    {
       "source": "/api/(.*)",
       "headers": [
         {"key":"Cache-Control","value":"no-store"}
