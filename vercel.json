@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "redirects": [
     {"source":"/favicon.ico","destination":"/mwt_logo.png","permanent":false},
+    {"source":"/","has":[{"type":"query","key":"idpage","value":"GALLERY"},{"type":"query","key":"part","value":"fineart"}],"destination":"/gallery","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"GALLERY"}],"destination":"/gallery","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"Ceramic_Pro_Long_Island_Car_and_Boat_Detailing"}],"destination":"/ceramic-coating","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"Ceramic_Pro_Long_Island,_Car_and_Boat_Detailing"}],"destination":"/ceramic-coating","permanent":true},
