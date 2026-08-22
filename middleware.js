@@ -14,8 +14,14 @@ export default function middleware(request) {
     });
   }
 
-  // Retire obsolete legacy session-style URLs from the previous CMS.
-  if (url.pathname === "/" && url.searchParams.has("sid")) {
+  // Retire obsolete legacy session-style URLs from the previous CMS, but
+  // preserve idpage URLs so Vercel's targeted permanent redirects can
+  // consolidate their SEO signals into the current service/location pages.
+  if (
+    url.pathname === "/" &&
+    url.searchParams.has("sid") &&
+    !url.searchParams.has("idpage")
+  ) {
     return new Response("Gone", {
       status: 410,
       headers: {
