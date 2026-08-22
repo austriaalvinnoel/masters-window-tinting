@@ -1,7 +1,7 @@
 export default function middleware(request) {
   const url = new URL(request.url);
 
-  // Retire obsolete legacy FineArt URLs
+  // Retire obsolete legacy FineArt URLs from the previous CMS.
   if (
     url.pathname === "/" &&
     url.searchParams.get("part") === "fineart"
@@ -14,5 +14,26 @@ export default function middleware(request) {
     });
   }
 
-  // Let all normal website requests continue
+  // Retire obsolete legacy session-style URLs from the previous CMS.
+  if (url.pathname === "/" && url.searchParams.has("sid")) {
+    return new Response("Gone", {
+      status: 410,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8"
+      }
+    });
+  }
+
+  // Retire the old PHP front controller. The current site is static and
+  // does not use /index.php for any live public page.
+  if (url.pathname === "/index.php") {
+    return new Response("Gone", {
+      status: 410,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8"
+      }
+    });
+  }
+
+  // Let all normal website requests continue.
 }
