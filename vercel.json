@@ -21,6 +21,7 @@
     {"source":"/","has":[{"type":"query","key":"idpage","value":"Tail_Light_&_Headlight_Tinting_|_Long_Island,_Nassau_and_Suffolk,_Babylon,_Huntington_and_Beyond"}],"destination":"/headlight-tail-light-tinting","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"ABOUT"}],"destination":"/about","permanent":true},
     {"source":"/","has":[{"type":"query","key":"idpage","value":"CONTACT"}],"destination":"/contact","permanent":true},
+    {"source":"/","has":[{"type":"query","key":"idpage","value":"F.A.Q."}],"destination":"/window-tinting","permanent":true},
     {"source":"/home-window-tinting","destination":"/residential","permanent":true},
     {"source":"/house-window-tinting","destination":"/residential","permanent":true},
     {"source":"/residential-window-tinting","destination":"/residential","permanent":true},
