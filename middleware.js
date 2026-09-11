@@ -1,6 +1,12 @@
 export default function middleware(request) {
   const url = new URL(request.url);
 
+  // Use one canonical host so Google does not split signals between www and non-www.
+  if (url.hostname === "www.masterswindowtinting.com") {
+    url.hostname = "masterswindowtinting.com";
+    return Response.redirect(url, 308);
+  }
+
   // Normalize legacy CMS page labels so spelling, punctuation, encoding,
   // capitalization, and historical separators resolve consistently.
   const idPage = (url.searchParams.get("idpage") || "")
