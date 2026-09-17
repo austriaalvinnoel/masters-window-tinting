@@ -1,0 +1,8 @@
+/* Mobile header safety: the banner height changes when its title and address
+   wrap, so it must stay in normal flow instead of relying on a fixed offset. */
+@media(max-width:880px){
+  .top-banner{position:relative}
+  header.nav{position:sticky;top:0!important}
+  body{padding-top:0}
+  section[id]{scroll-margin-top:80px}
+}
