@@ -682,6 +682,21 @@ section[id]{scroll-margin-top:170px}
 
 </style>
 <link rel="stylesheet" href="/mobile-header-fix.css">
+<!-- Google Ads base tag: Masters Window Tinting -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10812214464"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-10812214464');
+  // Phone taps are engagement signals, not verified completed calls.
+  document.addEventListener('click', function(event) {
+    var link = event.target.closest('a[href^="tel:"]');
+    if (link && typeof gtag === 'function') {
+      gtag('event', 'phone_link_click', {event_category:'contact', event_label:link.getAttribute('href')});
+    }
+  });
+</script>
 </head>
 <body>
 
