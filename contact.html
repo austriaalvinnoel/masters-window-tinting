@@ -823,7 +823,8 @@ section[id]{scroll-margin-top:170px}
       <div class="reveal" data-d="1">
         <div class="form-card">
           <form id="quoteForm" action="https://formspree.io/f/xykqvkwk" method="POST">
-            <input type="hidden" name="_subject" value="New Quote Request — Masters Window Tinting">
+            <input type="hidden" name="_subject" id="quoteSubject" value="New Quote Request — Masters Window Tinting">
+            <input type="hidden" name="lead_source" id="quoteLeadSource" value="">
             <div class="form-note">Request Appointment or Quote · We confirm within 1 hour</div>
             <div class="frow">
               <div class="field"><label>First Name *</label><input type="text" name="first_name" required></div>
@@ -841,7 +842,7 @@ section[id]{scroll-margin-top:170px}
             <div class="checks">
               <label class="chk"><input type="checkbox" name="service"><span>Window Tinting</span></label>
               <label class="chk"><input type="checkbox" name="service"><span>Paint Protection Film (PPF)</span></label>
-              <label class="chk"><input type="checkbox" name="service"><span>Liquid Paint Protection Film</span></label>
+              <label class="chk"><input type="checkbox" name="service" value="NanoPro Liquid PPF" id="nanoproService"><span>Liquid Paint Protection Film (NanoPro)</span></label>
               <label class="chk"><input type="checkbox" name="service"><span>Ceramic Coating</span></label>
               <label class="chk"><input type="checkbox" name="service"><span>Headlight / Taillight</span></label>
               <label class="chk"><input type="checkbox" name="service"><span>Residential</span></label>
@@ -965,6 +966,16 @@ document.querySelectorAll('img').forEach(img=>{
 
 
 <script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var service = params.get('service');
+  var source = params.get('source');
+  if(service && service.toLowerCase() === 'nanopro-liquid-ppf'){
+    document.getElementById('nanoproService').checked = true;
+    document.getElementById('quoteSubject').value = 'NanoPro Liquid PPF Quote Request — Masters Window Tinting';
+    document.getElementById('quoteLeadSource').value = source === 'liquid-ppf-comparison' ? 'Liquid PPF Comparison Article' : 'NanoPro Liquid PPF Service Page';
+  }
+})();
 document.getElementById('quoteForm').addEventListener('submit',function(e){
   e.preventDefault();
   var form = this;
