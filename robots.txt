@@ -1,11 +1,11 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /admin.html
+
+# API endpoints are not search landing pages.
 Disallow: /api/
-Disallow: /DEPLOY
-Disallow: /DEPLOY.html
-Disallow: /gallery-assign
-Disallow: /gallery-assign.html
+
+# Internal utility pages are excluded from search results using
+# X-Robots-Tag: noindex in vercel.json and page-level meta robots.
+# Do not block their crawling here, or crawlers cannot read noindex.
 
 Sitemap: https://masterswindowtinting.com/sitemap.xml
