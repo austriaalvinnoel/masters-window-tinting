@@ -897,9 +897,9 @@ section[id]{scroll-margin-top:170px}
       </div>
     </div>
     <div class="product-visual reveal" data-d="1" style="aspect-ratio:16/9;">
-      <video src="https://masterswindowtinting.com/commercial-video.mp4.mp4"
+      <video data-src="https://masterswindowtinting.com/commercial-video.mp4.mp4"
              poster="https://images.squarespace-cdn.com/content/v1/6992bb537f5bac1108a8f34c/1771238242962-ETCD9WJPV2DYUJB7R33U/acab01c48fbf5591fae7263dae772cfb454abdad-6992f333dd50d.webp"
-             autoplay loop muted playsinline preload="metadata"
+             loop muted playsinline preload="none"
              style="width:100%;height:100%;object-fit:contain;display:block;background:#000;"></video>
       <div class="ring">Elite<br>NanoPro</div>
       <div class="tag">Graphene-Oxide Infused</div>
@@ -1902,6 +1902,30 @@ function toggleYTSound(videoId, btnId) {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+</script>
+<script>
+// Homepage feature video: no download until it is near the viewport.
+(function(){
+  var v=document.querySelector('.product-visual video[data-src]');
+  if(!v) return;
+  var src=v.getAttribute('data-src');
+  // Fallback: poster stays, native controls let the visitor start playback.
+  // preload="none" means nothing downloads until they press play.
+  function manual(){
+    if(!v.getAttribute('src')) v.setAttribute('src',src);
+    v.controls=true;
+  }
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window)){ manual(); return; }
+  var o=new IntersectionObserver(function(es){
+    if(!es[0].isIntersecting) return;
+    o.disconnect();
+    v.setAttribute('src',src);
+    var p=v.play();
+    if(p&&p.catch) p.catch(manual);
+  },{rootMargin:'200px 0px'});
+  o.observe(v);
+})();
 </script>
 </body>
 </html>
